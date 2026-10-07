@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue,citecolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newcommand{\Ree}{\operatorname{Re}}
+\newcommand{\NF}{\operatorname{N}}
+
+\title{A perturbation of the seven-eighths zero-free half-plane}
+\author{}
+\date{7 October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We examine the numerical endpoint in the compensated-probe proof of the
+seven-eighths zero-free half-plane in \cite{OAI}. The reflected-row estimate
+has room to increase the total prime length, while the high-side endpoint
+certificate has a fixed positive margin. Keeping the same probe and changing
+its lengths gives, from the analytic estimates of \cite{OAI}, a zero-free
+half-plane with boundary $174999/200000=0.874995$. This note records the
+parameter changes and the extensions of the estimates used at the boundary.
+\end{abstract}
+
+\section{Statement and input}
+
+Let $F=\mathbb Q(\sqrt{-3})$. As in \cite[Equation (1.1b)]{OAI}, let
+$\beta_*$ be the supremum of $1/2$ and the real parts of zeros of primitive
+finite-order Hecke $L$-functions over $F$ in the critical strip. We use the
+seven-eighths theorem of \cite{OAI}, so $\beta_*\le 7/8$. We also use the
+arithmetic identities, detector estimates, reflected-energy lemma, additive
+Gram bound, and continuation criterion proved there. Section 2 checks the
+changes needed when its Part II geometry is perturbed. Section 3 checks the
+high comparison and the analytic domains.
+
+\begin{theorem}\label{thm:main}
+Every finite-order Hecke $L$-function over $F$ and every Dirichlet
+$L$-function, including the Riemann zeta function, has no zero in
+\[
+    \Ree s> B:=\frac{174999}{200000}
+                =\frac78-\frac1{200000}.
+\]
+The usual pole at $s=1$ for a principal character is allowed.
+\end{theorem}
+
+Put
+\begin{equation}\label{eq:geometry}
+\begin{gathered}
+ t=\frac3{100000},\qquad
+ \ell=\frac16+t,\qquad b=\frac18,\\
+ l_x=\frac{17}{48}-\frac t2,\qquad
+ l_y=\frac{23}{48}-\frac t2,\qquad
+ h=\frac{13}{16}+\frac{3t}{2},\\
+ M=l_x+l_y=\frac56-t.
+\end{gathered}
+\end{equation}
+These lengths satisfy $l_y-l_x=b$, $M+\ell=1$, and
+$h=1-l_x+\ell$. The general Mellin-exponent identity in
+\cite[Part II, compensated low estimate]{OAI} therefore remains
+\begin{equation}\label{eq:signal}
+ C(s)=\frac{l_x}{2}+s-1+\frac h6=s-\frac{11}{16}.
+\end{equation}
+Choose a fixed even number $K$ of disjoint prime slots, each of length
+$\ell/K$, as in \cite[Section 5, ``Order of choices'']{OAI}. The slot count
+may be enlarged to meet the same mesh requirements. The finite physical
+probe and its exact Poisson identity in \cite{OAI} make sense with the
+lengths in \eqref{eq:geometry}. All its arithmetic factors are unchanged.
+
+\section{The low comparison}
+
+\begin{lemma}\label{lem:low}
+The normalized compensated probe of \cite{OAI}, formed with
+\eqref{eq:geometry}, satisfies for every $\varepsilon>0$
+\[
+       |J_\eta(Z)|\ll_{\eta,\varepsilon}
+             Z^{3/16-t/4+\varepsilon}.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix a rescaled subset of slots of total logarithmic length
+$0\le d\le\ell$. In the notation of the compensated low estimate of
+\cite{OAI}, its row and surviving-slot lengths are
+\[
+ M'=M-2d,\qquad \ell'=\ell-d.
+\]
+The proof of the reflected-row norm in \cite[Part II, compensated low estimate]{OAI}
+first bounds one branch by $M'$ and the other by
+$M'+(1+3\ell'-2M')/4$, up to arbitrary small losses. Its general
+reflected-energy lemma permits these fixed bounded lengths. Substitution
+gives the squared row norm
+\begin{equation}\label{eq:row}
+ \sum_{0<\NF m\ll Z^{M'}} |B^J_{m,\sigma}(Z)|^2
+ \ll Z^{M'+((d-1/6+5t)/4)_++\varepsilon}.
+\end{equation}
+The additive Gram estimate is available throughout this range. Its scale
+conditions follow from
+\[
+ l_x-\ell=\frac3{16}-\frac{3t}{2}>0,\qquad
+ l_y-\ell=\frac5{16}-\frac{3t}{2}>0,
+\]
+\[
+ M-2\ell=\frac12-3t>0,\qquad
+ l_y-\ell-\frac{11b}{6}=\frac1{12}-\frac{3t}{2}>0.
+\]
+Thus its $P_a^2/Y'$ term is absorbed by $P_a^{1/6}$, exactly as in
+\cite[Part II, additive Gram bound]{OAI}. Cauchy--Schwarz, the count of
+rescaled tuples, and their coefficients add to the basic low exponent
+\[
+ -d+\left(\frac{d-1/6+5t}{8}\right)_+.
+\]
+This is nonpositive for $0\le d\le\ell$. Indeed, its positive-part
+argument is negative until $d>1/6-5t$, and thereafter
+$d-1/6+5t<8d$. The empty subset has exponent zero. The direct bound
+is consequently $Z^{l_x/2+b/12+\varepsilon}$.
+
+The prime normalizer in \cite[Part II, principal normalizer]{OAI} is nonzero and has
+inverse $Z^{o(1)}$ for every fixed positive slot length. Finally,
+\[
+ \frac{l_x}{2}+\frac b{12}=\frac3{16}-\frac t4.
+\]
+This proves the normalized estimate.
+\end{proof}
+
+The signal at the proposed boundary is
+\begin{equation}\label{eq:low-gap}
+ C(B)=\frac3{16}-\frac1{200000},\qquad
+ C(B)-\left(\frac3{16}-\frac t4\right)
+ =\frac1{400000}>0.
+\end{equation}
+
+\section{The high comparison}
+
+We first record the extension of the Euler regions used by the contour
+arguments. The local factors below are those of
+\cite[Equations (5.13a)--(5.13c)]{OAI}.
+
+\begin{lemma}\label{lem:analytic}
+The full compensated correction is holomorphic, with the bounds needed
+for principal-row contour moves, on the second Euler region of \cite{OAI}
+with its condition $\Ree s\ge7/8$ replaced by $\Ree s\ge B$. The
+principal local quotient there satisfies
+\[
+       G_p/H_p=-1+O((\NF p)^{-B}).
+\]
+The small-row contour can use the first Euler region with
+$\epsilon_0=37/100$.
+\end{lemma}
+
+\begin{proof}
+The exact local defect formula in \cite[local Euler lemma]{OAI} bounds
+$H_p-1$ in the original second
+region by $O(Q^{-363/200})$ for $p\nmid u$ and $O(Q^{-33/40})$
+for $p\mid u$, where $Q=\NF p$. Every local exponent involving
+$\Ree s$ has coefficient of absolute value at most six. Moving its
+lower boundary left by $1/200000$ therefore gives the respective bounds
+\[
+ O(Q^{-363/200+3/100000})\quad\text{and}\quad
+ O(Q^{-33/40+3/100000}).
+\]
+The first exponent is less than $-1$. The unramified product converges
+normally, while the ramified product has the same $O_\varepsilon((\NF
+u)^\varepsilon)$ bound. For $u=1$ its tail still tends to zero faster
+than $P_0^{-4/5}$. Enlarging the fixed excluded set therefore gives the
+same uniform nonvanishing of the principal product.
+
+The four errors for the principal selected factor have exponents
+$-\Ree s$, $-6\Ree z$, $4-5\Ree s-6\Ree z$, and
+$1-\Ree w-6\Ree z$. On the extended region they are all at most
+$-B$. The formula for $G_p$ has no division by $P_p$ or $H_p$, so the
+full finite selected-tuple correction remains holomorphic at their zeros.
+The bounds above and finite slot count give the all-height majorant used
+in the principal contour proof of \cite{OAI}.
+
+For small rows, $\beta_*>B$ implies
+$\beta_*+e+1/2>1+37/100$. The first Euler region of \cite{OAI}
+allows any positive $\epsilon_0$, so its unchanged local estimates apply
+to the line $(\beta_*+e,1/2,17/50)$. The central bin contours already
+lie in its region with $\epsilon_0=10e$. These are the only analytic
+domain uses of the original $7/8$ lower bound in the shared contour
+lemmas. Repeating their proofs with the extended region gives the same
+principal, bin, and outer-row contour estimates.
+\end{proof}
+
+\begin{lemma}\label{lem:high}
+If $B<\beta_*\le7/8$, then for some $\sigma>0$ independent of the
+target character,
+\[
+       |J_\eta(Z)-f_\eta(Z)|
+          \ll_\eta Z^{C(\beta_*)-\sigma},
+\]
+where $f_\eta$ is the principal Mellin signal from \cite{OAI} with
+\eqref{eq:signal}.
+\end{lemma}
+
+\begin{proof}
+The fourth-moment lemma of \cite{OAI} permits $\kappa=3/4$, because its
+zero-free input is $\beta_*\le(1+\kappa)/2=7/8$. Every detected bin has
+$\delta=2a-1\le2\beta_*-1\le3/4$. Its plain prime capacity is thus
+the baseline capacity in the proof of \cite[Part II, capacity
+comparison]{OAI}, with no positive $\Delta/4$ surcharge.
+The row exponent is bounded by $R_*(\delta,x)$ plus an arbitrarily small
+loss, with $0\le x\le1/2$ and $q=x\delta$. The same selected-prime
+argument applies since $\ell/h>8/39>7/37$ and
+$5\ell-h>1/48$. A fixed sufficiently fine even slot mesh meets all
+rounding conditions.
+
+At row length $d=h$, the general high exponent relative to $C(B)$ is
+\begin{equation}\label{eq:high-exponent}
+ E_B(h)=a-B+h\left(\frac{17}{50}-\frac16\right)
+       -a l_y-\frac\ell2+q\ell
+       +h\left(R+\frac\delta2-\frac{17}{50}\right).
+\end{equation}
+The endpoint certificate of \cite[Part II, compensated endpoint
+certificate]{OAI}, evaluated at
+its original geometry, bounds this expression with $B=7/8$ and $R=R_*$
+by $-49/440640$ for the larger range $\delta\le5/6$.
+Holding $a,\delta,q,R$ fixed while changing \eqref{eq:geometry} gives
+\begin{equation}\label{eq:perturbation}
+ E_B(h)-E_{7/8}(13/16)
+ =\frac1{200000}
+       +t\left(-\frac12+\delta+q+\frac{3R}{2}\right).
+\end{equation}
+The source bounds $R_*\le17/12$. Since $\delta\le3/4$ and
+$q\le\delta/2$, the right side of \eqref{eq:perturbation} is at most
+\[
+ \frac1{200000}+\frac{11t}{4}=\frac7{80000}.
+\]
+Thus the central endpoint retains the explicit margin
+\begin{equation}\label{eq:high-gap}
+ -E_B(h)\ge\frac{49}{440640}-\frac7{80000}>0.
+\end{equation}
+The frequency slope is positive, so this endpoint bounds all moderate
+rows with $d\le h$. Extending to $h+\zeta$ costs at most $2\zeta$, and
+$\zeta$ can be chosen below the margin in \eqref{eq:high-gap}.
+
+The floor and intermediate-row margins in \cite{OAI} are respectively
+$7/1200$ and $49/14400$ at the original geometry. Their changes are
+bounded by the same $7/80000$ and are therefore harmless. The small-row
+margin is $63/800$. Its change is at most $51t/100$, since
+$h(17/50-1/6)-l_y/2$ has derivative $51/100$ with respect to $t$.
+For large rows, the absolute contour can still be taken sufficiently far
+right after choosing $\zeta$. Lemma~\ref{lem:analytic} supplies the
+principal contour, whose margins $l_y/20$ and $h/600$ remain positive.
+Its local approximation supplies a positive power saving in each fixed
+slot. The prime normalizer costs only $Z^{o(1)}$.
+
+All detector, mesh, real-contour, and normalizer losses can be chosen
+below these fixed positive margins before the target character is fixed.
+The late height choice in \cite{OAI} then gives one $\sigma>0$ for every
+target, as claimed.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Suppose $\beta_*>B$. Lemma~\ref{lem:analytic} supplies a principal
+factor holomorphic and bounded away from zero on $\Ree s>B$.
+Lemma~\ref{lem:low} and \eqref{eq:low-gap} give the direct bound required
+by the continuation criterion of \cite[Section 2]{OAI}. Its parameter
+$\omega$ can be any sufficiently small positive number below
+$\beta_*-B$. Lemma~\ref{lem:high} gives the other required bound with a
+target-independent saving. The criterion contradicts $\beta_*>B$.
+Hence $\beta_*\le B$. The transfer in \cite{OAI} from primitive Hecke
+characters to imprimitive Hecke and Dirichlet characters proves the
+stated assertions.
+\end{proof}
+
+\section*{Verification scope}
+
+The rational inequalities in \eqref{eq:low-gap} and \eqref{eq:high-gap}
+can be checked independently by the accompanying \texttt{verify\_bounds.py}.
+Compiling this note checks the TeX, not the number-theoretic inputs.
+The underlying long estimates are cited from \cite{OAI}. The stronger
+boundary in Theorem~\ref{thm:main} is not part of its stated theorem or
+its existing formalization.
+
+\begin{thebibliography}{1}
+\bibitem{OAI}
+OpenAI, \emph{The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane
+$\Ree(s)>7/8$}, 30 September 2026. Source consulted 7 October 2026.
+\href{https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex}{Source TeX}.
+\end{thebibliography}
+
+\end{document}
