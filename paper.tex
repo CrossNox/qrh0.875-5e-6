@@ -272,10 +272,13 @@ stated assertions.
 
 The rational inequalities in \eqref{eq:low-gap} and \eqref{eq:high-gap}
 can be checked independently by the accompanying \texttt{verify\_bounds.py}.
-Compiling this note checks the TeX, not the number-theoretic inputs.
-The underlying long estimates are cited from \cite{OAI}. The stronger
-boundary in Theorem~\ref{thm:main} is not part of its stated theorem or
-its existing formalization.
+The file \texttt{Bounds.lean} checks their integer identities and two
+scaled linear bounds in Lean 4. It does not formalize the analytic
+lemmas, their extension to the new boundary, or the passage from real
+parameters to scaled integers. Compiling this note checks the TeX, not
+the number-theoretic inputs. The stronger boundary in
+Theorem~\ref{thm:main} is not part of \cite{OAI}'s stated theorem or its
+existing formalization.
 
 \begin{thebibliography}{1}
 \bibitem{OAI}
