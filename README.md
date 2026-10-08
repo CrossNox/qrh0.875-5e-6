@@ -7,6 +7,10 @@ L-functions, including the Riemann zeta function, with the principal pole
 allowed. It extends the analytic estimates in OpenAI's
 [seven-eighths manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex).
 
+This is a small numerical extension of that result. It uses the 7/8 proof
+throughout and is only as sound as that proof. The paper, the Lean proofs,
+and the scripts were entirely AI generated.
+
 [OAIHighUnconditional.lean](lean/OAIHighUnconditional.lean) proves the final
 statements without an assumed moment estimate or prior zero-free bound.
 It obtains the prior `beta ≤ 7/8`
@@ -70,6 +74,28 @@ are retained in `lean/.lake/build/lib/lean/` and reused when newer than their
 sources and direct imports. Audit modules always run again. `--only` checks
 one module using existing local proof objects. A separate low estimate audit
 is available through `uv run scripts/verify_oai.py OAILowAudit`.
+
+The final statements can also be checked with
+[Comparator](https://github.com/leanprover/comparator), the judge used for
+the upstream challenges:
+
+```sh
+uv run scripts/run_comparator.py
+```
+
+The challenge
+[`lean/comparator/PerturbedQuasiRiemann.lean`](lean/comparator/PerturbedQuasiRiemann.lean)
+is upstream's `ComparatorChallenges/HeckeSevenEighths.lean` with the bound
+changed to `174999/200000`. It adds the Mathlib statements for
+`riemannZeta` and `DirichletCharacter.LFunction`. The script exports
+upstream `lean/` at the pinned commit into `build/comparator/lean`, adds the
+local modules, the challenge, and
+[the solution](lean/comparator/PerturbedQuasiRiemannSolution.lean), and
+builds pinned `comparator`, `lean4export`, and `landrun` with Lean 4.34.1.
+Comparator then builds both modules in a Landlock sandbox, checks that the
+solution proves the challenge statements with only the three standard
+axioms, and replays the solution through the Lean kernel. The first run
+copies about 18 GB of upstream Lake directories, then reuses them.
 
 Run `uv run scripts/build_paper.py` from the root to compile the manuscript
 twice and update `paper.pdf`. TeX auxiliary files stay in the ignored

@@ -30,12 +30,12 @@ the source's reflected-exponent calculation to the new slot length and proves
 the extra positive-part loss. `EndpointCertificate.lean` proves the
 source endpoint polynomial identity, its lower bound, its equality with the
 high-bin exponent at the original geometry, and the perturbed high-endpoint
-margin `2611/110160000`. All three files compile without `sorry` or new
-axioms.
+margin `2611/110160000`.
 
-The local project now uses Lean 4.34.1 and the upstream Mathlib revision
-`d13f23b723b8a846827a245b89c10fc7d3f11612`. All three certificate
-files compile together with `lake build` from `lean/` on this toolchain.
+The local project uses Lean 4.34.1 and the upstream Mathlib revision
+`d13f23b723b8a846827a245b89c10fc7d3f11612`. `lake build` from `lean/`
+compiles these three files and `LowGramScale.lean` without `sorry` or new
+axioms.
 
 `LowGramScale.lean` proves the compensated Gram-factor inequality at the
 changed physical scales. It also proves that a fixed slot-product cap
@@ -43,7 +43,7 @@ changed physical scales. It also proves that a fixed slot-product cap
 `L ≤ Z^(2*xLength-yLength)`.
 
 The normalized compensated low estimate for the changed physical probe is
-now proved in Lean. `OAIHighEulerRegion.lean` proves the unramified local
+proved in Lean. `OAIHighEulerRegion.lean` proves the unramified local
 Euler defect bound at `Re(s) ≥ 174999/200000`, with decay
 `240 Q^(-363/200+3/100000)`. `OAIHighPrincipalProduct.lean` proves that,
 after excluding finitely many small primes, the actual principal Euler
@@ -110,8 +110,9 @@ includes the changed row threshold, physical scales, and slot length.
 `OAIHighCentralSlotExponent.lean` through `OAIHighCentralCollected.lean`
 carry this bound through the actual amplitude batches, source row count,
 finite central integral, normalizer, and dyadic collection. The resulting
-small-row bound assumes the stated `SourceMomentsAt` fourth-moment input
-at the changed slot lengths, zero moment excess, and detector heights.
+small-row bound takes the `SourceMomentsAt` fourth-moment input at the
+changed slot lengths, zero moment excess, and detector heights as a
+hypothesis. `OAIHighMomentTransport.lean` supplies it.
 `OAIHighSlotLengths.lean` constructs distinct positive slots with any
 positive total mass and the physical width bounds. `OAIHighCentralBudget.lean`
 chooses a small parameter below any positive zero gap and proves that the
@@ -145,8 +146,8 @@ the concrete detector data. `OAIHighSignalIdentity.lean` and
 `OAIHighCommonProbe.lean` prove the continuation contradiction at the new
 boundary. `OAIHighAssemblyFinal.lean` concludes `β* ≤ 174999/200000` and
 the Hecke, Dirichlet, and zeta nonvanishing claims from
-`ChosenPerturbedMomentInput` and `β* ≤ 7/8`. Its stronger raw-input
-versions remain available. `OAIHighData.lean` selects slots fine enough for
+`ChosenPerturbedMomentInput` and `β* ≤ 7/8`. It also states versions that
+take the raw moment input. `OAIHighData.lean` selects slots fine enough for
 any positive moment mesh, and `OAIHighAssemblyMomentInput.lean` derives the
 chosen input from a `FinePerturbedMomentInput`.
 `OAIHighMomentTransport.lean` proves that fine input from `β* ≤ 7/8`.
@@ -156,6 +157,10 @@ discharges both hypotheses of the perturbed assembly.
 Run `uv run scripts/verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
+`uv run scripts/run_comparator.py` checks the Hecke, Dirichlet, and zeta
+statements in `lean/comparator/PerturbedQuasiRiemann.lean` with Comparator.
+The Hecke definitions in that challenge are upstream's
+`ComparatorChallenges/HeckeSevenEighths.lean` verbatim.
 
 The perturbed moment input asserts fourth-moment estimates with zero moment
 excess, slot mass `1/6+3/100000`, and detector labels at most `7/8`.
@@ -182,7 +187,7 @@ ensures `ell j ≤ mesh/200`. Since `d ≥ 1/200`, every batch width
 `1/6+3/100000`. The original `RawMomentInput`, which applies under
 `β* > 7/8` with excess `β*-7/8`, is not used as the perturbed moment input.
 
-The upstream low-side declaration that was strengthened is
+The local low-side chain replaces the upstream declaration
 [`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).
 It assumes the total slot length is at most `1/6` and concludes with the
 fixed exponent `3/16`. The new probe has total length `1/6 + 3/100000`.

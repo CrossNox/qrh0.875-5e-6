@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.PerturbedQuasiRiemann",
+  "solution_module": "PerturbedQuasiRiemannSolution",
+  "theorem_names": [
+    "OAI.SevenEighths.HeckeFamily.LFunction_ne_zero_of_perturbed_boundary_lt_re",
+    "OAI.SevenEighths.PerturbedZeroFree.riemannZeta_ne_zero_of_perturbed_boundary_lt_re",
+    "OAI.SevenEighths.PerturbedZeroFree.dirichletLFunction_ne_zero_of_perturbed_boundary_lt_re"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

@@ -34,7 +34,9 @@ $\beta_*$ be the supremum of $1/2$ and the real parts of zeros of primitive
 finite-order Hecke $L$-functions over $F$ in the critical strip. We use the
 seven-eighths theorem of \cite{OAI}, so $\beta_*\le 7/8$. We also use the
 arithmetic identities, detector estimates, reflected-energy lemma, additive
-Gram bound, and continuation criterion proved there.
+Gram bound, and continuation criterion proved there. The result therefore
+depends on the correctness of \cite{OAI}. This note changes only the
+numerical geometry and the estimates that the change affects.
 Section~\ref{sec:low} checks the changed low comparison.
 Section~\ref{sec:moments} supplies the perturbed source moments with
 zero moment excess, and Section~\ref{sec:high} checks the high comparison
@@ -394,11 +396,18 @@ The final theorem's axiom audit permits only the standard Lean axioms
 It rejects any other transitive axiom dependency, including incomplete proofs.
 The verification script requires the pinned upstream commit and a clean
 upstream working tree.
+The Hecke, Dirichlet, and zeta statements are also accepted by
+Comparator, the judge used for the upstream challenges. The challenge
+uses upstream's Hecke definitions with the bound changed to $B$, and
+Comparator replays the solution through the Lean kernel.
 The proof uses Lean 4.34.1 and upstream revision
 \texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
 Compiling this note checks the TeX. The separate Lean build checks the proof.
 The stronger boundary in Theorem~\ref{thm:main} is an extension of
 \cite{OAI}'s stated theorem.
+
+This note, its Lean proofs, and the verification scripts were entirely
+AI generated.
 
 \begin{thebibliography}{1}
 \bibitem{OAI}
