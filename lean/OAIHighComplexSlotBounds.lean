@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighFiniteProductWZ
 import OAIHighFiniteProductBounds
 
@@ -15,9 +16,10 @@ local notation "Id" => Ideal ActualEisensteinCubic.O
 private theorem bound_marked_on_perturbed_boundary
     (Q : ℝ) (A η x w z : ℂ) (hQ : 4 ≤ Q)
     (hA : ‖A‖ ≤ 1) (hη : ‖η‖ ≤ 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖PrincipalSlotEstimate.regionMarked Q A η x w z‖ ≤ 16 := by
+  norm_num [AsymmetricGeometry.boundary] at hx
   have hQ0 : 0 < Q := by linarith
   have hQ1 : 1 ≤ Q := by linarith
   have hR : ‖coordR Q A x z‖ ≤ 1 / 2 :=
@@ -61,10 +63,12 @@ private theorem bound_marked_on_perturbed_boundary
 theorem bound_local_multiplier_with_complex_weight_on_perturbed_boundary
     (η : Character) (S : Finset Id) (hS : PerturbedCorrectionTail S)
     (P : PrimeIdeal) (hP : P.val ∉ S) (x w z : ℂ) (Bx Bz : ℝ)
-    (hx : x.re ∈ Icc (7 / 8 - 21 / 500000 : ℝ) Bx)
+    (hx : x.re ∈ Icc (AsymmetricGeometry.boundary : ℝ) Bx)
     (hw : (19 / 20 : ℝ) ≤ w.re)
     (hz : z.re ∈ Icc (33 / 200 : ℝ) Bz) :
     ‖localMultiplier η P x w z‖ ≤ localBound Bx Bz P := by
+  have hxLower := hx.1
+  norm_num [AsymmetricGeometry.boundary] at hxLower
   let Q : ℝ := Ideal.absNorm P.val
   have hQ : 4 ≤ Q := by
     dsimp [Q]
@@ -87,7 +91,7 @@ theorem bound_local_multiplier_with_complex_weight_on_perturbed_boundary
     simpa only [coordW, one_mul] using hq
   have hD : ‖coordD Q (idealCoeff η P.val) 1 x‖ ≤ 1 / 2 :=
     (coordD_norm_le Q hQ0 _ 1 x (idealCoeff_norm_le_one η _) (by simp)).trans
-      (rpow_le_half Q _ hQ (by linarith [hx.1]))
+      (rpow_le_half Q _ hQ (by linarith))
   have hm : ‖idealMarkedClosed η P x w z‖ ≤ 16 :=
     bound_marked_on_perturbed_boundary Q
       (actualAPhase η (primaryGenerator P.val)) (idealCoeff η P.val)
@@ -121,7 +125,7 @@ theorem bound_slot_multiplier_with_complex_weight_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal) (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (x w z : ℂ) (Bx Bz : ℝ)
-    (hx : x.re ∈ Icc (7 / 8 - 21 / 500000 : ℝ) Bx)
+    (hx : x.re ∈ Icc (AsymmetricGeometry.boundary : ℝ) Bx)
     (hw : (19 / 20 : ℝ) ≤ w.re)
     (hz : z.re ∈ Icc (33 / 200 : ℝ) Bz) :
     ‖slotMultiplier η J T b x w z‖ ≤ slotBound J T b Bx Bz := by
@@ -141,7 +145,7 @@ theorem bound_combined_slots_with_complex_weight_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal) (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (x w z : ℂ) (Bx Bz : ℝ)
-    (hx : x.re ∈ Icc (7 / 8 - 21 / 500000 : ℝ) Bx)
+    (hx : x.re ∈ Icc (AsymmetricGeometry.boundary : ℝ) Bx)
     (hw : (19 / 20 : ℝ) ≤ w.re)
     (hz : z.re ∈ Icc (33 / 200 : ℝ) Bz) :
     ‖globalClosedCorrection η S x w z * slotMultiplier η J T b x w z‖ ≤

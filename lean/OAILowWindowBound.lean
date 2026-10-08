@@ -9,6 +9,8 @@ open scoped Classical ContDiff
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve
 
 local notation "O" => ActualEisensteinCubic.O
@@ -41,9 +43,9 @@ theorem perturbed_original_ray_compensatedPhysicalProbe_low_loss
           (fun i => canonicalSlotSupport
             (ProbeRaySlots.pool R S a b (Z ^ (ell i))))
           W (fun i => Z ^ (ell i))
-          (Z ^ (17 / 48 - t / 2))
-          (Z ^ (23 / 48 - t / 2)) Z‖ ≤
-          C * Z ^ (3 / 16 - t / 4 + loss) := by
+          (Z ^ (xBase - t / 2))
+          (Z ^ (yBase - t / 2)) Z‖ ≤
+          C * Z ^ (lowBase - t / 4 + loss) := by
   let D := max 1 B
   have hD : 0 < D := lt_of_lt_of_le zero_lt_one (le_max_left _ _)
   have hDc : (D : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hD.ne'
@@ -86,15 +88,15 @@ theorem perturbed_original_ray_compensatedPhysicalProbe_low_loss
     (fun i => canonicalSlotSupport
       (ProbeRaySlots.pool R S a b (Z ^ (ell i))))
     Wn (fun i => Z ^ (ell i))
-    (Z ^ (17 / 48 - t / 2))
-    (Z ^ (23 / 48 - t / 2)) Z (D : ℂ)
+    (Z ^ (xBase - t / 2))
+    (Z ^ (yBase - t / 2)) Z (D : ℂ)
   rw [hscale] at heq
   rw [heq, norm_mul, norm_pow, Complex.norm_real,
     Real.norm_eq_abs, abs_of_pos hD]
   calc
-    _ ≤ D ^ K * (C * Z ^ (3 / 16 - t / 4 + 256 * ε)) :=
+    _ ≤ D ^ K * (C * Z ^ (lowBase - t / 4 + 256 * ε)) :=
       mul_le_mul_of_nonneg_left hb (by positivity)
-    _ ≤ D ^ K * (C * Z ^ (3 / 16 - t / 4 + loss)) := by
+    _ ≤ D ^ K * (C * Z ^ (lowBase - t / 4 + loss)) := by
       gcongr
     _ = _ := by ring
 

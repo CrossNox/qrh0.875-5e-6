@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighRamifiedBound
 import OAI.NumberTheory.DirichletL.Detector.HighRowsHolomorphic
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -8,9 +10,10 @@ namespace SevenEighths.ProbeEuler
 
 lemma perturbed_region_denominators (Q : ℝ) (A eta v x z : ℂ)
     (hQ : 4 ≤ Q) (hA : ‖A‖ ≤ 1) (heta : ‖eta‖ ≤ 1) (hv : ‖v‖ ≤ 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
+    (hx : (boundary : ℝ) ≤ x.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     1 - coordR Q A x z ≠ 0 ∧ 1 - coordV Q z ≠ 0 ∧
       1 - coordD Q eta v x ≠ 0 := by
+  norm_num [boundary] at hx
   have hQ0 : 0 < Q := by linarith
   have hR : ‖coordR Q A x z‖ ≤ 1 / 2 := by
     apply (coordR_norm_le Q hQ0 A x z hA).trans
@@ -33,7 +36,7 @@ theorem unramified_closed_analytic_x_on_perturbed_region
     (hQ : 4 ≤ Q) (hA : ‖A‖ ≤ 1) (heta : ‖eta‖ ≤ 1) (hv : ‖v‖ ≤ 1)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun x => unramifiedClosed Q A eta v x w z)
-      {x : ℂ | 7 / 8 - 21 / 500000 < x.re} := by
+      {x : ℂ | boundary < x.re} := by
   apply DifferentiableOn.analyticOnNhd _ (Complex.isOpen_re_gt _)
   intro x hx
   have hd := perturbed_region_denominators Q A eta v x z hQ hA heta hv hx.le hz
@@ -43,7 +46,7 @@ theorem unramified_closed_analytic_x_on_perturbed_region
 theorem unramified_closed_analytic_w_on_perturbed_region
     (Q : ℝ) (A eta v x z : ℂ)
     (hQ : 4 ≤ Q) (hA : ‖A‖ ≤ 1) (heta : ‖eta‖ ≤ 1) (hv : ‖v‖ ≤ 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
+    (hx : (boundary : ℝ) ≤ x.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun w => unramifiedClosed Q A eta v x w z)
       {w : ℂ | 9 / 10 < w.re} := by
   apply DifferentiableOn.analyticOnNhd _ (Complex.isOpen_re_gt _)
@@ -55,7 +58,7 @@ theorem unramified_closed_analytic_w_on_perturbed_region
 theorem unramified_closed_analytic_z_on_perturbed_region
     (Q : ℝ) (A eta v x w : ℂ)
     (hQ : 4 ≤ Q) (hA : ‖A‖ ≤ 1) (heta : ‖eta‖ ≤ 1) (hv : ‖v‖ ≤ 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) :
+    (hx : (boundary : ℝ) ≤ x.re) :
     AnalyticOnNhd ℂ (fun z => unramifiedClosed Q A eta v x w z)
       {z : ℂ | 4 / 25 < z.re} := by
   apply DifferentiableOn.analyticOnNhd _ (Complex.isOpen_re_gt _)
@@ -75,7 +78,7 @@ theorem ramified_closed_analytic_x_on_perturbed_region
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (ha : ‖a‖ ≤ 1) (hz : (4 / 25 : ℝ) ≤ z.re) (j : ℕ) :
     AnalyticOnNhd ℂ (fun x => ramifiedClosed p hp hg eta a rho x w z j)
-      {x : ℂ | 7 / 8 - 21 / 500000 < x.re} := by
+      {x : ℂ | boundary < x.re} := by
   apply DifferentiableOn.analyticOnNhd _ (Complex.isOpen_re_gt _)
   intro x hx
   have hd := perturbed_region_denominators _ (a ^ 2) 0 0 x z hQ
@@ -89,7 +92,7 @@ theorem ramified_closed_analytic_x_on_perturbed_region
 theorem ramified_closed_analytic_w_on_perturbed_region
     (eta a rho x z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
-    (ha : ‖a‖ ≤ 1) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (ha : ‖a‖ ≤ 1) (hx : (boundary : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) (j : ℕ) :
     Differentiable ℂ (fun w => ramifiedClosed p hp hg eta a rho x w z j) := by
   intro w
@@ -103,7 +106,7 @@ theorem ramified_closed_analytic_w_on_perturbed_region
 theorem ramified_closed_analytic_z_on_perturbed_region
     (eta a rho x w : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
-    (ha : ‖a‖ ≤ 1) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (j : ℕ) :
+    (ha : ‖a‖ ≤ 1) (hx : (boundary : ℝ) ≤ x.re) (j : ℕ) :
     AnalyticOnNhd ℂ (fun z => ramifiedClosed p hp hg eta a rho x w z j)
       {z : ℂ | 4 / 25 < z.re} := by
   apply DifferentiableOn.analyticOnNhd _ (Complex.isOpen_re_gt _)

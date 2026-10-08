@@ -1,0 +1,181 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,hyperref}
+\title{Research beyond the certified boundary}
+\author{}
+\date{8 October 2026}
+\begin{document}
+\maketitle
+
+The historical certified zero-free boundary at repository revision
+\texttt{c7d46a5} is $0.874958$. The main proof sources now use the rational
+boundary
+\[
+ B_{\mathrm{rat}}=\frac{4374785349}{5000000000}=0.8749570698.
+\]
+The asymmetric geometry has been transported through the analytic proof.
+The final Lean theorem, its axiom audit, and Comparator's kernel replay
+all pass at this boundary.
+This research pass determines an exact limit for the retained scalar
+estimates and proves several arithmetic reductions. Those reductions
+do not establish any further improvement to the zero-free boundary.
+The source is pinned at upstream revision
+\texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+
+\paragraph{Limit of the retained estimates.}
+With the existing balanced row count, moment parameter $\kappa=3/4$,
+and reflected scalar envelope, the maximum boundary reduction from
+$7/8$ is
+\[
+ \varepsilon_* = \frac{16\sqrt{921}-485}{13224},\qquad
+ B_* = \frac78-\varepsilon_* = 0.874957069799168740\ldots.
+\]
+The actual source bin
+$\delta_*=(49-\sqrt{921})/48$, $y=0$ has row count $2/3$.
+It supplies a geometry-independent obstruction within this family.
+An asymmetric geometry attains the closure point by an exact polynomial
+certificate. Smaller reductions give positive low and high gaps.
+Allowing independent slot length adds the reflected mass-excess cost
+and preserves the obstruction. The retained source conditions imply
+the nonnegative dual width needed for that scalar witness.
+
+The symmetric family alone has limiting boundary
+$0.874957200615373761\ldots$. The broader limit lies about
+$9.30\times10^{-7}$ below the historical certified boundary and about
+$8.31\times10^{-13}$ below $B_{\mathrm{rat}}$.
+It does not constrain improvements to the arithmetic estimates or
+the moment parameter. The rational interior geometry used in the main
+proof has positive low and high gaps. The exact irrational closure
+point is a scalar limit and does not itself supply those strict gaps.
+Lean proves the obstruction and the symmetric optimum.
+Exact symbolic arithmetic certifies asymmetric global attainment.
+See \texttt{method\_limit\_symmetric.tex},
+\texttt{method\_limit\_general.tex}, and
+\texttt{method\_limit\_free\_geometry.tex}.
+
+\paragraph{Joint inverse and plain moments.}
+For the actual common-shift product, sixth-equivalent pairs and the two
+diagonal strips each have energy $O(U^{1+\rho})$ under the stated
+source marginal bounds. Exact coefficient and kernel identities retain
+the M\"obius signs, fixed phases, and union zero masks.
+The remaining target is the signed doubly off-diagonal sum
+\[
+ |\mathcal E_{\mathrm{off,nonres}}|
+ \ll (1+H)^J U^{1+5(r+m-1)/6-\eta+\rho},\qquad \eta>0,
+\]
+uniformly across the active crossing region and for common derivative
+marks through order two. At the original critical crossing the exponent
+before the saving is about $1.10281809$.
+
+Termwise square-root cancellation would still leave an exponent gap
+of about $0.520564$. The tested Cauchy and additive-shift estimates also
+miss the target. These are limitations of particular upper-bound
+arguments. They are not lower bounds for the actual energy.
+Canonical finite-field checks include the quadratic collision cases
+that invalidate an indiscriminate four-shift square-root claim.
+No positive uniform $\eta$ has been proved.
+Grouping coefficients by their reduced sextic labels gives no power
+saving in their square norm. Separated prime products form singleton
+classes and retain square mass of order $DN/(\log D\log N)$ on
+positive source subwindows. This does not give a lower bound that
+contradicts the desired joint energy estimate.
+See \texttt{joint\_moments.tex} and \texttt{joint\_kernel.tex}.
+
+\paragraph{Exceptional Gram bulk and remainder.}
+The exact zero Poisson frequency of a block is
+\[
+ \operatorname{Bulk}_{C,d,k}
+ =\frac43\mu_{C,d,k}N^2\int_{\mathbb C^2}W.
+\]
+Lean proves this split, the annular nonzero-frequency estimate, and
+the supported-ideal summation. With the stated arithmetic block inputs,
+the remainder satisfies the paper-level bound
+\[
+ |E_{\rm exc}-E_{\rm bulk}|
+ \ll \operatorname{height}^{J}\frac Q{Y'}
+          P^{1/3}Y'^{-1/6}Z^\rho,\qquad P=Y'^2/Q.
+\]
+It is at most the diagonal scale up to $Z^\rho$ when $P^2\le Y'$.
+Replacing the coefficient by its complete mean inside the lattice sum
+would not give this exact remainder.
+
+The local arithmetic mean vanishes unless the combined valuations of
+$C(k)$ are divisible by six away from fixed support.
+The surviving common-part sum has a positive local Euler factor.
+There are explicit paper-level exceptional families with positive complete mean,
+including the actual calibration and fixed ray restrictions.
+Their calibration spectrum and CRT assembly are not yet formalized.
+Thus calibration does not annihilate every exceptional arithmetic block.
+For one specified sixth-power frequency family, the actual finite pools
+can be replaced by Euler products with a proved error. Its weighted
+bulk has leading order
+\[
+ c_{S,k_0}\frac QY P^{1/6}
+ |M_W(1/6+iv)|^2M_{F_U}(1/6),\qquad c_{S,k_0}>0.
+\]
+Here $U$ is the Gram energy test. For nonnegative nonzero $U$ and fixed
+$v$ with $M_W(1/6+iv)\ne0$, the coefficient is positive.
+The absolute error is
+\[
+ O\!\left(\frac QY\left[P^{1/12}+1+
+       \frac{P^{(1+\eta)/6}+1}{Y}\right]\right).
+\]
+This is a reviewed paper-level asymptotic for one family.
+It does not settle cancellation of the full weighted bulk.
+See \texttt{gram\_bulk.tex} and
+\texttt{gram\_remainder.tex} for the formal scope and assembly inputs.
+
+\paragraph{Direct mixed Gram estimates.}
+The actual calibrated complete mean is zero. The following block bounds
+are paper-level analytic deductions. Lean checks the local algebra and
+the nonzero Fourier tail used in their proofs.
+For squarefree source
+ideals, a dyadic mixed block with source norm $Y$, completed-column
+norm $C$, cubic-divisor norm $N$, and $CN^3\asymp T$ satisfies
+\[
+ |\mathcal M_{C,N,H\le H_0}|
+ \ll (1+|v|)^J T^\rho
+       \min\{\sqrt{CH_0},H_0/\sqrt Y\}.
+\]
+Here $H$ is the residual primitive conductor and the constants use the
+fixed smooth windows and $Y\ll T$.
+This proves a saving against $Q/\sqrt Y$ for $H_0=Q/P^\delta$.
+The full block, including nonsquarefree additive sources, satisfies
+\[
+ |\mathcal M_{C,N}|
+ \ll (1+|v|)^J T^\rho C\sqrt{YN}
+ = (1+|v|)^J T^\rho\frac{T\sqrt Y}{N^{5/2}}.
+\]
+It saves $P^{-\delta}$ against $Q/\sqrt Y$ when
+$N\gg(TYP^\delta/Q)^{2/5}$.
+At the original geometry and $\delta=0$, this threshold has exponent
+$13/40$ for $N$, or $23/120$ for $C$.
+The nonsquarefree reduction retains the exact prime-power Gauss support
+and sums a convergent squareful-ideal weight. The $\sqrt{CH_0}$ branch
+also extends to all additive sources. The stronger $H_0/\sqrt Y$ branch
+is currently proved only for squarefree sources.
+These absolute estimates are uniform in the real inverse height, which
+occurs only in a unit-modulus coefficient.
+The remaining squarefree-source range has large $H$ and small $N$.
+These are raw mixed-sum estimates. The final probe has an additional
+$Q^{-1/2}$ normalization and a Mellin integral.
+They do not imply a bound relative to the actual completed-row norm.
+See \texttt{gram\_mixed.tex} for the exact coefficients and the current
+scope of the nonsquarefree-source reduction.
+
+\paragraph{Verification and next theorem.}
+\texttt{lean/ResearchAudit.lean} checks all 92 research theorem dependencies
+against the permitted axioms \texttt{propext},
+\texttt{Classical.choice}, and \texttt{Quot.sound}.
+The analytic deductions identified as paper-level above are not covered
+by those formal statements. The finite arithmetic experiments use exact
+integer or symbolic arithmetic and do not prove the remaining incomplete
+sum bounds. Reproduce the formal audit and PDFs with
+\begin{verbatim}
+uv run scripts/verify_oai.py ResearchAudit --resume
+uv run research/build_notes.py
+\end{verbatim}
+The next substantial gain requires either the stated uniform joint
+moment saving, control of the remaining direct mixed sum, or cancellation
+of the assembled weighted exceptional Gram bulk. None is asserted here.
+\end{document}

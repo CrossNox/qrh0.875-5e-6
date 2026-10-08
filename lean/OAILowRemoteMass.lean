@@ -10,6 +10,8 @@ open scoped Classical
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve
 
 local notation "O" => ActualEisensteinCubic.O
@@ -60,9 +62,9 @@ lemma perturbed_compensation_scale_mass_bound
       (Finset.univ : Finset (∀ i, canonicalSlotSupport (T i)))
       (fun p => compensationSubsetWeight η W
         (fun i => Z ^ (ell i)) (fun i => (p i).val) J)
-      (fun p => Z ^ (17 / 48 - t / 2) /
+      (fun p => Z ^ (xBase - t / 2) /
         elementNorm (slotProduct (fun i => (p i).val) J))
-      (fun p => Z ^ (23 / 48 - t / 2) /
+      (fun p => Z ^ (yBase - t / 2) /
         elementNorm (slotProduct (fun i => (p i).val) J))
       (fun i : SelectedSlot J => W i.val)
       (fun p i => elementNorm (p i.val).val / Z ^ (ell i.val)) ≤
@@ -78,9 +80,9 @@ lemma perturbed_compensation_scale_mass_bound
           ‖W i.val (elementNorm (p i.val).val /
             Z ^ (ell i.val))‖) *
         lowPhysicalScale C
-          (Z ^ (17 / 48 - t / 2) /
+          (Z ^ (xBase - t / 2) /
             elementNorm (slotProduct (fun i => (p i).val) J))
-          (Z ^ (23 / 48 - t / 2) /
+          (Z ^ (yBase - t / 2) /
             elementNorm (slotProduct (fun i => (p i).val) J)) ≤
         elementNorm C.generator * Z ^ (5 / 6 - t) := by
     have hcoeff :

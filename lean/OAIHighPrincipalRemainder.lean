@@ -25,18 +25,18 @@ theorem source_remainders_power_bound_with_perturbed_lengths {ι : Type*}
     (∀j∈J,∀p∈T j,p.val∉S) → ∀Z : ℝ,0<Z→
     (∀j∈J,480≤c*Z^(ell j)) →
     (∀j∈J,(Ideal.absNorm η.modulus:ℝ)<c*Z^(ell j)) →
-    let K0 := fun s=>sourceMultiplier W0 W1 (Z^(17/48-lengthShift/2:ℝ))
-      (Z^(23/48-lengthShift/2:ℝ)) Z (η.excludePrimes S hS.prime) s
+    let K0 := fun s=>sourceMultiplier W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ))
+      (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z (η.excludePrimes S hS.prime) s
       (globalClosedCorrection η S s)
       (windowMultiplier η J T (fun j x=>(W j x:ℂ)) (fun j=>Z^(ell j)) s)
     let π := fixedSourcePrincipal S hS.prime
     (‖verticalIntegral a (fun s=>verticalIntegral (1/6+e) (fun z=>verticalIntegral (19/20)
       (fun w=>K0 s w z*LFunction π (6*z)*LFunction π w)))‖≤
-      C/e*Z^(a-11/16+(13/16)*e-23/960+
+      C/e*Z^(a+AsymmetricGeometry.signalOffset+AsymmetricGeometry.rowBase*e-AsymmetricGeometry.yBase/20+
         lengthShift*(1/40+3*e/2))) ∧
     (‖HeckeReciprocal.regularizedL π 1 * verticalIntegral a (fun s=>verticalIntegral (33/200)
       (fun z=>K0 s 1 z*LFunction π (6*z)))‖≤
-        C*Z^(a-11/16-13/9600-lengthShift/400)) := by
+        C*Z^(a+AsymmetricGeometry.signalOffset-AsymmetricGeometry.rowBase/600-lengthShift/400)) := by
   obtain ⟨C,hC,hbound⟩ := ordered_remainders_scale_bound η S hS J c d B hc hd hB
     W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1 a e ha hβ he hehi
   refine ⟨C,hC,?_⟩
@@ -44,7 +44,7 @@ theorem source_remainders_power_bound_with_perturbed_lengths {ι : Type*}
   dsimp only
   have hh := hbound W hW hsupp (fun j=>Z^(ell j))
     (fun _ _=>Real.rpow_pos_of_pos hZ _) hthreshold hmod T hT
-    (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z
+    (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z
     (Real.rpow_pos_of_pos hZ _) (Real.rpow_pos_of_pos hZ _) hZ
   dsimp only at hh
   rw [perturbed_source_w_scale_identity J ell lengthShift Z a e hell hZ,
@@ -52,13 +52,14 @@ theorem source_remainders_power_bound_with_perturbed_lengths {ι : Type*}
   exact hh
 
 lemma perturbed_source_fixed_contour_exponent (β e lengthShift : ℝ)
-    (hβlo : (7/8-21/500000 : ℝ) ≤ β)
+    (hβlo : (AsymmetricGeometry.boundary : ℝ) ≤ β)
     (he : e ≤ 1/1000)
     (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
-    ((7/8 : ℝ)+e)-11/16+(13/16)*e-23/960+
-        lengthShift*(1/40+3*e/2) ≤ β-11/16-1/4000 ∧
-    ((7/8 : ℝ)+e)-11/16-13/9600-lengthShift/400 ≤
-        β-11/16-1/4000 := by
+    ((7/8 : ℝ)+e)+AsymmetricGeometry.signalOffset+AsymmetricGeometry.rowBase*e-AsymmetricGeometry.yBase/20+
+        lengthShift*(1/40+3*e/2) ≤ β+AsymmetricGeometry.signalOffset-1/4000 ∧
+    ((7/8 : ℝ)+e)+AsymmetricGeometry.signalOffset-AsymmetricGeometry.rowBase/600-lengthShift/400 ≤
+        β+AsymmetricGeometry.signalOffset-1/4000 := by
+  dsimp [AsymmetricGeometry.boundary] at hβlo
   constructor
   · have h := perturbed_source_w_strict_exponent (7/8) e lengthShift he ht ht'
     linarith
@@ -71,7 +72,7 @@ theorem source_remainders_fixed_contour_saving {ι : Type*}
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1)
     (β e lengthShift : ℝ)
-    (hβlo : (7/8-21/500000 : ℝ) ≤ β) (hβhi : β ≤ 7/8)
+    (hβlo : (AsymmetricGeometry.boundary : ℝ) ≤ β) (hβhi : β ≤ 7/8)
     (hβeq : β = HeckeZeroSupremum.beta)
     (he : 0<e) (hehi : e≤1/1000)
     (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
@@ -82,17 +83,17 @@ theorem source_remainders_fixed_contour_saving {ι : Type*}
     (∀j∈J,∀p∈T j,p.val∉S) → ∀Z : ℝ,1≤Z→
     (∀j∈J,480≤c*Z^(ell j)) →
     (∀j∈J,(Ideal.absNorm η.modulus:ℝ)<c*Z^(ell j)) →
-    let K0 := fun s=>sourceMultiplier W0 W1 (Z^(17/48-lengthShift/2:ℝ))
-      (Z^(23/48-lengthShift/2:ℝ)) Z (η.excludePrimes S hS.prime) s
+    let K0 := fun s=>sourceMultiplier W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ))
+      (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z (η.excludePrimes S hS.prime) s
       (globalClosedCorrection η S s)
       (windowMultiplier η J T (fun j x=>(W j x:ℂ)) (fun j=>Z^(ell j)) s)
     let π := fixedSourcePrincipal S hS.prime
     (‖verticalIntegral (7/8+e) (fun s=>verticalIntegral (1/6+e)
       (fun z=>verticalIntegral (19/20) (fun w=>K0 s w z*LFunction π (6*z)*LFunction π w)))‖≤
-      C/e*Z^(β-11/16-1/4000)) ∧
+      C/e*Z^(β+AsymmetricGeometry.signalOffset-1/4000)) ∧
     (‖HeckeReciprocal.regularizedL π 1 * verticalIntegral (7/8+e)
       (fun s=>verticalIntegral (33/200) (fun z=>K0 s 1 z*LFunction π (6*z)))‖≤
-      C*Z^(β-11/16-1/4000)) := by
+      C*Z^(β+AsymmetricGeometry.signalOffset-1/4000)) := by
   obtain ⟨C,hC,hbound⟩ := source_remainders_power_bound_with_perturbed_lengths
     η S hS J c d B hc hd hB W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
     (7/8+e) e lengthShift ⟨by linarith,by linarith⟩ (by rw [← hβeq]; linarith)

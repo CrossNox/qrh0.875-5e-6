@@ -43,23 +43,24 @@ private theorem bound_gram_factor (q X Y L delta : ℝ)
 
 theorem verify_perturbed_gram_scale (q Z L delta : ℝ)
     (hq : 1 ≤ q) (hZ : 1 ≤ Z) (hL : 1 ≤ L)
-    (hqCap : q ≤ Z^(1 / 8 : ℝ))
+    (hqCap : q ≤ Z^ratioExponent)
     (hLCap : L ≤ Z^(2 * xLength - yLength))
     (hdelta : 0 ≤ delta) :
     compensatedGramFactor q (Z^xLength) (Z^yLength) L delta ≤
-      (3 * q / L) * Z^(3 / 8 - lengthChange / 2 + yLength * delta) := by
+      (3 * q / L) * Z^(2 * lowBase - lengthChange / 2 + yLength * delta) := by
   have hz : 0 < Z := lt_of_lt_of_le zero_lt_one hZ
   have hqpos : 0 < q := lt_of_lt_of_le zero_lt_one hq
   have hx : 0 < Z^xLength := Real.rpow_pos_of_pos hz _
   have hy : 0 < Z^yLength := Real.rpow_pos_of_pos hz _
   have hprime : q * Z^xLength ≤ Z^yLength := by
     calc
-      q * Z^xLength ≤ Z^(1 / 8 : ℝ) * Z^xLength :=
+      q * Z^xLength ≤ Z^ratioExponent * Z^xLength :=
         mul_le_mul_of_nonneg_right hqCap (by positivity)
       _ = Z^yLength := by
         rw [←Real.rpow_add hz]
         congr 1
-        norm_num [xLength, yLength, lengthChange]
+        dsimp only [xLength, yLength, ratioExponent]
+        ring
   have htail : L * Z^yLength ≤ q^2 * (Z^xLength)^2 := by
     calc
       L * Z^yLength ≤ Z^(2 * xLength - yLength) * Z^yLength :=
@@ -72,11 +73,12 @@ theorem verify_perturbed_gram_scale (q Z L delta : ℝ)
         le_mul_of_one_le_left (by positivity) (one_le_pow₀ hq)
   apply (bound_gram_factor q (Z^xLength) (Z^yLength) L delta
     hqpos hx hy hL hdelta hprime htail).trans
-  have hratio : Z^yLength / (q * Z^xLength) ≤ Z^(1 / 8 : ℝ) := by
-    have heq : Z^yLength / Z^xLength = Z^(1 / 8 : ℝ) := by
+  have hratio : Z^yLength / (q * Z^xLength) ≤ Z^ratioExponent := by
+    have heq : Z^yLength / Z^xLength = Z^ratioExponent := by
       rw [←Real.rpow_sub hz]
       congr 1
-      norm_num [xLength, yLength, lengthChange]
+      dsimp only [xLength, yLength, ratioExponent]
+      ring
     rw [←heq]
     exact div_le_div_of_nonneg_left (by positivity) (by positivity)
       (le_mul_of_one_le_left (by positivity) hq)
@@ -86,28 +88,29 @@ theorem verify_perturbed_gram_scale (q Z L delta : ℝ)
     3 * (q * Z^xLength / L) *
         (Z^yLength / (q * Z^xLength))^(1 / 6 : ℝ) *
         (Z^yLength)^delta ≤
-      3 * (q * Z^xLength / L) * (Z^(1 / 8 : ℝ))^(1 / 6 : ℝ) *
+      3 * (q * Z^xLength / L) * (Z^ratioExponent)^(1 / 6 : ℝ) *
         (Z^yLength)^delta := by gcongr
-    _ = (3 * q / L) * Z^(3 / 8 - lengthChange / 2 + yLength * delta) := by
-      have hexponent : xLength + 1 / 8 * (1 / 6 : ℝ) + yLength * delta =
-          3 / 8 - lengthChange / 2 + yLength * delta := by
-        norm_num [xLength, lengthChange]
+    _ = (3 * q / L) * Z^(2 * lowBase - lengthChange / 2 + yLength * delta) := by
+      have hexponent : xLength + ratioExponent * (1 / 6 : ℝ) + yLength * delta =
+          2 * lowBase - lengthChange / 2 + yLength * delta := by
+        dsimp only [xLength, ratioExponent, lowBase]
+        ring
       rw [←Real.rpow_mul hz.le, ←Real.rpow_mul hz.le, ←hexponent]
       rw [Real.rpow_add hz, Real.rpow_add hz]
       ring
 
 theorem verify_perturbed_gram_sqrt (q Z L delta : ℝ)
     (hq : 1 ≤ q) (hZ : 1 ≤ Z) (hL : 1 ≤ L)
-    (hqCap : q ≤ Z^(1 / 8 : ℝ))
+    (hqCap : q ≤ Z^ratioExponent)
     (hLCap : L ≤ Z^(2 * xLength - yLength))
     (hdelta : 0 ≤ delta) :
     Real.sqrt (compensatedGramFactor q (Z^xLength) (Z^yLength) L delta) ≤
       Real.sqrt (3 * q / L) *
-        Z^(3 / 16 - lengthChange / 4 + yLength * delta / 2) := by
+        Z^(lowBase - lengthChange / 4 + yLength * delta / 2) := by
   have hz : 0 < Z := lt_of_lt_of_le zero_lt_one hZ
   have hsqrtPower :
-      Real.sqrt (Z^(3 / 8 - lengthChange / 2 + yLength * delta)) =
-        Z^(3 / 16 - lengthChange / 4 + yLength * delta / 2) := by
+      Real.sqrt (Z^(2 * lowBase - lengthChange / 2 + yLength * delta)) =
+        Z^(lowBase - lengthChange / 4 + yLength * delta / 2) := by
     rw [Real.sqrt_eq_rpow, ←Real.rpow_mul hz.le]
     congr 1
     ring
@@ -119,7 +122,7 @@ theorem eventually_perturbed_gram_cap (B : ℝ) :
     ∀ᶠ Z : ℝ in Filter.atTop, 1 ≤ Z ∧
       ∀ L : ℝ, L ≤ B * Z^slotLength → L ≤ Z^(2 * xLength - yLength) := by
   have hgap : 0 < 2 * xLength - yLength - slotLength := by
-    norm_num [xLength, yLength, slotLength, lengthChange]
+    norm_num [xLength, yLength, slotLength, lengthChange, skew]
   have hB := (tendsto_rpow_atTop hgap).eventually
     (Filter.eventually_ge_atTop B)
   filter_upwards [Filter.eventually_ge_atTop (1 : ℝ), hB] with Z hZ hB

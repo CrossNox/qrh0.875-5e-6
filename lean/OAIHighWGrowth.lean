@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighSelectedLocal
 import OAI.NumberTheory.DirichletL.PrimeRows.WGrowth
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -13,11 +15,12 @@ theorem calibrated_physicalRow_w_growth_on_perturbed_boundary (eps : ℝ)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hfirst : FirstTail eps S)
     (hmax : ∀P∈S,P.IsMaximal) (T : Finset PrimeIdeal) (hT : ∀P∈T,P.val∉S)
     (η : Character) (u : FreeRow) (hu : u.val≠1) (x z : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re)
+    (hx : (boundary : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re)
     (hxw : 1+eps≤x.re+1/2) :
     ∃C : ℝ,0<C ∧ ∀w : ℂ,(1/2:ℝ)≤w.re →
       ‖star ((calibrationForSet S hmax).residueMonoid u.val)*
         physicalCompensatedRow S hS T hT η u x w z‖≤C*(3+|w.im|)^2 := by
+  norm_num [boundary] at hx
   obtain ⟨Cn,hCn,hn⟩ := calibrated_numerator_positive_growth (1/2) 1 (by norm_num) (by norm_num) S hS hmax
   obtain ⟨Ch,hCh,hh⟩ := unselectedCorrection_first_subpower 1 (by norm_num)
   let N : ℝ := ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)

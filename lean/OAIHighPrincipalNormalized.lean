@@ -40,10 +40,10 @@ theorem actual_ray_principal_comparison_on_perturbed_boundary {K : ℕ}
       normer≠0 ∧
       ‖(∑P:(∀j,T j),(∏j,(W j ((Ideal.absNorm (P j).val.val:ℝ)/Z^(ell j)):ℂ))*
         principalRowIntegral η S (fun j=>primaryGenerator (P j).val.val)
-          W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z)/normer-
-        HeckeSignal.signal (η.excludePrimes S hS.prime) (sourceCorrection η S) (-11/16) Z‖≤
-      C*(Z^(HeckeZeroSupremum.beta-11/16-1/3000+nu)+
-        Z^(HeckeZeroSupremum.beta-11/16+e-PrincipalSlotEstimate.perturbedBoundary*ellMin)) := by
+          W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z)/normer-
+        HeckeSignal.signal (η.excludePrimes S hS.prime) (sourceCorrection η S) AsymmetricGeometry.signalOffset Z‖≤
+      C*(Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000+nu)+
+        Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset+e-PrincipalSlotEstimate.perturbedBoundary*ellMin)) := by
   let : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   obtain ⟨C0,hC0,hrem⟩ := ProbePrincipalPhysical.physical_principal_residue_remainder_on_perturbed_boundary
     η S hS hTail c d B hc hd hB W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1 e lengthShift he hehi hβlo ht ht' (K:=K)
@@ -81,7 +81,7 @@ theorem actual_ray_principal_comparison_on_perturbed_boundary {K : ℕ}
   let normer := cs*(Probe.principalScalar Finset.univ Z (1/6+lengthShift)
     (slotMass T (residueWeights W (fun j=>Z^(ell j)))) : ℂ)
   have hr := hres W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1 hr0 hr1 hp0 hp1 hn0 hn1
-    T W (fun j=>Z^(ell j)) (c*Z^ellMin) (Z^(23/48-lengthShift/2:ℝ)) Z h480 hsmallB
+    T W (fun j=>Z^(ell j)) (c*Z^ellMin) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z h480 hsmallB
     (fun j _ p _=>(hWbounds j _).1) (fun j _ p hp=>(hpool j p hp).1)
     (fun j _ p hp=>(hpool j p hp).2.1) (fun j _=>hmass.1 j) hZ
   dsimp only at hr ⊢
@@ -96,15 +96,20 @@ theorem actual_ray_principal_comparison_on_perturbed_boundary {K : ℕ}
   have hpw : (c*Z^ellMin)^(-PrincipalSlotEstimate.perturbedBoundary)=c^(-PrincipalSlotEstimate.perturbedBoundary)*Z^(-PrincipalSlotEstimate.perturbedBoundary*ellMin) := by
     rw [Real.mul_rpow hc.le (Real.rpow_nonneg hZ0.le _),←Real.rpow_mul hZ0.le]
     congr 2;ring
-  have heq1 : (C0/e*Z^(HeckeZeroSupremum.beta-11/16-1/3000))*(‖cs⁻¹‖*Z^nu)=
-      (C0/e*‖cs⁻¹‖)*Z^(HeckeZeroSupremum.beta-11/16-1/3000+nu) := by
+  have heq1 : (C0/e*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000))*(‖cs⁻¹‖*Z^nu)=
+      (C0/e*‖cs⁻¹‖)*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000+nu) := by
     rw [Real.rpow_add hZ0];ring
-  have heq2 : D*Z^(HeckeZeroSupremum.beta+e-11/16)*(c*Z^ellMin)^(-PrincipalSlotEstimate.perturbedBoundary)=
-      (D*c^(-PrincipalSlotEstimate.perturbedBoundary))*Z^(HeckeZeroSupremum.beta-11/16+e-PrincipalSlotEstimate.perturbedBoundary*ellMin) := by
+  have heq2 : D*Z^(HeckeZeroSupremum.beta+e+AsymmetricGeometry.signalOffset)*(c*Z^ellMin)^(-PrincipalSlotEstimate.perturbedBoundary)=
+      (D*c^(-PrincipalSlotEstimate.perturbedBoundary))*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset+e-PrincipalSlotEstimate.perturbedBoundary*ellMin) := by
     rw [hpw]
-    rw [show HeckeZeroSupremum.beta-11/16+e-PrincipalSlotEstimate.perturbedBoundary*ellMin=
-      (HeckeZeroSupremum.beta+e-11/16)+(-PrincipalSlotEstimate.perturbedBoundary*ellMin) by ring,Real.rpow_add hZ0]
-    ring
+    calc
+      _ = (D*c^(-PrincipalSlotEstimate.perturbedBoundary))*
+          (Z^(HeckeZeroSupremum.beta+e+AsymmetricGeometry.signalOffset)*
+            Z^(-PrincipalSlotEstimate.perturbedBoundary*ellMin)) := by ring
+      _ = _ := by
+        rw [←Real.rpow_add hZ0]
+        congr 2
+        ring
   apply hh.trans
   rw [heq1,heq2]
   have h1 : C0/e*‖cs⁻¹‖≤C := by
@@ -116,8 +121,8 @@ theorem actual_ray_principal_comparison_on_perturbed_boundary {K : ℕ}
     have : 0≤C0/e*‖cs⁻¹‖ := by positivity
     linarith
   calc
-    _ ≤ C*Z^(HeckeZeroSupremum.beta-11/16-1/3000+nu)+
-        C*Z^(HeckeZeroSupremum.beta-11/16+e-PrincipalSlotEstimate.perturbedBoundary*ellMin) := by gcongr
+    _ ≤ C*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000+nu)+
+        C*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset+e-PrincipalSlotEstimate.perturbedBoundary*ellMin) := by gcongr
     _ = _ := by ring
 
 end SevenEighths.ProbePrincipalNormalized

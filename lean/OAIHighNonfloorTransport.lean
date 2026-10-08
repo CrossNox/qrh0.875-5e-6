@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighNormalizedTransportSaving
 import OAIHighFloorCollected
 import OAI.NumberTheory.DirichletL.PrimeRows.CentralSupportedSplit
@@ -25,7 +26,7 @@ private theorem perturbedNonfloorTransportPoolOutside
 theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a b B ζ lengthShift saving τ ellMin nu : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2) (hζ : 0<ζ) (hζ' : ζ≤1/48) (hτ : 0<τ)
     (ha : 0<a) (hab : a≤b) (hB : 0≤B) (hmin : 0<ellMin) (hnu : 0<nu)
-    (hβ : (7/8-21 / 500000:ℝ)<HeckeZeroSupremum.beta)
+    (hβ : (AsymmetricGeometry.boundary:ℝ)<HeckeZeroSupremum.beta)
     (ht : 0≤lengthShift) (ht' : lengthShift≤1 / 1000)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hTail : PerturbedCorrectionTail S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (4*e) S)
@@ -37,17 +38,17 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     (hr0 : ∀y,(W0 y).im=0) (hr1 : ∀y,(W1 y).im=0)
     (hp0 : ∀y,0≤(W0 y).re) (hp1 : ∀y,0≤(W1 y).re) (hn0 : W0≠0) (hn1 : W1≠0)
     (sigma : ℝ) (hsigma : 0<sigma)
-    (hgeometric : sigma+8*e+nu≤63/800-51*lengthShift/100) (hprincipal : sigma+nu≤1/3000)
-    (hwindow : sigma+e≤PrincipalSlotEstimate.perturbedBoundary*ellMin) (hlarge : sigma+nu+21 / 500000≤saving+3/16)
+    (hgeometric : sigma+8*e+nu≤63/800-(51*lengthShift/100+49*AsymmetricGeometry.skew/150)) (hprincipal : sigma+nu≤1/3000)
+    (hwindow : sigma+e≤PrincipalSlotEstimate.perturbedBoundary*ellMin) (hlarge : sigma+nu+AsymmetricGeometry.boundaryReduction≤saving+AsymmetricGeometry.lowBase)
     (eps R dmin dmax rmin ε κ cost mesh margin loss : ℝ)
     (heps : 0<eps) (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax)
     (hrmin : 0<rmin) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh) (hmargin : 0<margin)
     (hphasebudget : 8*e*R+κ≤ε) (hphasegap : ε<rmin*mesh)
     (hheight : 2*τ<dmin*cost) (hloss : τ*(2+4*eps)<loss)
-    (hcap : 13/16+3*lengthShift/2+ζ≤dmax-margin)
+    (hcap : AsymmetricGeometry.rowBase+3*lengthShift/2+ζ≤dmax-margin)
     (helllo : ∀j,dmax*rmin≤ell j) (hellhi : ∀j,ell j≤dmin*R)
     (hfloorbudget : 2*ζ+26*e+(K+8)*eps+loss+mesh/6+nu+
-      lengthShift*(121/40+3*e+mesh)+(sigma+21 / 500000)≤7/1200) :
+      lengthShift*(121/40+3*e+mesh)+AsymmetricGeometry.skew*(67/100+6*e)+(sigma+AsymmetricGeometry.boundaryReduction)≤7/1200) :
     let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃n : ℕ,0<n ∧ ∀η : Character,∃C : ℝ,0<C ∧ ∀ᶠ Z : ℝ in atTop,
       let Yp := fun j=>Z^(ell j)
@@ -67,7 +68,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
         (51/100<a → ∃j s,LFunction (sourceDetectorFamily S hS.prime η u (rayCubeFamily M H hH u) j) s=0 ∧
           ¬((sourceDetectorFamily S hS.prime η u (rayCubeFamily M H hH u) j).residue=1 ∧ s=1) ∧
           a≤s.re ∧ s.re<a+e ∧ |s.im|≤3*idx u*Z^τ)) ∧
-      (∀u∈rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*lengthShift/2+ζ)),
+      (∀u∈rowBand (Z^(1/100:ℝ)) (Z^((AsymmetricGeometry.rowBase:ℝ)+3*lengthShift/2+ζ)),
         (calibrationForSet S hmax).residueMonoid u.val≠0 →
         (∀θ,(rayCubeFamily M H hH u θ).residue≠1) ∧
         (∀θ,(rayCubeFamily M H hH u θ).modulus.absNorm≤
@@ -78,12 +79,12 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
       let alpha : FreeRow→ℝ := fun u=>51/100+e*grid u
       let height : FreeRow→ℝ := fun u=>(3*idx u+1:ℕ)*Z^τ
       ‖compensatedPhysicalProbe η (calibrationForSet S hmax) W0 W1
-          (fun j=>canonicalSlotSupport (T j)) WC Yp (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z/normer-
-        HeckeSignal.signal (η.excludePrimes S hS.prime) (sourceCorrection η S) (-11/16) Z-
+          (fun j=>canonicalSlotSupport (T j)) WC Yp (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z/normer-
+        HeckeSignal.signal (η.excludePrimes S hS.prime) (sourceCorrection η S) (AsymmetricGeometry.signalOffset) Z-
         finiteCentralCubeRows S hS hmax η
-          (supportedNonfloorRows S hmax (rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*lengthShift/2+ζ))) grid) T hT WC Yp
-          W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e alpha height/normer‖≤
-        C*Z^(HeckeZeroSupremum.beta-11/16-sigma) := by
+          (supportedNonfloorRows S hmax (rowBand (Z^(1/100:ℝ)) (Z^((AsymmetricGeometry.rowBase:ℝ)+3*lengthShift/2+ζ))) grid) T hT WC Yp
+          W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z e alpha height/normer‖≤
+        C*Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) := by
   let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   obtain ⟨n,hn,htransport⟩ := actual_normalized_probe_transport_saving_on_perturbed_boundary M H hH K e δ a b B ζ lengthShift saving τ ellMin nu
     he he' hδ hδ' hζ hζ' hτ ha hab hB hmin hnu hβ ht ht' S hS hTail hmax hfirst ell hell hellinj hellsum
@@ -93,8 +94,8 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     (1/100) margin loss lengthShift ht he he' heps ha hab hB hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh
     (by norm_num) hphasebudget hphasegap hmargin hheight hloss S hS hfirst hmax ell hellinj helllo hellhi
     W hsupp hW hWB hcompact hne hellsum W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1 hr0 hr1 hp0 hp1 hn0 hn1
-    nu hnu ζ (sigma+21 / 500000) hζ.le (by linarith)
-    (by linarith) hfloorbudget
+    nu hnu ζ sigma hζ.le (by linarith)
+    (by linarith) (by linarith only [hfloorbudget])
   refine ⟨n,hn,?_⟩
   intro η
   obtain ⟨Ct,hCt,htransport⟩ := htransport η
@@ -110,7 +111,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     fun j=>pool (RayQuotient.identityClass M H) S a b (Yp j)
   let hT := perturbedNonfloorTransportPoolOutside M H S K a b Yp
   let WC : Fin K→ℝ→ℂ := fun j y=>(W j y:ℂ)
-  let rows := rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*lengthShift/2+ζ))
+  let rows := rowBand (Z^(1/100:ℝ)) (Z^((AsymmetricGeometry.rowBase:ℝ)+3*lengthShift/2+ζ))
   let floors := supportedFloorRows S hmax rows grid
   have hrows : ∀u∈floors,u.val≠1 ∧ Z^(1/100:ℝ)≤rowNorm u ∧
       (calibrationForSet S hmax).residueMonoid u.val≠0 ∧ rowNorm u≤Z^(dmax-margin) := by
@@ -118,7 +119,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     rcases (mem_supportedFloorRows S hmax rows grid u).mp hu with ⟨hur,hcal,hg⟩
     have hm := mem_rowBand.mp hur
     exact ⟨hm.1,hm.2.1,hcal,hm.2.2.le.trans (Real.rpow_le_rpow_of_exponent_le hZ hcap)⟩
-  have hnorms : ∀u∈floors,rowNorm u≤Z^((13/16:ℝ)+3*lengthShift/2+ζ) := by
+  have hnorms : ∀u∈floors,rowNorm u≤Z^((AsymmetricGeometry.rowBase:ℝ)+3*lengthShift/2+ζ) := by
     intro u hu
     exact (mem_rowBand.mp ((mem_supportedFloorRows S hmax rows grid u).mp hu).1).2.2.le
   have hfloorbin : ∀u∈floors,detectorMaximum (sourceDetectorFamily S hS.prime η u (rayCubeFamily M H hH u))
@@ -127,20 +128,23 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     have hg := ((mem_supportedFloorRows S hmax rows grid u).mp hu).2.2
     have hh := (hbins u).2.2.2.2.1
     simpa only [hg,Nat.cast_zero,mul_zero,add_zero] using hh
-  have hb := (hf dmax hdRange le_rfl (13/16+3*lengthShift/2+ζ) (by linarith) le_rfl floors hrows hnorms idx
+  have hb := (hf dmax hdRange le_rfl (AsymmetricGeometry.rowBase+3*lengthShift/2+ζ) (by linarith) le_rfl floors hrows hnorms idx
     (fun u hu=>(hlabels u).2.1) hfloorbin).2
   have hsplit := finiteCentralCubeRows_supported_split S hS hmax η rows T hT WC Yp W0 W1
-    (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e grid (fun u=>(3*idx u+1:ℕ)*Z^τ)
-  change _≤Ct*Z^(HeckeZeroSupremum.beta-11/16-sigma) at herror
+    (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z e grid (fun u=>(3*idx u+1:ℕ)*Z^τ)
+  change _≤Ct*Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) at herror
   rw [hsplit] at herror
   have hh := normalized_nonfloor_error _ _ _ _ _ _ _ herror hb
   apply hh.trans
-  have hp : Z^(3/16-(sigma+21 / 500000))≤
-      Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
-    Real.rpow_le_rpow_of_exponent_le hZ (by linarith [hβ])
+  have hp : Z^(AsymmetricGeometry.lowBase-AsymmetricGeometry.boundaryReduction-sigma)≤
+      Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) :=
+    Real.rpow_le_rpow_of_exponent_le hZ (by
+      dsimp [AsymmetricGeometry.lowBase, AsymmetricGeometry.signalOffset,
+        AsymmetricGeometry.boundary, AsymmetricGeometry.boundaryReduction] at hβ ⊢
+      linarith)
   calc
-    _ ≤ Ct*Z^(HeckeZeroSupremum.beta-11/16-sigma)+
-      (Cf*(η.modulus.absNorm:ℝ)^(2*eps))*Z^(HeckeZeroSupremum.beta-11/16-sigma) := by gcongr
+    _ ≤ Ct*Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma)+
+      (Cf*(η.modulus.absNorm:ℝ)^(2*eps))*Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) := by gcongr
     _ = _ := by dsimp [C];ring
 
 end SevenEighths.ProbeHighRowFamily

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighEulerRegion
 import OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedTerms
 
@@ -14,10 +15,11 @@ variable (p : O) (hp : Prime p) [(Ideal.span {p}:Ideal O).IsMaximal]
 include hc in
 theorem sourceRowTerm_selected_base_on_perturbed_boundary (eta a rho x w z : ℂ)
     (heta : ‖eta‖≤1) (ha : ‖a‖≤1) (hρ : rho^6=1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (_hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (_hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re)
     (j e l k m : ℕ) (hj : j<6) (hk : k≤1)
     (hf : (e=0 ∧ l=2) ∨ (e=1 ∧ l=0) ∨ (e=0 ∧ l=1) ∨ (e=1 ∧ l=1)) :
     ‖sourceRowTerm p hp hg eta a rho x w z j e l k m‖≤2*(Ideal.absNorm (Ideal.span {p}):ℝ)^(-x.re+max (1-w.re) 0) := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   let Q : ℝ := Ideal.absNorm (Ideal.span {p})
   have hQ : 0<Q := by
     dsimp only [Q]

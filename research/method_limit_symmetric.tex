@@ -1,0 +1,138 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=1in]{geometry}
+\title{Exact limit of the symmetric probe inequalities}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+This calculation optimizes only the following arithmetic scheme.
+Let $\epsilon=7/8-B\geq0$ and let $t\geq0$ change the lengths by
+\[
+ \ell=\frac16+t,\qquad
+ \ell_x=\frac{17}{48}-\frac t2,\qquad
+ \ell_y=\frac{23}{48}-\frac t2,\qquad
+ h=\frac{13}{16}+\frac{3t}{2}.
+\]
+For $0\leq\delta\leq3/4$ and $0\leq y\leq1/2$, put
+\[
+ P=\frac{7+18y+8y^2}{9},\quad
+ J=\left(\frac56-\delta\right)\frac{37+34y}{18}+\delta P,
+ \quad L=\left(\frac56-\delta\right)\delta P,
+\]
+\[
+ R=1-\delta+\frac{L}{2J},\quad
+ A=\frac{1+(3+8y)\delta}{48}-\frac{13L}{32J},\quad
+ S=-\frac12+\delta+\delta\left(\frac12-y\right)+\frac{3R}{2}.
+\]
+The constraints are
+\[
+ \epsilon<\frac t4,
+ \qquad -A+\epsilon+tS<0\quad\hbox{throughout the rectangle}.
+\]
+They use the comparison exponent at $B$. Additional analytic constraints
+and a comparison exponent depending on an individual zero are not free
+parameters in this optimization.
+
+Since $J>0$, $1-\delta\leq R\leq17/12$. Hence
+$5/8\leq S\leq11/4$. Taking $t$ down to $4\epsilon$ reduces the
+supremum problem to the minimum of $A/(1+4S)$.
+
+Define $q(e)=49-1144080e-18604800e^2$. Its unique positive root is
+\[
+ e_* = \frac{98}{1144080+
+   \sqrt{1144080^2+3646540800}}.
+\]
+The root is positive and is less than $1/20000$.
+
+Here is a global certificate. Write
+\[
+ 5184J\bigl(A-e(1+4S)\bigr)=a_e(y)\delta^2+b_e(y)\delta+c_e(y),
+\]
+where
+\begin{align*}
+ a_e(y)&=1224+12096e+(3144+4608e)y\\
+ &\quad +(2256+16128e)y^2+(768+18432e)y^3,\\
+ b_e(y)&=-948+23040e+(-1508+6720e)y+(-104-1920e)y^2,\\
+ c_e(y)&=185-44400e+(170-40800e)y.
+\end{align*}
+Direct polynomial expansion gives
+\begin{align*}
+ 4a_ec_e-b_e^2
+ &=144q(e)\\
+ &\quad +(299712-664266240e-3102105600e^2)y\\
+ &\quad +(1336112-877278720e-3573043200e^2)y^2\\
+ &\quad +(1788736-484362240e-5879808000e^2)y^3\\
+ &\quad +(511424-113203200e-3011788800e^2)y^4.
+\end{align*}
+For $0\leq e\leq1/20000$, the last four coefficients have the
+respective positive lower bounds
+\[
+ \frac{4163920824}{15625},\quad
+ \frac{20191236428}{15625},\quad
+ \frac{5514072464}{3125},\quad
+ \frac{7902442352}{15625}.
+\]
+At $e=e_*$ the constant coefficient vanishes and all other coefficients
+are positive. Since $a_e(y)>0$ for $e,y\geq0$, the identity
+\[
+ 4a_e\bigl(a_e\delta^2+b_e\delta+c_e\bigr)
+ =(2a_e\delta+b_e)^2+(4a_ec_e-b_e^2)
+\]
+proves $A\geq e_*(1+4S)$ on the whole rectangle. Equality holds only at
+\[
+ y=0,\qquad
+ \delta=\delta_*:=\frac{948-23040e_*}{2448+24192e_*}.
+\]
+This point belongs to the prescribed rectangle.
+
+For $0\leq e<e_*$, choose $t=4e+(e_*-e)/4$. The low inequality is
+strict. The high margin satisfies
+\begin{align*}
+ A-e-tS
+ &\geq (e_*-e)\left(1+\frac{15S}{4}\right)>0.
+\end{align*}
+For $e\geq e_*$, the strict low inequality forces $t>4e$. Evaluating
+at $(\delta_*,0)$ gives
+\[
+ -A+e+tS=(e-e_*)(1+4S)+(t-4e)S>0.
+\]
+Thus the strict arithmetic scheme is feasible exactly when $e<e_*$.
+The root is its supremum and is not itself feasible.
+
+The reproducible calculation is
+\texttt{uv run research/method\_limit\_symmetric.py}.
+Its exact rational checkpoint is
+\[
+ \frac{21399692313119}{500000000000000000}
+ <e_*<
+ \frac{42799384626239}{1000000000000000000}.
+\]
+The endpoint polynomial has the exact signs
+\[
+ q\left(\frac{21399692313119}{500000000000000000}\right)
+ =\frac{35831290538249775973}{39062500000000000000000000000000}>0,
+\]
+\[
+ q\left(\frac{42799384626239}{1000000000000000000}\right)
+ =-\frac{35686173469217846747}{156250000000000000000000000000000}<0.
+\]
+Numerically,
+\[
+ e_* =0.0000427993846262388006485268367\ldots,
+ \qquad \delta_* =0.3866885309739388256550471335\ldots,
+\]
+\[
+ B_* =\frac78-e_*=0.8749572006153737611993514732\ldots.
+\]
+
+This is a limit of the stated inequalities, not of every probe method.
+Although the strict margins vanish at the limit, a proved family of
+analytic bounds for all $e<e_*$ could exclude every zero with real part
+greater than $B_*$. That closure argument is separate from this
+arithmetic certificate. Changing the comparison exponent to depend on
+the zero, or adding another independent geometric parameter, requires
+stating and optimizing those altered inequalities.
+
+\end{document}

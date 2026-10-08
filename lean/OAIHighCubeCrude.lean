@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighCentralCrude
 import OAI.NumberTheory.DirichletL.PrimeRows.CubeErrorSaving
 
@@ -21,14 +22,14 @@ theorem original_row_cube_arbitrary_saving_with_perturbed_lengths (K : ℕ) (τ 
     ∃C : ℝ,0≤C ∧ ∀(η : Character) (u : FreeRow),u.val≠1 →
       ∀(P : Fin K→PrimeIdeal),Function.Injective P → ∀hPS : ∀j,(P j).val∉S,
       ∀ψ : ι→Character,∀Z : ℝ,1≤Z →
-      ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤Z^((13/16:ℝ)+3*t/2+ζ) →
+      ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤Z^((AsymmetricGeometry.rowBase:ℝ)+3*t/2+ζ) →
       ∀length : Fin K→ℝ,(∑j,length j)=(1/6:ℝ)+t →
       (∀j,((P j).val.absNorm:ℝ)≤b*Z^(length j)) →
       ∀a B H : ℝ,∀i : ℕ,(51/100:ℝ)≤a → a≤1 → 2<B → Z^τ≤H → H≤(3*i+2:ℕ)*B →
       detectorMaximum (sourceDetectorFamily S hS.prime η u ψ) (3*(i+1:ℕ)*B)<a+2*e →
       ‖rowIntegral η S (calibrationForSet S hmax) (fun j=>CompletedGauss.primaryGenerator (P j).val)
-          W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z u-
-        centralCubeIntegral S hS hmax P hPS η u W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z a e H‖≤
+          W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z u-
+        centralCubeIntegral S hS hmax P hPS η u W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z a e H‖≤
         C*(η.modulus.absNorm:ℝ)^2*Z^(-saving) := by
   obtain ⟨N,hN⟩ := exists_nat_gt (((9:ℝ)+saving)/τ)
   have hN' : (9:ℝ)+saving<τ*N := by exact (div_lt_iff₀ hτ).mp hN |>.trans_eq (mul_comm _ _)
@@ -38,7 +39,7 @@ theorem original_row_cube_arbitrary_saving_with_perturbed_lengths (K : ℕ) (τ 
   intro η u hu P hP hPS ψ Z hZ huZ length hl hp a B H i ha haTop hB hHlo hH hbin
   have hZ0 : 0<Z := lt_of_lt_of_le zero_lt_one hZ
   have hH0 : 0≤H := (Real.rpow_nonneg hZ0.le τ).trans hHlo
-  have hmain := hbound η u hu P hP hPS ψ (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z
+  have hmain := hbound η u hu P hP hPS ψ (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z
     (Real.rpow_pos_of_pos hZ0 _) (Real.rpow_pos_of_pos hZ0 _) hZ a B H i ha haTop hB hH0 hH hbin
   have hcost := central_arithmetic_cost_bound_with_perturbed_lengths η u P Z b ζ t hZ hb.le hζ ht' huZ length hl hp
   have hscale := central_source_crude_scale_with_perturbed_lengths hZ (by linarith : 0≤a) he.le ht ht'

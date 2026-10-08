@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSelectedBound
 import OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedRamified
 
@@ -14,8 +15,9 @@ include hc in
 theorem ramifiedSelected_bound_on_perturbed_boundary (eta a rho x w z : ℂ)
     (hQ : (4:ℝ)≤Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖≤1) (ha : ‖a‖≤1) (hρ : rho^6=1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) (j : ℕ) (hj : j<6) :
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) (j : ℕ) (hj : j<6) :
     ‖ramifiedSelected p hp hg eta a rho x w z j‖≤385*(Ideal.absNorm (Ideal.span {p}):ℝ)^(max (1-w.re) 0) := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   let Q : ℝ := Ideal.absNorm (Ideal.span {p})
   let B : ℝ := max (1-w.re) 0
   have hQ0 : 0<Q := by dsimp [Q];linarith
@@ -50,7 +52,7 @@ include hc in
 theorem ramifiedSelected_small_bound_on_perturbed_boundary (eta a rho x z : ℂ)
     (hQ : (4:ℝ)≤Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖≤1) (ha : ‖a‖≤1) (hρ : rho^6=1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re) (t : ℝ) (j : ℕ) (hj : j<6) :
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re) (t : ℝ) (j : ℕ) (hj : j<6) :
     ‖ramifiedSelected p hp hg eta a rho x ((1/2:ℂ)+t*Complex.I) z j‖≤
       385*(Ideal.absNorm (Ideal.span {p}):ℝ)^(1/2:ℝ) := by
   have hh := ramifiedSelected_bound_on_perturbed_boundary p hp hg hc eta a rho x ((1/2:ℂ)+t*Complex.I) z hQ heta ha hρ hx
@@ -62,7 +64,7 @@ include hc in
 theorem ramifiedSelected_large_bound_on_perturbed_boundary (eta a rho x w z : ℂ)
     (hQ : (4:ℝ)≤Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖≤1) (ha : ‖a‖≤1) (hρ : rho^6=1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : 1≤w.re) (hz : (17/50:ℝ)≤z.re) (j : ℕ) (hj : j<6) :
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : 1≤w.re) (hz : (17/50:ℝ)≤z.re) (j : ℕ) (hj : j<6) :
     ‖ramifiedSelected p hp hg eta a rho x w z j‖≤385 := by
   have hh := ramifiedSelected_bound_on_perturbed_boundary p hp hg hc eta a rho x w z hQ heta ha hρ hx (by linarith) hz j hj
   simpa only [max_eq_right (by linarith : 1-w.re≤0),Real.rpow_zero,mul_one] using hh

@@ -1,4 +1,5 @@
 import OAIHighMomentMarkedState
+import OAIHighMomentGeometry
 import OAI.NumberTheory.DirichletL.Moments.DetectorPlainMomentParameters
 
 namespace OAI
@@ -20,7 +21,6 @@ variable {gap:ℝ}
 
 def delta (D:Parameters.PerturbedHighData gap):ℝ := D.small/4
 def stageError (D:Parameters.PerturbedHighData gap):ℝ := D.small/4
-def kappaPlain (_D:Parameters.PerturbedHighData gap):ℝ := 3/4
 
 theorem fixed_parameters (D:Parameters.PerturbedHighData gap):
     0<delta D ∧ delta D≤1/4 ∧ 0<stageError D ∧
@@ -83,6 +83,19 @@ theorem marked_state_admission (D:Parameters.PerturbedHighData gap)
   have hw:=width_bands D F.m hf.2.2.1
   refine ⟨rfl,rfl,rfl,rfl,rfl,rfl,rfl,hw.1,hw.2.1,hf.2.2.2.1,hf.2.2.2.2.1,?_⟩
   exact marked_capacity F hU selected (kappaPlain D) (delta D) (fixed_parameters D).1.le hcap
+
+theorem admit_selected_source_moment (D : Parameters.PerturbedHighData gap)
+    (F : Fiber M H Label (Fin D.N) U a D.ε tstar T heightAllowance i)
+    (hU : 1 < U) (selected : Finset (Fin D.N)) (d : ℝ) (hd : 0 < d)
+    (hwidth : ∀ j, F.widths j = D.ell j / d)
+    (hcapacity : 2 * d * F.m + (9 / 2 : ℝ) * (∑ j ∈ selected, D.ell j) ≤ d) :
+    length U (U^F.m) + length U (U^F.m) +
+      6 * kappaPlain D * (∑ j : selected, F.widths j.val) ≤ 1 + delta D := by
+  have hnormalized := (normalize_selected_moment_capacity D selected d F.m hd).mpr hcapacity
+  have hmarked : 2 * F.m + 6 * kappaPlain D * (∑ j ∈ selected, F.widths j) ≤ 1 := by
+    simpa only [hwidth] using hnormalized
+  exact marked_capacity F hU selected (kappaPlain D) (delta D)
+    (fixed_parameters D).1.le hmarked
 
 theorem unmarked_state_admission (D:Parameters.PerturbedHighData gap)
     (F:Fiber M H Label (Fin D.N) U a D.ε tstar T heightAllowance i)

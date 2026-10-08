@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSignalIdentity
 import OAI.NumberTheory.DirichletL.Hecke.CommonProbe
 
@@ -16,9 +17,9 @@ def PerturbedPrimitiveContract (ω σ : ℝ) : Prop :=
       (∀ I, idealCoeff χ I = if IsCoprime I χ.modulus then idealCoeff η I else 0) ∧
       AnalyticOnNhd ℂ H {s : ℂ | perturbedBoundary < s.re} ∧
       (∀ s : ℂ, perturbedBoundary < s.re → ‖H s - 1‖ ≤ 1 / 2) ∧
-      J =O[atTop] (fun x : ℝ => x ^ (perturbedBoundary - 11 / 16 + ω)) ∧
-      (fun x => J x - signal χ H (-11 / 16) x) =O[atTop]
-        (fun x : ℝ => x ^ (beta - 11 / 16 - σ))
+      J =O[atTop] (fun x : ℝ => x ^ (perturbedBoundary + AsymmetricGeometry.signalOffset + ω)) ∧
+      (fun x => J x - signal χ H (AsymmetricGeometry.signalOffset) x) =O[atTop]
+        (fun x : ℝ => x ^ (beta + AsymmetricGeometry.signalOffset - σ))
 
 def UniformPerturbedCommonProbe : Prop :=
   perturbedBoundary < beta → ∃ ω σ : ℝ,
@@ -34,7 +35,7 @@ theorem beta_le_perturbed_boundary (h : UniformPerturbedCommonProbe) :
     perturbed_continuation_boundary_gt (β := beta) (σ := σ) hω0
   have hhalf : (1 / 2 : ℝ) ≤
       beta - perturbedContinuationMargin beta ω σ := by
-    dsimp [perturbedBoundary] at hboundary
+    dsimp [perturbedBoundary, AsymmetricGeometry.boundary] at hboundary
     linarith
   obtain ⟨η, ρ, hp, _, _, hpole, hz, hnear⟩ :=
     HeckePrimitiveSupremum.exists_primitive_zero_near_beta hmargin hhalf
@@ -47,12 +48,10 @@ theorem beta_le_perturbed_boundary (h : UniformPerturbedCommonProbe) :
   have hzχ : LFunction χ ρ = 0 := by
     rw [HeckeFiniteDeletion.LFunction_eq_of_mask_nonpole χ η hmask
       (by linarith [hboundary, hnear]) hχpole, hz, zero_mul]
-  apply (nonzero_of_perturbed_probe_bounds χ H J beta ω σ (-11 / 16)
+  apply (nonzero_of_perturbed_probe_bounds χ H J beta ω σ (AsymmetricGeometry.signalOffset)
     beta_le_one hω0 hω hσ hH hb ?_ ?_ hnear hχpole) hzχ
-  · convert hJ using 1
-    ring
-  · convert herr using 1
-    ring
+  · exact hJ
+  · exact herr
 
 theorem hecke_ne_zero_of_perturbed_common_probe
     (h : UniformPerturbedCommonProbe) (χ : Character) (s : ℂ)

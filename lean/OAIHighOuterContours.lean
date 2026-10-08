@@ -1,5 +1,7 @@
+import OAIAsymmetricGeometry
 import OAIHighResidueBounds
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -23,7 +25,7 @@ theorem source_ordered_outer_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hcw : 1 < cw) (he : 0 < e) :
     let K := fun s => sourceMultiplier W0 W1 X Y Z

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighFloorIntegral
 import OAIHighCentralNormalizer
 
@@ -7,6 +8,7 @@ noncomputable section
 open scoped Classical BigOperators Topology ContDiff
 open Filter Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 open ProbeRaySlots HeckeDetectorPhysicalSelection
 local notation "O" => HeckeFamily.O
@@ -23,8 +25,8 @@ theorem perturbed_normalized_floor_cube (N n : ℕ) (e eps c b A R dmin dmax rmi
     (hlengthShift : 0≤lengthShift)
     (he : 0<e) (he1 : e<1/1000) (heps : 0<eps) (hc : 0<c) (hcb : c≤b) (hA : 0≤A)
     (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax) (hrmin : 0<rmin)
-    (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh) (hδ : 0<δ)
-    (hbudget : 8*e*R+κ≤ε) (hgap : ε<rmin*mesh) (hmargin : 0<margin)
+    (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0< mesh) (hδ : 0<δ)
+    (hbudget : 8*e*R+κ≤ε) (hgap : ε<rmin*mesh) (hmargin : 0< margin)
     (hheight : 2*τ<dmin*cost) (hloss : τ*(2+4*eps)<loss)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hfirst : FirstTail (4*e) S)
     (hmax : ∀P∈S,P.IsMaximal)
@@ -54,11 +56,11 @@ theorem perturbed_normalized_floor_cube (N n : ℕ) (e eps c b A R dmin dmax rmi
         (Probe.principalScalar Finset.univ Z (1/6+lengthShift)
           (PrincipalSignalComparison.slotMass T (ProbePrincipalResidueActual.residueWeights W Yp)) : ℂ)
       normer≠0 ∧ ‖finiteCentralCubeRows S hS hmax η rows T (normalizedFloorPoolOutside M H S N c b Yp) (fun j y=>(W j y:ℂ)) Yp
-        W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e (fun _=>51/100) (fun _=>(3*i+1:ℕ)*Z^τ)/normer‖≤
+        W0 W1 (Z^(xBase-lengthShift/2:ℝ)) (Z^(yBase-lengthShift/2:ℝ)) Z e (fun _=>51/100) (fun _=>(3*i+1:ℕ)*Z^τ)/normer‖≤
         C*(η.modulus.absNorm:ℝ)^(2*eps)*
           Z^(ProbeCentralExponent.sourceExponent (51/100) v 1 (1/100)+
             ProbeCentralExponent.realLoss N v e eps loss mesh+
-            lengthShift*(1/40+3*e+mesh)+nu) := by
+            lengthShift*(1/40+3*e+mesh)+skew*(67/100+6*e)+nu) := by
   let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   let WC : Fin N→ℝ→ℂ := fun j y=>(W j y:ℂ)
   have hWC (j : Fin N) : ContDiff ℝ ∞ (WC j) := Complex.ofRealCLM.contDiff.comp (hW j)
@@ -90,7 +92,7 @@ theorem perturbed_normalized_floor_cube (N n : ℕ) (e eps c b A R dmin dmax rmi
   apply hm.trans_eq
   rw [Real.rpow_add hZ (ProbeCentralExponent.sourceExponent (51/100) v 1 (1/100)+
     ProbeCentralExponent.realLoss N v e eps loss mesh+
-    lengthShift*(1/40+3*e+mesh)) nu]
+    lengthShift*(1/40+3*e+mesh)+skew*(67/100+6*e)) nu]
   ring
 
 end SevenEighths.ProbeHighRowFamily

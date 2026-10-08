@@ -1,0 +1,525 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,geometry,hyperref}
+\geometry{margin=25mm}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}[lemma]{Proposition}
+\newcommand{\N}{\mathrm N}
+\newcommand{\OO}{\mathcal O}
+\newcommand{\rad}{\operatorname{rad}}
+\title{A reduction of the joint inverse and plain witness moment}
+\author{}
+\date{8 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Status.}
+The coefficient identities, resonant-pair count, complete-residue mean,
+and diagonal-strip reductions below are proved.
+The desired bound for the remaining physical row sum is open.
+No new zero-free boundary follows from this note.
+The pinned upstream revision is
+\begin{center}
+\texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+\end{center}
+The Lean file \path{lean/JointMomentReduction.lean} checks the complementary
+coefficient identity, finite pair-kernel expansion, and diagonal-strip
+inequality. The ideal-counting and analytic arguments are not formalized.
+
+\paragraph{The actual product.}
+Put $D=U^r$, $N=U^m$, $D_*=U^t$, and $X=DN=U^s$.
+Let $V$ be the source cutoff, equal to one on $[0,1]$ and zero on
+$[2,\infty)$. Let $W$ be the positive annular profile.
+The argument also permits two fixed smooth profiles $W_I,W_P$ supported
+in $[a,b]$, with $0<a<b$ fixed. The source character is
+\[
+ \psi_u(K)=\eta(K)\,
+   \operatorname{idealRowHom}(m_0^6 f_0^4 u,K).
+\]
+The symbols $m_0,f_0$ denote the fixed row data rather than the length $m$.
+Source prime deletions are part of this common character.
+For the same real shifts $\sigma,\omega$ in both factors,
+\begin{align*}
+ I_u&=D^{-1/2}\sum_d\mu(d)\psi_u(d)V(\N d/D_*)
+      W_I(\N d/D)(\N d/D)^{-\sigma+i\omega},\\
+ P_u&=N^{-1/2}\sum_n\psi_u(n)
+      W_P(\N n/N)(\N n/N)^{-\sigma+i\omega}.
+\end{align*}
+All ideals in this note are nonzero integral ideals of the Eisenstein ring.
+The sums displayed here are finite. Multiplicativity, including zeros, gives
+\begin{equation}\label{eq:product}
+ I_uP_u=X^{-1/2}\sum_K c_K\psi_u(K)(\N K/X)^{-\sigma+i\omega},
+ \qquad
+ c_K=\sum_{dn=K}\mu(d)V(\N d/D_*)W_I(\N d/D)W_P(\N n/N).
+\end{equation}
+Its support is $a^2X\le\N K\le b^2X$.
+The shifts are common within a row. Actual detector shifts
+$\sigma_u,\omega_u$ need not be common across rows.
+
+On a compact short crossing strip with $r\le t-\kappa$, $\kappa>0$,
+the inverse cutoff is exactly one once $bU^{-\kappa}\le1$.
+Indeed $\N d\le bU^r\le U^t$ throughout its support.
+The target there is therefore a pure dyadic M\"obius and plain mixed
+moment. Its coefficient does not receive extra cancellation from the
+truncation boundary.
+For four pairwise distinct prime ideals $d_1,d_2,n_1,n_2$ in the
+respective annuli, the inverse signs satisfy
+$\mu(d_1)\mu(d_2)=+1$ and the radical modulus has norm comparable to
+$(DN)^2$. This sector prevents an argument that assumes either a shortened
+modulus or oscillating inverse signs in every remaining configuration.
+
+\paragraph{Common derivative marks.}
+For $j+k=\ell$, differentiating the product in its common shifts multiplies
+the summand in \eqref{eq:product} by
+$(-1)^j i^k\log(\N K/X)^\ell$.
+Thus all marks of total order at most two are bounded on the product annulus.
+Independent differentiation of the two factors instead inserts separate
+logarithms and does not preserve the complete divisor cancellation below.
+At fixed $D,N,D_*$, a two-dimensional Sobolev argument transports uniform
+fixed-shift energies for $F,\partial_\sigma F,\partial_\omega F,
+\partial_\sigma\partial_\omega F$ to arbitrary rowwise shifts
+in $[0,1]\times[-H,H]$, with a polynomial loss in $1+H$.
+No fixed-shift kernel identity is applied directly to a moving-shift sum.
+
+\paragraph{Complementary coefficients and their limitation.}
+For $K\ne1$, the complete divisor identity gives the exact equality
+\begin{equation}\label{eq:complement}
+ A_{D_*}(K):=\sum_{dn=K}\mu(d)V(\N d/D_*)
+ =-\sum_{dn=K}\mu(d)(1-V(\N d/D_*)).
+\end{equation}
+For an aggregate annular detector
+\[
+ T_u(X)=X^{-1/2}\sum_K\psi_u(K)A_{D_*}(K)
+       W(\N K/X)(\N K/X)^{-\sigma_u+i\omega_u},
+\]
+whose support excludes the unit, \eqref{eq:complement} yields
+\begin{equation}\label{eq:aggregate}
+ T_u(X)=-\sum_{\N n\le bX/D_*}\frac{\psi_u(n)}{\sqrt{\N n}}
+        I_u(X/\N n\,\,W_n),\qquad
+ W_n(y)=W(y)\bigl(1-V(Xy/(\N nD_*))\bigr).
+\end{equation}
+The inverse polynomial on the right has scale $X/\N n$ and the same
+rowwise shifts. Smooth seminorms of $W_n$ are uniform in $n,X,D_*$.
+Derivatives of $V$ have fixed compact transition support.
+Common marks in \eqref{eq:aggregate} remain powers of $\log y$.
+
+The existing inverse amplification energy, for $s\ge t\ge1$, gives
+\[
+ \|I(X/\N n)\|_{\ell^2(u)}
+ \ll (1+H)^{J/2}U^{1/12}(X/\N n)^{5/12}U^\rho.
+\]
+Minkowski and ideal counting then give
+\begin{equation}\label{eq:aggregate-bound}
+ \sum_u|T_u(X)|^2
+ \ll (1+H)^J U^{1/6+s-t/6+\rho},
+\end{equation}
+because $\sum_{\N n\le Y}(\N n)^{-11/12}\ll Y^{1/12}$.
+At $s=t$, this exponent equals $1+5(t-1)/6$.
+The complementary variable has bounded norm there, so orthogonality only
+in that variable cannot supply a power saving.
+If a common prime-deletion mask kills every nonunit $n$ allowed in
+\eqref{eq:aggregate}, only the unit survives. This conditional collapse
+does not apply automatically to every source ray label.
+
+An individual dyadic coefficient $c_K$ need not cancel or have shorter
+support. For separated annuli, $K=pq$ with $\N p\asymp D$ and
+$\N q\asymp N$ can have only $d=p$ in \eqref{eq:product}, giving
+a nonzero coefficient of size comparable to one at norm $DN$.
+
+\paragraph{The exact physical kernel.}
+At a fixed pair of common shifts define
+\[
+ b_K=c_K(\N K/X)^{-\sigma+i\omega},\qquad
+ \mathcal K_U(K,L)=\sum_{u\in\mathcal F_U}\psi_u(K)\overline{\psi_u(L)}.
+\]
+Here $\mathcal F_U$ is the actual sixth-power-free physical row family,
+or a specified subset, with row norm at most $U$.
+The energy is exactly
+\begin{equation}\label{eq:kernel}
+ \sum_{u\in\mathcal F_U}|I_uP_u|^2
+ =X^{-1}\sum_{K,L}b_K\overline{b_L}\mathcal K_U(K,L).
+\end{equation}
+At a good prime $P$, its local row factor on units is the canonical sextic
+character to exponent $v_P(K)-v_P(L)$ modulo six. Its value at zero is
+zero whenever $P\mid KL$, including exponent zero modulo six.
+Consequently the union zero mask is $\rad(KL)$, not just the conductor
+of the reduced quotient character.
+
+For $q=\N P$, let $\chi_P$ be the actual sextic character and
+$\theta_P$ the chosen nontrivial additive character. Its finite Fourier
+factor is
+\[
+ G_P(e,h)=\sum_{z\in\OO/P}\chi_P^e(z)\theta_P(hz).
+\]
+The zeroth power retains the zero extension.
+Then $G_P(0,0)=q-1$, $G_P(e,0)=0$ for $e\not\equiv0\pmod6$,
+and $G_P(0,h)=-1$ for $h\ne0$.
+For $e\not\equiv0$ and $h\ne0$,
+\[
+ G_P(e,h)=\chi_P^e(h)^{-1}\tau_P(e),\qquad |\tau_P(e)|^2=q.
+\]
+CRT gives a product of these factors, with the actual trace-coordinate
+scalings. On nonresonant pairs its global zero Fourier mode vanishes.
+This does not imply that \eqref{eq:kernel} vanishes on a physical annulus.
+For generic coprime squarefree $K,L$, the radical modulus has norm
+$Q\asymp X^2$. Poisson completion has dual volume $Q/U$.
+Taking absolute values costs approximately $\sqrt Q=X$, already larger
+than $U$ when $s>1$.
+
+\begin{lemma}[Resonant pairs]\label{lem:resonant-count}
+Fix a finite set $\Sigma$ of prime ideals. For $\N K,\N L\le BX$,
+suppose $v_P(K)\equiv v_P(L)\pmod6$ for every $P\notin\Sigma$.
+The number of ordered pairs is at most
+\[
+ C_B X\zeta_{\OO}(3)^2
+       \prod_{P\in\Sigma}(1-(\N P)^{-1/2})^{-2}.
+\]
+\end{lemma}
+\begin{proof}
+Write uniquely $K=K_\Sigma A B_1^6$ and $L=L_\Sigma A B_2^6$,
+where $A$ is sixth-power-free outside $\Sigma$ and all three ideals
+$A,B_1,B_2$ are supported outside $\Sigma$.
+For fixed $K_\Sigma,L_\Sigma,B_1,B_2$, ideal counting bounds the number
+of $A$ by a constant times
+\[
+ \frac{X}{\max(\N K_\Sigma(\N B_1)^6,\N L_\Sigma(\N B_2)^6)}
+ \le\frac{X}{\sqrt{\N K_\Sigma\N L_\Sigma}(\N B_1)^3(\N B_2)^3}.
+\]
+Sum the latter bound. The $B_1,B_2$ sums converge to at most
+$\zeta_{\OO}(3)^2$. Each fixed-supported ideal sum is
+$\prod_{P\in\Sigma}(1-(\N P)^{-1/2})^{-1}$.
+\end{proof}
+
+If $\Sigma$ varies with arithmetic height, this Euler factor must be
+retained. It is at most $(\N\rad\Sigma)^4$, since $\N P\ge2$.
+Thus a stated polynomial bound for $\N\rad\Sigma$ supplies a polynomial
+height loss. Primes dividing $m_0f_0$ can often be removed entirely,
+since their zero masks annihilate ideals containing them.
+
+\begin{proposition}[Absolute resonant energy]\label{prop:resonant-energy}
+Assume $|\mathcal F_U|\ll U$, $s$ is bounded, and the profile sup norms
+are bounded. For any $\rho>0$, the absolute contribution to
+\eqref{eq:kernel} of the pairs in Lemma~\ref{lem:resonant-count} is
+\[
+ \ll (1+H)^J U^{1+\rho},
+\]
+with the explicit fixed-supported Euler factor if needed.
+The same bound holds for common derivative marks of total order at most two
+and for arbitrary rowwise shifts in the stated bounded real-shift interval.
+\end{proposition}
+\begin{proof}
+The coefficient $|c_K|$ is at most a profile constant times the number
+of squarefree ideal divisors of $K$, hence $\ll_\epsilon(\N K)^\epsilon$.
+The real shifts and common logarithmic marks are bounded on the product
+annulus. The norm of every row character is at most one.
+Lemma~\ref{lem:resonant-count}, $|\mathcal F_U|\ll U$, and the
+normalization $X^{-1}$ give $\ll U X^{2\epsilon}$.
+Choose $\epsilon$ after the bounded range of $s$ and the reserved $\rho$.
+\end{proof}
+
+\begin{proposition}[Complete-residue special case]\label{prop:complete}
+Average \eqref{eq:product} over every residue class modulo the product
+of all varying good primes in its ideal support, with each residue class
+given equal weight. Fix the common shifts across this average.
+Then its normalized mean-square is $\ll X^\rho$, including common marks
+of total order at most two and the fixed-supported factor above.
+\end{proposition}
+\begin{proof}
+CRT and the vanishing local zero Fourier mode eliminate every nonresonant
+pair. The norm of each surviving normalized complete pair mean is at most
+one. Apply Lemma~\ref{lem:resonant-count} and the coefficient bound in
+Proposition~\ref{prop:resonant-energy}, then divide by $X$.
+\end{proof}
+This is a proved restricted averaging result. It gives no discrepancy
+estimate comparing the complete average with the sixth-power-free annulus,
+especially when its modulus has norm much larger than $U$.
+
+\paragraph{Two further off-diagonal strips are controlled.}
+Write
+\[
+\begin{aligned}
+ a_d&=\mu(d)V(\N d/D_*)W_I(\N d/D)(\N d/D)^{-\sigma+i\omega},\\
+ b_n&=W_P(\N n/N)(\N n/N)^{-\sigma+i\omega}.
+\end{aligned}
+\]
+Before collecting $K=dn$, the exact Type II sum is
+\begin{equation}\label{eq:typeII}
+ (DN)^{-1}\sum_{d_1,d_2,n_1,n_2}
+ a_{d_1}\overline{a_{d_2}}b_{n_1}\overline{b_{n_2}}
+ \mathcal K_U(d_1n_1,d_2n_2).
+\end{equation}
+The part with $d_1=d_2$ equals
+\[
+ D^{-1}\sum_{u,d}|a_d|^2|\psi_u(d)|^2|P_u|^2
+ \ll\sum_u|P_u|^2.
+\]
+The part with $n_1=n_2$ similarly is at most a constant times
+$\sum_u|I_u|^2$. These identities also permit moving common shifts,
+because the coefficient square sums are uniformly $O(D)$ and $O(N)$.
+Under the source marked marginal moment hypotheses both bounds are
+$\ll(1+H)^J U^{1+\rho}$ in the crossing strip $r\le1$, $m\le1/2$.
+For the inverse factor use its existing exponent
+$\max(1,(1+5r)/6)=1$. For the plain factor a fourth-moment bound
+$\sum_u|P_u|^4\ll U^{1+\rho}$ and $|\mathcal F_U|\ll U$ suffice
+by Cauchy--Schwarz.
+
+For a common mark $\ell\le2$, expand
+$\log(\N(dn)/(DN))^\ell=
+ (\log(\N d/D)+\log(\N n/N))^\ell$.
+Cauchy--Schwarz over the at most three binomial terms reduces the same
+strips to marked marginal energies. All factor logarithms are bounded
+on their individual annuli.
+The intersection $d_1=d_2,n_1=n_2$ is nonnegative. Inclusion and exclusion
+therefore bound the total energy from above by these two controlled strips
+plus the real part of the doubly off-diagonal sum.
+This controls some nonresonant pairs without termwise kernel bounds.
+It is conditional only on the already stated marginal source moments,
+not on a new joint estimate.
+
+\paragraph{What a pairwise square-root estimate would still miss.}
+Even suppose, more strongly than the available completion argument,
+that every remaining incomplete pair kernel satisfied
+$|\mathcal K_U(K,L)|\ll U^{1/2+\rho}$.
+There are $O(X^{2+\rho})$ weighted pairs. Absolute summation in
+\eqref{eq:typeII} would then give only
+$\ll U^{s+1/2+\rho}$ after normalization by $X$.
+The same estimate follows from Cauchy--Schwarz using only a mean-square
+pair-kernel bound $\sum_{K,L}|\mathcal K_U(K,L)|^2\ll X^2U^{1+\rho}$
+and the coefficient square sum $\sum_K|c_K|^2\ll X^{1+\rho}$.
+To reach the desired exponent requires additional signed correlation
+cancellation of $U^{s/6+1/3+\eta}$ relative to those bounds.
+At the displayed crossing this missing saving is about
+$U^{0.520564+\eta}$.
+A finite-field four-shift square-root bound alone supplies no such
+global coefficient cancellation or transfer across varying moduli.
+
+\paragraph{An exact Cauchy reorganization.}
+At fixed common shifts put
+\[
+ A_u=\sum_d a_d\psi_u(d),\qquad B_u=\sum_n b_n\psi_u(n),
+ \qquad J_u=\sum_d|a_d\psi_u(d)|^2,
+ \quad L_u=\sum_n|b_n\psi_u(n)|^2.
+\]
+Before removing resonance, the doubly off-diagonal sum has the exact form
+\begin{equation}\label{eq:covariance}
+ \mathcal E_{\mathrm{both\ off}}
+   =(DN)^{-1}\sum_u (|A_u|^2-J_u)(|B_u|^2-L_u).
+\end{equation}
+Expand both parentheses to verify this equality.
+The four terms are the full energy, the two strips, and their intersection.
+This subtraction is checked in Lean as
+\path{express_double_strip_subtraction_as_centered_row_product}.
+For common derivative marks, its polarized version is a finite sum of
+centered cross-products between the marked factors, obtained by the same
+binomial expansion. It does not introduce independent row shifts.
+
+Cauchy over the short coefficient pair gives another exact reduction.
+Let $w_u=|A_u|^2-J_u$, let $\mathcal N$ be the finite plain annulus,
+and define
+\[
+ T_{u,v}(N)=\sum_{n\in\mathcal N}\psi_u(n)\overline{\psi_v(n)},
+ \qquad B_2=\sum_{n\in\mathcal N}|b_n|^2\ll N.
+\]
+For the doubly off-diagonal sum,
+\begin{align}
+ |\mathcal E_{\mathrm{both\ off}}|^2
+ &\le \frac{B_2^2}{D^2N^2}
+   \sum_{n_1\ne n_2}
+    \left|\sum_u w_u\psi_u(n_1)\overline{\psi_u(n_2)}\right|^2\notag\\
+ &\le \frac{B_2^2}{D^2N^2}
+   \sum_{u,v} w_u w_v |T_{u,v}(N)|^2.\label{eq:cauchy-row-pair}
+\end{align}
+The last equality follows by expanding the square after adding the
+nonnegative $n_1=n_2$ terms. Its right hand side is nonnegative even
+though some $w_u$ are negative. Bounding its individual terms further
+requires absolute values of these real weights.
+
+The new varying character is exactly
+$\psi_u(n)\overline{\psi_v(n)}$.
+Its local moving exponent is the difference between the valuations
+of $u$ and $v$ modulo six, with the union zero mask retained.
+After separating the fixed reciprocity phases, its moving modulus is
+supported on $\rad((u)(v))$, with norm at most a fixed-height constant
+times $U^2$. For generic coprime bulk rows this norm is comparable to
+$U^2$. Thus Cauchy changes the modulus legitimately. It does not apply
+a local estimate for one four-ideal modulus to a different unfrozen one.
+The additive shifts in a correlation estimate for $T_{u,v}(N)$ are
+shifts of $n$, reduced at every prime of this row-pair modulus.
+Even if the original four ideals were squarefree and pairwise coprime,
+the new rows $u,v$ need not be. Their local exponents can be quadratic,
+so the doubled-root exceptions found in the local kernel analysis remain
+necessary.
+
+An optimistic square-root bound $|T_{u,v}(N)|\ll N^{1/2}U^\rho$
+on all nonexceptional row pairs would still not finish this Cauchy route.
+Using $\sum_u|w_u|\ll DU$ gives an off-diagonal upper bound
+of order $U N^{1/2}$ for the energy. Even granting an additional ideal
+inverse fourth-moment bound $\sum_u|A_u|^4\ll D^2U$ to control
+exceptional equal-row pairs, and optimistically assuming there are no
+other exceptional row pairs, this leads to
+\[
+ U^{1+m/2+\rho}+U^{m+1/2+\rho}.
+\]
+At the crossing the first exponent is $1.2041950721$, exceeding
+$1.1028180869$. The exponent comparison would require
+$r>1-2m/5$. This condition fails at the crossing.
+The square-root row-correlation hypothesis and the inverse fourth moment
+are not supplied by the existing proof.
+
+\begin{lemma}[Barrier for direct additive differencing]\label{lem:differencing}
+Let $G$ be a finite additive group of order $Q$, let
+$\theta:G\to\mathbb C$, and let $\alpha:G\to[0,1]$ satisfy
+$\sum_z\alpha(z)\le M$.
+For a nonempty shift set $\mathcal H$ of cardinality $H$, set
+\[
+ \Delta=H^{-1}\sum_{h\in\mathcal H}\sum_z
+                  |\alpha(z-h)-\alpha(z)|.
+\]
+Assume $|\theta|\le1$ and assume the complete fourth-moment estimate
+with a fixed constant $C\ge1$, increasing it if needed,
+\[
+ \sum_z\left|\sum_{h\in\mathcal H}\theta(z+h)\right|^4
+ \le C(QH^2+Q^{1/2}H^4).
+\]
+Then
+\[
+ \left|\sum_z\alpha(z)\theta(z)\right|
+ \le \Delta+C^{1/4}M^{3/4}
+          (Q^{1/4}H^{-1/2}+Q^{1/8}).
+\]
+Consequently this derived bound cannot provide a strict improvement
+over the trivial bound $M$ by exponent optimization if $Q\ge M^2$.
+This is a statement about the bound obtained by this proof, not a
+lower bound on the actual character sum.
+\end{lemma}
+\begin{proof}
+Translate the weights to compare the sum with
+$\sum_z\alpha(z)H^{-1}\sum_h\theta(z+h)$.
+The absolute difference is at most $\Delta$.
+Weighted H\"older bounds the fourth power of the latter by
+\[
+ M^3 H^{-4}\sum_z\alpha(z)
+                \left|\sum_h\theta(z+h)\right|^4.
+\]
+Discard $\alpha(z)\le1$, apply the assumed complete fourth moment,
+and take a fourth root. The second term in this upper bound is at least $M$
+when $Q\ge M^2$.
+\end{proof}
+
+The complete fourth-moment hypothesis is deliberately conditional.
+It would follow from suitable collision counting and a complete
+four-distinct-shift Weil bound, followed by absolute summation over the
+shift quartets. The local generic candidate is
+$|C_P+1|\le2\sqrt{\N P}$, not $|C_P|\le2\sqrt{\N P}$.
+CRT collision primes require the exceptional ideal factor retained in
+the independent local-kernel note. No uniform collision count for our
+moving shift sets is proved here.
+
+Even granting that favorable complete fourth moment and setting
+$\Delta=0$, applying Lemma~\ref{lem:differencing} at the original
+four-ideal modulus gives $M\asymp U$, $Q\asymp U^{2s}$.
+Its unavoidable bound term has exponent $3/4+s/4>1$ when $s>1$.
+Applying it instead to \eqref{eq:cauchy-row-pair} gives
+$M\asymp U^m$, $Q\asymp U^2$ and exponent $3m/4+1/4>m$ for $m<1$.
+The analogous long-factor Cauchy route has exponent
+$3r/4+1/4>r$ when $r<1$.
+Thus direct additive Cauchy and four-shift absolute completion supplies
+no gain at either actual crossing length. The sixth-power-free physical
+row indicator additionally has no proved small translation error.
+Restricting the original quadruple to squarefree pairwise coprime ideals
+does not cover every excluded sector. Shared-prime, nonresonant products
+can have both $d_1\ne d_2$ and $n_1\ne n_2$.
+Their inactive local primes still impose zero masks.
+The controlled strips and resonant bound alone do not dispose of them.
+Improving this route requires preserving more coefficient structure,
+gaining cancellation between completed shift quartets, or a different
+amplification. A local four-shift theorem alone is insufficient.
+
+\paragraph{The remaining falsifiable target.}
+Remove from \eqref{eq:typeII} the strips $d_1=d_2$ and $n_1=n_2$,
+and remove pairs $d_1n_1,d_2n_2$ that are sixth-equivalent outside
+the specified fixed prime set. For fixed common shifts and each total
+common mark at most two, prove a bound for the absolute value of the
+remaining signed sum
+\begin{equation}\label{eq:open-target}
+ |\mathcal E_{\mathrm{both\ off,nonres}}|
+ \ll (1+H)^J U^{1+5(s-1)/6-\eta+\rho}.
+\end{equation}
+The region must satisfy $s\ge1+\kappa$ with
+$0<\eta<5\kappa/6$, so that the proved $U^{1+\rho}$ pieces fit.
+The constants must use fixed smooth seminorms, bounded length ranges,
+and the source height controls. The coefficient signs $\mu(d_1)\mu(d_2)$,
+the common zero masks, and every fixed reciprocity phase remain in the sum.
+No arbitrary independently shifted coefficient sequence is permitted.
+Sobolev then supplies the requested moving-shift joint moment.
+Equation~\eqref{eq:open-target} is not proved here.
+
+At the original numerical crossing
+$\delta=0.3867$, $x=1/2$, the source balance gives
+\[
+ t=1.1233817043,\quad r=0.7149915600,\quad m=0.4083901443,
+ \quad 1+5(t-1)/6=1.1028180869.
+\]
+Thus a new theorem must beat $U^{1.1028180869}$ there, with a quantitative
+positive saving. The complete-residue and controlled-strip results have
+exponent one and do fit this budget. They leave a concrete doubly
+off-diagonal arithmetic sum rather than a generic coefficient assertion.
+At that crossing, a uniform short-count saving $g$ is discounted by about
+$0.75324$ after retuning the detector cutoff against the untouched long
+branch. Coverage only at this single crossing is insufficient for a new
+global boundary, since the active crossing moves as the geometry changes.
+
+\paragraph{Reproducible count.}
+Run \texttt{uv run research/joint\_moments.py}.
+The script counts actual Eisenstein ideals by norm, using split,
+inert, and ramified rational primes. It checks the exact decomposition
+$K=A B^6$ at every norm through $524287$.
+It then counts ordered sixth-equivalent pairs in $[X,2X)$ exactly.
+At $X=65536$ it finds $39631$ resonant pairs and $39629$ diagonal pairs.
+At $X=262144$ it finds $158502$ resonant pairs and $158498$ diagonal pairs.
+The ratios are about $0.6046X$. These finite counts support the proved
+linear counting scale. They do not test the physical incomplete kernel.
+
+\paragraph{Source references.}
+All paths below are relative to the upstream \texttt{lean/} directory.
+
+The actual dyadic definition is in
+\path{OAI/NumberTheory/DirichletL/Hecke/Dyadic.lean}.
+
+The cutoff and weighted fiber are in
+\path{Hecke/DetectorWitnessArithmetic.lean}, lines 11--73.
+
+The exact complete ideal divisor sum is
+\path{Arithmetic/IdealMobius.lean}, lines 538--575.
+
+The row character specification is
+\path{Hecke/InverseAmplificationFamily.lean}, lines 12--31.
+
+The ideal-row coefficient equality is
+\path{Hecke/RowClosure.lean}, theorem \path{idealCoeff_eq_row}.
+
+The local row symbol and product are in
+\path{Eisenstein/CompactEnergyFamilies.lean}, lines 466--487.
+
+Canonical sextic and its finite-field Fourier identities are in
+\path{GaussSum/FiniteFourier.lean} and
+\path{Arithmetic/EisensteinEmbedding.lean}, lines 420--478.
+
+The existing inverse rowwise energy is
+\path{Hecke/InverseAmplificationRowwise.lean},
+theorem \path{no_slot_rowwise_endpoint}.
+
+The squarefree divisor bound is
+\path{Arithmetic/SquarefreeDivisors.lean}, line 130.
+
+The source paper's inverse amplification is at lines 12362--12453
+and its plain fourth moment starts at line 12477.
+
+An independent review confirmed the strip, mark, resonant-fiber, and
+complete-residue reductions. The four local Lean theorem axiom reports
+contain only \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}.
+The local kernel agent independently checks the actual finite-field
+Fourier phases and provides formal zero-mask lemmas. Those checks do not
+prove \eqref{eq:open-target}.
+
+\end{document}

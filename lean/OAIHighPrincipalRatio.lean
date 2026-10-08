@@ -1,7 +1,9 @@
+import OAIAsymmetricGeometry
 import OAIHighSlotEstimate
 import OAIHighSignalShift
 import OAI.NumberTheory.DirichletL.PrincipalSignalComparison
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -10,6 +12,47 @@ open MeasureTheory Set Filter Asymptotics Complex
 namespace SevenEighths.PrincipalSignalComparison
 open HeckeFamily PrincipalSlotEstimate ProbeEuler ProbeLocal Continuation HeckeSignal
 variable {κ ι : Type*}
+
+def asymmetricKernel (χ : Character) (H : ℂ → ℂ) (a Z : ℝ) (t : ℝ) : ℂ :=
+  gaussianContourIntegrand (quotient χ H) signalOffset Z ((a : ℂ)+t*I)
+
+def asymmetricKernelEnvelope (a C Z : ℝ) : ℝ :=
+  Z^(a+signalOffset) * Real.exp ((a-5/6)^2) * ((3/2)*C)
+
+def asymmetricSlotResidue (χ : Character) (H : ℂ → ℂ) (a Z : ℝ)
+    (S : Finset κ) (T : κ → Finset ι) (w Q : κ → ι → ℝ) (A η : κ → ι → ℂ) : ℂ :=
+  (1/(2*Real.pi) : ℂ) * ∫ t : ℝ,
+    (Z : ℂ)^(((a : ℂ)+t*I)+(signalOffset : ℂ)) *
+      Complex.exp ((((a : ℂ)+t*I)-5/6)^2) *
+      H ((a : ℂ)+t*I) / LFunction χ ((a : ℂ)+t*I) *
+        slotRatio S T w Q A η ((a : ℂ)+t*I)
+
+theorem asymmetricSlotResidue_eq_reciprocal (χ : Character) (H : ℂ → ℂ) (a Z : ℝ)
+    (S : Finset κ) (T : κ → Finset ι) (w Q : κ → ι → ℝ) (A η : κ → ι → ℂ) :
+    asymmetricSlotResidue χ H a Z S T w Q A η = (1/(2*Real.pi) : ℂ) * ∫ t : ℝ,
+      asymmetricKernel χ H a Z t * slotRatio S T w Q A η ((a : ℂ)+t*I) := by
+  unfold asymmetricSlotResidue
+  congr 1
+  apply integral_congr_ae
+  filter_upwards [raw_inverse_ae_reciprocal χ a] with t ht
+  simp only [asymmetricKernel, gaussianContourIntegrand, quotient, div_eq_mul_inv]
+  rw [ht]
+  ring
+
+theorem asymmetric_raw_slot_integrable (χ : Character) (H : ℂ → ℂ) (a Z : ℝ)
+    (S : Finset κ) (T : κ → Finset ι) (w Q : κ → ι → ℝ) (A η : κ → ι → ℂ)
+    (hi : Integrable (fun t : ℝ => asymmetricKernel χ H a Z t *
+      slotRatio S T w Q A η ((a : ℂ)+t*I))) :
+    Integrable (fun t : ℝ =>
+      (Z : ℂ)^(((a : ℂ)+t*I)+(signalOffset : ℂ)) *
+        Complex.exp ((((a : ℂ)+t*I)-5/6)^2) *
+        H ((a : ℂ)+t*I) / LFunction χ ((a : ℂ)+t*I) *
+          slotRatio S T w Q A η ((a : ℂ)+t*I)) := by
+  apply hi.congr
+  filter_upwards [raw_inverse_ae_reciprocal χ a] with t ht
+  unfold asymmetricKernel gaussianContourIntegrand quotient
+  simp only [div_eq_mul_inv, ht]
+  ring
 
 theorem weighted_principal_slot_error_on_perturbed_boundary
     {ι : Type*} (S : Finset ι) (w Q : ι → ℝ)
@@ -87,6 +130,7 @@ theorem principalSlot_differentiableAt_on_perturbed_boundary
     apply rpow_le_half Q _ hQ4
     norm_num
     unfold perturbedBoundary at hs
+    norm_num [boundary] at hs
     linarith
   have hcorr := bound_region_correction_defect_on_perturbed_boundary
     (w := (1 : ℂ)) (z := (1 / 6 : ℂ))

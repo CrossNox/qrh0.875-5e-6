@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighFloorNormalized
 
 namespace OAI
@@ -6,6 +7,7 @@ noncomputable section
 open scoped Classical BigOperators Topology ContDiff
 open Filter Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 open ProbeRaySlots HeckeDetectorPhysicalSelection
 local notation "O" => HeckeFamily.O
@@ -22,8 +24,8 @@ theorem perturbed_floor_cube_saving (N n : ℕ) (e eps c b A R dmin dmax rmin τ
     (hlengthShift : 0≤lengthShift)
     (he : 0<e) (he1 : e<1/1000) (heps : 0<eps) (hc : 0<c) (hcb : c≤b) (hA : 0≤A)
     (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax) (hrmin : 0<rmin)
-    (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh) (hδ : 0<δ)
-    (hbudget : 8*e*R+κ≤ε) (hgap : ε<rmin*mesh) (hmargin : 0<margin)
+    (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0< mesh) (hδ : 0<δ)
+    (hbudget : 8*e*R+κ≤ε) (hgap : ε<rmin*mesh) (hmargin : 0< margin)
     (hheight : 2*τ<dmin*cost) (hloss : τ*(2+4*eps)<loss)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hfirst : FirstTail (4*e) S)
     (hmax : ∀P∈S,P.IsMaximal)
@@ -38,11 +40,11 @@ theorem perturbed_floor_cube_saving (N n : ℕ) (e eps c b A R dmin dmax rmin τ
     (hr0 : ∀y,(W0 y).im=0) (hr1 : ∀y,(W1 y).im=0)
     (hp0 : ∀y,0≤(W0 y).re) (hp1 : ∀y,0≤(W1 y).re) (hn0 : W0≠0) (hn1 : W1≠0)
     (nu : ℝ) (hnu : 0<nu)
-    (ζ saving : ℝ) (hζ : 0≤ζ) (hrowtop : 13/16+3*lengthShift/2+ζ≤1) (_hsaving : 0<saving)
-    (htotal : 2*ζ+26*e+(N+8)*eps+loss+mesh/6+nu+lengthShift*(121/40+3*e+mesh)+saving≤7/1200) :
+    (ζ saving : ℝ) (hζ : 0≤ζ) (hrowtop : rowBase+3*lengthShift/2+ζ≤1) (_hsaving : 0<saving)
+    (htotal : 2*ζ+26*e+(N+8)*eps+loss+mesh/6+nu+lengthShift*(121/40+3*e+mesh)+skew*(67/100+6*e)+saving+boundaryReduction≤7/1200) :
     letI : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃C : ℝ,0<C ∧ ∀η : Character,∀ᶠ Z : ℝ in atTop,
-      ∀d : ℝ,dmin≤d → d≤dmax → ∀(v : ℝ),0≤v → v≤13/16+3*lengthShift/2+ζ → ∀rows : Finset FreeRow,
+      ∀d : ℝ,dmin≤d → d≤dmax → ∀(v : ℝ),0≤v → v≤rowBase+3*lengthShift/2+ζ → ∀rows : Finset FreeRow,
       (∀u∈rows,u.val≠1 ∧ Z^δ≤rowNorm u ∧
         (calibrationForSet S hmax).residueMonoid u.val≠0 ∧ rowNorm u≤Z^(d-margin)) →
       (∀u∈rows,rowNorm u≤Z^v) →
@@ -55,9 +57,9 @@ theorem perturbed_floor_cube_saving (N n : ℕ) (e eps c b A R dmin dmax rmin τ
         (Probe.principalScalar Finset.univ Z (1/6+lengthShift)
           (PrincipalSignalComparison.slotMass T (ProbePrincipalResidueActual.residueWeights W Yp)) : ℂ)
       normer≠0 ∧ ‖finiteCentralCubeRows S hS hmax η rows T (savingFloorPoolOutside M H S N c b Yp) (fun j y=>(W j y:ℂ)) Yp
-        W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e (fun _=>51/100) (fun _=>(3*i+1:ℕ)*Z^τ)/normer‖≤
+        W0 W1 (Z^(xBase-lengthShift/2:ℝ)) (Z^(yBase-lengthShift/2:ℝ)) Z e (fun _=>51/100) (fun _=>(3*i+1:ℕ)*Z^τ)/normer‖≤
         C*(η.modulus.absNorm:ℝ)^(2*eps)*
-          Z^(3/16-saving) := by
+          Z^(lowBase-boundaryReduction-saving) := by
   let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   obtain ⟨C,hC,hbound⟩ := perturbed_normalized_floor_cube M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh δ margin loss lengthShift
     hlengthShift he he1 heps hc hcb hA hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh hδ hbudget hgap hmargin hheight hloss
@@ -70,9 +72,14 @@ theorem perturbed_floor_cube_saving (N n : ℕ) (e eps c b A R dmin dmax rmin τ
   dsimp only
   have hh := hb d hd hd' v hv rows hrows hnorm i hi hbin
   refine ⟨hh.1,hh.2.trans ?_⟩
-  have hm := ProbeCentralExponent.floor_source_margin (1/100) 0 (3*lengthShift/2+ζ) v le_rfl (by linarith) (by linarith)
+  have hvold : v ≤ 13/16+3*lengthShift/2+ζ := by
+    have hskew := bound_skew.1
+    dsimp only [rowBase] at hvhi
+    linarith
+  have hm := ProbeCentralExponent.floor_source_margin (1/100) 0 (3*lengthShift/2+ζ) v le_rfl (by linarith) (by linarith [hvold])
   have hl := ProbeCentralExponent.realLoss_bound N v e eps loss mesh (by linarith [hrowtop]) he.le heps.le
   apply mul_le_mul_of_nonneg_left (Real.rpow_le_rpow_of_exponent_le hZ _) (by positivity)
+  have hlowBase : 3/16 ≤ lowBase := by norm_num [lowBase, skew]
   linarith
 
 end SevenEighths.ProbeHighRowFamily

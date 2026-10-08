@@ -9,6 +9,8 @@ open scoped Classical ContDiff SchwartzMap
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve
 
 local notation "O" => ActualEisensteinCubic.O
@@ -46,12 +48,12 @@ theorem perturbed_low_central_gaussian_dyads
           else ‖lowCommonDyad η (calibrationForSet S hS)
             W0 W1 (fun i => canonicalSlotSupport (T i))
             W (fun i => Z ^ (ell i)) J
-            (Z ^ (17 / 48 - t / 2))
-            (Z ^ (23 / 48 - t / 2)) ((2 : ℝ) ^ j)
+            (Z ^ (xBase - t / 2))
+            (Z ^ (yBase - t / 2)) ((2 : ℝ) ^ j)
             (Z ^ (1 + lowSelectedLength ell J)) V hV‖
         Summable f ∧
           (∑' j : ℕ, f j) ≤
-            C * Z ^ (3 / 16 - t / 4 + 256 * ε) := by
+            C * Z ^ (lowBase - t / 4 + 256 * ε) := by
   obtain ⟨degree, C, hC, he⟩ :=
     perturbed_low_central_gaussian_dyad η S hS hbad
       ell hell t ht htSmall hsum a b ε ha hε hε1
@@ -70,12 +72,12 @@ theorem perturbed_low_central_gaussian_dyads
     else ‖lowCommonDyad η (calibrationForSet S hS)
       W0 W1 (fun i => canonicalSlotSupport (T i))
       W (fun i => Z ^ (ell i)) J
-      (Z ^ (17 / 48 - t / 2))
-      (Z ^ (23 / 48 - t / 2)) ((2 : ℝ) ^ j) R V hV‖
+      (Z ^ (xBase - t / 2))
+      (Z ^ (yBase - t / 2)) ((2 : ℝ) ^ j) R V hV‖
   have hz : 0 < Z := lt_trans zero_lt_one hZ.1
   obtain ⟨hsm, hmb⟩ := hm R (by dsimp [R]; positivity)
   have hb (j : ℕ) : f j ≤
-      (C * Z ^ (3 / 16 - t / 4 + 254 * ε)) *
+      (C * Z ^ (lowBase - t / 4 + 254 * ε)) *
       (((2 : ℝ) ^ j) ^ ε *
         gaussianJointMoment V hV degree ((2 : ℝ) ^ j / R)) := by
     dsimp only [f]
@@ -97,19 +99,19 @@ theorem perturbed_low_central_gaussian_dyads
     dsimp [f]
     split_ifs <;> positivity
   have hsumf := Summable.of_nonneg_of_le hn hb
-    (hsm.mul_left (C * Z ^ (3 / 16 - t / 4 + 254 * ε)))
+    (hsm.mul_left (C * Z ^ (lowBase - t / 4 + 254 * ε)))
   refine ⟨hsumf, ?_⟩
   calc
     _ ≤ ∑' j : ℕ,
-        (C * Z ^ (3 / 16 - t / 4 + 254 * ε)) *
+        (C * Z ^ (lowBase - t / 4 + 254 * ε)) *
           (((2 : ℝ) ^ j) ^ ε *
             gaussianJointMoment V hV degree ((2 : ℝ) ^ j / R)) :=
       hsumf.tsum_le_tsum hb (hsm.mul_left _)
-    _ = (C * Z ^ (3 / 16 - t / 4 + 254 * ε)) *
+    _ = (C * Z ^ (lowBase - t / 4 + 254 * ε)) *
         (∑' j : ℕ, ((2 : ℝ) ^ j) ^ ε *
           gaussianJointMoment V hV degree ((2 : ℝ) ^ j / R)) :=
       tsum_mul_left
-    _ ≤ (C * Z ^ (3 / 16 - t / 4 + 254 * ε)) *
+    _ ≤ (C * Z ^ (lowBase - t / 4 + 254 * ε)) *
         (Cm * R ^ ε) :=
       mul_le_mul_of_nonneg_left hmb (by positivity)
     _ ≤ _ := by
@@ -117,7 +119,7 @@ theorem perturbed_low_central_gaussian_dyads
       rw [← Real.rpow_mul hz.le]
       calc
         _ = (C * Cm) *
-            (Z ^ (3 / 16 - t / 4 + 254 * ε) *
+            (Z ^ (lowBase - t / 4 + 254 * ε) *
               Z ^ ((1 + lowSelectedLength ell J) * ε)) := by ring
         _ ≤ _ := by
           rw [← Real.rpow_add hz]

@@ -1,0 +1,143 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{xurl}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newcommand{\Nm}{\mathrm{N}}
+\begin{document}
+\title{The exceptional Gram remainder after removing the exact bulk}
+\author{}
+\date{}
+\maketitle
+
+Fix $Q,Y'\geq1$ and $P=Y'^2/Q\geq1$. All arithmetic parameters lie in
+fixed polynomial ranges in $Z$. Write $q_C=\Nm C$, $q_d=\Nm d$ and
+$N=Y'/(q_Cq_d)$. The joint Schwartz profile is supported in a fixed
+annulus away from the origin. Its finitely many required seminorms are
+bounded by $\operatorname{height}^{J}R^{-B}$. The pulled-back periodic
+coefficient is formed after the $d$ scaling. Let its period be an ideal
+$r$ with $q_r=\Nm r\ll RP$ and assume its absolute value is at most
+$q_C$. Its exact mean is
+\[
+ \mu_{C,d,k}=q_r^{-2}\sum_{v\in(\mathcal O/r)^2}a_{C,d,k}(v).
+\]
+
+\begin{proposition}
+For a periodic coefficient $a$ of modulus $r$, bounded by $B_0$, and
+a joint annular Schwartz profile $W$, the lattice sum at scale $N>0$
+equals
+\[
+ \frac43\mu N^2\int_{\mathbb C^2}W+\mathcal R,
+ \qquad
+ |\mathcal R|\ll_W B_0N^2
+   \min\{1,(q_r/N)^A\},\quad A>2.
+\]
+The implicit constant uses finitely many Schwartz seminorms and is
+independent of $r,N,a$.
+\end{proposition}
+
+\begin{proof}
+Choose a generator of $r$ and apply the actual joint periodic Poisson
+formula in the pinned upstream source. The zero dual frequency has
+coefficient $\sum a=q_r^2\mu$. The inverse joint covolume multiplied
+by $q_r^2$ equals $4/3$. Scaling by $\sqrt N$ in four real dimensions
+contributes $N^2$. This gives the displayed bulk exactly.
+
+The remainder contains all nonzero dual frequencies, including those
+from the constant part of $a$. Its finite Fourier coefficients have
+absolute value at most $q_r^2B_0$. For $N\geq q_r$, the nonzero dual
+lattice estimate yields $(q_r/N)^A$. For $N<q_r$, the annular physical
+lattice bound controls the original sum by $O(B_0N^2)$ even when
+$N<1$. The bulk has the same bound since $|\mu|\leq B_0$ and the
+integral is controlled by a Fourier seminorm. Their difference gives
+the other part of the minimum.
+\end{proof}
+
+The centered coefficient $a-\mu$ has zero mean and absolute value at
+most $2B_0$. Its lattice sum satisfies the existing zero-mean annular
+engine. It is not by itself $\mathcal R$. The exact relation is
+\[
+ \mathcal R=\sum_m(a(m)-\mu)W_N(m)
+ +\mu\left(\sum_mW_N(m)-\frac43N^2\int W\right).
+\]
+This distinction is retained in the Lean module.
+
+\begin{lemma}
+For $A>1/6$ and every $\Lambda>0$,
+\[
+ \sum_{i,j\geq0}2^{-i/6-j}
+   \min\{1,(2^{i+j}/\Lambda)^A\}\ll_A\Lambda^{-1/6}.
+\]
+\end{lemma}
+\begin{proof}
+Set $m=i+j$. The sum of the weights at level $m$ is
+\[
+ 2^{-m}\sum_{i=0}^m2^{5i/6}
+ \leq(1-2^{-5/6})^{-1}2^{-m/6}.
+\]
+If $\Lambda\leq1$, the full geometric sum is bounded and
+$\Lambda^{-1/6}\geq1$. Otherwise take $m_0=\lfloor\log_2\Lambda\rfloor$.
+For $m\leq m_0$, sum the geometric progression with ratio
+$2^{A-1/6}$ after multiplying by $\Lambda^{-A}$. For $m>m_0$, sum
+$2^{-m/6}$. Both sums are $O_A(\Lambda^{-1/6})$.
+\end{proof}
+
+To sum over actual ideals, let $0<e<1/12$ and
+$\theta=1/6-2e$. For $u>0$ and $A\geq1$,
+$\min(1,u^A)\leq u^\theta$. Therefore
+\begin{align*}
+ q_C^{-7/6+e}q_d^{-2}\min\{1,(q_Cq_d/\Lambda)^A\}
+ &\leq\Lambda^{-1/6+2e}
+   q_C^{-1-e}q_d^{-11/6-2e}.
+\end{align*}
+Each ideal exponent is strictly below $-1$. The upstream
+\path{supportedIdeal_rpow_summable} theorem thus proves a bound
+uniform in all finite sets of supported $C,d$. The Lean theorem
+\path{centered_exceptional_supported_double_sum} formalizes
+this deduction without assuming the resulting double-sum bound.
+
+Assume the exceptional $k$ count is
+$O((RP/q_C)^{1/6}q_C^e)$ and the Gram normalization outside the
+blocks is $Q/Y'^3$. The local remainder above then gives a total at
+fixed $R$ bounded by
+\[
+ \operatorname{height}^J\frac Q{Y'}R^{-B+1/6}P^{1/6}
+ \sum_{C,d}q_C^{-7/6+e}q_d^{-2}
+   \min\{1,(RPq_Cq_d/Y')^A\}.
+\]
+Apply the ideal bound with $\Lambda=Y'/(RP)$ to obtain
+\[
+ \operatorname{height}^J\frac Q{Y'}P^{1/3}Y'^{-1/6}
+ R^{-B+1/3}\left(\frac{Y'}{RP}\right)^{2e}.
+\]
+Within the fixed polynomial ranges, choose $e$ sufficiently small
+to absorb the last factor into $Z^\varepsilon$. Choose $B$ large
+enough to sum $R$. This proves the paper-level remainder estimate
+\[
+ |E_{\rm exc}-E_{\rm bulk}|\ll
+ \operatorname{height}^J\frac Q{Y'}P^{1/3}Y'^{-1/6}Z^\varepsilon.
+\]
+The exact arithmetic bulk identification and its cancellation remain
+separate obligations. This estimate alone does not improve the
+frozen boundary. The diagonal comparison follows from $P^2\leq Y'$,
+which gives $P^{1/3}Y'^{-1/6}\leq1$. For rescaled subsets with
+$Q=q(X/L)(Y/L)$ and $Y'=Y/L$, one has
+\[
+ \frac{P^2}{Y'}=\frac{LY}{q^2X^2}.
+\]
+Thus $LY\leq q^2X^2$ suffices. In exponent notation with
+$q\geq1$, this is ensured by $2x-y-\ell\geq0$.
+
+\paragraph{Formal checkpoint.}
+The module \path{lean/GramCenteredRemainder.lean} proves coefficient
+centering, the exact $4/3$ bulk split, the direct nonzero Fourier
+remainder estimate, the annular bound at every $N>0$, and the
+supported-ideal summation with loss $2e$. The displayed arithmetic
+block normalization, exceptional count, height control, and
+polynomial-range absorption are explicit inputs to the paper-level
+assembly. They are not asserted as unconditional formal theorems.
+Run \texttt{uv run} \path{research/gram_remainder.py} to verify this checkpoint
+against upstream commit
+\path{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+\end{document}

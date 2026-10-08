@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighOrderedContours
 
 namespace OAI
@@ -19,7 +20,7 @@ theorem bound_residue_arithmetic_on_perturbed_region
     (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (X Z a ξ C : ℝ) (hX : 0 < X) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (AsymmetricGeometry.boundary : ℝ) ≤ a)
     (hξ : 33 / 200 ≤ ξ) (hξ1 : 6 * ξ ≠ 1)
     (hC : 0 ≤ C)
     (hR : ∀ s : ℂ, a ≤ s.re →
@@ -98,7 +99,7 @@ theorem continued_residue_pair_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (AsymmetricGeometry.boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 33 / 200 ≤ ξ) (hξ1 : 6 * ξ ≠ 1) :
     Integrable (fun q : ℝ × ℝ =>
@@ -141,7 +142,7 @@ theorem residue_pair_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (AsymmetricGeometry.boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 33 / 200 ≤ ξ) (hξ1 : 6 * ξ ≠ 1) :
     Integrable (fun q : ℝ × ℝ =>
@@ -178,7 +179,7 @@ theorem source_iterated_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (AsymmetricGeometry.boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -209,7 +210,7 @@ theorem residue_iterated_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (AsymmetricGeometry.boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 33 / 200 ≤ ξ) (hξ1 : 6 * ξ ≠ 1) :
     Integrable (fun t : ℝ => verticalIntegral ξ (fun z =>

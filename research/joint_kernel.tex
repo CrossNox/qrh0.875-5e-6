@@ -1,0 +1,596 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,hyperref}
+\usepackage{xurl}
+\newcommand{\OO}{\mathcal O}
+\newcommand{\Nm}{\mathrm N}
+\newcommand{\rad}{\operatorname{rad}}
+\begin{document}
+
+\title{The exact canonical sextic kernel for the joint detector}
+\author{}
+\date{}
+\maketitle
+
+All upstream references below use revision
+\begin{center}
+\texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+\end{center}
+No endpoint improvement is proved here.
+
+\paragraph{The actual characters.}
+The pinned source defines
+\[
+ \chi_u(K)=\eta(K)\,\mathfrak s(m^6f^4u,K),\qquad
+ \mathfrak s(u,K)=\prod_{P}\chi_P(u\bmod P)^{v_P(K)}.
+\]
+The first identity is the ideal version of
+\path{Hecke/InverseAmplificationFamily.lean:29} and
+\path{Eisenstein/CompactEnergyFamilies.lean:486}.
+Here \(\chi_P\) is the canonical sextic character, not an arbitrarily
+chosen character of order six. In
+\path{GaussSum/FiniteFourier.lean:801},
+\[
+ \chi_P=\mathrm{cubicChar}_P^2\,\mathrm{quadraticChar}_P.
+\]
+The cubic value is lifted using the reduction of the fixed Eisenstein
+root \(\omega\), with
+\(\overline{\mathrm{cubicChar}_P(x)}=x^{(\Nm P-1)/3}\).
+The bar in this identity denotes reduction, not complex conjugation.
+The resulting character has exact order six at odd primes away from
+\(1-\omega\), by
+\path{Arithmetic/EisensteinEmbedding.lean:471}.
+
+The inverse detector is a M\"obius polynomial. It does not conjugate
+the character. Consequently, its product with the plain polynomial
+uses \(\chi_u(dn)\). A reverse fiber conjugates both factors together.
+The fixed \(\eta\), \(m\), and \(f\) contribute coefficient phases and
+fixed masks. They do not change the following kernel in the variable
+\(u\) once those factors have been extracted.
+
+\paragraph{The joint energy and its period.}
+Let \(X=DN\) and \(s=\sigma-i\omega_0\). At a fixed common shift,
+the normalized product is
+\[
+ I_u P_u=X^{-1/2}\sum_K c_K\chi_u(K)
+       (\Nm K/X)^{-s},
+\]
+where
+\[
+ c_K=\sum_{dn=K}\mu(d)V(\Nm d/D_*)W_1(\Nm d/D)W_2(\Nm n/N).
+\]
+The exact finite polynomial expansion contains
+\[
+ X^{-1}\sum_{K,L} c_K\overline{c_L}
+ (\Nm K/X)^{-s}(\Nm L/X)^{-\bar s}
+ \chi_u(K)\overline{\chi_u(L)}.
+\]
+Each derivative of total order \(j+k\) inserts
+\((-1)^ji^k\log(\Nm K/X)^{j+k}\) into the product polynomial.
+These logarithms are bounded on its fixed annular support.
+Different rows may have different shifts. This displayed expansion
+therefore does not justify averaging rowwise witnesses at a common
+shift. Uniform derivative bounds and Sobolev transport are required.
+
+Write \(R=\rad(KL)\) and \(Q=\Nm R\).
+For each \(P\mid R\), put \(q_P=\Nm P\) and
+\(e_P=v_P(K)-v_P(L)\pmod6\), with representatives \(0,\ldots,5\).
+Then the variable part of the row kernel is
+\[
+ F_{K,L}(u)=\prod_{P\mid R}
+ \begin{cases}
+  \chi_P(u)^{e_P},&u\notin P,\\
+  0,&u\in P.
+ \end{cases}
+\]
+The zero mask persists when \(e_P=0\).
+For a local additive character \(\psi_P\), define
+\[
+ G_P(e,h)=\sum_{x\in\OO/P}(\chi_P^e)(x)\psi_P(hx).
+\]
+The zeroth power here is a multiplicative character, whose value at
+zero is zero. It is not the scalar convention \(0^0=1\).
+Under CRT, for an additive character expressed in local coordinates,
+\[
+ \widehat F_{K,L}(h)=\prod_{P\mid R}G_P(e_P,h_P).
+\]
+The exact local classification is
+\[
+ G_P(e,0)=
+ \begin{cases}q_P-1,&e=0,\\0,&e\ne0,\end{cases}
+ \qquad
+ G_P(0,h)=-1\quad(h\ne0).
+\]
+For \(e\ne0\), \(h\ne0\), and primitive \(\psi_P\),
+\[
+ G_P(e,h)=(\chi_P^e)(h)^{-1}\tau_P(e),
+ \qquad |\tau_P(e)|^2=q_P.
+\]
+These local identities are already formalized upstream in
+\path{Arithmetic/EisensteinEmbedding.lean:400--458}.
+An additive character with a minus sign replaces \(h\) by \(-h\).
+One must also include the actual CRT frequency scaling for the
+chosen global trace character.
+
+\paragraph{Exceptional pairs are sixth equivalent.}
+The complete zero frequency is exactly
+\[
+ \sum_{u\bmod R}F_{K,L}(u)=
+ \begin{cases}
+  \prod_{P\mid R}(q_P-1),&v_P(K)\equiv v_P(L)\pmod6\text{ for all }P,\\
+  0,&\text{otherwise}.
+ \end{cases}
+\]
+The exceptional class consists of
+\(K=A B^6\), \(L=A C^6\), where \(A\) has prime exponents in
+\(\{0,1,\ldots,5\}\). Distinct ideals can be exceptional.
+For example, \(K=P Q^7\) and \(L=P^7Q\) have the same complete
+kernel on units modulo \(PQ\), although \(K\ne L\) when \(P\ne Q\).
+Thus a claim of complete cancellation for every distinct pair is false.
+This does not falsify the proposed joint moment saving. The total
+resonant energy still requires summation with normalized coefficients.
+
+The new file \path{lean/JointKernelArithmetic.lean} proves the
+actual ideal identity
+\[
+ \mathfrak s(u,K A^6)=\mathfrak s(u,K)
+          \mathbf 1_{(A,(u))=1}.
+\]
+It also proves equality of the two sixth-twisted factors on their
+common unit set and canonical active and masked zero-mode identities.
+These statements preserve the support masks explicitly.
+
+\paragraph{What completion does not establish.}
+If \(K,L\) are coprime squarefree ideals with norm comparable to
+\(X\), then \(Q\asymp X^2\), all their local exponents are active,
+and every primitive nonzero complete Fourier kernel has norm
+\(\sqrt Q\asymp X\). A smooth row cutoff of area \(U\) has roughly
+\(Q/U\) significant dual frequencies. Bounding the completed sum
+term by term gives order \(\sqrt Q\), up to cutoff constants.
+Near \(r+m=1.123\), this is \(U^{1.123}\), which exceeds the
+trivial per-pair bound \(U\).
+Therefore complete zero-mode cancellation and local Gauss bounds alone
+do not yield the required joint energy
+\[
+ \sum_u |\partial_\sigma^j\partial_{\omega_0}^k(I_uP_u)|^2
+ \ll \mathrm{height}^J U^{1+(5/6)(r+m-1)-\eta+\rho},
+ \qquad j+k\le2,\quad\eta>0.
+\]
+The new estimate must control the weighted sum over \(K,L\) and
+nonzero dual frequencies. A detector fiber indicator also prevents
+direct use of the complete mean. One can dominate its nonnegative
+energy by the full family before derivative transport, but that step
+does not supply the missing cancellation.
+
+There is an exact finite formulation of the missing estimate.
+For a finitely supported row weight \(w\), set
+\[
+ w_R(x)=\sum_{u\equiv x\bmod R}w(u),\qquad
+ \widehat w_R(h)=\sum_{x\bmod R}w_R(x)\psi_R(-hx).
+\]
+Finite Fourier inversion gives
+\[
+ \sum_u w(u)F_{K,L}(u)
+   =Q^{-1}\sum_{h\bmod R}\widehat w_R(h)
+                    \prod_{P\mid R}G_P(e_P,h_P).
+\]
+Write
+\(a_K=c_K\eta(K)\mathfrak s(m^6f^4,K)(\Nm K/X)^{-s}\).
+Once the resonant pairs are bounded, the remaining target is a bound
+for the real part of
+\[
+ \frac1X\sum_{K\not\sim_6 L}a_K\overline{a_L}
+ \frac1{\Nm\rad(KL)}
+ \sum_{h\ne0}\widehat w_{\rad(KL)}(h)
+                \prod_{P\mid\rad(KL)}G_P(e_P,h_P)
+\]
+with exponent \(1+\frac56(r+m-1)-\eta+\rho\).
+The period and the Fourier transform of the row weight depend on the
+pair. This dependence must remain in a proposed bilinear estimate.
+
+Even at one prime, restricting a complete sum can remove its
+cancellation. For the subset \(S=\{u:\chi_P(u)=1\}\),
+\(\sum_{u\in S}\chi_P(u)=(q_P-1)/6\), whereas the complete sum is
+zero. This example diagnoses an invalid inference for arbitrary
+subsets. It makes no claim that the detector fibers equal \(S\).
+
+\paragraph{Exact computation.}
+Run
+\begin{verbatim}
+uv run research/joint_kernel.py \
+  --checkpoint research/joint_kernel.checkpoint.json
+\end{verbatim}
+The script models both primes above split rational primes and inert
+residue fields \(\mathbf F_p[\omega]/(\omega^2+\omega+1)\).
+It computes the canonical cubic and quadratic values by finite-field
+powering. It stores Fourier sums in
+\(\mathbf Z[\zeta_6,\zeta_p]\), imposing both cyclotomic relations.
+Gauss norm identities and complete joint exponent sums are checked
+with integers. No complex floating-point comparisons are used.
+The run checked 1,716 local Fourier kernels, including their canonical
+Gauss phases, and 1,440 direct joint exponent products in ten residue
+fields. It also records the size of the subset where the canonical
+character equals one.
+Checkpoints retain the script hash, pinned revision, field labels,
+and a digest of every exact Fourier kernel.
+Resume with \texttt{--resume}. A changed script requires a fresh run.
+
+\paragraph{Four shifts with the actual exponent labels.}
+For \(\theta=\chi_P^e\), \(1\le e\le5\), define
+\[
+ C_\theta(a,b,c,d)=\sum_{x\in\OO/P}
+ \theta(x+a)\theta(x+b)\overline{\theta(x+c)\theta(x+d)}.
+\]
+Let \(m_t=\#\{a,b\}\cap\{t\}-\#\{c,d\}\cap\{t\}\), where
+the counts include multiplicity. The exceptional divisor condition is
+\(e m_t\equiv0\pmod6\) for every distinct shift \(t\).
+On this exceptional variety the complete sum is exactly
+\(q_P-\#\{a,b,c,d\}\).
+For \(e=1,2,4,5\), the exceptional condition says that the numerator
+and denominator multisets agree. For \(e=3\), it additionally includes
+\(a=b\), \(c=d\), even if \(a\ne c\).
+Excluding only the usual paired shifts is therefore insufficient for
+a uniform square-root bound on the actual local exponent family.
+
+Three collision identities are exact. If \(b\ne d\) and
+\(\theta\ne1\),
+\[
+ C_\theta(0,b,0,d)=-1-\theta(b)\overline{\theta(d)},
+ \qquad |C_\theta(0,b,0,d)|\le2.
+\]
+For \(a\ne c\),
+\[
+ C_\theta(a,a,c,c)=
+ \begin{cases}q_P-2,&\theta^2=1,\\-1,&\theta^2\ne1.\end{cases}
+\]
+These statements are proved in \texttt{JointKernelArithmetic.lean}
+using the exact shifted-character correlation from the pinned source.
+
+For \(t\ne0,1\), the substitution \(y=x/(x+1)\), followed by
+\(z=(t-1)y/t\), gives the three-root Jacobi identity
+\[
+ C_\theta(0,0,1,t)=
+   \theta\!\left(\frac{t}{(t-1)^2}\right)
+       J(\theta^2,\theta^{-1})-1.
+\]
+The omitted point \(y=1\) has value one. The pole \(x=-1\) has
+value zero, so it contributes no additional term.
+If \(\theta^2\ne1\), both Jacobi characters and their product are
+nonprincipal, and the exact Jacobi product theorem gives
+\(|J(\theta^2,\theta^{-1})|^2=q_P\).
+Hence the three-root bound is \(\sqrt{q_P}+1\).
+The new Lean file proves this general Jacobi norm identity from
+\path{Mathlib.NumberTheory.JacobiSum.Basic}.
+The displayed M\"obius substitution is proved here algebraically and
+checked by the exact script, but is not formalized in Lean.
+
+For four distinct roots, the proposed bound
+\[
+ |C_\theta(a,b,c,d)|\le2\sqrt{q_P}+1
+\]
+is an unproved input in this work. No general finite-field Weil bound
+for this rational character sum was found in the imported Lean
+theorems. The script tests every translation and scaling class over
+the ten actual fields, for all five nonzero exponent labels.
+Its checkpoint labels this uniform bound as observed, not proved.
+The computations give two exact counterexamples to deleting the
+additive constant in this bound. Above the split rational prime
+\(19\), either embedding of \(\omega\) gives
+\[
+ C_{\chi_P}(0,1,2,3)=-9,\qquad 9^2>4\cdot19.
+\]
+In the inert field \(\mathbf F_{121}\),
+\[
+ C_{\chi_P^3}(0,1,\omega,3+5\omega)=-23,
+ \qquad 23=2\sqrt{121}+1.
+\]
+All four shifts are distinct in each example.
+The second example attains the proposed bound exactly.
+The script checked 93,210 normalized four-shift cases in total.
+
+\paragraph{The Type II reorganization and its cost.}
+At a fixed shift write
+\[
+ \alpha_d=\mu(d)V(\Nm d/D_*)W_1(\Nm d/D)(\Nm d/D)^{-s},
+ \qquad \beta_n=W_2(\Nm n/N)(\Nm n/N)^{-s}.
+\]
+Fixed base-character phases and masks can be included in these
+coefficients. The full Type II energy before grouping is
+\[
+ \frac1{DN}\sum_{d_1,d_2,n_1,n_2}
+ \alpha_{d_1}\overline{\alpha_{d_2}}
+ \beta_{n_1}\overline{\beta_{n_2}}
+ \mathcal K_w(d_1n_1,d_2n_2).
+\]
+Both M\"obius factors remain present.
+For the nonzero Fourier remainder, replace this full row kernel by
+\[
+ \mathcal K_w^{\ne0}(K,L)=
+   \frac1{\Nm\rad(KL)}\sum_{h\ne0}
+      \widehat w_{\rad(KL)}(h)\prod_{P\mid\rad(KL)}G_P(e_P,h_P).
+\]
+For nonresonant pairs this agrees with the full variable row kernel,
+since the complete zero mode vanishes. This statement keeps the
+fixed base phases in the coefficients \(\alpha_d\), \(\beta_n\).
+They do not guarantee sign cancellation in every sector.
+If \(d_1,d_2\) are distinct prime ideals, their product of M\"obius
+values is \(+1\). Taking \(n_1,n_2\) to be two further distinct
+prime ideals gives the full period \(\Nm\rad(d_1d_2n_1n_2)\asymp
+(DN)^2\). Thus the largest periods occur in a sector where these
+two M\"obius signs supply no cancellation.
+In the full Type II energy, the diagonal strips \(d_1=d_2\) and
+\(n_1=n_2\) reduce to the
+marginal plain and inverse energies with bounded annular weights.
+They are already order \(U^{1+\rho}\) when those marginal estimates
+hold. Removing these strips does not change the cardinality exponent
+of the remaining pairs.
+
+One exact Cauchy step for the full positive joint energy is instructive.
+For nonnegative \(w\), put
+\[
+ \begin{aligned}
+ A_u&=\sum_d\alpha_d\chi_u(d),\qquad
+ B_u=\sum_n\beta_n\chi_u(n),\\
+ T(d_1,d_2)&=\sum_u w(u)|B_u|^2
+                \chi_u(d_1)\overline{\chi_u(d_2)}.
+ \end{aligned}
+\]
+Then
+\[
+ E^2\le\frac{(\sum_d|\alpha_d|^2)^2}{D^2N^2}
+          \sum_{d_1,d_2}|T(d_1,d_2)|^2,
+\]
+and the latter sum is exactly
+\[
+ \sum_{u,v}w(u)w(v)|B_u|^2|B_v|^2
+ \left|\sum_d\chi_u(d)\overline{\chi_v(d)}\right|^2.
+\]
+This step replaces the signed M\"obius coefficients by their squared
+norm. It has not created a M\"obius saving. Reversing the roles of
+\(d\) and \(n\) retains the M\"obius factors in \(|A_u|^2|A_v|^2\),
+but requires a new bound for the correlated plain sum in the last
+factor.
+
+There is also an explicit cost even under a stronger hypothetical
+input. Suppose every nonexceptional incomplete pair kernel were
+bounded by \(U^{1/2+\rho}\). Summing its absolute value over
+\(D^2N^2\) pairs, then dividing by \(DN\), gives
+\[
+ E_{\mathrm{off}}\ll DN\,U^{1/2+\rho}
+       =U^{r+m+1/2+\rho}.
+\]
+At \((r,m)=(0.71499156,0.40839014)\), this exponent is
+\(1.62338170\). The required exponent before a saving is
+\(1+\frac56(r+m-1)=1.10281808\).
+The missing gain from the weighted average is therefore at least
+\[
+ (r+m+1/2)-\left(1+\frac56(r+m-1)\right)
+       =\frac{r+m}{6}+\frac13=0.52056362.
+\]
+Cauchy with only a mean square pair-kernel bound of order \(U\)
+has the same cost. Thus even hypothetical square-root cancellation
+for each pair does not prove the needed mixed moment by itself.
+
+The four-shift sums above are the complete local kernels produced by
+additive differencing of a fixed residue character. They are not a
+replacement for the actual Type II expression with varying periods
+\(\rad(d_1n_1d_2n_2)\).
+Applying them globally requires a proved reorganization that preserves
+those periods, their CRT scaling, and the signed coefficient average.
+That bridge and the required weighted saving remain unproved.
+
+\paragraph{A complete differencing kernel on the full-conductor sector.}
+Fix pairwise coprime squarefree \(d_1,d_2,n_1,n_2\), and put
+\(Q_0=d_1d_2n_1n_2\). The pair character is now a primitive product
+\(\Theta_{Q_0}=\prod_{P\mid Q_0}\chi_P^{e_P}\), where each
+\(e_P\) equals \(1\) or \(5\).
+For fixed additive translates \(a,b,c,d\), its complete four-shift
+correlation factors exactly as
+\[
+ \mathcal C_{Q_0}(a,b,c,d)=
+  \prod_{P\mid Q_0}C_{\chi_P^{e_P}}(a_P,b_P,c_P,d_P).
+\]
+The quadratic double-root exception is absent in this sector.
+Let \(E\) be the squarefree product of those primes \(P\mid Q_0\)
+for which either
+\((a_P,b_P)=(c_P,d_P)\) or
+\((a_P,b_P)=(d_P,c_P)\).
+The exact exceptional values, together with the unproved generic
+local bound, give the conditional estimate
+\[
+ |\mathcal C_{Q_0}(a,b,c,d)|
+    \le3^{\#\{P:P\mid Q_0\}}
+           \sqrt{\Nm Q_0\,\Nm E}.
+\]
+Keeping \(E\) is necessary when translates coincide modulo only
+some of the conductor primes.
+
+For two shifts, no new Weil input is needed. CRT and the exact
+nonprincipal shifted-character identity give
+\[
+ \sum_{x\bmod Q_0}\Theta_{Q_0}(x+h)
+                       \overline{\Theta_{Q_0}(x)}=
+ \prod_{P\mid Q_0}
+ \begin{cases}q_P-1,&h\in P,\\-1,&h\notin P.\end{cases}
+\]
+At shifts coprime to \(Q_0\), this complete correlation has norm
+one. Applying it to an incomplete row region still requires a
+controlled completion or differencing argument. It does not remove
+the dependence of \(Q_0\) on the original quadruple.
+
+\paragraph{Grouping by the reduced sextic label while retaining masks.}
+Write each nonzero ideal uniquely as \(K=A_K B_K^6\), with the
+prime exponents of \(A_K\) in \(\{0,\ldots,5\}\).
+For the following finite identity assume that each sixth part
+\(B_K\) is supported, as required by the upstream sixth-mask theorem.
+In particular this holds in the prime-product sector below, where
+the sixth part is one. The exact identity is
+\[
+ \sum_K a_K\mathfrak s(u,K)
+ =\sum_A\mathfrak s(u,A)
+       \sum_{K:A_K=A}a_K\mathbf1_{(B_K,(u))=1}.
+\]
+This finite grouping identity is now proved in
+\path{group_finite_ideal_rows_by_reduced_label_with_sixth_mask}.
+The inner coefficient depends on \(u\). Dropping that dependence
+would discard the sixth-power zero mask.
+An equivalent grouping has two labels \((A,T)\), where
+\[
+ T=\frac{\rad(B_K)}{\gcd(\rad(B_K),\rad(A))}.
+\]
+For that grouping put
+\[
+ C_{A,T}=\sum_{K:(A_K,T_K)=(A,T)}a_K.
+\]
+Then
+\[
+ \sum_K a_K\mathfrak s(u,K)
+ =\sum_{A,T}C_{A,T}\mathfrak s(u,A)
+                    \mathbf1_{(T,(u))=1}.
+\]
+Removing primes already dividing \(A\) from \(T\) is valid because
+\(\mathfrak s(u,A)\) itself vanishes there.
+
+For two labels \((A,T)\), \((A',T')\), the reduced multiplicative
+conductor is
+\[
+ Q_6=\prod_{v_P(A)-v_P(A')\not\equiv0\bmod6}P.
+\]
+The union zero mask is still supported on
+\(R=\rad(AA'TT')\). Its passive part is \(Z=R/Q_6\).
+Thus the pair kernel is a primitive character modulo \(Q_6\),
+multiplied by the coprimality mask at \(Z\), and its full period is
+\(R=Q_6Z\). Grouping by \(Q_6\) alone does not determine the kernel.
+Pairs with \(Q_6=1\) remain the sixth-equivalent exceptional pairs.
+
+\paragraph{Singleton prime products.}
+The actual source profile satisfies
+\(\operatorname{supp}W\subset(1/2,2)\), by
+\path{DetectorDictionaryInverseUniform.positiveAnnular_support_sharp}
+in \path{Dictionary/InverseUniformSource.lean:14}.
+Hence every product coefficient has \(\Nm K<4X\).
+If \(\Nm A\ge X\) and \(K=A B^6\) lies in this support, then
+\(B=1\). Indeed, a nonunit nonzero integral ideal has norm at least
+two, so \(\Nm K\ge64\Nm A\ge64X\).
+This implication is proved in
+\path{exclude_nontrivial_sixth_part_from_full_norm_annulus}.
+Every squarefree product \(PQ\) with \(\Nm P\ge D\) and
+\(\Nm Q\ge N\) therefore occupies a singleton reduced-label class.
+Its additional mask label is \(T=1\).
+
+Here are the precise source-window hypotheses for a square-mass
+lower bound. Choose fixed closed intervals
+\(J_I=[a_I,b_I]\), \(J_P=[a_P,b_P]\subset[1,2)\), of positive length,
+on which the real source profiles obey
+\(W_1\ge w_I>0\), \(W_2\ge w_P>0\).
+Assume \(D>4N\), \(N>2\), and that
+\(V(\Nm P/D_*)=1\) on the chosen inverse-prime interval.
+At the stated crossing the last condition holds for all sufficiently
+large \(U\) whenever \(r\le t_* -\kappa\), with \(\kappa>0\), because
+the actual cutoff is one on \([0,1]\).
+These positivity hypotheses hold for the actual
+\texttt{positiveAnnular}: for \(1\le y<2\) it equals
+\texttt{sieveBump}(y), since the cutoff at \(2y\) is zero.
+The bump has radii one and two and is positive inside its outer ball.
+Continuity gives a positive minimum on every closed subinterval of
+\([1,2)\). This assertion uses the concrete bump, not only a support
+condition for an arbitrary profile.
+
+For primes \(P,Q\) in these respective windows, the only divisors of
+\(PQ\) are \(1,P,Q,PQ\). Separation of the annuli makes the inverse
+weight vanish at \(1,Q,PQ\). Consequently
+\[
+ c_{PQ}=-W_1(\Nm P/D)W_2(\Nm Q/N),\qquad
+ |c_{PQ}|^2\ge w_I^2w_P^2.
+\]
+The factorization alternatives and this coefficient evaluation are
+proved in \path{classify_prime_product_factor_pair} and
+\path{evaluate_separated_prime_product_coefficient}.
+The separation also makes the map \((P,Q)\mapsto PQ\) injective.
+No M\"obius convolution cancellation occurs in this sector.
+
+The prime-counting input is available for these actual Eisenstein
+ideals in the pinned upstream. In
+\path{Hecke/RayPrimes.lean:38},
+\path{HeckeRayPrimes.classCoeff_ratio_tendsto} proves the
+ideal Mangoldt mass limit in a fixed principal ray class, with
+positive density \(A=(\operatorname{rayCard}M)^{-1}\).
+For a smooth nonnegative real bump \(\varphi\) supported inside
+either positive window, with positive integral, the theorem
+\path{PNT.AnnularPrimeMass.primeAnnularSum_log_div_tendsto}
+in \path{PrimeCounting/AnnularPrimeMass.lean:335} gives
+\[
+ \frac{\log x}{x}\sum_{P\in\mathcal C}
+       \varphi(\Nm P/x)\longrightarrow A\int\varphi>0.
+\]
+Its hypotheses include differentiability of \(\varphi\), continuity
+of its derivative, zero endpoint values and a positive lower endpoint.
+The displayed conclusion implies at least \(c x/\log x\) primes in
+the window, since \(\varphi\) is bounded. A fixed finite set of bad
+primes can be deleted once the window moves beyond their norms.
+These upstream results supply the counting input. The asymptotic
+lower bound below is deduced here and is not a new Lean theorem.
+
+It follows that, for the pure source coefficients and all sufficiently
+large \(D,N\), with fixed windows, ray class and deleted prime set,
+\[
+ \sum_K|c_K|^2\ \ge\sum_{P,Q}|c_{PQ}|^2
+       \gg \frac{DN}{\log D\log N}.
+\]
+The same lower bound holds after grouping by \((A,T)\), because
+these classes are singletons. Bounded common shifts multiply each
+singleton coefficient by a factor bounded above and below on the
+chosen windows. Fixed character phases have modulus one after the
+fixed bad primes are deleted. Thus the obstruction also applies to
+the unmarked shifted coefficient square norm.
+It rules out a uniform bound \(X^{1-\varepsilon}\), for any fixed
+\(\varepsilon>0\), obtained solely by cancellation in these grouped
+coefficients. It does not obstruct the desired joint energy: the
+normalized diagonal contribution remains only order \(U\), up to
+logarithms, below the target exponent.
+
+\paragraph{What remains after reduced-conductor grouping.}
+The nonresonant grouped energy still asks for a bound on
+\[
+ \frac1X\operatorname{Re}\sum_{(A,T)\not\sim_6(A',T')}
+ C_{A,T}\overline{C_{A',T'}}
+ \sum_u w(u)\mathfrak s(u,A)\overline{\mathfrak s(u,A')}
+                 \mathbf1_{(TT',(u))=1}.
+\]
+Here nonresonance means \(A\ne A'\), since both labels are sixth
+reduced. The weight, derivative transport and fixed coefficient
+phases must still be included as before. The singleton prime-product
+sector contains coprime pairs with \(\Nm Q_6\asymp X^2\), \(Z=1\),
+and positive products of the two M\"obius signs. Reduced-conductor
+grouping therefore neither removes the largest conductors nor
+forces coefficient sign cancellation on them.
+
+At \((r,m)=(0.71499156,0.40839014)\), the required exponent is
+\[
+ 1.10281808-\eta+\rho,\qquad \eta>0.
+\]
+The absolute use of even a hypothetical \(\sqrt U\) pair bound
+still has exponent \(1.62338170\), with the previously computed
+gap \(0.52056362\). The counting lower bound prevents recovering
+that gap from a coefficient square-norm power saving alone.
+A bound for the weighted average of the pair characters, with their
+active conductors and passive masks, remains the missing input.
+
+The exact script also checks this grouping for indicator annuli.
+In each run the square masses before and after masked grouping agree,
+and the maximum group size is one.
+\begin{center}
+\begin{tabular}{rrr}
+\((D,N)\) & Square mass & Prime products with \(c_{PQ}=-1\)\\
+\hline
+\((32,8)\) & 14 & 12\\
+\((128,16)\) & 229 & 110\\
+\((256,32)\) & 770 & 246\\
+\((512,64)\) & 2885 & 1140\\
+\((1024,64)\) & 5988 & 2085
+\end{tabular}
+\end{center}
+These are arithmetic checks using the actual split and inert prime
+ideals away from two and three. They use indicator profiles and do
+not simulate the smooth detector energy or the sixth-free row family.
+
+\end{document}

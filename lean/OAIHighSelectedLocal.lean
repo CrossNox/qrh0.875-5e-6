@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSelectedActual
 import OAIHighSelectedRamified
 import OAI.NumberTheory.DirichletL.PrimeRows.SelectedBounds
@@ -13,7 +14,7 @@ local notation "O" => HeckeFamily.O
 
 lemma continuedCompensatedLocal_ramified_bound_on_perturbed_boundary (η : Character) (u : FreeRow) (P : PrimeIdeal)
     (hs : Supported P.val) (hP : P.val∣Ideal.span {u.val}) (hQ : (4:ℝ)≤P.val.absNorm)
-    (x w z : ℂ) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (x w z : ℂ) (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖continuedCompensatedLocal η u P hs x w z
       (star (idealCoeff η P.val)*(P.val.absNorm:ℂ)^x) ((P.val.absNorm:ℂ)^(-w))‖≤
         385*(P.val.absNorm:ℝ)^(max (1-w.re) 0) := by
@@ -36,9 +37,10 @@ lemma continuedCompensatedLocal_ramified_bound_on_perturbed_boundary (η : Chara
 
 lemma continuedCompensatedLocal_unramified_bound_on_perturbed_boundary (η : Character) (u : FreeRow) (P : PrimeIdeal)
     (hs : Supported P.val) (hP : ¬P.val∣Ideal.span {u.val}) (hQ : (4:ℝ)≤P.val.absNorm)
-    (x w z : ℂ) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (x w z : ℂ) (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖continuedCompensatedLocal η u P hs x w z
       (star (idealCoeff η P.val)*(P.val.absNorm:ℂ)^x) ((P.val.absNorm:ℂ)^(-w))‖≤961 := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   let p := primaryGenerator P.val
   have hp : Prime p := supported_primeGenerator_prime P hs
   have hspan : Ideal.span {p}=P.val := span_primaryGenerator_of_supported P.val hs
@@ -66,7 +68,7 @@ lemma continuedCompensatedLocal_unramified_bound_on_perturbed_boundary (η : Cha
 
 lemma continuedCompensatedLocal_bound_on_perturbed_boundary (η : Character) (u : FreeRow) (P : PrimeIdeal)
     (hs : Supported P.val) (hQ : (4:ℝ)≤P.val.absNorm)
-    (x w z : ℂ) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (x w z : ℂ) (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖continuedCompensatedLocal η u P hs x w z
       (star (idealCoeff η P.val)*(P.val.absNorm:ℂ)^x) ((P.val.absNorm:ℂ)^(-w))‖≤
         961*(if P.val∣Ideal.span {u.val} then (P.val.absNorm:ℝ)^(max (1-w.re) 0) else 1) := by

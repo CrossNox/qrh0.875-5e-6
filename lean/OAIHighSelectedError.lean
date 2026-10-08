@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedError
 
 namespace OAI
@@ -8,9 +9,10 @@ open ProbeLocal
 
 lemma unramifiedMarked_selected_error_on_perturbed_boundary (Q : ℝ) (A eta v x w z : ℂ)
     (hQ : 4≤Q) (hA : ‖A‖≤1) (heta : ‖eta‖≤1) (hv : ‖v‖≤1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖unramifiedMarked Q A eta v x w z+coordD Q eta v x‖≤28 ∧
     ‖star eta*(Q:ℂ)^x‖*‖unramifiedMarked Q A eta v x w z+coordD Q eta v x‖≤28 := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   have hQ0 : 0<Q := by linarith
   have hQ1 : 1≤Q := by linarith
   let R := coordR Q A x z

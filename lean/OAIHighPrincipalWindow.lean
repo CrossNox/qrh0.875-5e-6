@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighPrincipalActualBound
 import OAI.NumberTheory.DirichletL.Detector.PrincipalResidueActual
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -35,15 +37,15 @@ theorem normalized_actual_window_residue_on_perturbed_boundary {κ : Type*}
           (slotMass T (residueWeights W scale)) : ℂ)
       normer≠0 ∧
       Integrable (fun t : ℝ => fixedPrincipalResidue (∏p∈E,p)^2/6 *
-        sourceMultiplier W0 W1 (Z^(17/48-lengthShift/2 : ℝ)) Y Z
+        sourceMultiplier W0 W1 (Z^(xBase-lengthShift/2 : ℝ)) Y Z
           (η.excludePrimes E hE.prime) ((a : ℂ)+t*I)
           (globalClosedCorrection η E ((a : ℂ)+t*I))
           (B ((a : ℂ)+t*I)) 1 (1/6)) ∧
       ‖sourceResidueIntegral W0 W1 (∏p∈E,p) (η.excludePrimes E hE.prime)
-          a (Z^(17/48-lengthShift/2 : ℝ)) Y Z
+          a (Z^(xBase-lengthShift/2 : ℝ)) Y Z
           (globalClosedCorrection η E) B / normer -
-          signal (η.excludePrimes E hE.prime) (sourceCorrection η E) (-11/16) Z‖ ≤
-        D*Z^(a-11/16)*P^(-PrincipalSlotEstimate.perturbedBoundary) := by
+          signal (η.excludePrimes E hE.prime) (sourceCorrection η E) signalOffset Z‖ ≤
+        D*Z^(a+signalOffset)*P^(-PrincipalSlotEstimate.perturbedBoundary) := by
   dsimp only
   let : NeZero (∏p∈E,p) := ⟨fixedPrimeProduct_ne_zero E hE.prime⟩
   obtain ⟨D,hD,hbound⟩ :=

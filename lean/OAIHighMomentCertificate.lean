@@ -1,4 +1,5 @@
 import OAIHighAssemblyMomentInput
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.Energy.CertifiedExistence
 
 namespace OAI
@@ -10,10 +11,25 @@ namespace SevenEighths.ProbeFinalAssembly
 open CenteredMomentEnergyCertifiedExistence
 open CenteredMomentEnergyCappedWidthInduction CenteredMomentEnergyWidthSchedule
 
+theorem bound_plain_moment_kappa_from_bootstrap
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
+    2 * HeckeZeroSupremum.beta - 1 ≤ (3 / 4 : ℝ) := by
+  linarith
+
+theorem admit_plain_moment_parameters
+    (hβ : AsymmetricGeometry.boundary < HeckeZeroSupremum.beta)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
+    (51 / 100 : ℝ) ≤ HeckeZeroSupremum.beta ∧
+      2 * HeckeZeroSupremum.beta - 1 ≤ (3 / 4 : ℝ) := by
+  constructor
+  · norm_num [AsymmetricGeometry.boundary] at hβ
+    linarith
+  · exact bound_plain_moment_kappa_from_bootstrap hβhi
+
 theorem perturbed_detector_certified_band
     {gap : ℝ} (D : Parameters.PerturbedHighData gap)
     (F : PerturbedSourceData D)
-    (hβ : (7 / 8 - 21 / 500000 : ℝ) < HeckeZeroSupremum.beta)
+    (hβ : AsymmetricGeometry.boundary < HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
     (bΦ : ℝ) (hbΦ : 0 < bΦ) :
     CertifiedBand (α := Fin D.N) F.modulus ⊤ le_top
@@ -36,8 +52,8 @@ theorem perturbed_detector_certified_band
   · norm_num
   · norm_num
   · exact div_pos D.small_pos (by norm_num)
-  · linarith
-  · linarith [hβ]
+  · exact (admit_plain_moment_parameters hβ hβhi).1
+  · exact (admit_plain_moment_parameters hβ hβhi).2
 
 end SevenEighths.ProbeFinalAssembly
 

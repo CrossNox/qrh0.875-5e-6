@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.PrimeRows.CentralErrorSaving
 
 namespace OAI
@@ -13,15 +14,15 @@ variable {ι : Type*} [Fintype ι]
 lemma central_source_crude_scale_with_perturbed_lengths
     {Z a e t : ℝ} (hZ : 1 ≤ Z) (ha : 0 ≤ a) (he : 0 ≤ e)
     (ht : 0 ≤ t) (ht' : t ≤ 1 / 30) :
-    (Z ^ (17 / 48 - t / 2 : ℝ)) ^ (1 / 2 - (17 / 50 : ℝ)) *
+    (Z ^ (AsymmetricGeometry.xBase - t / 2 : ℝ)) ^ (1 / 2 - (17 / 50 : ℝ)) *
       Z ^ (2 + (17 / 50 : ℝ) - 1) *
-      (Z ^ (23 / 48 - t / 2 : ℝ)) ^ ((1 - a - 6 * e) - 1) ≤ Z ^ (2 : ℝ) := by
+      (Z ^ (AsymmetricGeometry.yBase - t / 2 : ℝ)) ^ ((1 - a - 6 * e) - 1) ≤ Z ^ (2 : ℝ) := by
   have hZ0 : 0 < Z := lt_of_lt_of_le zero_lt_one hZ
   simp_rw [← Real.rpow_mul hZ0.le]
   rw [← Real.rpow_add hZ0, ← Real.rpow_add hZ0]
   apply Real.rpow_le_rpow_of_exponent_le hZ
-  have hly : 0 ≤ (23 / 48 : ℝ) - t / 2 := by linarith
-  have hneg : ((23 / 48 : ℝ) - t / 2) * (-a - 6 * e) ≤ 0 :=
+  have hly : 0 ≤ (AsymmetricGeometry.yBase : ℝ) - t / 2 := by linarith
+  have hneg : ((AsymmetricGeometry.yBase : ℝ) - t / 2) * (-a - 6 * e) ≤ 0 :=
     mul_nonpos_of_nonneg_of_nonpos hly (by linarith)
   nlinarith
 
@@ -42,7 +43,7 @@ lemma central_arithmetic_cost_bound_with_perturbed_lengths {K : ℕ}
     (Z b ζ t : ℝ) (hZ : 1 ≤ Z) (hb : 0 ≤ b)
     (hζ : ζ ≤ 1 / 48) (ht' : t ≤ 1 / 30)
     (hu : ((Ideal.span {u.val} : Ideal O).absNorm : ℝ) ≤
-      Z ^ ((13 / 16 : ℝ) + 3 * t / 2 + ζ))
+      Z ^ ((AsymmetricGeometry.rowBase : ℝ) + 3 * t / 2 + ζ))
     (length : Fin K → ℝ) (hlength : ∑ j, length j = (1 / 6 : ℝ) + t)
     (hP : ∀ j, ((P j).val.absNorm : ℝ) ≤ b * Z ^ (length j)) :
     contourArithmeticCost η u P ≤
@@ -51,7 +52,7 @@ lemma central_arithmetic_cost_bound_with_perturbed_lengths {K : ℕ}
   have hu' : ((Ideal.span {u.val} : Ideal O).absNorm : ℝ) ≤ Z :=
     hu.trans (by
       simpa using Real.rpow_le_rpow_of_exponent_le hZ
-        (show (13 / 16 : ℝ) + 3 * t / 2 + ζ ≤ 1 by linarith))
+        (show (AsymmetricGeometry.rowBase : ℝ) + 3 * t / 2 + ζ ≤ 1 by linarith))
   have hp := central_prime_product_bound_with_perturbed_lengths
     P Z b t hZ0 hb length hlength hP
   have hp0 : 0 ≤ ∏ j, ((P j).val.absNorm : ℝ) :=
@@ -86,14 +87,14 @@ theorem original_row_rectangle_arbitrary_saving_with_perturbed_lengths (K : ℕ)
     ∃C : ℝ,0≤C ∧ ∀(η : Character) (u : FreeRow),u.val≠1 →
       ∀(P : Fin K→PrimeIdeal),Function.Injective P → ∀hPS : ∀j,(P j).val∉S,
       ∀ψ : ι→Character,∀Z : ℝ,1≤Z →
-      ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤Z^((13/16:ℝ)+3*t/2+ζ) →
+      ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤Z^((AsymmetricGeometry.rowBase:ℝ)+3*t/2+ζ) →
       ∀length : Fin K→ℝ,(∑j,length j)=(1/6:ℝ)+t →
       (∀j,((P j).val.absNorm:ℝ)≤b*Z^(length j)) →
       ∀a B H : ℝ,∀i : ℕ,(51/100:ℝ)≤a → a≤1 → 2<B → Z^τ≤H → H≤(3*i+2:ℕ)*B →
       detectorMaximum (sourceDetectorFamily S hS.prime η u ψ) (3*(i+1:ℕ)*B)<a+2*e →
       ‖rowIntegral η S (calibrationForSet S hmax) (fun j=>CompletedGauss.primaryGenerator (P j).val)
-          W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z u-
-        centralRectangleIntegral S hS hmax P hPS η u W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z a e H‖≤
+          W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z u-
+        centralRectangleIntegral S hS hmax P hPS η u W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z a e H‖≤
         C*(η.modulus.absNorm:ℝ)^2*Z^(-saving) := by
   obtain ⟨N,hN⟩ := exists_nat_gt (((9:ℝ)+saving)/τ)
   have hN' : (9:ℝ)+saving<τ*N := by exact (div_lt_iff₀ hτ).mp hN |>.trans_eq (mul_comm _ _)
@@ -103,7 +104,7 @@ theorem original_row_rectangle_arbitrary_saving_with_perturbed_lengths (K : ℕ)
   intro η u hu P hP hPS ψ Z hZ huZ length hl hp a B H i ha haTop hB hHlo hH hbin
   have hZ0 : 0<Z := lt_of_lt_of_le zero_lt_one hZ
   have hH0 : 0≤H := (Real.rpow_nonneg hZ0.le τ).trans hHlo
-  have hmain := hbound η u hu P hP hPS ψ (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z
+  have hmain := hbound η u hu P hP hPS ψ (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z
     (Real.rpow_pos_of_pos hZ0 _) (Real.rpow_pos_of_pos hZ0 _) hZ a B H i ha haTop hB hH0 hH hbin
   have hcost := central_arithmetic_cost_bound_with_perturbed_lengths η u P Z b ζ t hZ hb.le hζ ht' huZ length hl hp
   have hscale := central_source_crude_scale_with_perturbed_lengths hZ (by linarith : 0≤a) he.le ht ht'

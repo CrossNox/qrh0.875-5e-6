@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSmallTail
 import OAIHighPhysicalDyad
 import OAI.NumberTheory.DirichletL.PrimeRows.PhysicalDyad
@@ -8,12 +9,13 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 local notation "O" => HeckeFamily.O
 
 theorem small_perturbed_physical_tail (K : ℕ) (e δ a b B t : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2)
-    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : (7/8-21 / 500000:ℝ)≤HeckeZeroSupremum.beta)
+    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : boundary≤HeckeZeroSupremum.beta)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
@@ -27,8 +29,8 @@ theorem small_perturbed_physical_tail (K : ℕ) (e δ a b B t : ℝ)
       ∀length : Fin K→ℝ,(∀i,0≤length i) → (∑i,length i)=(1/6:ℝ)+t →
       ∀W : Fin K→ℝ→ℂ,(∀i,Function.support (W i)⊆Icc a b) → (∀i y,‖W i y‖≤B) →
       (∑n∈F,‖finitePhysicalRows S hmax η (R n) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z‖)
-      ≤C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta-11/16-63/800+8*e+51*t/100) := by
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z‖)
+      ≤C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta+signalOffset+49*skew/150-63/800+8*e+51*t/100) := by
   obtain ⟨C,hC,hmain⟩ := small_physical_dyads_sum_on_perturbed_boundary K e δ a b B t he he' hδ hδ' ha hb hB hβ
     S hS hmax hfirst W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
   let N : ℝ := ‖((1/(2*Real.pi):ℝ):ℂ)^3‖
@@ -38,10 +40,10 @@ theorem small_perturbed_physical_tail (K : ℕ) (e δ a b B t : ℝ)
   have hmain' := hmain η Z hZ F hF R hR T hT hdis length hl0 hl W hWS hWB
   have hZ0 : 0<Z := lt_of_lt_of_le zero_lt_one hZ
   let g : ℕ→ℝ := fun n=>absolutePhysicalDyadIntegral S hS hmax η (R n) T hT W (fun i=>Z^(length i)) W0 W1
-    (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z (HeckeZeroSupremum.beta+8*e) (1/2) (17/50)
+    (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z (HeckeZeroSupremum.beta+8*e) (1/2) (17/50)
   have hbnd (n : ℕ) (hn : n∈F) :
       ‖finitePhysicalRows S hmax η (R n) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z‖≤N*g n := norm_finitePhysicalRows_le_absolute_on_perturbed_boundary
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z‖≤N*g n := norm_finitePhysicalRows_le_absolute_on_perturbed_boundary
     e (HeckeZeroSupremum.beta+8*e) (1/2) (17/50) he he' (by linarith) le_rfl
     (by linarith [HeckeZeroSupremum.beta_le_one]) le_rfl (by norm_num) le_rfl
     S hS hmax hfirst η (R n) (fun u hu=>(hR n hn u hu).1) T hT hdis W _ W0 W1
@@ -49,9 +51,9 @@ theorem small_perturbed_physical_tail (K : ℕ) (e δ a b B t : ℝ)
   calc
     _ ≤ ∑n∈F,N*g n := Finset.sum_le_sum hbnd
     _ = N*∑n∈F,g n := (Finset.mul_sum _ _ _).symm
-    _ ≤ N*(C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta-11/16-63/800+8*e+51*t/100)) :=
+    _ ≤ N*(C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta+signalOffset+49*skew/150-63/800+8*e+51*t/100)) :=
       mul_le_mul_of_nonneg_left hmain' hN
-    _ ≤ (1+N)*(C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta-11/16-63/800+8*e+51*t/100)) :=
+    _ ≤ (1+N)*(C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta+signalOffset+49*skew/150-63/800+8*e+51*t/100)) :=
       mul_le_mul_of_nonneg_right (by linarith : N≤1+N) (by positivity)
     _ = _ := by ring
 

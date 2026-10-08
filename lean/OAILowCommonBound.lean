@@ -9,6 +9,8 @@ open scoped Classical ContDiff SchwartzMap
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve
 
 local notation "O" => ActualEisensteinCubic.O
@@ -44,9 +46,9 @@ theorem perturbed_compensatedPhysicalProbe_low
         ‖compensatedPhysicalProbe η (calibrationForSet S hS)
           W0 W1 (fun i => canonicalSlotSupport (T i))
           W (fun i => Z ^ (ell i))
-          (Z ^ (17 / 48 - t / 2))
-          (Z ^ (23 / 48 - t / 2)) Z‖ ≤
-          C * Z ^ (3 / 16 - t / 4 + 256 * ε) := by
+          (Z ^ (xBase - t / 2))
+          (Z ^ (yBase - t / 2)) Z‖ ≤
+          C * Z ^ (lowBase - t / 4 + 256 * ε) := by
   obtain ⟨V, hV, hbudget, hidentity⟩ :=
     compensatedPhysicalProbe_common_gaussian W
       (fun _ => |Real.log a| + |Real.log b|)
@@ -76,7 +78,7 @@ theorem perturbed_compensatedPhysicalProbe_low
     (HasCompactSupport.of_support_subset_isCompact isCompact_Icc hW0)
     (HasCompactSupport.of_support_subset_isCompact isCompact_Icc hW1)
     _ hslots (fun i => Z ^ (ell i)) (fun i => by positivity)
-    (Z ^ (17 / 48 - t / 2)) (Z ^ (23 / 48 - t / 2))
+    (Z ^ (xBase - t / 2)) (Z ^ (yBase - t / 2))
     Z (by positivity) (by positivity) hz]
   apply (norm_sum_le _ _).trans
   have hterm (A : Finset (Fin K)) :
@@ -84,11 +86,11 @@ theorem perturbed_compensatedPhysicalProbe_low
         lowCommonDyad η (calibrationForSet S hS)
           W0 W1 (fun i => canonicalSlotSupport (T i))
           W (fun i => Z ^ (ell i)) A
-          (Z ^ (17 / 48 - t / 2))
-          (Z ^ (23 / 48 - t / 2)) ((2 : ℝ) ^ j)
+          (Z ^ (xBase - t / 2))
+          (Z ^ (yBase - t / 2)) ((2 : ℝ) ^ j)
           (Z * ∏ i ∈ Finset.univ \ A, Z ^ (ell i))
           (V A) (hV A)‖ ≤
-        C A * Z ^ (3 / 16 - t / 4 + 256 * ε) := by
+        C A * Z ^ (lowBase - t / 4 + 256 * ε) := by
     have hc : Z * (∏ i ∈ Finset.univ \ A, Z ^ (ell i)) =
         Z ^ (1 + lowSelectedLength ell A) := by
       rw [lowSelectedScale_product ell A Z hz,
@@ -131,9 +133,9 @@ theorem perturbed_original_ray_compensatedPhysicalProbe_low
         (fun i => canonicalSlotSupport
           (ProbeRaySlots.pool R S a b (Z ^ (ell i))))
         W (fun i => Z ^ (ell i))
-        (Z ^ (17 / 48 - t / 2))
-        (Z ^ (23 / 48 - t / 2)) Z‖ ≤
-        C * Z ^ (3 / 16 - t / 4 + 256 * ε) := by
+        (Z ^ (xBase - t / 2))
+        (Z ^ (yBase - t / 2)) Z‖ ≤
+        C * Z ^ (lowBase - t / 4 + 256 * ε) := by
   obtain ⟨C, hC, he⟩ :=
     perturbed_compensatedPhysicalProbe_low η S hmax hS.bad
       ell hell t ht htSmall hsum a b ε ha hε hε1

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.Detector.PrincipalNormalized
 
 namespace OAI
@@ -6,6 +7,7 @@ noncomputable section
 open scoped Classical BigOperators Topology ContDiff
 open Filter
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily ProbePhysical ProbeRaySlots PrincipalSignalComparison
 open PrincipalMellinResidues ProbePrincipalResidueActual
 local notation "O" => HeckeFamily.O

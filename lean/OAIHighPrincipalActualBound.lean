@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighPrincipalNormalizedIdentity
 import OAIHighGlobalCorrection
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -16,7 +18,7 @@ theorem sourceCorrection_differentiable_on_perturbed_boundary (η : Character)
     DifferentiableOn ℂ (sourceCorrection η E)
       {s : ℂ | perturbedBoundary < s.re} := by
   change DifferentiableOn ℂ (fun s => globalClosedCorrection η E s 1 (1/6))
-    {s : ℂ | (7/8-21 / 500000 : ℝ) < s.re}
+    {s : ℂ | (boundary : ℝ) < s.re}
   exact (global_closed_correction_analytic_x_on_perturbed_region η E hE 1 (1/6)
     (by norm_num) (by norm_num)).differentiableOn
 
@@ -51,13 +53,13 @@ theorem exists_normalized_actual_source_bound_on_perturbed_boundary
         (Probe.principalScalar S Z (1/6+lengthShift) (slotMass T w) : ℂ)
       normer ≠ 0 ∧
       Integrable (fun t : ℝ => fixedPrincipalResidue (∏ p ∈ E, p) ^ 2 / 6 *
-        sourceMultiplier W0 W1 (Z^(17/48-lengthShift/2 : ℝ)) Y Z
+        sourceMultiplier W0 W1 (Z^(xBase-lengthShift/2 : ℝ)) Y Z
           (η.excludePrimes E hE.prime) ((a : ℂ)+t*I)
           (globalClosedCorrection η E ((a : ℂ)+t*I)) (B ((a : ℂ)+t*I)) 1 (1/6)) ∧
       ‖sourceResidueIntegral W0 W1 (∏ p ∈ E, p) (η.excludePrimes E hE.prime)
-          a (Z^(17/48-lengthShift/2 : ℝ)) Y Z (globalClosedCorrection η E) B / normer -
-          signal (η.excludePrimes E hE.prime) (sourceCorrection η E) (-11/16) Z‖ ≤
-        D * Z^(a-11/16) * P^(-perturbedBoundary) := by
+          a (Z^(xBase-lengthShift/2 : ℝ)) Y Z (globalClosedCorrection η E) B / normer -
+          signal (η.excludePrimes E hE.prime) (sourceCorrection η E) signalOffset Z‖ ≤
+        D * Z^(a+signalOffset) * P^(-perturbedBoundary) := by
   dsimp only
   let : NeZero (∏ p ∈ E, p) := ⟨fixedPrimeProduct_ne_zero E hE.prime⟩
   obtain ⟨C, hC, hrec⟩ :=

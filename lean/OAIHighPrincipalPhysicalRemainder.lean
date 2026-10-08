@@ -17,7 +17,7 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Set.Icc a0 b0) (hW1 : Function.support W1⊆Set.Icc a1 b1)
     (e lengthShift : ℝ) (he : 0<e) (hehi : e≤1/1000)
-    (hβlo : (7/8-21/500000 : ℝ) ≤ HeckeZeroSupremum.beta)
+    (hβlo : (AsymmetricGeometry.boundary : ℝ) ≤ HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta ≤ 7/8)
     (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     letI : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
@@ -30,15 +30,15 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
     (∀j,(Ideal.absNorm η.modulus:ℝ)<c*Z^(ell j)) →
     ‖(∑P:(∀j,T j),(∏j,(W j ((Ideal.absNorm (P j).val.val:ℝ)/Z^(ell j)):ℂ))*
         principalRowIntegral η S (fun j=>primaryGenerator (P j).val.val)
-          W0 W1 (Z^(17/48-lengthShift/2:ℝ))
-          (Z^(23/48-lengthShift/2:ℝ)) Z)-
+          W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ))
+          (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z)-
       sourceResidueIntegral W0 W1 (∏p∈S,p) (η.excludePrimes S hS.prime)
-        (7/8+e) (Z^(17/48-lengthShift/2:ℝ))
-        (Z^(23/48-lengthShift/2:ℝ)) Z
+        (7/8+e) (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ))
+        (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z
         (globalClosedCorrection η S)
         (windowMultiplier η Finset.univ T (fun j x=>(W j x:ℂ))
           (fun j=>Z^(ell j)))‖≤
-      C/e*Z^(HeckeZeroSupremum.beta-11/16-1/4000) := by
+      C/e*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/4000) := by
   let : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   obtain ⟨C,hC,hbound⟩ :=
     ProbePrincipalRemainderBounds.source_remainders_fixed_contour_saving η S hS
@@ -55,7 +55,7 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
   have heq := principal_physical_pool_ordered η S hS T hT hdis
     (fun j p=>(W j ((Ideal.absNorm p.val:ℝ)/Z^(ell j)):ℂ))
     W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
-    (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z
+    (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z
     (7/8+e) e
     (Real.rpow_pos_of_pos hZ0 _) (Real.rpow_pos_of_pos hZ0 _) hZ0
     (by linarith) (by linarith) (by linarith) he (by linarith)
@@ -71,10 +71,10 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
   unfold sourceResidueIntegral windowMultiplier
   rw [hres,add_sub_cancel_right]
   have hn := (norm_add_le _ _).trans (add_le_add hb.1 hb.2)
-  change _≤(2*C)/e*Z^(HeckeZeroSupremum.beta-11/16-1/4000)
+  change _≤(2*C)/e*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/4000)
   apply hn.trans
   have hCe : C≤C/e := (le_div_iff₀ he).mpr (by nlinarith)
-  have hzpow : 0≤Z^(HeckeZeroSupremum.beta-11/16-1/4000) :=
+  have hzpow : 0≤Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/4000) :=
     Real.rpow_nonneg hZ0.le _
   have htwo : (2*C)/e=2*(C/e) := by ring
   rw [htwo]

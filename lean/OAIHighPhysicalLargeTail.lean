@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighLargeSaving
 import OAIHighPhysicalDyad
 import OAI.NumberTheory.DirichletL.PrimeRows.PhysicalDyad
@@ -8,6 +9,7 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 local notation "O" => HeckeFamily.O
 
@@ -19,16 +21,16 @@ theorem large_perturbed_physical_tail (K : ℕ) (δ a b B ζ t saving : ℝ)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1) :
     ∃C : ℝ,0<C ∧ ∀(η : Character) (Z : ℝ),1≤Z → ∀R : ℕ→Finset FreeRow,
-      (∀n u,u∈R n → u.val≠1 ∧ Z^((13/16:ℝ)+3*t/2+ζ)*(2:ℝ)^n≤((Ideal.span {u.val}:Ideal O).absNorm:ℝ) ∧
-        ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤2*(Z^((13/16:ℝ)+3*t/2+ζ)*(2:ℝ)^n)) →
+      (∀n u,u∈R n → u.val≠1 ∧ Z^(rowBase+3*t/2+ζ)*(2:ℝ)^n≤((Ideal.span {u.val}:Ideal O).absNorm:ℝ) ∧
+        ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤2*(Z^(rowBase+3*t/2+ζ)*(2:ℝ)^n)) →
       ∀(T : Fin K→Finset PrimeIdeal) (_hT : ∀i P,P∈T i→P.val∉S),
       (∀P:(∀i,T i),Function.Injective (fun i=>(P i).val)) →
       ∀length : Fin K→ℝ,(∀i,0≤length i) → (∑i,length i)=(1/6:ℝ)+t →
       ∀W : Fin K→ℝ→ℂ,(∀i,Function.support (W i)⊆Icc a b) → (∀i y,‖W i y‖≤B) →
       Summable (fun n=>finitePhysicalRows S hmax η (R n) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z) ∧
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z) ∧
       (∑'n,‖finitePhysicalRows S hmax η (R n) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z‖)
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z‖)
       ≤C*(η.modulus.absNorm:ℝ)^δ*Z^(-saving) := by
   obtain ⟨r,C,hr,hC,hmain⟩ := large_physical_tail_arbitrary_saving_with_perturbed_lengths K δ a b B ζ t saving hδ hδ' hζ ht ha hb hB
     S hS hmax hfirst W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
@@ -39,9 +41,9 @@ theorem large_perturbed_physical_tail (K : ℕ) (δ a b B ζ t saving : ℝ)
   obtain ⟨hgs,hgb⟩ := hmain η Z hZ R hR T hT hdis length hl0 hl W hWS hWB
   have hZ0 : 0<Z := lt_of_lt_of_le zero_lt_one hZ
   let f : ℕ→ℂ := fun n=>finitePhysicalRows S hmax η (R n) T W (fun i=>Z^(length i)) W0 W1
-    (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z
+    (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z
   let g : ℕ→ℝ := fun n=>absolutePhysicalDyadIntegral S hS hmax η (R n) T hT W (fun i=>Z^(length i)) W0 W1
-    (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z 2 2 r
+    (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z 2 2 r
   have hbnd (n : ℕ) : ‖f n‖≤N*g n := norm_finitePhysicalRows_le_absolute_on_perturbed_boundary
     (1/2000) 2 2 r (by norm_num) (by norm_num) (by norm_num)
     (by linarith [HeckeZeroSupremum.beta_le_one]) (by norm_num) (by norm_num) (by norm_num) hr

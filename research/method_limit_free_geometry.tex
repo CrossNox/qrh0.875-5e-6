@@ -1,0 +1,152 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,xurl,hyperref}
+\begin{document}
+\title{Independent probe lengths and the reflected mass loss}
+\author{}
+\date{October 8, 2026}
+\maketitle
+
+The physical probe and its principal Mellin identities do not require
+$x+y+\ell=1$.  This audit identifies the cost of removing that relation
+from the current reflected scalar estimate.  It does not prove a lower
+bound for the arithmetic row energy.
+
+Write
+\[
+ \begin{aligned}
+ x&=\frac{17}{48}-u,& y&=\frac{23}{48}-v,& \ell&=\frac16+w,\\
+ T&=u+v,& M&=x+y=\frac56-T.
+ \end{aligned}
+\]
+The principal scale has $h=1-x+\ell$.  Its exponent
+$x/2+s-1+h/6$ therefore changes by $-u/3+w/6$.
+The unpenalized LOW exponent changes by $-(5u+v)/12$.
+Their relative gain is $(T+2w)/12$.
+These identities alone do not justify using the old LOW estimate above
+total mass one.
+
+For the reflected scalar estimate, put
+\[
+ T_d=2H+2A_0+2z_a-1-\ell_0-\theta-N_0-3B_0.
+\]
+The original proof bounds $T_d\le H-3d+6\eta$ using $M+\ell=1$.
+Under the same remaining scalar gates, the unrestricted bound is
+\[
+ T_d\le H+(M+\ell-1)_+-3d+6\eta.
+\]
+The same hybrid-saving argument then gives
+\begin{equation}\label{eq:generalbound}
+ E_{\rm ref}\le M-2d+(M+\ell-1)_+
+   +\left(\frac{d+1+3\ell-2M}{4}\right)_++40\eta.
+\end{equation}
+This is proved against the actual upstream definition of
+\texttt{reflectedExponent} in
+\nolinkurl{lean/MethodLimitFreeGeometry.lean}, theorem
+\nolinkurl{bound_free_reflected_exponent_with_mass_penalty}.
+The mass-at-most-one corollary recovers the estimate without the added
+mass term.  The error parameter $\eta$ here is distinct from the desired
+boundary reduction $\varepsilon$.
+
+The added mass term is necessary for this scalar envelope.  Choose
+\[
+ \begin{aligned}
+ O_0&=A_0=N_0=S_0=B_0=\theta=0,& H&=M,\\
+ \ell_0&=z_a=\ell,& v&=T_d=2M+\ell-1,\\
+ \ell_{\rm cube}&=\ell_{\rm fourth}=0.
+ \end{aligned}
+\]
+The retained gate holds with equality.  If $M\ge1/2$ and $\ell\ge0$,
+the nonnegative width gates hold.  Since
+\[
+ U(v,z_a)=\min\{v,z_a,(v+z_a)/3\}\le z_a,
+\]
+the actual scalar functional satisfies
+\[
+ \begin{aligned}
+ E_{\rm ref}&=\max\{M,2M+\ell-1\}+\ell-U(2M+\ell-1,\ell)\\
+ &\ge M+(M+\ell-1)_+.
+ \end{aligned}
+\]
+Equality holds whenever $\ell\le2M-1$.
+In particular, $M\ge2\ell$ and $M+\ell\ge1$ imply that condition.
+The source inequalities $x\le y$ and $\ell\le2x-y$ imply
+$M\ge2\ell$.  Thus the witness applies throughout the excess-mass
+region of those source scales, even when the other positive part in
+\eqref{eq:generalbound} is active.
+
+As an exact counterexample to omitting the mass loss, take
+$M=21/25$ and $\ell=17/100$.  Then
+$1+3\ell-2M=-17/100$, but the witness has
+$E_{\rm ref}=17/20>21/25$.
+For the baseline $x,y$ with only $w=1/1000$ added, the Gram cap still
+holds with gap $123/2000$.  The principal gain is $1/6000$, while the
+reflected energy contributes a LOW exponent cost $1/2000$ after
+Cauchy--Schwarz.  The net LOW gain is $-1/3000$.
+
+Consequently, in source geometries with $M\ge1/2$ and $\ell\ge0$,
+the empty-subset scalar-envelope gain cannot exceed
+\[
+ G(T,w)=\frac{T+2w}{12}-\frac{(w-T)_+}{2}.
+\]
+If the other empty positive part is active, it can only reduce the gain
+further.  At the universal endpoint witness with $R=2/3$, $q=\delta/2$
+and the height parameter zero, the relative central cost is
+\[
+ K=\varepsilon+\frac{1+\delta}{2}T+\delta w.
+\]
+For $\delta\ge0$, imposing $\varepsilon\le G(T,w)$ gives the exact
+inequality
+\[
+ K\ge\varepsilon(3+6\delta)
+   +\frac{(T-w)_+}{3}
+   +(w-T)_+\left(\frac23+3\delta\right).
+\]
+No separate sign assumption on $u$ or $v$ is needed.  Below mass one,
+the residual cost is $(T-w)/3$.  Above mass one, it is
+$(w-T)(2/3+3\delta)$.  Equality in the geometry cost requires $w=T$.
+This proves that independent slot mass does not improve the critical
+endpoint obstruction within the present scalar-envelope proof.
+
+The transfer of this witness to that ceiling is restricted to source
+geometries with $M\ge1/2$ and $\ell\ge0$.
+The retained source family supplies the first condition explicitly:
+$x\le y$, $h=1-x+\ell$, $h<7/8$ and $\ell>(8/39)h$ imply
+\[
+ x>1-\frac{31}{39}h>\frac{95}{312},\qquad
+ M=x+y\ge2x>\frac{95}{156}>\frac12.
+\]
+The positive slot lengths supply $\ell\ge0$.
+The source-family bridge and the nonnegative dual-width consequence are
+proved in \nolinkurl{MethodLimitFreeGeometry.lean}.
+
+The corresponding fixed-mass endpoint ceiling is
+\[
+ \varepsilon\le\frac{16\sqrt{921}-485}{13224}.
+\]
+The transfer from the displayed scalar gain assumption to the actual
+endpoint obstruction is formalized separately in
+\nolinkurl{MethodLimitGeneral.bound_independent_slot_boundary_reduction}.
+This is not a limit for all methods.  An improvement would need to
+exclude the scalar witness using additional arithmetic information, or
+replace the reflected estimate.
+
+Source checks used the pinned upstream revision
+\nolinkurl{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+The arbitrary-scale physical weight is in
+\nolinkurl{Detector/PhysicalRows.lean:19}.
+The arbitrary-scale principal identity is
+\nolinkurl{Detector/PrincipalInput.lean:36}.
+The reflected functional and hybrid saving are in
+\nolinkurl{Inversion/TerminalWidths.lean:318--322}.
+The existing local use of the mass relation is
+\nolinkurl{lean/OAILowReflected.lean:30}.
+The exact numerical checkpoint is reproduced with
+\texttt{uv run} \nolinkurl{research/method_limit_free_geometry.py}.
+The complete local module compiled with Lean 4.34.1 in the isolated
+Docker toolchain.  The unrestricted upper bound, mass-cap corollary,
+lower witness, source-scale equality, explicit counterexample and
+combined central-cost inequality passed
+\texttt{\#assert\_standard\_axioms}.  Their only axioms are
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+\end{document}

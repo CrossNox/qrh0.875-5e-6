@@ -10,6 +10,8 @@ open scoped Classical ContDiff SchwartzMap
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve
 
 local notation "O" => ActualEisensteinCubic.O
@@ -46,12 +48,12 @@ theorem perturbed_low_all_gaussian_dyads
           lowCommonDyad η (calibrationForSet S hS)
             W0 W1 (fun i => canonicalSlotSupport (T i))
             W (fun i => Z ^ (ell i)) J
-            (Z ^ (17 / 48 - t / 2))
-            (Z ^ (23 / 48 - t / 2)) ((2 : ℝ) ^ j)
+            (Z ^ (xBase - t / 2))
+            (Z ^ (yBase - t / 2)) ((2 : ℝ) ^ j)
             (Z ^ (1 + lowSelectedLength ell J)) V hV
         Summable f ∧
           ‖∑' j : ℕ, f j‖ ≤
-            C * Z ^ (3 / 16 - t / 4 + 256 * ε) := by
+            C * Z ^ (lowBase - t / 4 + 256 * ε) := by
   obtain ⟨Cc, hCc, hcentral⟩ :=
     perturbed_low_central_gaussian_dyads η S hS hbad
       ell hell t ht htSmall hsum a b ε ha hε hε1
@@ -75,13 +77,15 @@ theorem perturbed_low_all_gaussian_dyads
     hc'.1 hr'.1
   refine ⟨hh.1, hh.2.trans ?_⟩
   have hp : Z ^ (-1 : ℝ) ≤
-      Z ^ (3 / 16 - t / 4 + 256 * ε) :=
-    Real.rpow_le_rpow_of_exponent_le hc.1.le (by linarith)
+      Z ^ (lowBase - t / 4 + 256 * ε) :=
+    Real.rpow_le_rpow_of_exponent_le hc.1.le (by
+      have hbase : 0 ≤ lowBase := by norm_num [lowBase, skew]
+      linarith)
   calc
-    _ ≤ Cc * Z ^ (3 / 16 - t / 4 + 256 * ε) +
+    _ ≤ Cc * Z ^ (lowBase - t / 4 + 256 * ε) +
         Cr * Z ^ (-1 : ℝ) := add_le_add hc'.2 hr'.2
-    _ ≤ Cc * Z ^ (3 / 16 - t / 4 + 256 * ε) +
-        Cr * Z ^ (3 / 16 - t / 4 + 256 * ε) :=
+    _ ≤ Cc * Z ^ (lowBase - t / 4 + 256 * ε) +
+        Cr * Z ^ (lowBase - t / 4 + 256 * ε) :=
       add_le_add le_rfl (mul_le_mul_of_nonneg_left hp hCr.le)
     _ = _ := by ring
 

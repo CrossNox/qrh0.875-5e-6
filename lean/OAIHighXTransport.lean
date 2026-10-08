@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighResidueMoments
 import OAI.NumberTheory.DirichletL.Detector.PrincipalTransport
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -24,7 +26,7 @@ theorem principal_box_majorant_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξlo : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξlo : 1 / 6 < ξlo) :
     ∃ A : ℝ, 0 ≤ A ∧
       ∀ σ ∈ Icc a 3, ∀ ξ ∈ Icc ξlo 2, ∀ p : HeightSpace,
@@ -35,6 +37,7 @@ theorem principal_box_majorant_on_perturbed_region
           (6 * ((ξ : ℂ) + p.1.2 * I)) *
         LFunction (fixedSourcePrincipal S hS.prime)
           ((3 : ℂ) + p.2 * I)‖ ≤ A * jointEnvelope 8 p := by
+  norm_num [boundary] at ha
   obtain ⟨C, hC, hR⟩ := HeckeReciprocalGrowth.polynomial_reciprocal_bound
     (η.excludePrimes S hS.prime) a hβ
   obtain ⟨D, hD, hd⟩ := ProbeRadialMellin.radial_mellin_strip_decay
@@ -101,7 +104,7 @@ theorem continued_x_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) < a) (ha3 : a ≤ 3)
+    (ha : (boundary : ℝ) < a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) (v u : ℝ) :
     verticalIntegral a (fun s =>
@@ -118,6 +121,7 @@ theorem continued_x_shift_on_perturbed_region
         (6 * ((ξ : ℂ) + v * I)) *
       LFunction (fixedSourcePrincipal S hS.prime)
         ((3 : ℂ) + u * I)) := by
+  norm_num [boundary] at ha
   obtain ⟨A, hA, hb⟩ := principal_box_majorant_on_perturbed_region
     η S hS hTail J T b hT W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
     X Y Z a ξ hX hY hZ ha.le hβ hξ

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighFloorGlobal
 import OAIHighCentralExponent
 import OAI.NumberTheory.DirichletL.Detector.CentralExponent
@@ -8,6 +9,7 @@ noncomputable section
 open scoped Classical BigOperators Topology ContDiff
 open Filter Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 open ProbeRaySlots HeckeDetectorPhysicalSelection
 local notation "O" => HeckeFamily.O
@@ -24,8 +26,8 @@ theorem perturbed_global_floor_cube_norm (N n : ℕ) (e eps c b A R dmin dmax rm
     (hlengthShift : 0≤lengthShift)
     (he : 0<e) (he1 : e<1/1000) (heps : 0<eps) (hc : 0<c) (hcb : c≤b) (hA : 0≤A)
     (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax) (hrmin : 0<rmin)
-    (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh) (hδ : 0<δ)
-    (hbudget : 8*e*R+κ≤ε) (hgap : ε<rmin*mesh) (hmargin : 0<margin)
+    (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0< mesh) (hδ : 0<δ)
+    (hbudget : 8*e*R+κ≤ε) (hgap : ε<rmin*mesh) (hmargin : 0< margin)
     (hheight : 2*τ<dmin*cost) (hloss : τ*(2+4*eps)<loss)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hfirst : FirstTail (4*e) S)
     (hmax : ∀P∈S,P.IsMaximal)
@@ -47,11 +49,11 @@ theorem perturbed_global_floor_cube_norm (N n : ℕ) (e eps c b A R dmin dmax rm
       let Yp : Fin N→ℝ := fun j=>Z^(ell j)
       let T : Fin N→Finset ProbePhysical.PrimeIdeal := fun j=>pool (RayQuotient.identityClass M H) S c b (Yp j)
       ‖finiteCentralCubeRows S hS hmax η rows T (globalFloorIntegralPoolOutside M H S N c b Yp) W Yp
-        W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e (fun _=>51/100) (fun _=>(3*i+1:ℕ)*Z^τ)‖≤
+        W0 W1 (Z^(xBase-lengthShift/2:ℝ)) (Z^(yBase-lengthShift/2:ℝ)) Z e (fun _=>51/100) (fun _=>(3*i+1:ℕ)*Z^τ)‖≤
         C*(η.modulus.absNorm:ℝ)^(2*eps)*
           Z^(ProbeCentralExponent.sourceExponent (51/100) v 1 (1/100)+
             ProbeCentralExponent.realLoss N v e eps loss mesh+
-            lengthShift*(1/40+3*e+mesh)) := by
+            lengthShift*(1/40+3*e+mesh)+skew*(67/100+6*e)) := by
   obtain ⟨Ca,hCa,hbound⟩ := perturbed_global_floor_cube_arithmetic M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh δ margin loss lengthShift
     hlengthShift he he1 heps hc hcb hA hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh hδ hbudget hgap hmargin hheight hloss
     S hS hfirst hmax ell hell hello hellhi W hWs hW hWB hellsum
@@ -71,16 +73,17 @@ theorem perturbed_global_floor_cube_norm (N n : ℕ) (e eps c b A R dmin dmax rm
   have hp := hprofile e (51/100) (Z^τ) ((3*i+1:ℕ)*Z^τ) i he he1 le_rfl (by norm_num)
     hZ.2 hheight S hS hmax hfirst η rows (fun u hu=>(hrows u hu).1) T
     (globalFloorIntegralPoolOutside M H S N c b Yp) (rayCubeFamily M H hH) hbin W Yp
-    (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z (by positivity) (by positivity) hZp mass (by dsimp [mass];positivity)
+    (Z^(xBase-lengthShift/2:ℝ)) (Z^(yBase-lengthShift/2:ℝ)) Z (by positivity) (by positivity) hZp mass (by dsimp [mass];positivity)
     (hb d hd hd' v hv rows hrows hnorm i hi hbin)
   apply hp.trans_eq
   rw [physical_scale_identity_with_perturbed_lengths Z (51/100) e lengthShift hZp]
+  simp only [show (51/100 : ℝ)+4/25=67/100 by norm_num]
   have hpowers : Z^((25/48)*(51/100)-181/300+(105/8)*e+
-        lengthShift*((51/100)/2+3*e-2/25))*
+        lengthShift*((51/100)/2+3*e-2/25)+skew*(67/100+6*e))*
       Z^(v*(67/100+12*e+eps*(N+8))+loss+(1/6+lengthShift)*(-3/20+mesh))=
       Z^(ProbeCentralExponent.sourceExponent (51/100) v 1 (1/100)+
         ProbeCentralExponent.realLoss N v e eps loss mesh+
-            lengthShift*(1/40+3*e+mesh)) := by
+            lengthShift*(1/40+3*e+mesh)+skew*(67/100+6*e)) := by
     rw [←Real.rpow_add hZp]
     congr 1
     unfold ProbeCentralExponent.sourceExponent ProbeCentralExponent.realLoss
@@ -88,7 +91,7 @@ theorem perturbed_global_floor_cube_norm (N n : ℕ) (e eps c b A R dmin dmax rm
   dsimp [mass]
   calc
     _ = (Cp*Ca)*(η.modulus.absNorm:ℝ)^(2*eps)*(Z^((25/48)*(51/100)-181/300+(105/8)*e+
-        lengthShift*((51/100)/2+3*e-2/25))*
+        lengthShift*((51/100)/2+3*e-2/25)+skew*(67/100+6*e))*
       Z^(v*(67/100+12*e+eps*(N+8))+loss+(1/6+lengthShift)*(-3/20+mesh))) := by ring
     _ = _ := by rw [hpowers]
 

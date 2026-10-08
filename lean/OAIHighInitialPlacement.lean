@@ -1,5 +1,7 @@
+import OAIAsymmetricGeometry
 import OAIHighTripleTransport
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -23,7 +25,7 @@ theorem source_initial_placement_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) < a) (ha3 : a ≤ 3)
+    (ha : (boundary : ℝ) < a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (he : 0 < e) (he2 : e ≤ 11 / 6) :
     let K := fun s => sourceMultiplier W0 W1 X Y Z
@@ -36,6 +38,7 @@ theorem source_initial_placement_on_perturbed_region
     verticalIntegral a (fun s => verticalIntegral (1 / 6 + e)
       (fun z => verticalIntegral 3
         (fun w => K s w z * LFunction π (6 * z) * LFunction π w))) := by
+  norm_num [boundary] at ha
   dsimp only
   rw [← continued_triple_eq_raw η S hS.prime J T b W0 W1 X Y Z 3 2 3,
     ← continued_triple_eq_raw η S hS.prime J T b W0 W1 X Y Z
@@ -60,7 +63,7 @@ theorem source_initial_ordered_at_a_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) < a) (ha3 : a ≤ 3)
+    (ha : (boundary : ℝ) < a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (he : 0 < e) (he2 : e ≤ 11 / 6) :
     let K := fun s => sourceMultiplier W0 W1 X Y Z

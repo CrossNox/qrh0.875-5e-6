@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.Detector.HighRowsRamified
 
 namespace OAI
@@ -15,12 +16,13 @@ variable (p : O) (hp : Prime p) [(Ideal.span {p} : Ideal O).IsMaximal]
 include hc in
 theorem bound_row_marked_term_on_perturbed_region (eta a rho x w z : ℂ)
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re)
     (j e l k m : ℕ) (ht : 0 < e + 3 * l) (hk : k ≤ 1) :
     ‖rowMarkedTerm p hp hg eta a ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-x))
       ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-w))
       (coordV (Ideal.absNorm (Ideal.span {p})) z) rho j e l k m‖ ≤ 2 := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   rw [← sourceRowTerm_pos p hp hg eta a rho x w z j e l k m (by omega)]
   apply (sourceRowTerm_norm_le p hp hg hc eta a rho x w z heta ha hρ
     j e l k m ht hk).trans
@@ -49,9 +51,10 @@ theorem bound_second_region_v_on_perturbed_region (Q : ℝ)
 
 theorem bound_second_region_r_on_perturbed_region (Q : ℝ)
     (hQ : 4 ≤ Q) (a x z : ℂ) (ha : ‖a‖ ≤ 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖evenRatio Q a ((Q : ℂ) ^ (-x)) (coordV Q z)‖ ≤ 1 / 2 := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   rw [evenRatio_eq_coordR Q (by linarith)]
   apply (coordR_norm_le Q (by linarith) (a ^ 2) x z
     (by simpa only [norm_pow] using pow_le_one₀ (norm_nonneg a) ha)).trans
@@ -61,7 +64,7 @@ include hc in
 theorem bound_row_base_finite_on_perturbed_region (eta a rho x w z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re)
     (j e l : ℕ) (ht : 0 < e + 3 * l) :
     ‖rowBaseFinite p hp hg eta a ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-x))
@@ -94,7 +97,7 @@ include hc in
 theorem bound_row_closed_marked_on_perturbed_region (eta a rho x w z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) (j : ℕ) :
     ‖rowClosedMarked p hp hg eta a
       ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-x))
@@ -124,7 +127,7 @@ include hc in
 theorem bound_ramified_closed_on_perturbed_region (eta a rho x w z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) (j : ℕ) :
     ‖ramifiedClosed p hp hg eta a rho x w z j‖ ≤ 193 := by
   have hb := bound_row_closed_marked_on_perturbed_region p hp hg hc

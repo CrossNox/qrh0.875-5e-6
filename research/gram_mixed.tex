@@ -1,0 +1,420 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{xurl}
+\title{Arithmetic cancellation in the mixed low row}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\section{The mixed low row}
+
+The arbitrary row Cauchy inequality uses only the norm of the completed
+row. An improvement must estimate its correlation with the additive
+column before taking absolute values. The identities below isolate the
+complete principal correlation. The conductor arguments then bound
+specified ranges of the incomplete sum.
+
+Write $I$ for the squarefree completed column and $J$ for its cubic divisor
+variable. With $A=IJ^3$, the upstream definitions give
+\[
+ \operatorname{summand}(\Psi,W,T,I,J)
+ =\gamma_2(I)\overline{\alpha(A)}\Psi(A)
+       \frac{q_J^{1/2}}{T^{1/2}}W(q_A/T).
+\]
+Here $\gamma_2(I)=\texttt{gaussTwo}(I)$ is the normalized cubic Gauss coefficient. Its modulus
+is one on supported squarefree columns. All zero masks remain in $\Psi$.
+The marked row multiplies this expression by $1_{D\mid A}$.
+The additive polynomial has the exact normalization
+\[
+ A_{\sigma,m}(v)=Y^{-3/2}\sum_s c_\sigma(s)
+       W_1(q_s/Y)(q_s/Y)^{-1+iv}g_s(-m).
+\]
+Write $a_{\sigma,v}(s)=c_\sigma(s)W_1(q_s/Y)(q_s/Y)^{-1+iv}$.
+
+For a finite field $F$, a multiplicative character $\chi$, and an additive
+character $\psi$, put $G_\chi(h)=\sum_x\chi(x)\psi(hx)$.
+The upstream finite Gauss convolution proves the exact identity
+\[
+ \sum_{m\in F}\rho(m)G_\chi(-m)
+ =\begin{cases}
+   \rho(-1)^{-1}\tau(\rho)(|F|-1),&\chi=\rho,\\
+   0,&\chi\ne\rho.
+  \end{cases}
+\]
+The multiplicative characters are extended by zero at zero, including
+the principal character. In the mixed row, the good prime exponent of
+$\rho$ is $v_{\mathfrak p}(I)+3v_{\mathfrak p}(J)$.
+An absent prime factor is the constant function one instead. For a source
+prime of exponent one this distinction has no effect since $G_\chi(0)=0$.
+At an arbitrary local dual frequency $k$, the exact transform is
+\[
+ \sum_{m\in F}\rho(m)G_\chi(-m)\psi(km)
+   =\chi(-1)^{-1}\tau(\chi)G_{\rho\chi^{-1}}(k).
+\]
+This identity includes the zeros of $\rho\chi^{-1}$.
+For an absent row factor, the transform is instead $|F|\chi(k)$.
+These formulas retain the arithmetic dependence needed for a mixed
+nonzero frequency estimate.
+
+Suppose first that $s$ and $I$ are squarefree. At every good prime the
+complete principal condition is
+\[
+ v_{\mathfrak p}(I)+3v_{\mathfrak p}(J)
+        \equiv v_{\mathfrak p}(s)\pmod6.
+\]
+Since the two squarefree exponents belong to $\{0,1\}$, this is equivalent
+to equality of those exponents and evenness of $v_{\mathfrak p}(J)$.
+Thus the good prime resonance is exactly $I=s$, $J=b^2$, and $A=sb^6$.
+The original source and completed masks make $s$ and $A$ prime to $S$.
+By \texttt{calibrationForSet\_span}, the calibration modulus is exactly
+$\prod_{\mathfrak p\in S}\mathfrak p$. Its local residue character is
+nonprincipal at every prime of $S$. The exact
+\texttt{rowCoefficient\_apply} formula shows that all other dependence on
+$m$ is $\chi_A(m)$. The target character, reciprocity phase, and completed
+correction are evaluated at $A$ and do not depend on $m$.
+Thus CRT separates the calibration mean from every good prime mean.
+For nonempty $S$ the calibration mean is zero. The upstream theorem
+\texttt{calibration\_mixed\_fourier\_zero} at $H=0$ therefore gives
+\[
+ \mathcal M_{\rm full\ complete\ mean}=0.
+\]
+This covers all original fixed phases and requires no loss depending on
+height. The higher powers in the Mellin phase are in the smooth row
+profile and are not part of the complete arithmetic mean.
+
+Higher source powers cannot contribute to the complete principal mean.
+At a good prime of source exponent $a\ge2$, its Gauss transform is
+supported on $\mathfrak p^{a-1}\mid m$. If $\mathfrak p\mid A$, the
+completed character retains a zero mask on $\mathfrak p\mid m$, so the
+product is zero pointwise. If $\mathfrak p\nmid A$, the completed row is
+constant at this prime and the complete mean of the Gauss transform is
+zero. This last assertion follows by summing its defining additive
+character over $m$. Every nonzero source residue has zero additive mean.
+
+The good prime principal factor, before its zero calibration mean is
+applied, has a bound stronger than the existing product of norm bounds.
+Assume fixed compact windows $q_s\asymp Y$, $q_A\asymp T$, with
+$T\ge cY>0$. On the resonance $J=b^2$ the completed weight is
+$q_b/T^{1/2}$. The ideal count gives
+\[
+ \sum_{q_b\ll(T/Y)^{1/6}}\frac{q_b}{T^{1/2}}
+ \ll T^{-1/6}Y^{-1/3}.
+\]
+The normalized local complete Gauss mean has modulus at most $q_s^{1/2}$.
+There are $O(Y)$ source ideals. Consequently the zero frequency term of
+an uncalibrated row Poisson mean, whose radial row integral is $O(Q)$,
+satisfies
+\[
+ |\mathcal M_{\rm principal}|
+ \ll QY^{-3/2}\,Y\,Y^{1/2}\,T^{-1/6}Y^{-1/3}
+ =\frac Q{\sqrt Y}\left(\frac YT\right)^{1/6}.
+\]
+For the actual sum of surviving marked slots, every selected prime must
+divide $A=sb^6$. Distinct slot supports imply at most
+$\omega(A)^K\ll_{K,\epsilon}q_A^\epsilon$ tuples. Bounded slot weights
+therefore add only $T^\epsilon$, with no factor from their total lengths.
+The Gaussian annuli can be summed using their homogeneous seminorm decay.
+
+There is a stronger bound for the actual resonant partial sum.
+On $I=s$, $J=b^2$, the squarefree source Gauss identity gives
+\[
+ g_s(-m)\chi_{sb^6}(m)
+   =\chi_s(-1)^{-1}\tau_s\,
+       1_{(m,sb)=1}.
+\]
+The zero extension at primes dividing $b$ is retained.
+After multiplication by the calibration character this coefficient has
+zero mean and period norm
+\[
+ L_{s,b}\ll_{\rm fixed}q_s\operatorname{radnorm}(b)
+       \ll_{\rm fixed}Y(T/Y)^{1/6}.
+\]
+For any fixed $a>2$, Poisson applied to the common compact smooth row
+profile gives, whenever $Q\ge C Y(T/Y)^{1/6}$,
+\[
+ |\mathcal M_{\rm resonant}|
+ \ll_{a,\epsilon}(1+|v|)^{J_a}
+       Q T^{-1/6}Y^{-1/3}T^\epsilon
+       \left(\frac{Y(T/Y)^{1/6}}Q\right)^a.
+\]
+Indeed its normalized arithmetic Fourier coefficients are bounded by
+$q_s^{1/2}$. Its zero frequency vanishes by calibration. The other dual
+vectors have linear scale $(Q/L_{s,b})^{1/2}$, and Fourier decay of
+order $2a$ bounds their total by $(L_{s,b}/Q)^a$.
+Summing the same positive source and divisor counts proves the display.
+The exponent of the moving period is $(5l_y+N)/6$ when $Y=Z^{l_y}$
+and $T=Z^N$. At the original empty subset geometry this is
+$19/32$, below the row exponent $5/6$.
+The estimate concerns the arithmetic resonant partial sum and uses the
+original calibration. It does not change the principal Mellin signal of
+the detector.
+
+\subsection{A range of small residual conductors}
+
+Fix $S$ and the calibration, all original ray classes, and the target
+character. Let $f_v(z)=\Omega(|z|^2)|z|^{-2iv}$, with $\Omega$ supported
+in a fixed positive compact annulus. Fix compact source windows at
+$q_s\asymp Y$, $q_I\asymp C$, $q_J\asymp N$, where $CN^3\asymp T$.
+The actual smooth row profile is $h_{\sigma,v}=f_v$ for every ray
+$\sigma$. Its Fourier seminorms of any fixed order are bounded by a
+fixed polynomial in $1+|v|$. All dependence on $\sigma$ is retained
+in the arithmetic coefficients.
+Assume $Y\ll_{\rm fixed}T$, as in the actual probe geometry.
+The constants below are uniform in $Y,C,N,Q\ge1$, in the finite ray class
+$\sigma$, in the Mellin height $v$, and in every real inverse row height $t$.
+The completed window is
+$W_t(x)=\texttt{logPhase}(t,\log x)W(x)$, and $|W_t(x)|=|W(x)|$.
+It is evaluated at $q_A/T$ and has no row dependence. The absolute
+estimates below do not differentiate it, so their constants are uniform
+in $t$. They depend on the fixed windows
+and their indicated seminorms. Further Fourier heights in the joint
+source window can be included in the same finite height polynomial.
+
+In this paragraph $s$ is squarefree. Write $R=\operatorname{rad}(sIJ)$.
+Define two coprime squarefree ideals
+\[
+ H=\prod_{\substack{\mathfrak p\mid R\\
+       v_{\mathfrak p}(I)+3v_{\mathfrak p}(J)
+              -v_{\mathfrak p}(s)\not\equiv0\ (6)}}\mathfrak p,
+ \qquad D=R/H.
+\]
+Let $\chi_H$ have the indicated nonzero sextic exponent at every prime
+of $H$. It is primitive modulo $H$. The principal factors at primes of
+$D$ remain the coprimality mask. The exact moving row coefficient is
+\[
+ g_s(-m)\chi_{IJ^3}(m)\xi(m)
+    =\chi_s(-1)^{-1}\tau_s\chi_H(m)\xi(m)1_{(m,D)=1}.
+\]
+The finite fixed phases multiplying this identity have modulus bounded
+independently of the moving ideals, by
+\texttt{rowCoefficient\_apply} and the original completed correction
+bound. They do not change $H$ or $D$.
+
+For every $\epsilon>0$, the part with $q_H\le H_0$ satisfies the raw
+mixed block estimate
+\[
+ |\mathcal M_{C,N;H\le H_0}|
+   \ll_\epsilon (1+|v|)^J T^\epsilon
+     \min\left\{\sqrt{CH_0},\frac{H_0}{\sqrt Y}\right\}.
+\]
+This assertion is absolute and does not use a lower bound for the norm
+of the completed row.
+
+To prove it, retain the exact mask and expand
+$1_{(m,D)=1}=\sum_{d\mid D}\mu(d)1_{d\mid(m)}$.
+The ideals $d$ are coprime to $H$ and to the calibration modulus.
+Set $m=d n$, using its fixed primary generator. The row profile has norm
+scale $Q/q_d$. The primitive character $\xi\chi_H$ has conductor norm
+$\asymp_{\rm fixed}q_H$, and normalized Gauss coefficients of size
+$O_{\rm fixed}(q_H^{-1/2})$. Smooth Poisson and Fourier decay give
+\[
+ \left|\sum_m\xi(m)\chi_H(m)1_{(m,D)=1}
+                     f_v(m/\sqrt Q)\right|
+ \ll_\epsilon (1+|v|)^J q_H^{1/2}T^\epsilon.
+\]
+For $Q_d=Q/q_d$, the Poisson majorant is a fixed multiple of
+\[
+ \frac{Q_d}{\sqrt{q_H}}\sum_{\ell\ne0}
+       |\widehat f_v(\sqrt{Q_d/q_H}\,\ell)|.
+\]
+When $Q_d\le q_H$, lattice counting bounds this by $O(q_H^{1/2})$.
+When $Q_d\ge q_H$, Fourier decay of order $2(a+1)$ bounds it by
+$O(q_H^{1/2}(q_H/Q_d)^a)$.
+Terms with $q_d$ larger than the fixed row radius are empty. The bounded
+subunit scales cost a fixed constant. The divisor count supplies
+$T^\epsilon$. When $Q/q_d\ge q_H$, the same argument with higher
+Fourier decay supplies $(q_Hq_d/Q)^a$ for any fixed $a>2$.
+
+Now put $g=(s,I)$. Every prime in $s/g$ or $I/g$ belongs to $H$, since
+the squarefree exponents there differ and $3v_{\mathfrak p}(J)$ can be
+only $0$ or $3$ modulo six. These two ideals are coprime. Hence
+\[
+ \frac{q_s q_I}{q_g^2}\le q_H\le H_0,
+ \qquad q_g\gg\sqrt{YC/H_0}.
+\]
+On a gcd dyad $q_g\asymp G$, ideal counting bounds the number of pairs
+$(s,I)$ by $O(YC/G)$. Summing the decreasing dyads from this lower
+bound gives $O(\sqrt{YC H_0})$. The unrestricted pair count is also
+$O(YC)$.
+There are $O(N)$ divisor ideals $J$, with completed weight
+$O(N^{1/2}/T^{1/2})$. The source Gauss factor has size $O(Y^{1/2})$.
+Multiplication by $Y^{-3/2}$ therefore gives respectively
+\[
+ Y^{-1}\sqrt{H_0}\,\sqrt{YC H_0}\,
+       \frac{N^{3/2}}{T^{1/2}}
+       \asymp\frac{H_0}{\sqrt Y},
+ \qquad
+ Y^{-1}\sqrt{H_0}\,YC\,
+       \frac{N^{3/2}}{T^{1/2}}
+       \asymp\sqrt{CH_0}.
+\]
+The original summed marked slots add only $T^\epsilon$, because their
+selected primes divide $A=IJ^3$. This proves the block bound.
+
+For $H_0=Q/P^\delta$ with any fixed $\delta>0$, the small conductor
+part is bounded by $(Q/\sqrt Y)P^{-\delta}T^\epsilon$.
+
+There is also a bound for the whole block, including large conductors.
+The radical bound gives $q_H\le q_R\ll YCN$.
+Taking $H_0$ to be this fixed multiple of $YCN$ in the first branch gives
+\[
+ |\mathcal M_{C,N}|\ll_\epsilon(1+|v|)^J T^\epsilon C\sqrt{YN}
+       \asymp(1+|v|)^J T^\epsilon\frac{T\sqrt Y}{N^{5/2}}.
+\]
+Consequently a factor $P^{-\delta}$ relative to $Q/\sqrt Y$ holds when
+\[
+ N\gg_{\rm fixed}(TY P^\delta/Q)^{2/5},
+ \qquad\text{equivalently}\qquad
+ C\ll_{\rm fixed}\left(\frac{Q}{YT^{1/6}P^\delta}\right)^{6/5}.
+\]
+At the original geometry, the thresholds for $\delta=0$ are
+$N=Z^{13/40}$ and $C=Z^{23/120}$.
+This estimate uses every actual marked weight through its divisor bound.
+It requires no cancellation among completed columns and no norm lower bound.
+
+The remaining squarefree-source sum has $q_H>Q/P^\delta$ and
+$N\ll_{\rm fixed}(TY P^\delta/Q)^{2/5}$.
+After the exact mask expansion
+it is the sum of primitive character transforms against the coupled
+$s,I,J$ weights
+\begin{multline*}
+ Y^{-3/2}T^{-1/2}\sum_{\substack{s\asymp Y,\ I\asymp C,\ J\asymp N\\
+                   s,I\ \mathrm{squarefree},\ q_H>Q/P^\delta\\
+                   N\ll(TYP^\delta/Q)^{2/5}}} \\
+ a_{\sigma,v}(s)\gamma_2(I)\,q_J^{1/2}\chi_s(-1)^{-1}\tau_s
+     \mathfrak a_\sigma(s,I,J)W(q_Iq_J^3/T)
+     \mathcal R_{s,I,J},
+\end{multline*}
+where
+\[
+ \mathcal R_{s,I,J}=
+     \sum_{d\mid D}\mu(d)\xi(d)\chi_H(d)
+        \sum_n\xi(n)\chi_H(n)f_v(dn/\sqrt Q).
+\]
+Here $\mathfrak a_\sigma(s,I,J)$ retains the actual target, reciprocity,
+calibration denominator, completed correction, marked prime sum, and
+fixed phases. The source and completed windows are displayed explicitly.
+No independent coefficient sequence has been substituted
+for it. The two displayed block bounds do not control this remaining
+range by $(Q/\sqrt Y)P^c$ with $c<1/12$.
+It is the remaining sum in two coupled arithmetic variables for this route.
+
+\subsection{Reduction of nonsquarefree sources}
+
+Write every source uniquely as $s=t u$, where $t$ is squarefree, $u$ is
+squareful, and $(t,u)=1$. Put
+\[
+ d=u/\operatorname{rad}(u),\qquad
+ r=\prod_{\substack{\mathfrak p\mid u\\6\nmid v_{\mathfrak p}(u)}}\mathfrak p,
+ \qquad
+ e=\prod_{\substack{\mathfrak p\mid u\\6\mid v_{\mathfrak p}(u)}}\mathfrak p.
+\]
+Thus $u=d r e$. If $(u,A)\ne1$, the original mixed summand is zero
+pointwise by the higher source power mask theorem.
+Otherwise the exact prime power support enforces $d\mid(m)$.
+After $m=d n$, CRT and the prime power lift identity give, up to a unit
+phase independent of $n$,
+\[
+ g_s(-d n)
+ =q_d\tau_{t,r}\chi_{t,r}(n)^{-1}
+       \prod_{\mathfrak p\mid e}
+          \bigl(q_{\mathfrak p}1_{\mathfrak p\mid(n)}-1\bigr),
+ \qquad |\tau_{t,r}|=(q_tq_r)^{1/2}.
+\]
+The character $\chi_{t,r}$ has exponent one at primes of $t$ and
+exponent $v_{\mathfrak p}(u)$ modulo six at primes of $r$.
+It is primitive at each of these primes. The displayed principal factors
+are exact Ramanujan sums, including their values at zero.
+
+Expand the last product over $f\mid e$ with coefficient
+$\mu(e/f)q_f$, and then substitute $n=f n'$. Since $(u,A)=1$, every
+such $f$ is coprime to the active conductor and the calibration.
+The active conductor is obtained from $t,I,J$ as before, with the
+additional nonprincipal factors on $r$. Its norm satisfies
+\[
+ q_H\le q_tq_r\,C N\ll\frac{Y C N}{q_dq_e}.
+\]
+The passive masks remain exact. Primitive Poisson bounds the row after
+both substitutions by $q_H^{1/2}(YT)^\epsilon$ uniformly in
+$Q/(q_dq_f)$. Summing $f$ gives
+\[
+ q_d(q_tq_r)^{1/2}\sum_{f\mid e}q_f
+     \ll_\epsilon (YT)^\epsilon\sqrt{Yq_dq_e}.
+\]
+More explicitly, after multiplying by the actual row character and
+calibration, the row is
+\[
+ \begin{aligned}
+ \eta_{s,A}q_d\tau_{t,r}
+   &\sum_{f\mid e}\mu(e/f)q_f\xi(f)\chi_H(f) \\
+   &\quad {}\times
+   \sum_{h\mid D}\mu(h)\xi(h)\chi_H(h)
+   \sum_k\xi(k)\chi_H(k)f_v(dfhk/\sqrt Q).
+ \end{aligned}
+\]
+Here $\eta_{s,A}$ has modulus one and contains the source CRT phases,
+the row factor $\chi_A(d)$, and $\xi(d)$.
+The ideals $f,h$ are coprime to $H$ and the calibration. Their displayed
+character values are therefore units. The last row has physical norm
+scale $Q/(q_dq_fq_h)$. This form retains the original fixed phases and
+both exact divisor expansions through every change of variables.
+The product of this amplitude bound and $q_H^{1/2}$ is therefore at
+most $Y\sqrt{C N}(YT)^\epsilon$, independently of $u$.
+For fixed $u$, there are $O(Y/q_u)$ possible $t$. The same completed
+column and cubic divisor counts now give
+\[
+ |\mathcal M_{C,N;\,u}|\ll_\epsilon
+       (1+|v|)^J T^\epsilon\frac{C\sqrt{Y N}}{q_u}.
+\]
+The sum $\sum_{u\ {m squareful}}q_u^{-1}$ converges. Its Euler factor
+is $1+\sum_{a\ge2}q_{\mathfrak p}^{-a}=1+1/(q_{\mathfrak p}(q_{\mathfrak p}-1))$.
+Thus the whole block estimate $C\sqrt{Y N}T^\epsilon$ and the proved
+large $J$ range hold for all additive sources.
+
+For $q_H\le H_0$, unrestricted counting instead gives
+\[
+ |\mathcal M_{C,N;\,u,H\le H_0}|\ll_\epsilon
+       (1+|v|)^J T^\epsilon
+       \frac{\sqrt{C H_0}}{\sqrt{q_uq_r}}.
+\]
+The series $\sum_{u\ {\rm squareful}}(q_uq_r)^{-1/2}$ converges.
+At a prime with source exponent $a\ge2$, its local weight is
+$q_{\mathfrak p}^{-(a+1_{6\nmid a})/2}$. The least exponent is $3/2$.
+The $\sqrt{C H_0}$ branch therefore also extends to all additive sources.
+
+The stronger $H_0/\sqrt Y$ branch does not follow by this argument.
+Put $g=(t,I)$. Its conductor constraint only gives
+$q_tq_Iq_r/q_g^2\le H_0$. The refined gcd count consequently yields
+$H_0/(\sqrt Y q_r)$ for each fixed $u$.
+The sum of $q_r^{-1}$ is not bounded by $Y^\epsilon$. For sources
+$u=b^6$, one has $r=1$, and there are $\asymp Y^{1/6}$ such ideals
+below $Y$. The Ramanujan substitutions and their reduced row scales
+must be retained to treat this branch more sharply.
+This is a precise obstruction to extending the refined small conductor
+estimate by absolute values. The remaining nonsquarefree sources lie
+in the same small $J$ range, but their exact Ramanujan factors must be
+kept in the residual sum.
+
+The principal and conductor statements above are absolute estimates.
+The actual global zero frequency vanishes. Neither statement implies a bound relative
+to $\|B^\varnothing\|_2$, which may be smaller than the available upper
+bound $Q^{1/2}Z^\epsilon$. It does show that this principal resonance
+cannot alone saturate the existing product of the proved norm bounds.
+To improve the low exponent, it remains necessary to bound the nonzero
+row Poisson frequencies of the actual mixed sum. Its moving modulus can
+be much larger than the physical row length, so zero complete mean
+alone gives no power saving. The final probe also has the outer factor
+$Q^{-1/2}$ and the Mellin integral. The displayed bounds concern the raw
+mixed row sum before this normalization.
+
+The local algebra and the one plane zero mean Fourier tail reduction
+are proved in \path{lean/GramMixedArithmetic.lean}.
+The conductor block estimates above are analytic arguments and are not
+claimed as Lean theorems.
+The exact finite prime models and the squarefree valuation classification
+can be reproduced with
+\texttt{uv run research/gram\_mixed.py}.
+
+\end{document}

@@ -9,6 +9,8 @@ open scoped Classical
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss
 
 local notation "O" => ActualEisensteinCubic.O
@@ -55,16 +57,16 @@ theorem eventually_perturbed_original_slot_scales
         (∀ i x, x ∈ slots i → elementNorm x ≤ b * Z ^ (ell i)) →
         ∀ (J : Finset (Fin K)) (a : LowUnselectedTuple slots J),
           let L := elementNorm (∏ i : J, (a i).val)
-          1 ≤ Z ^ (23 / 48 - t / 2) / L ∧
-          1 ≤ (Z ^ (23 / 48 - t / 2) / L) ^ 2 /
-            lowPhysicalScale C (Z ^ (17 / 48 - t / 2) / L)
-              (Z ^ (23 / 48 - t / 2) / L) ∧
+          1 ≤ Z ^ (yBase - t / 2) / L ∧
+          1 ≤ (Z ^ (yBase - t / 2) / L) ^ 2 /
+            lowPhysicalScale C (Z ^ (xBase - t / 2) / L)
+              (Z ^ (yBase - t / 2) / L) ∧
           ∀ δ : ℝ, 0 ≤ δ →
-            lowGramFactor C (Z ^ (17 / 48 - t / 2) / L)
-              (Z ^ (23 / 48 - t / 2) / L) δ ≤
+            lowGramFactor C (Z ^ (xBase - t / 2) / L)
+              (Z ^ (yBase - t / 2) / L) δ ≤
               Real.sqrt (3 * elementNorm C.generator / L) *
-                Z ^ (3 / 16 - t / 4 +
-                  (23 / 96 - t / 4) * δ) := by
+                Z ^ (lowBase - t / 4 +
+                  (yBase / 2 - t / 4) * δ) := by
   filter_upwards [eventually_perturbed_compensated_source_scales
     C (b ^ K) t ht htSmall] with Z hZ
   refine ⟨hZ.1, ?_⟩

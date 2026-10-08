@@ -1,5 +1,7 @@
+import OAIAsymmetricGeometry
 import OAIHighZTransport
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -23,7 +25,7 @@ theorem continued_triple_x_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) < a) (ha3 : a ≤ 3)
+    (ha : (boundary : ℝ) < a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) :
     let F := fun s w z =>
@@ -34,6 +36,7 @@ theorem continued_triple_x_shift_on_perturbed_region
       verticalIntegral 3 (fun w => F s w z))) =
     verticalIntegral 3 (fun s => verticalIntegral ξ (fun z =>
       verticalIntegral 3 (fun w => F s w z))) := by
+  norm_num [boundary] at ha
   let F := fun s w z =>
     continuedSourceMultiplier η S hS.prime J T b W0 W1 X Y Z s w z *
     LFunction (fixedSourcePrincipal S hS.prime) (6 * z) *
@@ -71,7 +74,7 @@ theorem continued_triple_z_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a) (ha3 : a ≤ 3)
+    (ha : (boundary : ℝ) ≤ a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) :
     let F := fun s w z =>
@@ -82,6 +85,7 @@ theorem continued_triple_z_shift_on_perturbed_region
       verticalIntegral 3 (fun w => F s w z))) =
     verticalIntegral a (fun s => verticalIntegral 2 (fun z =>
       verticalIntegral 3 (fun w => F s w z))) := by
+  norm_num [boundary] at ha
   let F := fun s w z =>
     continuedSourceMultiplier η S hS.prime J T b W0 W1 X Y Z s w z *
     LFunction (fixedSourcePrincipal S hS.prime) (6 * z) *

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSelectedLocal
 import OAI.NumberTheory.DirichletL.PrimeRows.SlotSums
 
@@ -15,7 +16,7 @@ theorem continued_selected_slot_bound_on_perturbed_boundary (eps a b r B : ℝ) 
     ∃C : ℝ,0<C ∧ ∀(η : Character) (u : FreeRow) (T : Finset PrimeIdeal)
       (hT : ∀P∈T,Supported P.val ∧ (4:ℝ)≤P.val.absNorm)
       (Y : ℝ),1≤Y → ∀(W : ℝ→ℂ),Function.support W⊆Set.Icc a b →
-      (∀y,‖W y‖≤B) → ∀(x w z : ℂ),(7 / 8 - 21 / 500000 : ℝ) ≤ x.re → (1/2:ℝ)≤w.re → z.re=r →
+      (∀y,‖W y‖≤B) → ∀(x w z : ℂ),(AsymmetricGeometry.boundary : ℝ) ≤ x.re → (1/2:ℝ)≤w.re → z.re=r →
       (∑P : T,‖W ((P.val.val.absNorm:ℝ)/Y)*(P.val.val.absNorm:ℂ)^(z-1)*
         continuedCompensatedLocal η u P.val (hT P.val P.property).1 x w z
           (star (idealCoeff η P.val.val)*(P.val.val.absNorm:ℂ)^x) ((P.val.val.absNorm:ℂ)^(-w))‖)

@@ -1,15 +1,15 @@
-import Mathlib
+import BoundsReal
 
 namespace PerturbedZeroFreeBound
 
 noncomputable section
 
-private def totalSlotLength : ℝ := 1 / 6 + 169 / 1000000
-private def totalRowLength : ℝ := 5 / 6 - 169 / 1000000
+private def totalSlotLength : ℝ := 1 / 6 + lengthChange
+private def totalRowLength : ℝ := 5 / 6 - lengthChange
 private def adjustedRowLength (d : ℝ) : ℝ := totalRowLength - 2 * d
 private def remainingSlotLength (d : ℝ) : ℝ := totalSlotLength - d
 private def reflectedLoss (d : ℝ) : ℝ :=
-  max 0 ((d - 1 / 6 + 5 * (169 / 1000000)) / 4)
+  max 0 ((d - 1 / 6 + 5 * lengthChange) / 4)
 
 private def hybridSaving (v slotWeight : ℝ) : ℝ :=
   min v (min slotWeight ((v + slotWeight) / 3))
@@ -118,14 +118,14 @@ theorem bound_perturbed_reflected_exponent
     change reflectedExponent powerfulLength rowLength sourceLength
       gcdLength slotWeight dualLength cubeLength fourthLength FourierLength ≤ _
     apply hbound.trans
-    have hlossUpper : (d - 1 / 6 + 5 * (169 / 1000000)) / 4 ≤
+    have hlossUpper : (d - 1 / 6 + 5 * lengthChange) / 4 ≤
         reflectedLoss d := by
       unfold reflectedLoss
       exact le_max_right _ _
     have hrowExplicit : rowLength ≤
-        (5 / 6 - 169 / 1000000 - 2 * d) - powerfulLength + error := by
+        (5 / 6 - lengthChange - 2 * d) - powerfulLength + error := by
       simpa [adjustedRowLength, totalRowLength] using hrow
-    have hslotExplicit : slotWeight ≤ 1 / 6 + 169 / 1000000 - d := by
+    have hslotExplicit : slotWeight ≤ 1 / 6 + lengthChange - d := by
       simpa [remainingSlotLength, totalSlotLength] using hslot
     dsimp [FourierLength, adjustedRowLength, remainingSlotLength,
       totalRowLength, totalSlotLength]

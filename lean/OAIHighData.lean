@@ -7,6 +7,7 @@ namespace OAI
 noncomputable section
 open scoped BigOperators
 namespace SevenEighths.Parameters
+open AsymmetricGeometry
 
 structure PerturbedHighData (gap : ℝ) where
   small : ℝ
@@ -21,7 +22,7 @@ structure PerturbedHighData (gap : ℝ) where
   sigma : ℝ
   small_pos : 0 < small
   small_gap : small < gap / 4
-  small_cap : small ≤ 1 / 100000000
+  small_cap : small ≤ 1 / 10000000000000000
   slots_pos : 0 < N
   slots_injective : Function.Injective ell
   slots_sum : (∑ j, ell j) = 1 / 6 + perturbedSlotLengthShift
@@ -44,21 +45,22 @@ structure PerturbedHighData (gap : ℝ) where
   count_budget : 159 * ε + small +
     (1 + 6 * perturbedSlotLengthShift) * small + 7 * small ≤ 1 / 32
   central_budget :
-    (13 / 16 + 3 * perturbedSlotLengthShift / 2) * (159 * ε + small +
+    (rowBase + 3 * perturbedSlotLengthShift / 2) * (159 * ε + small +
       (1 + 6 * perturbedSlotLengthShift) * small + 7 * small) +
       2 * small + (3 / 2) * (2 * small) +
       (26 * e + (N + 8) * eps + small + small / 6) +
       (small + small + small) + small +
-      perturbedSlotLengthShift * (3 * e + small) ≤ 1 / 500000
-  row_threshold : 13 / 16 + 3 * perturbedSlotLengthShift / 2 +
+      perturbedSlotLengthShift * (3 * e + small) + 6 * skew * e ≤ highMargin
+  row_threshold : rowBase + 3 * perturbedSlotLengthShift / 2 +
     3 * small ≤ 7 / 8
   geometric_budget : sigma + 8 * e + small / 8 +
-    51 * perturbedSlotLengthShift / 100 ≤ 63 / 800
-  principal_budget : sigma + small / 8 ≤ 2611 / 110160000
-  window_budget : sigma + e ≤ (437479 / 500000) * ((7 / 8) * rmin)
+    51 * perturbedSlotLengthShift / 100 + 49 * skew / 150 ≤ 63 / 800
+  principal_budget : sigma + small / 8 ≤ 1 / 3000
+  window_budget : sigma + e ≤ (boundary) * ((7 / 8) * rmin)
   floor_budget : 2 * small + 26 * e + (N + 8) * eps +
-    small + small / 6 + small / 8 + sigma + 21 / 500000 +
-    perturbedSlotLengthShift * (121 / 40 + 3 * e + small) ≤ 7 / 1200
+    small + small / 6 + small / 8 + sigma + boundaryReduction +
+    perturbedSlotLengthShift * (121 / 40 + 3 * e + small) +
+      skew * (67 / 100 + 6 * e) ≤ 7 / 1200
   high_saving : sigma + small / 8 + small / 8 ≤ small
   height_choice : ∀ J : ℝ, 0 ≤ J → ∃ τ : ℝ,
     0 < τ ∧ τ < (1 / 200) / 2 ∧
@@ -141,7 +143,7 @@ theorem exists_perturbed_high_data_fine
   · linarith only [hsigma_small, hsmall_cap]
   · have hsum : sigma + e ≤ ellMin / 2 := by
       linarith only [hsigma_ell, heell]
-    have hcoef : (1 / 2 : ℝ) ≤ 437479 / 500000 := by norm_num
+    have hcoef : (1 / 2 : ℝ) ≤ boundary := by norm_num
     have hscaled := mul_le_mul_of_nonneg_right hcoef hellMin.le
     dsimp [ellMin] at hsum hscaled ⊢
     linarith

@@ -9,6 +9,8 @@ open scoped Classical ContDiff SchwartzMap
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve RayFourExpansion
 
 local notation "O" => ActualEisensteinCubic.O
@@ -46,10 +48,10 @@ theorem perturbed_low_central_gaussian_dyad
         ‖lowCommonDyad η (calibrationForSet S hS) W0 W1
           (fun i => canonicalSlotSupport (T i))
           W (fun i => Z ^ (ell i)) J
-          (Z ^ (17 / 48 - t / 2))
-          (Z ^ (23 / 48 - t / 2)) U
+          (Z ^ (xBase - t / 2))
+          (Z ^ (yBase - t / 2)) U
           (Z ^ (1 + lowSelectedLength ell J)) V hV‖ ≤
-          C * Z ^ (3 / 16 - t / 4 + 254 * ε) *
+          C * Z ^ (lowBase - t / 4 + 254 * ε) *
             gaussianJointMoment V hV degree
               (U / Z ^ (1 + lowSelectedLength ell J)) := by
   obtain ⟨degree, C, hC, he⟩ :=

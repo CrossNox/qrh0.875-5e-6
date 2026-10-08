@@ -149,13 +149,14 @@ theorem verify_source_high_exponent (delta y : ℝ)
   ring
 
 private def evaluateQuadraticCoefficient (y : ℝ) : ℝ :=
-  153063882 + 393024336 * y + 282085176 * y ^ 2 + 96097344 * y ^ 3
+  38381036152738950 + 98112671277888624 * y +
+    70349424015981576 * y ^ 2 + 24024727795678656 * y ^ 3
 
 private def evaluateLinearCoefficient (y : ℝ) : ℝ :=
-  -118376871 - 188464636 * y - 13011148 * y ^ 2
+  -29828491018092129 - 47206874749477924 * y - 3166469409426772 * y ^ 2
 
 private def evaluateConstantCoefficient (y : ℝ) : ℝ :=
-  22888570 + 21032740 * y
+  5795432885635430 + 5325532921935260 * y
 
 private def evaluatePerturbedEndpointPolynomial (delta y : ℝ) : ℝ :=
   evaluateQuadraticCoefficient y * delta ^ 2 +
@@ -163,10 +164,12 @@ private def evaluatePerturbedEndpointPolynomial (delta y : ℝ) : ℝ :=
 
 theorem verify_perturbed_endpoint_polynomial_identity (delta y : ℝ)
     (hJ : sourceJ delta y ≠ 0) :
-    648000000 * sourceJ delta y *
-      (-sourceHighExponent (7 / 8 - 21 / 500000)
-        (1 / 6 + 169 / 1000000) (23 / 48 - 169 / 2000000)
-        (13 / 16 + 507 / 2000000) delta y - 1 / 500000) =
+    162000000000000000 * sourceJ delta y *
+      (-sourceHighExponent (7 / 8 - 214651 / 5000000000)
+        (1 / 6 + 42930200831 / 250000000000000)
+        (23 / 48 - 12457523527 / 15625000000000 - 42930200831 / 500000000000000)
+        (13 / 16 - 12457523527 / 15625000000000 + 128790602493 / 500000000000000)
+        delta y - 1 / 1250000000000) =
       evaluatePerturbedEndpointPolynomial delta y := by
   unfold sourceHighExponent sourceRowExponent evaluatePerturbedEndpointPolynomial
     evaluateQuadraticCoefficient evaluateLinearCoefficient evaluateConstantCoefficient
@@ -177,8 +180,10 @@ theorem verify_perturbed_endpoint_polynomial_identity (delta y : ℝ)
 theorem verify_perturbed_endpoint_square_identity (delta y : ℝ) :
     4 * evaluateQuadraticCoefficient y * evaluatePerturbedEndpointPolynomial delta y =
       (2 * evaluateQuadraticCoefficient y * delta + evaluateLinearCoefficient y) ^ 2 +
-        569922764319 + 4240763631276888 * y + 20292262879067528 * y ^ 2 +
-        27625937254957024 * y ^ 3 + 7915471831892336 * y ^ 4 := by
+        979807389619512241359 + 275799814009247843319007787580888 * y +
+        1303439473219357232720782491774728 * y ^ 2 +
+        1756569235069508453488622075444704 * y ^ 3 +
+        501751386744843713686464752902256 * y ^ 4 := by
   unfold evaluatePerturbedEndpointPolynomial evaluateQuadraticCoefficient
     evaluateLinearCoefficient evaluateConstantCoefficient
   ring
@@ -191,8 +196,10 @@ theorem bound_perturbed_endpoint_polynomial (delta y : ℝ) (hy : 0 ≤ y) :
   have hidentity := verify_perturbed_endpoint_square_identity delta y
   have hright : 0 ≤
       (2 * evaluateQuadraticCoefficient y * delta + evaluateLinearCoefficient y) ^ 2 +
-        569922764319 + 4240763631276888 * y + 20292262879067528 * y ^ 2 +
-        27625937254957024 * y ^ 3 + 7915471831892336 * y ^ 4 := by
+        979807389619512241359 + 275799814009247843319007787580888 * y +
+        1303439473219357232720782491774728 * y ^ 2 +
+        1756569235069508453488622075444704 * y ^ 3 +
+        501751386744843713686464752902256 * y ^ 4 := by
     positivity
   by_contra hnegative
   have hnegative' : evaluatePerturbedEndpointPolynomial delta y < 0 :=
@@ -205,14 +212,16 @@ theorem bound_perturbed_endpoint_polynomial (delta y : ℝ) (hy : 0 ≤ y) :
 theorem bound_perturbed_high_endpoint (delta y : ℝ)
     (hdelta0 : 0 ≤ delta) (hdelta1 : delta ≤ 3 / 4)
     (hy0 : 0 ≤ y) (hy1 : y ≤ 1 / 2) :
-    sourceHighExponent (7 / 8 - 21 / 500000)
-      (1 / 6 + 169 / 1000000) (23 / 48 - 169 / 2000000)
-      (13 / 16 + 507 / 2000000) delta y ≤ -(1 / 500000) := by
+    sourceHighExponent (7 / 8 - 214651 / 5000000000)
+      (1 / 6 + 42930200831 / 250000000000000)
+      (23 / 48 - 12457523527 / 15625000000000 - 42930200831 / 500000000000000)
+      (13 / 16 - 12457523527 / 15625000000000 + 128790602493 / 500000000000000)
+      delta y ≤ -(1 / 1250000000000) := by
   have hJbounds := bound_source_j delta y hdelta0 (by linarith) hy0 hy1
   have hJ : 0 < sourceJ delta y := by linarith [hJbounds.1]
   have hidentity := verify_perturbed_endpoint_polynomial_identity delta y hJ.ne'
   have hpolynomial := bound_perturbed_endpoint_polynomial delta y hy0
-  have hfactor : 0 < 648000000 * sourceJ delta y := by positivity
+  have hfactor : 0 < 162000000000000000 * sourceJ delta y := by positivity
   nlinarith
 
 end

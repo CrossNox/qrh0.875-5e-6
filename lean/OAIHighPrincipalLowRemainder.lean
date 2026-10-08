@@ -26,18 +26,18 @@ theorem source_remainders_power_bound_on_perturbed_boundary {ι : Type*}
     (∀j∈J,∀p∈T j,p.val∉S) → ∀Z : ℝ,0<Z→
     (∀j∈J,480≤c*Z^(ell j)) →
     (∀j∈J,(Ideal.absNorm η.modulus:ℝ)<c*Z^(ell j)) →
-    let K0 := fun s=>sourceMultiplier W0 W1 (Z^(17/48-lengthShift/2:ℝ))
-      (Z^(23/48-lengthShift/2:ℝ)) Z (η.excludePrimes S hS.prime) s
+    let K0 := fun s=>sourceMultiplier W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ))
+      (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z (η.excludePrimes S hS.prime) s
       (globalClosedCorrection η S s)
       (windowMultiplier η J T (fun j x=>(W j x:ℂ)) (fun j=>Z^(ell j)) s)
     let π := fixedSourcePrincipal S hS.prime
     (‖verticalIntegral a (fun s=>verticalIntegral (1/6+e) (fun z=>verticalIntegral (19/20)
       (fun w=>K0 s w z*LFunction π (6*z)*LFunction π w)))‖≤
-      C/e*Z^(a-11/16+(13/16)*e-23/960+
+      C/e*Z^(a+AsymmetricGeometry.signalOffset+AsymmetricGeometry.rowBase*e-AsymmetricGeometry.yBase/20+
         lengthShift*(1/40+3*e/2))) ∧
     (‖HeckeReciprocal.regularizedL π 1 * verticalIntegral a (fun s=>verticalIntegral (33/200)
       (fun z=>K0 s 1 z*LFunction π (6*z)))‖≤
-        C*Z^(a-11/16-13/9600-lengthShift/400)) := by
+        C*Z^(a+AsymmetricGeometry.signalOffset-AsymmetricGeometry.rowBase/600-lengthShift/400)) := by
   obtain ⟨C,hC,hbound⟩ := ordered_remainders_scale_bound_on_perturbed_boundary η S hS hTail J c d B hc hd hB
     W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1 a e ha hβ he hehi
   refine ⟨C,hC,?_⟩
@@ -45,7 +45,7 @@ theorem source_remainders_power_bound_on_perturbed_boundary {ι : Type*}
   dsimp only
   have hh := hbound W hW hsupp (fun j=>Z^(ell j))
     (fun _ _=>Real.rpow_pos_of_pos hZ _) hthreshold hmod T hT
-    (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z
+    (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z
     (Real.rpow_pos_of_pos hZ _) (Real.rpow_pos_of_pos hZ _) hZ
   dsimp only at hh
   rw [perturbed_source_w_scale_identity J ell lengthShift Z a e hell hZ,
@@ -72,7 +72,7 @@ theorem source_remainders_strict_saving_on_perturbed_boundary {ι : Type*}
     (∀j∈J,480≤c*Z^(ell j)) →
     (∀j∈J,(Ideal.absNorm η.modulus:ℝ)<c*Z^(ell j)) →
     let K0 := fun s=>sourceMultiplier W0 W1
-      (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z
+      (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z
       (η.excludePrimes S hS.prime) s (globalClosedCorrection η S s)
       (windowMultiplier η J T (fun j x=>(W j x:ℂ))
         (fun j=>Z^(ell j)) s)
@@ -80,12 +80,12 @@ theorem source_remainders_strict_saving_on_perturbed_boundary {ι : Type*}
     (‖verticalIntegral (HeckeZeroSupremum.beta+e)
       (fun s=>verticalIntegral (1/6+e) (fun z=>verticalIntegral (19/20)
         (fun w=>K0 s w z*LFunction π (6*z)*LFunction π w)))‖≤
-      C/e*Z^(HeckeZeroSupremum.beta-11/16-1/3000)) ∧
+      C/e*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000)) ∧
     (‖HeckeReciprocal.regularizedL π 1 *
       verticalIntegral (HeckeZeroSupremum.beta+e)
       (fun s=>verticalIntegral (33/200)
         (fun z=>K0 s 1 z*LFunction π (6*z)))‖≤
-      C*Z^(HeckeZeroSupremum.beta-11/16-1/3000)) := by
+      C*Z^(HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000)) := by
   obtain ⟨C,hC,hbound⟩ := source_remainders_power_bound_on_perturbed_boundary
     η S hS hTail J c d B hc hd hB W0 W1 a0 b0 a1 b1
     ha0 ha1 hW0 hW1 (HeckeZeroSupremum.beta+e) e lengthShift
@@ -101,11 +101,11 @@ theorem source_remainders_strict_saving_on_perturbed_boundary {ι : Type*}
     e lengthShift hehi ht ht'
   have hz := perturbed_source_z_strict_exponent HeckeZeroSupremum.beta
     e lengthShift hehi ht
-  have hw' : (HeckeZeroSupremum.beta+e)-11/16+(13/16)*e-23/960+
+  have hw' : (HeckeZeroSupremum.beta+e)+AsymmetricGeometry.signalOffset+AsymmetricGeometry.rowBase*e-AsymmetricGeometry.yBase/20+
       lengthShift*(1/40+3*e/2) ≤
-      HeckeZeroSupremum.beta-11/16-1/3000 := by linarith
-  have hz' : (HeckeZeroSupremum.beta+e)-11/16-13/9600-lengthShift/400 ≤
-      HeckeZeroSupremum.beta-11/16-1/3000 := by linarith
+      HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000 := by linarith
+  have hz' : (HeckeZeroSupremum.beta+e)+AsymmetricGeometry.signalOffset-AsymmetricGeometry.rowBase/600-lengthShift/400 ≤
+      HeckeZeroSupremum.beta+AsymmetricGeometry.signalOffset-1/3000 := by linarith
   constructor
   · exact hh.1.trans (mul_le_mul_of_nonneg_left
       (Real.rpow_le_rpow_of_exponent_le hZ hw')

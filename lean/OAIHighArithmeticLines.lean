@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighComplexSlotBounds
 import OAI.NumberTheory.DirichletL.Detector.PrincipalContours
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -21,7 +23,7 @@ theorem bound_arithmetic_on_lines_with_gaps_on_perturbed_region
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (X Y Z a Bs Bz cw σ ξ υ C : ℝ)
     (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hσ : σ ∈ Icc a Bs) (hξ : ξ ∈ Icc (33 / 200 : ℝ) Bz)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (δw δz : ℝ) (hdw : 0 < δw) (hdz : 0 < δz)
@@ -37,6 +39,7 @@ theorem bound_arithmetic_on_lines_with_gaps_on_perturbed_region
       ((ξ : ℂ) + p.1.2 * I)‖ ≤
       arithmeticAmplitude S J T b X Y Z a Bs Bz cw C δw δz *
         jointHeight p.1.1 p.1.2 p.2 ^ 8 := by
+  norm_num [boundary] at ha
   let : NeZero (∏ P ∈ S, P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   have hx := cpow_le_scaleBound hX (1 / 2 - ((ξ : ℂ) + p.1.2 * I))
     (show (1 / 2 - ((ξ : ℂ) + p.1.2 * I) : ℂ).re ∈
@@ -164,7 +167,7 @@ theorem bound_arithmetic_on_lines_on_perturbed_region
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (X Y Z a Bs Bz cw σ ξ υ C : ℝ)
     (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hσ : σ ∈ Icc a Bs) (hξ : ξ ∈ Icc (33 / 200 : ℝ) Bz)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1)
@@ -197,7 +200,7 @@ theorem continued_source_joint_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -209,6 +212,7 @@ theorem continued_source_joint_integrable_on_perturbed_region
         (6 * ((ξ : ℂ) + p.1.2 * I)) *
       LFunction (fixedSourcePrincipal S hS.prime)
         ((υ : ℂ) + p.2 * I)) heightMeasure := by
+  norm_num [boundary] at ha
   obtain ⟨C, hC, hR⟩ := HeckeReciprocalGrowth.polynomial_reciprocal_bound
     (η.excludePrimes S hS.prime) a hβ
   have hi := profile_arithmetic_integrable W0 W1 a0 b0 a1 b1
@@ -238,7 +242,7 @@ theorem source_joint_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -270,7 +274,7 @@ theorem source_joint_fubini_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -311,7 +315,7 @@ theorem continued_source_slices_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) (N : ℕ) :
@@ -329,6 +333,7 @@ theorem continued_source_slices_on_perturbed_region
       (∫ q : ℝ × ℝ, ‖F (sliceMap axis R q)‖ ∂volume.prod volume) ≤
         arithmeticAmplitude S J T b X Y Z a a ξ cw C
           |υ - 1| |6 * ξ - 1| * K / height R ^ N := by
+  norm_num [boundary] at ha
   obtain ⟨C, hC, hR⟩ := HeckeReciprocalGrowth.polynomial_reciprocal_bound
     (η.excludePrimes S hS.prime) a hβ
   obtain ⟨K, hK, hk⟩ := profile_arithmetic_slices W0 W1 a0 b0 a1 b1
@@ -367,7 +372,7 @@ theorem source_w_leftover_outer_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e t : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : (boundary : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (he : 0 < e)
     (hs1 : (a : ℂ) + t * I ≠ 1) :
     let s : ℂ := (a : ℂ) + t * I
@@ -379,6 +384,7 @@ theorem source_w_leftover_outer_integrable_on_perturbed_region
       LFunction (fixedSourcePrincipal S hS.prime)
         (6 * ((1 / 6 + e : ℝ) + v * I)) *
       LFunction (fixedSourcePrincipal S hS.prime) w)) := by
+  norm_num [boundary] at ha
   obtain ⟨C, K, hC, hK, hslice⟩ :=
     continued_source_slices_on_perturbed_region
       η S hS hTail J T b hT W0 W1 a0 b0 a1 b1
@@ -415,7 +421,7 @@ theorem source_z_boundary_any_on_perturbed_region
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 : ℝ) (ha0 : 0 < a0)
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (X Y Z : ℝ) (hX : 0 < X) (hZ : 0 < Z)
-    (s : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (s : ℂ) (hs : (boundary : ℝ) ≤ s.re)
     (hη : LFunction (η.excludePrimes S hS.prime) s ≠ 0)
     {e : ℝ} (he : 0 < e) :
     BoundaryControl (fun z => sourceMultiplier W0 W1 X Y Z

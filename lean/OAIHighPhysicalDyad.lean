@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSourceTransport
 import OAI.NumberTheory.DirichletL.PrimeRows.PhysicalDyad
 
@@ -7,12 +8,13 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set Complex
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 local notation "O" => HeckeFamily.O
 
 section
 variable {K : ℕ} (e σ υ r : ℝ) (he : 0<e) (he' : e<1/1000)
-    (hσ : (7 / 8 - 21 / 500000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ) (hσ3 : σ≤3)
+    (hσ : boundary ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ) (hσ3 : σ≤3)
     (hυ : (1/2:ℝ)≤υ) (hυ3 : υ≤3) (hr : (17/50:ℝ)≤r)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S) (η : Character) (R : Finset FreeRow) (hR : ∀u∈R,u.val≠1)

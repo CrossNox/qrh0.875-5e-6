@@ -1,16 +1,18 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.ParametersCentralBudget
 
 namespace OAI
 
 noncomputable section
 namespace SevenEighths.Parameters
+open AsymmetricGeometry
 
-def perturbedSlotLengthShift : ℝ := 169 / 1000000
+def perturbedSlotLengthShift : ℝ := AsymmetricGeometry.lengthShift
 
 theorem exists_perturbed_central_budget (gap : ℝ) (hgap : 0 < gap) :
     ∃ small : ℝ, 0 < small ∧ small < gap / 4 ∧
-      small ≤ 1 / 100000000 ∧
-      13 / 16 + 3 * perturbedSlotLengthShift / 2 + 3 * small ≤ 7 / 8 ∧
+      small ≤ 1 / 10000000000000000 ∧
+      rowBase + 3 * perturbedSlotLengthShift / 2 + 3 * small ≤ 7 / 8 ∧
       ∀ N : ℕ, ∃ allowance : ℝ, 0 < allowance ∧
         allowance ≤ small / ((N : ℝ) + 2000) ∧
         ∀ ε e eps : ℝ,
@@ -19,16 +21,16 @@ theorem exists_perturbed_central_budget (gap : ℝ) (hgap : 0 < gap) :
           0 ≤ eps → eps ≤ allowance →
           159 * ε + small +
               (1 + 6 * perturbedSlotLengthShift) * small + 7 * small ≤ 1 / 32 ∧
-          (13 / 16 + 3 * perturbedSlotLengthShift / 2) * (159 * ε + small +
+          (rowBase + 3 * perturbedSlotLengthShift / 2) * (159 * ε + small +
               (1 + 6 * perturbedSlotLengthShift) * small + 7 * small) +
             2 * small + (3 / 2) * (2 * small) +
             (26 * e + (N + 8) * eps + small + small / 6) +
             (small + small + small) + small +
-            perturbedSlotLengthShift * (3 * e + small) ≤ 1 / 500000 := by
-  let small := min (gap / 8) (1 / 100000000)
+            perturbedSlotLengthShift * (3 * e + small) + 6 * skew * e ≤ highMargin := by
+  let small := min (gap / 8) (1 / 10000000000000000)
   have hsmall : 0 < small := lt_min (by positivity) (by norm_num)
   have hsmall_gap : small ≤ gap / 8 := min_le_left _ _
-  have hsmall_cap : small ≤ 1 / 100000000 := min_le_right _ _
+  have hsmall_cap : small ≤ 1 / 10000000000000000 := min_le_right _ _
   refine ⟨small, hsmall, by linarith, hsmall_cap, ?_, ?_⟩
   · dsimp [perturbedSlotLengthShift]
     linarith

@@ -1,5 +1,7 @@
+import OAIAsymmetricGeometry
 import OAIHighXTransport
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -20,7 +22,7 @@ theorem continued_source_differentiable_z_on_perturbed_region
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (W0 W1 : SchwartzMap ℝ ℂ) (X Y Z : ℝ)
     (hX : 0 < X) (hZ : 0 < Z)
-    (s w : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (s w : ℂ) (hs : (boundary : ℝ) ≤ s.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     DifferentiableOn ℂ
       (fun z => continuedSourceMultiplier η S hS.prime J T b
@@ -60,7 +62,7 @@ theorem continued_principal_differentiable_z_on_perturbed_region
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (W0 W1 : SchwartzMap ℝ ℂ) (X Y Z : ℝ)
     (hX : 0 < X) (hZ : 0 < Z)
-    (s w : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (s w : ℂ) (hs : (boundary : ℝ) ≤ s.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     DifferentiableOn ℂ
       (fun z => continuedSourceMultiplier η S hS.prime J T b
@@ -103,7 +105,7 @@ theorem continued_z_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a) (ha3 : a ≤ 3)
+    (ha : (boundary : ℝ) ≤ a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) (t u : ℝ) :
     verticalIntegral ξ (fun z =>

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighAssemblyFixedHigh
 import OAIHighCommonProbe
 import OAIHighPrincipalActualBound
@@ -63,15 +64,14 @@ theorem common_perturbed_probe_of_chosen_moments
   refine ⟨η.excludePrimes F.S F.exclusions.prime,
     sourceCorrection η F.S, F.probe η,
     hmask, hH, hHbound, ?_, ?_⟩
-  · have hlow := F.probe_low (1 / 10000000) (by norm_num) η
+  · have hlow := F.probe_low AsymmetricGeometry.lowAllowance (by norm_num) η
     apply hlow.trans
     apply Continuation.rpow_isBigO_atTop_of_le
-    have hgap : 0 < HeckeZeroSupremum.beta -
-        (7 / 8 - 21 / 500000 : ℝ) := by
-      simpa only [HeckeSignal.perturbedBoundary] using sub_pos.mpr hβ
-    dsimp [ω, HeckeSignal.perturbedBoundary,
-      Parameters.perturbedSlotLengthShift]
-    linarith [hgap]
+    change AsymmetricGeometry.lowBase - AsymmetricGeometry.lengthShift / 4 +
+      AsymmetricGeometry.lowAllowance ≤
+        AsymmetricGeometry.boundary + AsymmetricGeometry.signalOffset + ω
+    exact AsymmetricGeometry.bound_low_allowance.le.trans
+      (le_add_of_nonneg_right hω0.le)
   · obtain ⟨Ct, hCt, hhigh⟩ := hhigh η
     obtain ⟨Cm, hCm, hsource⟩ := hsource η
     apply isBigO_rpow_of_eventual_norm_bound

@@ -1,0 +1,291 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newcommand{\eps}{\varepsilon}
+\title{The fixed-mass asymmetric endpoint limit}
+\author{}
+\date{8 October 2026}
+\begin{document}
+\maketitle
+
+This note certifies the optimum of an explicitly defined numerical family
+using the existing balanced row count and the moment parameter
+$\kappa=3/4$. It does not claim optimality of the full method. In
+particular, the constraint $l_x+l_y+\ell=1$ is imposed here. Its necessity
+in the source construction has not been established. Allowing the total
+mass or the moment parameter to vary is a separate problem.
+The historical certified zero-free boundary at repository revision
+\texttt{c7d46a5} is $0.874958$. The main proof sources now implement a
+rational interior geometry with boundary
+\[
+ B_{\mathrm{rat}}=\frac{4374785349}{5000000000}=0.8749570698.
+\]
+Its analytic transport and final theorem pass the Lean axiom audit and
+Comparator's kernel replay. This rational boundary is distinct
+from the exact irrational closure limit derived below.
+
+\section{Geometry and the numerical family}
+
+Let $u,v\in\mathbb R$, $T=u+v$, and set
+\[
+ l_x=\frac{17}{48}-u,\qquad l_y=\frac{23}{48}-v,\qquad
+ \ell=\frac16+T,\qquad h=\frac{13}{16}+2u+v,\qquad b=l_y-l_x.
+\]
+Then $l_x+l_y+\ell=1$ and $h=1-l_x+\ell$. Neither $u\ge0$ nor
+$v\ge0$ is required by the scalar scale inequalities below. The physical
+signal and direct low exponent are
+\[
+ C(s)=\frac{l_x}{2}+s-1+\frac h6
+     =s-\frac{11}{16}+\frac{v-u}{6},\qquad
+ L=\frac{l_x}{2}+\frac b{12}
+     =\frac3{16}-\frac{5u+v}{12}.
+\]
+For $B=7/8-\eps$, their gap is $C(B)-L=T/4-\eps$.
+The signal shift must therefore be included when comparing asymmetric
+geometries.
+
+Retain the exact upstream functions
+\[
+ D(y)=\frac{37+34y}{18},\quad P(y)=\frac{7+18y+8y^2}{9},\quad
+ J(\delta,y)=(5/6-\delta)D(y)+\delta P(y),
+\]
+\[
+ R(\delta,y)=1-\delta+
+       \frac{(5/6-\delta)\delta P(y)}{2J(\delta,y)},\qquad
+ q=\delta(1/2-y),
+\]
+on $0\le\delta\le3/4$, $0\le y\le1/2$. Here $J\ge35/54>0$.
+The prior $\beta_*\le7/8$ supplies the moment parameter $\kappa=3/4$
+and the indicated $\delta$ cap. No energy theorem at a smaller
+$\kappa$ is used.
+Define
+\[
+ E_0=-\frac1{48}+\frac23\delta+\frac q6-\frac{13}{16}(1-R).
+\]
+The general source exponent at frequency and row lengths $\omega,d$ is
+\begin{align*}
+ F={}&l_x(1/2-c)+a+c-1-a l_y-\omega c+dR\\
+ &+\omega(a-1/2)+\ell(c-1/2+q),\qquad
+ c=17/50,\quad a=(1+\delta)/2.
+\end{align*}
+At $\omega=d=h$, subtracting $C(B)$ gives exactly
+\[
+ E_{\eps,u,v}=E_0+\eps+
+ u(2R+\delta+q-5/6)+v(R+\delta+q-1/6).
+\]
+Our family requires $\eps>0$, $T\ge4\eps$, and
+$E_{\eps,u,v}\le0$ for every point of this parameter box. These are
+closure conditions. Positive low and high savings require strict gaps.
+
+The following sufficient scale conditions define the source-admissible
+subfamily considered here. We retain the existing buffers rather than
+assuming stronger estimates:
+\begin{gather*}
+ b>0,\quad \ell>0,\quad l_x-\ell>0,\quad l_y-\ell>0,\quad
+ l_x+l_y-2\ell>0,\quad h>0,\quad h<7/8,\\
+ 0\le T<1/30,\qquad 2l_x-l_y-\ell>0,\qquad
+ l_y-\ell-11b/6>0,\\
+ \ell>\frac8{39}h,\qquad 5\ell-h>\frac1{48}.
+\end{gather*}
+The compensated Gram cap $\ell<2l_x-l_y$ absorbs the constants
+in $L_{\rm subset}\ll Z^\ell$. It is stronger than the condition
+obtained by absorbing the Gram tail directly into its fractional term.
+The reflected exponent for a subset of length $d$ is
+\[
+ -d+\frac18(d-1/6+5T)_+.
+\]
+It is nonpositive for every $d\ge0$ when $T\le1/30$.
+The supply condition $\ell/h>8/39$ retains the source buffer above
+$7/37$, which is the maximum inverse selected-prime requirement at
+the inverse/plain crossing. It enforces the capacities
+$r+2L_A<1$ and $2r+8L_A<3$ after fine-mesh rounding. Plain marked
+capacity remains $2m+(9/2)L_A\le1$. Positive individual slot lengths
+can be made arbitrarily small, so a fine mesh does not bound their
+total length. Distinct lengths retain disjoint prime annuli.
+
+\section{Exact upper bound and attainment}
+
+Put
+\[
+ s=\sqrt{921},\qquad \delta_*=(49-s)/48,
+ \qquad \eps_*=(16s-485)/13224.
+\]
+At $y=0$ the row count has the rational form
+\[
+ R(\delta,0)=\frac{185-288\delta+96\delta^2}{185-138\delta}.
+\]
+The equation $288\delta_*^2-588\delta_*+185=0$ gives
+$R(\delta_*,0)=2/3$. At this actual source bin the two shift
+coefficients coincide, so
+\[
+ E_{\eps,u,v}(\delta_*,0)=\frac34\delta_*-\frac7{24}
+      +\eps+T(1/2+3\delta_*/2).
+\]
+The coefficient of $T$ is positive. Thus $T\ge4\eps$ and the high
+inequality imply
+\[
+ \eps\le\frac{7/24-3\delta_*/4}{3+6\delta_*}=\eps_*.
+\]
+The inequality is strict if the low gap is strict. This argument imposes
+no signs on $u$ or $v$, and no other geometry restrictions.
+
+For the matching closure point choose
+\[
+ u_*=-\frac{5417}{26448}+\frac{3413s}{507471},\qquad
+ v_*=\frac{53}{912}-\frac{11s}{5833},\qquad T_*=4\eps_*.
+\]
+These satisfy stationarity in $\delta$ at $(\delta_*,0)$.
+Numerically,
+\begin{align*}
+ u_*&=-0.000711421104065542371,\\
+ v_*&= 0.000883141907390582298,\\
+ \eps_*&=0.0000429302008312599817,\\
+ 7/8-\eps_*&=0.874957069799168740.
+\end{align*}
+The script \texttt{research/method\_limit\_general.py} reconstructs the
+following exact certificate using symbolic rational arithmetic in
+$\mathbb Q(\sqrt{921})$. Set
+\[
+ N=-2J E_{\eps_*,u_*,v_*}=A(y)\delta^2+B(y)\delta+K(y).
+\]
+It checks the identity
+\[
+ 4A(y)N=(2A(y)\delta+B(y))^2+yH(y),
+\]
+where $A(y)$ has positive coefficients and
+\begin{align*}
+ H(y)={}&\frac{241329064550-7669715200s}{203840443809}\\
+ &+\left(\frac{596581904575}{815361775236}
+          -\frac{397791650s}{22648938201}\right)y\\
+ &+\left(-\frac{211863217525}{203840443809}
+          +\frac{2926468000s}{67946814603}\right)y^2\\
+ &+\left(-\frac{837952475}{1192049379}
+          +\frac{275538200s}{10728444411}\right)y^3.
+\end{align*}
+All four coefficients of $H$ are positive. The script proves these
+signs using rational lower and upper enclosures of $s$ obtained from
+an integer square root at denominator $10^{18}$. It also reconstructs
+a positive Bernstein representation on $0\le y\le1/2$.
+At $y=0$ it checks
+\[
+ N(\delta,0)=\left(\frac{884}{1653}
+                  -\frac{9172s}{4567239}\right)(\delta-\delta_*)^2.
+\]
+Consequently the high inequality holds globally, with equality only
+at the critical bin. This certifies the exact fixed-mass closure optimum.
+Keeping $u_*,v_*$ fixed and taking $\eps=\eps_*-\rho$ gives both
+low and high gaps at least $\rho$ for every $\rho>0$.
+
+\section{Remaining margins and verification scope}
+
+The fixed floor at $a=51/100$, $R=1$, and $q=1/100$ has relative
+exponent
+\[
+ -7/1200+\eps+(359/300)u+(259/300)v.
+\]
+More generally a floor cutoff $a_0=(1+\delta_0)/2$ costs
+\[
+ -1/48+3\delta_0/4+\eps+
+ u(7/6+3\delta_0/2)+v(5/6+3\delta_0/2).
+\]
+For the intermediate branch $d\le1/2$, the source estimate
+$R\le76/75-(2/3)\delta$ and $q\le\delta/2$ gives
+\[
+ -529/2400+(25/96)\delta+\eps+
+ u(\delta/2-23/150)+v(1/2+\delta-49/150).
+\]
+At the proposed closure geometry this is linear in $\delta$, so its
+two endpoint checks certify the whole interval. The small-row saving is
+$63/800-(26/75)u-(101/150)v$ before selectable losses.
+
+On the active principal line $a=\beta_*+e$, the $w$ and $z$ contour
+savings tend to $l_y/20$ and $h/600$ as $e\to0$. The $w$ cost is
+$(1+h)e$ and the $z$ cost is $e$. On the separate fixed line
+$a=7/8+e$, each limiting saving is reduced by at most $\eps$.
+These two paths must not be conflated.
+The Euler local perturbation is $6\eps$, independently of $T$.
+The strong principal tail condition remains valid for $\eps<1/400$.
+The small-row first Euler region with parameter $37/100$ requires
+$B>87/100$. The global Euler product condition recorded by the script
+is $31/40-\eps+24/25>5/3$.
+Large-row and contour tails retain a positive coefficient $h$ and
+can be cut off farther right after choosing the small losses.
+
+Selected numerical margins at the closure point are
+\[
+\begin{array}{lr}
+ \text{floor} &0.00587929120698663634\\
+ \text{intermediate, worst endpoint} &0.0244035004494126309\\
+ \text{small row} &0.0784019770984330626\\
+ \text{principal active }w &0.0239141762379638042\\
+ \text{principal active }z &0.00135326716616543250\\
+ \text{principal fixed }z &0.00131033696533417251\\
+ \ell-(8/39)h &0.000282428557323091710\\
+ 5\ell-h-1/48 &0.00139830431736570208\\
+ 2l_x-l_y-\ell &0.0646342633121966271
+\end{array}
+\]
+All other listed source scale and Euler margins are checked strictly
+positive by the same script. Thus those scalar inequalities do not
+reduce the optimum of this fixed-mass family. They do not establish
+that every general-geometry analytic transport lemma has been proved.
+The main proof establishes the transport for its particular rational
+interior geometry and passes the final Lean audit and Comparator replay.
+Its boundary $B_{\mathrm{rat}}$ lies about $8.31\times10^{-13}$ above
+$B_*$. At the exact closure point the low and high gaps vanish, so the
+closure certificate alone is not a zero-free theorem at $B_*$.
+
+The companion \texttt{lean/MethodLimitGeneral.lean} proves the exact
+upper bound and its strict form using the actual pinned upstream
+\texttt{Endpoint.balancedRowCount}. It proves the signal and low-gap
+identities and the closed form for $\eps_*$. Its transitive axiom
+audit allows only \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}. Global attainment is certified by the symbolic
+script, rather than by that Lean module. Reproduce the checks with
+\begin{verbatim}
+uv run research/method_limit_general.py
+uv run scripts/verify_oai.py MethodLimitGeneral --only
+\end{verbatim}
+The upstream source is pinned at
+\texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+Changing $\kappa$, the total mass, the source row-count estimate, or
+the direct low estimate changes this optimization problem and is
+outside its limit claim.
+
+\section{Conditional extension to independent slot length}
+
+For independent shifts take $\ell=1/6+w$ while retaining
+$l_x=17/48-u$, $l_y=23/48-v$, and $h=13/16+u+w$.
+Write $T=u+v$. The high perturbation becomes
+\[
+ \eps+u(R+\delta/2-1/6)+v(1+\delta)/2
+       +w(R+\delta/2+q-2/3).
+\]
+At the same critical bin it reduces to
+$\eps+((1+\delta_*)/2)T+\delta_*w$.
+If the direct low comparison includes the reflected mass-excess cost
+$(w-T)_+/2$, its required gap is
+\[
+ (T+2w)/12-(w-T)_+/2-\eps\ge0.
+\]
+Under this explicit assumption the same upper bound follows. For every
+$\delta\ge0$, put $k=(1+3\delta)/6$. Then
+\begin{align*}
+ ((1+\delta)/2)T+\delta w
+ ={}&k\bigl(T+2w-6(w-T)_+\bigr)\\
+ &+(T-w)/3+(1+3\delta)(w-T)_+.
+\end{align*}
+The last line is nonnegative. For $w\le T$ it is $(T-w)/3$.
+For $w\ge T$ it is $(2/3+3\delta)(w-T)$.
+Thus the high cost is at least $(2+6\delta)\eps$, recovering
+$\eps\le\eps_*$. The Lean theorem
+\begin{verbatim}
+bound_independent_slot_boundary_reduction
+\end{verbatim}
+verifies this conditional arithmetic extension with the actual upstream row count.
+It does not prove that the displayed mass-excess cost is forced for
+actual detector rows. The separate reflected source audit must supply
+that premise before interpreting this as a limit of the larger family.
+\end{document}

@@ -6,18 +6,20 @@ noncomputable section
 namespace SevenEighths.Endpoint
 
 def evaluatePerturbedHighEndpointExponent (δ y : ℝ) : ℝ :=
-  balancedExponent δ y + 21 / 500000 +
-    (169 / 1000000) *
-      (-1 / 2 + δ + δ * (1 / 2 - y) + 3 * balancedRowCount δ y / 2)
+  balancedExponent δ y + 214651 / 5000000000 +
+    (42930200831 / 250000000000000) *
+      (-1 / 2 + δ + δ * (1 / 2 - y) + 3 * balancedRowCount δ y / 2) +
+    (12457523527 / 15625000000000) * (2 / 3 - balancedRowCount δ y)
 
 private def evaluateQuadraticCoefficient (y : ℝ) : ℝ :=
-  153063882 + 393024336 * y + 282085176 * y ^ 2 + 96097344 * y ^ 3
+  38381036152738950 + 98112671277888624 * y +
+    70349424015981576 * y ^ 2 + 24024727795678656 * y ^ 3
 
 private def evaluateLinearCoefficient (y : ℝ) : ℝ :=
-  -118376871 - 188464636 * y - 13011148 * y ^ 2
+  -29828491018092129 - 47206874749477924 * y - 3166469409426772 * y ^ 2
 
 private def evaluateConstantCoefficient (y : ℝ) : ℝ :=
-  22888570 + 21032740 * y
+  5795432885635430 + 5325532921935260 * y
 
 private def evaluateEndpointPolynomial (δ y : ℝ) : ℝ :=
   evaluateQuadraticCoefficient y * δ ^ 2 +
@@ -25,8 +27,8 @@ private def evaluateEndpointPolynomial (δ y : ℝ) : ℝ :=
 
 theorem verify_perturbed_endpoint_polynomial_identity (δ y : ℝ)
     (hJ : balanceDenominator δ y ≠ 0) :
-    648000000 * balanceDenominator δ y *
-      (-evaluatePerturbedHighEndpointExponent δ y - 1 / 500000) =
+    162000000000000000 * balanceDenominator δ y *
+      (-evaluatePerturbedHighEndpointExponent δ y - 1 / 1250000000000) =
       evaluateEndpointPolynomial δ y := by
   unfold evaluatePerturbedHighEndpointExponent balancedExponent
     balancedRowCount balancedCutoff evaluateEndpointPolynomial
@@ -38,8 +40,10 @@ theorem verify_perturbed_endpoint_polynomial_identity (δ y : ℝ)
 theorem verify_perturbed_endpoint_square_identity (δ y : ℝ) :
     4 * evaluateQuadraticCoefficient y * evaluateEndpointPolynomial δ y =
       (2 * evaluateQuadraticCoefficient y * δ + evaluateLinearCoefficient y) ^ 2 +
-        569922764319 + 4240763631276888 * y + 20292262879067528 * y ^ 2 +
-        27625937254957024 * y ^ 3 + 7915471831892336 * y ^ 4 := by
+        979807389619512241359 + 275799814009247843319007787580888 * y +
+        1303439473219357232720782491774728 * y ^ 2 +
+        1756569235069508453488622075444704 * y ^ 3 +
+        501751386744843713686464752902256 * y ^ 4 := by
   unfold evaluateEndpointPolynomial evaluateQuadraticCoefficient
     evaluateLinearCoefficient evaluateConstantCoefficient
   ring
@@ -52,8 +56,10 @@ theorem bound_perturbed_endpoint_polynomial (δ y : ℝ) (hy : 0 ≤ y) :
   have hidentity := verify_perturbed_endpoint_square_identity δ y
   have hright : 0 ≤
       (2 * evaluateQuadraticCoefficient y * δ + evaluateLinearCoefficient y) ^ 2 +
-        569922764319 + 4240763631276888 * y + 20292262879067528 * y ^ 2 +
-        27625937254957024 * y ^ 3 + 7915471831892336 * y ^ 4 := by
+        979807389619512241359 + 275799814009247843319007787580888 * y +
+        1303439473219357232720782491774728 * y ^ 2 +
+        1756569235069508453488622075444704 * y ^ 3 +
+        501751386744843713686464752902256 * y ^ 4 := by
     positivity
   by_contra hnegative
   have hnegative' : evaluateEndpointPolynomial δ y < 0 := lt_of_not_ge hnegative
@@ -65,21 +71,22 @@ theorem bound_perturbed_endpoint_polynomial (δ y : ℝ) (hy : 0 ≤ y) :
 theorem bound_perturbed_high_endpoint_exponent (δ y : ℝ)
     (hδ : 0 ≤ δ) (hδ' : δ ≤ 3 / 4)
     (hy : 0 ≤ y) (hy' : y ≤ 1 / 2) :
-    evaluatePerturbedHighEndpointExponent δ y ≤ -(1 / 500000) := by
+    evaluatePerturbedHighEndpointExponent δ y ≤ -(1 / 1250000000000) := by
   have hJbounds := balanceDenominator_bounds hδ (by linarith) hy hy'
   have hJ : 0 < balanceDenominator δ y := by linarith [hJbounds.1]
   have hidentity := verify_perturbed_endpoint_polynomial_identity δ y hJ.ne'
   have hpolynomial := bound_perturbed_endpoint_polynomial δ y hy
-  have hfactor : 0 < 648000000 * balanceDenominator δ y := by positivity
+  have hfactor : 0 < 162000000000000000 * balanceDenominator δ y := by positivity
   nlinarith
 
 theorem bound_high_endpoint_exponent_with_slot_length_shift (t δ y : ℝ)
-    (ht : 0 ≤ t) (ht' : t ≤ 169 / 1000000)
+    (ht : 0 ≤ t) (ht' : t ≤ 42930200831 / 250000000000000)
     (hδ : 0 ≤ δ) (hδ' : δ ≤ 3 / 4)
     (hy : 0 ≤ y) (hy' : y ≤ 1 / 2) :
-    balancedExponent δ y + 21 / 500000 +
-      t * (-1 / 2 + δ + δ * (1 / 2 - y) + 3 * balancedRowCount δ y / 2) ≤
-      -(1 / 500000) := by
+    balancedExponent δ y + 214651 / 5000000000 +
+      t * (-1 / 2 + δ + δ * (1 / 2 - y) + 3 * balancedRowCount δ y / 2) +
+      (12457523527 / 15625000000000) * (2 / 3 - balancedRowCount δ y) ≤
+      -(1 / 1250000000000) := by
   have hJbounds := balanceDenominator_bounds hδ (by linarith) hy hy'
   have hJ : 0 < balanceDenominator δ y := by linarith [hJbounds.1]
   have hcutoff : 1 ≤ balancedCutoff δ y := by

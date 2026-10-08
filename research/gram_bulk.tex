@@ -1,0 +1,584 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newcommand{\Norm}{\mathrm N}
+\newcommand{\C}{\mathbb C}
+\begin{document}
+
+\title{Complete means of the exceptional additive Gram blocks}
+\author{}
+\date{October 8, 2026}
+\maketitle
+
+This note records arithmetic deductions from the pinned upstream revision
+\texttt{adc7f1241}\allowbreak\texttt{b42e322a645}\allowbreak
+\texttt{1854ab7e4b4c}\allowbreak\texttt{146bf78a}.
+It does not assert a new zero-free boundary.
+The local finite-field formulas below have direct proofs.
+Run their exact checks with
+\begin{quote}
+\texttt{uv run research/gram\_bulk.py}.
+\end{quote}
+The Lean file \path{lean/GramBulkClassification.lean} records the vanishing
+of the pulled-back coefficient when the dilation meets a common prime.
+
+\section*{The coefficient being averaged}
+
+Let $H$ be the fixed modulus called \texttt{jointFixedModulus} upstream.
+For the common ideal $C$, frequency $k\ne0$, and dilation $d$, the mean is
+\[
+ \mu_{C,d,k}=\frac1{q_{\mathfrak r}^2}
+ \sum_{x,y\bmod\mathfrak r}
+ \operatorname{canonicalJoint}(C,k,dx,dy),
+\]
+where $\mathfrak r$ is any period of the pulled-back coefficient.
+The multiplication by $d$ occurs before averaging.
+If $d$ is a unit modulo $\mathfrak r$, multiplication permutes its residue
+classes and $\mu_{C,d,k}=\mu_{C,1,k}$.
+If a prime of $C$ divides $d$, the mean is zero.
+Indeed \texttt{localExtension} is defined to be zero when both columns vanish
+at that prime.
+If a prime outside the fixed modulus divides both $d$ and $k$, the moving
+numerator character supplies a zero mask and the coefficient is again zero.
+The calibration masks also force zero if $C$ or $d$ meets its excluded set.
+These facts must be checked before replacing a pulled-back mean by an
+undilated mean.
+
+The exact Poisson bulk is
+\[
+ \operatorname{Bulk}_{C,d,k}
+ =\frac43\mu_{C,d,k}N^2\int_{\C^2}W_{C,d,k}.
+\]
+It is the zero dual frequency.
+It is not the lattice sum with the arithmetic coefficient replaced by its
+complete mean.
+Subtracting that latter lattice sum leaves an additional constant-coefficient
+lattice discrepancy.
+
+\section*{Good primes outside the fixed modulus}
+
+Fix a finite field $F$ of cardinality $q$ and a multiplicative character
+$\chi$ of exact order six, extended by zero at zero.
+Write $c=v_p(C)$ and $e=v_p(k)$.
+For $e=0$, define $\psi_e(u)=1$ for every $u\in F$.
+For $e>0$, define $\psi_e(u)=\chi(u)^e$, with value zero at $u=0$.
+For $c=0$, put $L_c(u,v;k)=1$.
+For $c>0$, put
+\[
+ L_c(u,v;k)=
+ \begin{cases}
+ 0,&u=v=0,\\
+ q^{c-1}\displaystyle\sum_{vx-uy=k}
+        \chi(x)^c\overline{\chi(y)^c},&\text{otherwise}.
+ \end{cases}
+\]
+When $e=0$, $k$ is any nonzero element of $F$.
+When $e>0$, its residue is zero.
+This is the local factor in \texttt{GramLocalExtension.lean}, multiplied by
+the two moving numerator factors in \texttt{GramJoint.lean}.
+Define
+\[
+ m_q(c,e;d)=q^{-2}\sum_{u,v\in F}
+       L_c(du,dv;k)\psi_e(du)\overline{\psi_e(dv)}.
+\]
+
+\begin{proposition}
+If $d\ne0$ in $F$, then
+\[
+ m_q(c,e;d)=
+ \begin{cases}
+ 1,&c=e=0,\\
+ 0,&6\nmid c+e,\\
+ (1-q^{-1})^2,&c=0, e>0, 6\mid e,\\
+ q^c(1-q^{-1})^2,&c>0, e=0, 6\mid c,\\
+ q^c(1-q^{-1})^3,&c>0, e>0, 6\mid c+e.
+ \end{cases}
+\]
+If $d=0$, the mean is zero unless $c=e=0$, in which case it is one.
+\end{proposition}
+
+\begin{proof}
+A nonzero dilation permutes $F$ in both columns, so it suffices to take $d=1$.
+If $c=0$ and $e>0$, character orthogonality gives
+\[
+ q^{-2}\left|\sum_{u\in F}\chi(u)^e\right|^2
+ =\begin{cases}(1-q^{-1})^2,&6\mid e,\\0,&6\nmid e.\end{cases}
+\]
+Suppose $c>0$ and $e>0$.
+The numerator factors kill both one-zero branches.
+For unit columns and $k=0$, the local correlation is
+$(q-1)\chi(u/v)^c$.
+The weighted coefficient is therefore
+$q^{c-1}(q-1)\chi(u/v)^{c+e}$.
+The sum over the two unit columns is $(q-1)^2$ if $6\mid c+e$ and zero
+otherwise.
+After division by $q^2$, this proves the last branch.
+
+Suppose $c>0$ and $e=0$, so $k\ne0$.
+For unit columns, the correlation is
+\[
+ \chi(u/v)^c
+ \begin{cases}q-2,&6\mid c,\\-1,&6\nmid c.\end{cases}
+\]
+The two one-zero branches are each $q-1$ if $6\mid c$ and zero otherwise.
+When $6\mid c$, their total before multiplication by $q^{c-1}$ is
+$(q-1)^2(q-2)+2(q-1)^2=q(q-1)^2$.
+When $6\nmid c$, the unit-column sum vanishes by orthogonality and both
+one-zero branches vanish.
+This proves the fourth branch.
+Finally, if $d=0$ and $c>0$, the definition of $L_c$ kills the coefficient.
+If $d=0$, $c=0$, and $e>0$, the numerator zero mask kills it.
+\end{proof}
+
+Thus a nonzero complete mean requires the combined ideal $C(k)$ to have
+valuations divisible by six away from the fixed support.
+The existing exceptional count imposes this condition only on $(k)$ at primes
+outside $C$ and the fixed support.
+The complete mean imposes the stronger combined condition.
+All common-part exponents are included in this proposition.
+No squarefree-column hypothesis occurs.
+
+\section*{The common-part sum}
+
+\begin{lemma}
+For every integer $h>0$ divisible by six,
+\[
+ \sum_{c=0}^h q^{-2c}m_q(c,h-c;1)
+ =(1-q^{-1})(1-q^{-2}).
+\]
+\end{lemma}
+
+\begin{proof}
+Put $r=q^{-1}$ and factor out $(1-r)^2$.
+The endpoint contributions are $1$ and $r^h$.
+The interior contributions sum to
+$(1-r)\sum_{c=1}^{h-1}r^c=r-r^h$.
+The resulting factor is $1+r$.
+\end{proof}
+
+This identity is positive and independent of $h$.
+Consequently these good-prime common-part branches do not cancel each other.
+If the complete signed M\"obius sum can be extended to all dilation ideals,
+the primes outside $C(k)$ and the fixed support contribute
+$\prod_p(1-q_p^{-2})$.
+Combining this product with the preceding identity formally gives
+\[
+ \zeta_{\mathrm{good}}(2)^{-1}
+ \prod_{p\mid C(k),\ p\ \mathrm{good}}(1-q_p^{-1}).
+\]
+The extension of the finite divisor pool to this infinite Euler product needs
+a tail estimate.
+This note does not identify the finite divisor-pool sum with that product.
+
+\section*{Good excluded primes}
+
+Let $p$ lie in the excluded set $S$, away from the primes over $2,3$.
+The calibration zero masks require $c=0$ and $d$ a unit at $p$.
+The generator $b_*$ has valuation one at $p$.
+Hence the local character in the first column is
+\[
+ \chi_p^{1+e}\overline{\xi_p},
+\]
+and the second column has its conjugate.
+The local complete mean is zero unless $\chi_p^{1+e}=\xi_p$.
+When this identity holds, its value is $(1-q_p^{-1})^2$.
+For the quadratic calibration $\xi_p=\chi_p^3$, the necessary and sufficient
+condition at this prime is $e\equiv2\pmod6$.
+This local assertion follows from character orthogonality and the upstream
+definitions of \texttt{gramPeriodicMonoid} and \texttt{jointExtension}.
+Its assembly with the remaining fixed phases is not yet formalized.
+
+\section*{The remaining fixed phase}
+
+The primary restriction, physical ray restriction, supplementary phases at
+$2,3$, and the reciprocity phase remain in a finite complete mean.
+They cannot be discarded.
+Their exact coefficient is the function \texttt{jointFixed} upstream,
+with the $S$-supported moving numerator factors retained.
+A global formula must show how that finite mean depends on the residue class
+of $C$, the unit and bad-prime components of $k$, and the ray sector.
+The local product above is a proved factor only at primes coprime to that
+fixed modulus.
+
+\begin{lemma}
+If $m$ is supported and primary, and $4\mid n-m$, then
+\[
+ \operatorname{jointFixed}(C,k;n,m)=f(n)\overline{f(m)},
+\]
+where
+\[
+ \begin{split}
+ f(n)={}&\operatorname{primaryCoefficient}(Cn)\\
+ &\cdot\operatorname{numeratorBadTwist}(u,a,b,r;n).
+ \end{split}
+\]
+\end{lemma}
+
+\begin{proof}
+The diagonal reciprocity identity is $\mathcal R(m,m)=\chi_m(-1)$.
+For primary prime generators this is the upstream identity in
+\texttt{Detector/PrimePhase.lean}.
+It extends to every supported primary $m$ by prime factorization.
+Indeed the reciprocity phase is multiplicative in both arguments, symmetric,
+and takes values $\pm1$ on supported arguments, so
+$\mathcal R(ab,ab)=\mathcal R(a,a)\mathcal R(b,b)$.
+The denominator character is also multiplicative in the denominator ideal.
+
+Since $n$ and $m$ have the same ray modulo $4$,
+$\mathcal R(n,m)=\mathcal R(m,m)=\chi_m(-1)$.
+Also
+\[
+ \operatorname{numeratorBadTwist}(-u;m)
+ =\chi_m(-1)\operatorname{numeratorBadTwist}(u;m).
+\]
+The extra two factors in \texttt{jointFixed} multiply to
+$\chi_m(-1)\overline{\chi_m(-1)}=1$.
+\end{proof}
+
+The general diagonal identity and this rank-one lemma are compiled in
+\texttt{GramBulkClassification.lean} with only the standard axioms
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+To apply the lemma without explicit column hypotheses, one must use the
+original masks.
+The numerator unit supplement kills unsupported columns.
+For primary $C$, the primary restriction on $Cm$ implies the one on $m$.
+Since supported $C$ is invertible modulo $4$, the two ray restrictions on
+$Cn,Cm$ imply $4\mid n-m$.
+That bridge is not yet formalized here.
+
+\section*{An explicit nonzero arithmetic mean}
+
+Assume $S$ contains the unique primes over $2$ and $3$, and let
+$S_{\mathrm g}$ be its other primes.
+Write the squarefree calibration generator as
+\[
+ b_*=u_b\lambda\,2\prod_{p\in S_{\mathrm g}}\pi_p,
+\]
+with primary good generators $\pi_p$.
+Every sixth-torsion residue character at a good prime is a power of its
+canonical exact-order-six character.
+Thus choose $1\le a_p\le5$ such that $\xi_p=\chi_p^{a_p}$, and put
+\[
+ k_0=u_b^{-1}\lambda^5\,2^5
+       \prod_{p\in S_{\mathrm g}}\pi_p^{a_p-1}.
+\]
+Then $b_*k_0=\lambda^6\,2^6\prod_p\pi_p^{a_p}$.
+
+Fix a unit ray $\sigma$ modulo the ideal $(4)$.
+For $C=d=1$, the single-column coefficient after the rank-one reduction is
+\[
+ f(n)=\tau^{-1}\xi(n)^{-1}\chi_n(b_*k_0)
+\]
+on primary columns in ray $\sigma$ coprime to $S$, and zero otherwise.
+On those columns it is a constant $\gamma_\sigma$ of norm one.
+To see this, the sixth powers at the bad primes contribute one, with their
+unit masks retained.
+At a good excluded prime, reciprocity gives
+$\chi_n(\pi_p)^{a_p}
+=\mathcal R(\pi_p,n)^{a_p}\chi_p(n)^{a_p}$.
+The character cancels $\xi_p(n)$, and the phase is constant in ray $\sigma$.
+The calibration character at $\lambda$ is fixed by
+$n\equiv1\pmod{\lambda^2}$.
+The calibration character at $2$ is fixed by $n\bmod4$.
+
+The ideals $(\lambda^2)$ and $(4)$ are coprime and have norms $9$ and $16$.
+CRT therefore gives the active residue density
+\[
+ \delta_\sigma=\frac1{144}
+     \prod_{p\in S_{\mathrm g}}(1-q_p^{-1}).
+\]
+Consequently
+\[
+ \mu_{1,1,k_0}=\delta_\sigma^2>0.
+\]
+For a supported element $a$ coprime to $S$, multiplication of the frequency
+by $a^6$ retains the unit masks at its primes and gives
+\[
+ \mu_{1,1,k_0a^6}
+ =\delta_\sigma^2\prod_{p\mid(a)}(1-q_p^{-1})^2.
+\]
+The finite-field character spectrum and CRT density in this argument have
+not yet been formalized in Lean.
+The formula is a mathematical deduction using those standard finite-group
+facts and the rank-one identity.
+It proves nonvanishing of the arithmetic mean.
+It does not prove nonvanishing or positivity of the weighted bulk, because
+the smooth integral and subsequent frequency sum can cancel.
+
+\section*{The two finite pools}
+
+Write $Y$ for the physical column scale, including any preceding rescaling.
+The upstream window is the unmasked set
+\[
+ F_Y=\{I\text{ supported}:W(q_I/Y)\ne0\}.
+\]
+It does not impose a ray or calibration restriction.
+The actual common pool is $\{\gcd(I,J):I,J\in F_Y\}$.
+The dilation pool at $C$ is the union of all ideal divisors of the residual
+window $F_{Y/q_C}$.
+These are the definitions in \texttt{GramFiniteGcd.lean:16},
+\texttt{LowColumnBounds.lean:13}, and \texttt{MobiusRegroup.lean:11}.
+
+Choose $0<a'<b'$ such that $W$ never vanishes on $[a',b']$, and put
+\[
+ L_0=\max\left(1,\left(\frac{12}{\sqrt{b'}-\sqrt{a'}}\right)^2\right).
+\]
+If $q_C\le Y/L_0$, the interval
+$[\sqrt{a'Y/q_C},\sqrt{b'Y/q_C}]$ has length at least $12$.
+It contains $j,j+6$ with $j\equiv1\pmod6$ and $j>0$.
+Both integer ideals are supported and they are coprime.
+Thus $C(j),C(j+6)\in F_Y$ and their gcd is exactly $C$.
+Every supported $C$ up to $Y/L_0$ belongs to the actual common pool.
+
+Similarly, for $N=Y/q_C$, every supported $D$ with $q_D\le N/L_0$
+divides a column $D(j)$ in $F_N$.
+Here one only needs $j\equiv1\pmod6$ in the interval
+$[\sqrt{a'N/q_D},\sqrt{b'N/q_D}]$.
+Extra good excluded primes dividing $j$ cause no problem because the pools
+are unmasked.
+
+The elementary ideal count $\#\{D:q_D\le T\}\ll T$ gives
+\[
+ \sum_{q_D>L}q_D^{-2}\ll L^{-1}\qquad(L\ge1).
+\]
+Consequently, for any specified set of allowed dilation primes, the actual
+finite signed sum $\sum_D\mu(D)q_D^{-2}$ differs from its infinite Euler
+product by $O_W(q_C/Y)$.
+For $Y/q_C<L_0$, the same bound follows by bounding both sums absolutely.
+This argument concerns the signed factor only after its nonunit dilation
+terms have been proved to vanish.
+It does not replace a raw Poisson remainder by a centered lattice sum.
+
+\section*{Assembly at one combined sixth-power frequency}
+
+Keep $k_0$ and the unit ray from the explicit nonzero family above.
+Let $A$ be an ideal coprime to $S$, let $a$ be its multiplicative primary
+generator, and put $H=k_0a^6$.
+Only common ideals $C\mid A^6$ can have nonzero mean at this combined
+frequency.
+Set $k=H/\operatorname{primaryGenerator}(C)$.
+At an excluded good prime $k$ retains exponent $a_p-1$.
+At a prime outside $S$, write $h=6v_p(A)$ and $c=v_p(C)$.
+The complete mean is
+\[
+ \mu_{C,1,k}=\delta_\sigma^2
+   \prod_{p\mid A}m_{q_p}(c,h-c;1).
+\]
+The fixed density is independent of $C$.
+The original ray condition becomes the unit ray $\sigma/C$ on the residual
+column, which has the same density.
+The corresponding constant phase cancels with its conjugate.
+If $D$ meets $S$ or $A$, its pulled-back coefficient vanishes.
+Otherwise it is a unit at every relevant period prime and its mean is the
+displayed one.
+
+Put $P=Y^2/Q$.
+The physical frequency scale is exactly
+\[
+ \operatorname{frequencyScale}(C,k,Y,Q)
+   =q_C\Norm(k)/P=\Norm(H)/P.
+\]
+The profile integral after lattice scaling therefore depends on $H$ and $P$,
+and not on $C$ or $D$.
+Write it as $J_v(\Norm(H)/P)$.
+The zero dual frequency has prefactor
+\[
+ \frac{Q}{Y^3}\frac43\left(\frac{Y}{q_Cq_D}\right)^2
+ =\frac43\frac QY q_C^{-2}q_D^{-2}.
+\]
+This is the exact Poisson bulk, with the standard Lebesgue integral on
+$\mathbb C^2$.
+
+Let $\zeta_S(s)=\prod_{p\notin S}(1-q_p^{-s})^{-1}$.
+The infinite signed dilation factor is
+\[
+ E_A=\zeta_S(2)^{-1}\prod_{p\mid A}(1-q_p^{-2})^{-1}.
+\]
+The local common-part identity then gives
+\[
+ E_A\sum_{C\mid A^6}q_C^{-2}\mu_{C,1,k}
+ =\delta_\sigma^2\zeta_S(2)^{-1} f(A),\qquad
+ f(A)=\prod_{p\mid A}(1-q_p^{-1}).
+\]
+
+Both finite-pool errors can be bounded before summing over $A$.
+Since $0\le\mu_{C,1,k}\le\delta_\sigma^2q_C$,
+\[
+ \sum_{C\mid A^6}q_C^{-1}\mu_{C,1,k}
+ \le\delta_\sigma^2\tau(A^6).
+\]
+The finite dilation error at $C$ is $O_W(q_C/Y)$.
+Any omitted common ideal has $q_C>Y/L_0$, and $0<E_A\le1$.
+It follows that the actual arithmetic factor $T_Y(A)$ satisfies
+\[
+ \left|T_Y(A)-\delta_\sigma^2\zeta_S(2)^{-1}f(A)\right|
+ \ll_{S,W}\frac{\tau(A^6)}Y.
+\]
+The common profile $J_v(\Norm(H)/P)$ can be factored out before applying
+this bound.
+The pool saturation and this error estimate are paper-level proofs from the
+actual finite definitions, not yet Lean theorems.
+
+\section*{The weighted family asymptotic}
+
+Assume $W\in C_c^\infty((0,\infty))$ is nonzero and $U$ is a Schwartz
+function on $\mathbb R$.
+Here $U(r)$ is used as a radial function $U(|z|^2)$ on $\mathbb C$.
+For $s\in\mathbb C$, write
+$M_W(s)=\int_0^\infty W(r)r^s\,dr/r$.
+With $F_U=\operatorname{paperRadialFourier}(U)$, the common integral is
+\[
+ J_v(T)=\pi^2\int_0^\infty\int_0^\infty
+ W(r_1)\overline{W(r_2)}
+ r_1^{-1+iv}r_2^{-1-iv}F_U(T/(r_1r_2))\,dr_1\,dr_2.
+\]
+The factor $\pi^2$ is from polar coordinates in the two complex variables.
+For real $v$ and $\alpha>0$,
+\[
+ M_{J_v}(\alpha)
+ =\pi^2|M_W(\alpha+iv)|^2 M_{F_U}(\alpha).
+\]
+The profile and its $T$ derivative decay rapidly at infinity, uniformly in
+real $v$, because the oscillatory powers have modulus one.
+
+The Eisenstein ideal count coprime to $S$ is
+\[
+ A_S(T)=c_ST+O_S(\sqrt T+1),\qquad
+ c_S=\frac{\pi}{3\sqrt3}\prod_{p\in S}(1-q_p^{-1}).
+\]
+Indeed there are six generators for each nonzero ideal and the Eisenstein
+lattice has covolume $\sqrt3/2$.
+Finite inclusion-exclusion gives the displayed coprimality factors.
+Since $f(A)=\sum_{D\mid A}\mu(D)/q_D$, convolution gives
+\[
+ \sum_{q_A\le T,\ (A,S)=1}f(A)
+ =\frac{c_S}{\zeta_S(2)}T+O_S(\sqrt T+1).
+\]
+The error uses the convergent series $\sum_Dq_D^{-3/2}$ and the tail
+$\sum_{q_D>T}q_D^{-2}\ll T^{-1}$.
+
+Put $X=(P/\Norm(k_0))^{1/6}$.
+Partial summation gives
+\[
+ \sum_{(A,S)=1} f(A)J_v((q_A/X)^6)
+ =\frac{c_S}{6\zeta_S(2)}X M_{J_v}(1/6)
+   +O_{S,W,U}(\sqrt X+1).
+\]
+This error is uniform for all real $v$.
+For example, it is bounded by a constant times
+\[
+ \sqrt X\int_0^\infty\sqrt u\left|\frac d{du}J_v(u^6)\right|du
+ +\int_0^\infty\left|\frac d{du}J_v(u^6)\right|du.
+\]
+Both integrals are uniformly finite.
+The divisor estimate $\tau(A^6)\ll_\eta q_A^\eta$ and rapid profile decay
+bound the aggregate finite-pool error by
+$O_{S,W,U,\eta}((X^{1+\eta}+1)/Y)$.
+
+Thus the exact zero-dual-frequency contribution from this one specified
+combined-frequency family is, for $P,Y\ge1$ and any $\eta>0$,
+\[
+ \begin{split}
+ \mathcal B_{k_0}(P,Y,v)
+ ={}&\frac{2\pi^2}{9}
+ \frac{\delta_\sigma^2c_S}{\zeta_S(2)^2}
+ \Norm(k_0)^{-1/6}\frac QY P^{1/6}
+ |M_W(1/6+iv)|^2 M_{F_U}(1/6)\\
+ &+O_{S,W,U,\eta}\left(
+ \frac QY\left[P^{1/12}+1+
+ \frac{P^{(1+\eta)/6}+1}{Y}\right]\right).
+ \end{split}
+\]
+Each ideal $A$ supplies the single element $H=k_0a^6$.
+There is no additional factor of six in this chosen family.
+Other unit or bad-support frequency families have not been included.
+This theorem is a mathematical derivation using the mean classification,
+pool arguments, and lattice count above.
+Its CRT and spectral ingredients remain unformalized in Lean.
+
+\section*{Fourier normalization and the radial obstruction}
+
+Upstream \texttt{SexticRadialPoisson.lean:304} defines
+\[
+ \operatorname{paperFourier}(g)(u)
+ =\frac2{\sqrt3}\widehat g\left(\frac{2i}{\sqrt3}\overline u\right),
+\]
+where the standard Fourier transform has phase $e^{-2\pi i x\cdot\xi}$.
+For a radial function this gives
+\[
+ F_U(t)=\frac{2\pi}{\sqrt3}\int_0^\infty
+ U(r)J_0\left(\frac{4\pi}{\sqrt3}\sqrt{rt}\right)dr.
+\]
+At $\alpha=1/6$, the absolute convergence of the Bessel Mellin integral
+justifies Fubini and gives\footnote{The identity
+$\int_0^\infty x^{2\alpha-1}J_0(x)dx
+=2^{2\alpha-1}\Gamma(\alpha)/\Gamma(1-\alpha)$ is
+DLMF 10.22.43, \url{https://dlmf.nist.gov/10.22.E43}.}
+\[
+ M_{F_U}(\alpha)
+ =\frac{2\pi}{\sqrt3}
+ \left(\frac3{4\pi^2}\right)^\alpha
+ \frac{\Gamma(\alpha)}{\Gamma(1-\alpha)}M_U(1-\alpha).
+\]
+Near infinity its absolute integrand is
+$O(x^{2\alpha-3/2})$, which is integrable at $\alpha=1/6$.
+Near zero it is $O(x^{2\alpha-1})$.
+Hence if $U$ is real, nonnegative on $(0,\infty)$, and nonzero there,
+$M_{F_U}(1/6)>0$.
+For such $U$, if also $M_W(1/6+iv)\ne0$, the displayed leading coefficient
+of this family is positive.
+For fixed $v$ with this nonvanishing property, it is a genuine leading
+asymptotic as $P\to\infty$ and $P^{\eta/6}/Y\to0$.
+The absolute error is uniform in $v$.
+A relative asymptotic in a growing frequency range requires an explicit
+lower bound on $|M_W(1/6+iv)|$ compared with that error.
+
+The smooth functional has the single-window Mellin factor from the earlier
+radial projection analysis:
+\[
+ |M_W(1/6+iv)|^2M_{F_U}(1/6).
+\]
+For $D=r\,d/dr$, replacing $W$ by $(D+1/6+iv)W$ annihilates its first
+Mellin factor by integration by parts.
+For the physical two-window kernel
+$W_0DW_1-DW_0W_1+(1/6)W_0W_1$, the source multiplier is $7/6-w-z$.
+It vanishes at $(w,z)=(1,1/6)$.
+In that source convention the principal $W_1$ Mellin value is at $1$,
+and the principal radial Fourier value of $W_0$ is at $1/6$.
+The $U$ here is the Gram energy test and is not assumed to be that physical
+$W_0$.
+Finite coupled window combinations require their cross Gram terms before
+this single-window calculation can be identified with the full coupled
+Mellin functional.
+It does not prove that this family is the entire exceptional bulk.
+Other frequency families may cancel a signed subfamily contribution.
+Nor does it compare the bulk with the centered remainder without the exact
+Poisson split.
+There is no new zero-free boundary conclusion here.
+
+\section*{Checks and remaining obligations}
+
+The script computes the defining finite-field correlation directly using
+integer pairs in $\mathbb Z[\omega]$.
+It uses no floating-point roots of unity.
+At each of $q=7,13,19$, it checks all $0\le c,e\le6$ and dilations $0,1,2$,
+giving $441$ exact mean checks.
+It also checks the common-part sum at $h=6,12,18$.
+For example, at $q=7$,
+\[
+ m_7(1,5;1)=216/49,\qquad m_7(1,0;1)=0,\qquad
+ m_7(6,0;1)=86436.
+\]
+
+The remaining formalization obligations are CRT assembly, the active-column
+bridge for the rank-one identity, the finite-field character spectrum,
+the two pool saturation lemmas, and the weighted ideal count.
+The remaining mathematical classification problem is the other unit and
+bad-support families and their signed aggregate.
+Only after that classification can the full exceptional bulk be compared
+with the detector's principal contribution.
+
+\end{document}

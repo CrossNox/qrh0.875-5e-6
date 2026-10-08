@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighNormalizedTransport
 import OAI.NumberTheory.DirichletL.PrimeRows.NormalizedTransportSaving
 
@@ -23,7 +24,7 @@ private theorem perturbedSavingPoolOutside (S : Finset (Ideal O))
 theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ) (e δ a b B ζ lengthShift saving τ ellMin nu : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2) (hζ : 0<ζ) (hζ' : ζ≤1/48) (hτ : 0<τ)
     (ha : 0<a) (hab : a≤b) (hB : 0≤B) (hmin : 0<ellMin) (hnu : 0<nu)
-    (hβ : (7/8-21 / 500000:ℝ)<HeckeZeroSupremum.beta)
+    (hβ : (AsymmetricGeometry.boundary:ℝ)<HeckeZeroSupremum.beta)
     (ht : 0≤lengthShift) (ht' : lengthShift≤1 / 1000)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hTail : PerturbedCorrectionTail S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (4*e) S)
@@ -35,9 +36,9 @@ theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ)
     (hr0 : ∀y,(W0 y).im=0) (hr1 : ∀y,(W1 y).im=0)
     (hp0 : ∀y,0≤(W0 y).re) (hp1 : ∀y,0≤(W1 y).re) (hn0 : W0≠0) (hn1 : W1≠0)
     (sigma : ℝ)
-    (_hgeometric : sigma+8*e+nu≤63/800-51*lengthShift/100) (hprincipal : sigma+nu≤1/3000)
+    (_hgeometric : sigma+8*e+nu≤63/800-(51*lengthShift/100+49*AsymmetricGeometry.skew/150)) (hprincipal : sigma+nu≤1/3000)
     (hwindow : sigma+e≤PrincipalSlotEstimate.perturbedBoundary*ellMin)
-    (hlarge : sigma+nu+21 / 500000≤saving+3/16) :
+    (hlarge : sigma+nu+AsymmetricGeometry.boundaryReduction≤saving+AsymmetricGeometry.lowBase) :
     let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃n : ℕ,0<n ∧ ∀η : Character,∃C : ℝ,0<C ∧ ∀ᶠ Z : ℝ in atTop,
       let Yp := fun j=>Z^(ell j)
@@ -57,7 +58,7 @@ theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ)
         (51/100<a → ∃j s,LFunction (sourceDetectorFamily S hS.prime η u (rayCubeFamily M H hH u) j) s=0 ∧
           ¬((sourceDetectorFamily S hS.prime η u (rayCubeFamily M H hH u) j).residue=1 ∧ s=1) ∧
           a≤s.re ∧ s.re<a+e ∧ |s.im|≤3*idx u*Z^τ)) ∧
-      (∀u∈rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*lengthShift/2+ζ)),
+      (∀u∈rowBand (Z^(1/100:ℝ)) (Z^((AsymmetricGeometry.rowBase:ℝ)+3*lengthShift/2+ζ)),
         (calibrationForSet S hmax).residueMonoid u.val≠0 →
         (∀θ,(rayCubeFamily M H hH u θ).residue≠1) ∧
         (∀θ,(rayCubeFamily M H hH u θ).modulus.absNorm≤
@@ -68,11 +69,11 @@ theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ)
       let alpha : FreeRow→ℝ := fun u=>51/100+e*grid u
       let height : FreeRow→ℝ := fun u=>(3*idx u+1:ℕ)*Z^τ
       ‖compensatedPhysicalProbe η (calibrationForSet S hmax) W0 W1
-          (fun j=>canonicalSlotSupport (T j)) WC Yp (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z/normer-
-        HeckeSignal.signal (η.excludePrimes S hS.prime) (sourceCorrection η S) (-11/16) Z-
-        finiteCentralCubeRows S hS hmax η (rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*lengthShift/2+ζ))) T hT WC Yp
-          W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e alpha height/normer‖≤
-        C*Z^(HeckeZeroSupremum.beta-11/16-sigma) := by
+          (fun j=>canonicalSlotSupport (T j)) WC Yp (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z/normer-
+        HeckeSignal.signal (η.excludePrimes S hS.prime) (sourceCorrection η S) (AsymmetricGeometry.signalOffset) Z-
+        finiteCentralCubeRows S hS hmax η (rowBand (Z^(1/100:ℝ)) (Z^((AsymmetricGeometry.rowBase:ℝ)+3*lengthShift/2+ζ))) T hT WC Yp
+          W0 W1 (Z^(AsymmetricGeometry.xBase-lengthShift/2:ℝ)) (Z^(AsymmetricGeometry.yBase-lengthShift/2:ℝ)) Z e alpha height/normer‖≤
+        C*Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) := by
   let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   obtain ⟨n,hn,hbound⟩ := actual_normalized_probe_transport_on_perturbed_boundary M H hH K e δ a b B ζ lengthShift saving τ ellMin nu
     he he' hδ hδ' hζ hζ' hτ ha hab hB hmin hnu hβ ht ht' S hS hTail hmax hfirst ell hell hellinj hellsum
@@ -85,17 +86,21 @@ theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ)
   dsimp only at hb ⊢
   obtain ⟨hnorm,idx,grid,hlabels,hbins,hray,herror⟩ := hb
   refine ⟨hnorm,idx,grid,hlabels,hbins,hray,herror.trans ?_⟩
-  have h1 : Z^(HeckeZeroSupremum.beta-11/16-63/800+8*e+51*lengthShift/100+nu)≤Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
+  have h1 : Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-63/800+8*e+(51*lengthShift/100+49*AsymmetricGeometry.skew/150)+nu)≤Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) :=
     Real.rpow_le_rpow_of_exponent_le hZ (by linarith only [_hgeometric])
-  have h2 : Z^(-saving+nu)≤Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
-    Real.rpow_le_rpow_of_exponent_le hZ (by linarith [hβ])
-  have h3 : Z^(HeckeZeroSupremum.beta-11/16-1/3000+nu)≤Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
+  have h2 : Z^(-saving+nu)≤Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) :=
+    Real.rpow_le_rpow_of_exponent_le hZ (by
+      dsimp [AsymmetricGeometry.lowBase, AsymmetricGeometry.signalOffset,
+        AsymmetricGeometry.boundary, AsymmetricGeometry.boundaryReduction] at hlarge hβ ⊢
+      linarith)
+  have h3 : Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-1/3000+nu)≤Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) :=
     Real.rpow_le_rpow_of_exponent_le hZ (by linarith)
-  have h4 : Z^(HeckeZeroSupremum.beta-11/16+e-PrincipalSlotEstimate.perturbedBoundary*ellMin)≤Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
+  have h4 : Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset+e-PrincipalSlotEstimate.perturbedBoundary*ellMin)≤Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma) :=
     Real.rpow_le_rpow_of_exponent_le hZ (by linarith)
   calc
-    _ ≤ C*(4*Z^(HeckeZeroSupremum.beta-11/16-sigma)) :=
-      mul_le_mul_of_nonneg_left (by linarith) hC.le
+    _ ≤ C*(4*Z^(HeckeZeroSupremum.beta+ AsymmetricGeometry.signalOffset-sigma)) :=
+      mul_le_mul_of_nonneg_left
+        ((add_le_add (add_le_add (add_le_add h1 h2) h3) h4).trans_eq (by ring)) hC.le
     _ = _ := by ring
 
 

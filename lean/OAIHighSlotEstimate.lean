@@ -1,7 +1,9 @@
+import OAIAsymmetricGeometry
 import OAIHighGlobalCorrection
 import OAIHighEulerRegion
 import OAI.NumberTheory.DirichletL.PrincipalSlotEstimate
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -11,7 +13,7 @@ open Complex
 namespace SevenEighths.PrincipalSlotEstimate
 open ProbeEuler ProbeLocal
 
-def perturbedBoundary : ℝ := 7 / 8 - 21 / 500000
+def perturbedBoundary : ℝ := boundary
 
 theorem bound_region_correction_defect_on_perturbed_boundary
     {Q : ℝ} {A η s w z : ℂ}
@@ -24,7 +26,7 @@ theorem bound_region_correction_defect_on_perturbed_boundary
   have hb := PerturbedZeroFreeBound.bound_unramified_closed_on_perturbed_region
     Q A η 1 s w z (by linarith) hA hη (by simp)
     (by simpa only [perturbedBoundary] using hs) hw hz
-  have hp : Q ^ (-(363 / 200 : ℝ) + 63 / 250000) ≤ Q ^ (-(1 : ℝ)) :=
+  have hp : Q ^ (-(363 / 200 : ℝ) + 6 * boundaryReduction) ≤ Q ^ (-(1 : ℝ)) :=
     Real.rpow_le_rpow_of_exponent_le hQ1 (by norm_num)
   have hi : 240 * Q ^ (-(1 : ℝ)) ≤ 1 / 2 := by
     rw [Real.rpow_neg_one, ← div_eq_mul_inv]
@@ -61,7 +63,7 @@ theorem bound_region_geometric_factors_on_perturbed_boundary
   · exact (coordW_norm_le Q hQ0 1 w (by simp)).trans
       (rpow_le_half Q _ hQ4 (by linarith))
   · exact (coordD_norm_le Q hQ0 η 1 s hη (by simp)).trans
-      (rpow_le_half Q _ hQ4 (by simp only [perturbedBoundary] at hs; linarith))
+      (rpow_le_half Q _ hQ4 (by simp only [perturbedBoundary, boundary] at hs; linarith))
 
 theorem bound_region_marked_error_on_perturbed_boundary
     {Q : ℝ} {A η s w z : ℂ}
@@ -85,7 +87,7 @@ theorem bound_region_marked_error_on_perturbed_boundary
   have hg := bound_region_geometric_factors_on_perturbed_boundary hQ hη.le hs hw hz
   have hRhalf : ‖coordR Q A s z‖ ≤ 1 / 2 :=
     hR.trans (rpow_le_half Q _ hQ4
-      (by simp only [perturbedBoundary] at hs; linarith))
+      (by simp only [perturbedBoundary, boundary] at hs; linarith))
   have hW : ‖coordW Q 1 w‖ ≤ 1 := by linarith [hg.2.1]
   have hq : ‖(Q : ℂ)⁻¹‖ ≤ 1 := by
     rw [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hQ0]
@@ -95,7 +97,7 @@ theorem bound_region_marked_error_on_perturbed_boundary
     hRhalf hg.1 hq hg.2.2
   change ‖regionMarked Q A η s w z + coordD Q η 1 s‖ ≤ _ at hE
   have hRT : ‖coordR Q A s z‖ ≤ Q ^ (-perturbedBoundary) :=
-    hR.trans (hpow _ _ (by simp only [perturbedBoundary] at hs ⊢; linarith))
+    hR.trans (hpow _ _ (by simp only [perturbedBoundary, boundary] at hs ⊢; linarith))
   have hKV : ‖coordK Q η s w‖ * ‖coordV Q z‖ ≤
       Q ^ (-perturbedBoundary) := by
     calc
@@ -104,7 +106,7 @@ theorem bound_region_marked_error_on_perturbed_boundary
         rw [← Real.rpow_add hQ0]
         congr 1
         ring
-      _ ≤ _ := hpow _ _ (by simp only [perturbedBoundary] at hs ⊢; linarith)
+      _ ≤ _ := hpow _ _ (by simp only [perturbedBoundary, boundary] at hs ⊢; linarith)
   have hBR : ‖star η * (Q : ℂ) ^ s‖ * ‖coordR Q A s z‖ ≤
       Q ^ (-perturbedBoundary) := by
     calc
@@ -113,7 +115,7 @@ theorem bound_region_marked_error_on_perturbed_boundary
         rw [← Real.rpow_add hQ0]
         congr 1
         ring
-      _ ≤ _ := hpow _ _ (by simp only [perturbedBoundary] at hs ⊢; linarith)
+      _ ≤ _ := hpow _ _ (by simp only [perturbedBoundary, boundary] at hs ⊢; linarith)
   have hBKV : ‖star η * (Q : ℂ) ^ s‖ *
       (‖coordK Q η s w‖ * ‖coordV Q z‖) ≤ Q ^ (-perturbedBoundary) := by
     calc
@@ -124,7 +126,7 @@ theorem bound_region_marked_error_on_perturbed_boundary
         rw [← Real.rpow_add hQ0, ← Real.rpow_add hQ0]
         congr 1
         ring
-      _ ≤ _ := hpow _ _ (by simp only [perturbedBoundary] at hs ⊢; linarith)
+      _ ≤ _ := hpow _ _ (by simp only [perturbedBoundary, boundary] at hs ⊢; linarith)
   have hE' : ‖regionMarked Q A η s w z + coordD Q η 1 s‖ ≤
       24 * ‖coordR Q A s z‖ +
         4 * (‖coordK Q η s w‖ * ‖coordV Q z‖) := by
@@ -152,7 +154,7 @@ theorem bound_region_replacement_error_on_perturbed_boundary
   have hVT : ‖coordV Q z‖ ≤ Q ^ (-perturbedBoundary) := by
     rw [coordV_norm Q hQ0]
     exact Real.rpow_le_rpow_of_exponent_le hQ1
-      (by simp only [perturbedBoundary]; linarith)
+      (by simp only [perturbedBoundary, boundary]; linarith)
   have hDT : ‖coordD Q η 1 s‖ ≤ Q ^ (-perturbedBoundary) :=
     (coordD_norm_le Q hQ0 η 1 s hη.le (by simp)).trans
       (Real.rpow_le_rpow_of_exponent_le hQ1 (by linarith))

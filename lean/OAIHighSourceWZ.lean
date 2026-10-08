@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighFiniteProductWZ
 import OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -21,7 +23,7 @@ theorem source_multiplier_differentiable_w_on_perturbed_boundary
     (W0 W1 : SchwartzMap ℝ ℂ) (a1 b1 : ℝ) (ha1 : 0 < a1)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z : ℝ) (hY : 0 < Y) (s z : ℂ)
-    (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (hs : (boundary : ℝ) ≤ s.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     DifferentiableOn ℂ
       (fun w => sourceMultiplier W0 W1 X Y Z
@@ -57,7 +59,7 @@ theorem source_multiplier_differentiable_z_on_perturbed_boundary
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (W0 W1 : SchwartzMap ℝ ℂ) (X Y Z : ℝ)
     (hX : 0 < X) (hZ : 0 < Z) (s w : ℂ)
-    (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (hs : (boundary : ℝ) ≤ s.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     DifferentiableOn ℂ
       (fun z => sourceMultiplier W0 W1 X Y Z

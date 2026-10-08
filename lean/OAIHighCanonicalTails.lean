@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.PrimeRows.PhysicalPartition
 import OAIHighPhysicalSmallTail
 import OAIHighPhysicalLargeTail
@@ -8,12 +9,13 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 local notation "O" => HeckeFamily.O
 
 theorem canonical_small_perturbed_tail (K : ℕ) (e δ a b B t : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2)
-    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : (7/8-21 / 500000:ℝ)≤HeckeZeroSupremum.beta)
+    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : boundary≤HeckeZeroSupremum.beta)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
@@ -24,8 +26,8 @@ theorem canonical_small_perturbed_tail (K : ℕ) (e δ a b B t : ℝ)
       ∀length : Fin K→ℝ,(∀i,0≤length i) → (∑i,length i)=(1/6:ℝ)+t →
       ∀W : Fin K→ℝ→ℂ,(∀i,Function.support (W i)⊆Icc a b) → (∀i y,‖W i y‖≤B) →
       ‖finitePhysicalRows S hmax η (rowBand 1 (Z^(1/100:ℝ))) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z‖
-      ≤C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta-11/16-63/800+8*e+51*t/100) := by
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z‖
+      ≤C*(η.modulus.absNorm:ℝ)^δ*Z^(HeckeZeroSupremum.beta+signalOffset+49*skew/150-63/800+8*e+51*t/100) := by
   obtain ⟨C,hC,hmain⟩ := small_perturbed_physical_tail K e δ a b B t he he' hδ hδ' ha hb hB hβ
     S hS hmax hfirst W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
   refine ⟨C,hC,?_⟩
@@ -39,11 +41,11 @@ theorem canonical_small_perturbed_tail (K : ℕ) (e δ a b B t : ℝ)
   have hbnd := hmain η Z hZ (smallDyadicIndices L) (fun n hn=>mem_smallDyadicIndices.mp hn)
     (smallDyadicRows L) hrows T hT hdis length hl0 hl W hWS hWB
   have heq := sum_small_dyadicRows L (physicalRowValue S hmax η T W (fun i=>Z^(length i)) W0 W1
-    (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z)
+    (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z)
   change finitePhysicalRows S hmax η (rowBand 1 L) T W (fun i=>Z^(length i)) W0 W1
-    (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z=
+    (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z=
     ∑n∈smallDyadicIndices L,finitePhysicalRows S hmax η (smallDyadicRows L n) T W (fun i=>Z^(length i)) W0 W1
-      (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z at heq
+      (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z at heq
   rw [heq]
   exact (norm_sum_le _ _).trans hbnd
 
@@ -59,16 +61,16 @@ theorem canonical_large_perturbed_tail (K : ℕ) (δ a b B ζ t saving : ℝ)
       (∀P:(∀i,T i),Function.Injective (fun i=>(P i).val)) →
       ∀length : Fin K→ℝ,(∀i,0≤length i) → (∑i,length i)=(1/6:ℝ)+t →
       ∀W : Fin K→ℝ→ℂ,(∀i,Function.support (W i)⊆Icc a b) → (∀i y,‖W i y‖≤B) →
-      Summable (fun n=>finitePhysicalRows S hmax η (dyadicRows (Z^((13/16:ℝ)+3*t/2+ζ)) n) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z) ∧
-      (∑'n,‖finitePhysicalRows S hmax η (dyadicRows (Z^((13/16:ℝ)+3*t/2+ζ)) n) T W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z‖)
+      Summable (fun n=>finitePhysicalRows S hmax η (dyadicRows (Z^(rowBase+3*t/2+ζ)) n) T W (fun i=>Z^(length i)) W0 W1
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z) ∧
+      (∑'n,‖finitePhysicalRows S hmax η (dyadicRows (Z^(rowBase+3*t/2+ζ)) n) T W (fun i=>Z^(length i)) W0 W1
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z‖)
       ≤C*(η.modulus.absNorm:ℝ)^δ*Z^(-saving) := by
   obtain ⟨C,hC,hmain⟩ := large_perturbed_physical_tail K δ a b B ζ t saving hδ hδ' hζ ht ha hb hB
     S hS hmax hfirst W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
   refine ⟨C,hC,?_⟩
   intro η Z hZ T hT hdis length hl0 hl W hWS hWB
-  apply hmain η Z hZ (dyadicRows (Z^((13/16:ℝ)+3*t/2+ζ))) _ T hT hdis length hl0 hl W hWS hWB
+  apply hmain η Z hZ (dyadicRows (Z^(rowBase+3*t/2+ζ))) _ T hT hdis length hl0 hl W hWS hWB
   intro n u hu
   have hh := mem_dyadicRows.mp hu
   exact ⟨hh.1,hh.2.1,hh.2.2.le⟩

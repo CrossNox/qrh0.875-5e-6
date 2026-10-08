@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighFixedSource
 import OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds
 
@@ -15,7 +16,7 @@ local notation "Id" => Ideal ActualEisensteinCubic.O
 lemma marked_differentiableAt_w_on_perturbed_boundary
     (η : Character) (P : PrimeIdeal) (x w z : ℂ)
     (hQ : 4 ≤ (Ideal.absNorm P.val : ℝ))
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     DifferentiableAt ℂ (fun w => idealMarkedClosed η P x w z) w := by
   have hQ0 : 0 < (Ideal.absNorm P.val : ℝ) := by linarith
@@ -33,7 +34,7 @@ lemma marked_differentiableAt_w_on_perturbed_boundary
 lemma marked_differentiableAt_z_on_perturbed_boundary
     (η : Character) (P : PrimeIdeal) (x w z : ℂ)
     (hQ : 4 ≤ (Ideal.absNorm P.val : ℝ))
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     DifferentiableAt ℂ (fun z => idealMarkedClosed η P x w z) z := by
   have hQ0 : 0 < (Ideal.absNorm P.val : ℝ) := by linarith
@@ -51,7 +52,7 @@ lemma marked_differentiableAt_z_on_perturbed_boundary
 theorem local_analytic_w_on_perturbed_boundary
     (η : Character) (S : Finset Id) (hS : PerturbedCorrectionTail S)
     (P : PrimeIdeal) (hP : P.val ∉ S) (x z : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun w => localMultiplier η P x w z)
       {w : ℂ | 9 / 10 < w.re} := by
@@ -92,7 +93,7 @@ theorem local_analytic_w_on_perturbed_boundary
 theorem local_analytic_z_on_perturbed_boundary
     (η : Character) (S : Finset Id) (hS : PerturbedCorrectionTail S)
     (P : PrimeIdeal) (hP : P.val ∉ S) (x w : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     AnalyticOnNhd ℂ (fun z => localMultiplier η P x w z)
       {z : ℂ | 4 / 25 < z.re} := by
@@ -136,7 +137,7 @@ theorem slot_analytic_w_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal)
     (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S) (x z : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun w => slotMultiplier η J T b x w z)
       {w : ℂ | 9 / 10 < w.re} := by
@@ -153,7 +154,7 @@ theorem slot_analytic_z_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal)
     (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S) (x w : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     AnalyticOnNhd ℂ (fun z => slotMultiplier η J T b x w z)
       {z : ℂ | 4 / 25 < z.re} := by
@@ -170,7 +171,7 @@ theorem combined_slot_analytic_w_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal)
     (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S) (x z : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ
       (fun w => globalClosedCorrection η S x w z * slotMultiplier η J T b x w z)
@@ -184,7 +185,7 @@ theorem combined_slot_analytic_z_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal)
     (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S) (x w : ℂ)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     AnalyticOnNhd ℂ
       (fun z => globalClosedCorrection η S x w z * slotMultiplier η J T b x w z)

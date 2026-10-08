@@ -9,6 +9,8 @@ open scoped Classical
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve RayFourExpansion
 
 local notation "O" => ActualEisensteinCubic.O
@@ -41,14 +43,14 @@ theorem perturbed_low_physical_inverse_normalized
       ∀ θ : ℝ,
         let L := elementNorm (∏ i : J, (p i).val)
         let Q := lowPhysicalScale (calibrationForSet S hS)
-          (Z ^ (17 / 48 - t / 2) / L)
-          (Z ^ (23 / 48 - t / 2) / L)
-        ∀ (hX0 : 0 < Z ^ (17 / 48 - t / 2) / L)
-          (hY0 : 0 < Z ^ (23 / 48 - t / 2) / L),
+          (Z ^ (xBase - t / 2) / L)
+          (Z ^ (yBase - t / 2) / L)
+        ∀ (hX0 : 0 < Z ^ (xBase - t / 2) / L)
+          (hY0 : 0 < Z ^ (yBase - t / 2) / L),
           (Real.sqrt Q)⁻¹ / (2 * Real.pi) *
             lowInverseMass (calibrationForSet S hS) aCut bCut haCut hbCut
-              (Z ^ (17 / 48 - t / 2) / L)
-              (Z ^ (23 / 48 - t / 2) / L) hX0 hY0
+              (Z ^ (xBase - t / 2) / L)
+              (Z ^ (yBase - t / 2) / L) hX0 hY0
               (lowSelectedInverseRow Finset.univ
                 (lowSelectedWeight η
                   (fun i => canonicalSlotSupport (T i)) J W
@@ -81,8 +83,8 @@ theorem perturbed_low_physical_inverse_normalized
   dsimp only
   let L := elementNorm (∏ i : J, (p i).val)
   let Q := lowPhysicalScale (calibrationForSet S hS)
-    (Z ^ (17 / 48 - t / 2) / L)
-    (Z ^ (23 / 48 - t / 2) / L)
+    (Z ^ (xBase - t / 2) / L)
+    (Z ^ (yBase - t / 2) / L)
   intro hX0 hY0
   have hz : 0 < Z := lt_trans zero_lt_one hZ.1
   have hL : 0 < L := lowUnselectedProduct_norm_pos _

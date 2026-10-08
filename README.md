@@ -1,7 +1,7 @@
-# The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane $\Re(s)>7/8-42\times10^{-6}$
+# The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane $\Re(s)>0.8749570698$
 
 [paper.pdf](paper.pdf) states and proves nonvanishing for
-`Re(s) > 437479/500000 = 0.874958`
+`Re(s) > 4374785349/5000000000 = 0.8749570698`
 for finite-order Hecke L-functions over `Q(sqrt(-3))` and Dirichlet
 L-functions, including the Riemann zeta function, with the principal pole
 allowed. It extends the analytic estimates in OpenAI's
@@ -11,10 +11,11 @@ This is a small numerical extension of that result. It uses the 7/8 proof
 throughout and is only as sound as that proof. The paper, the Lean proofs,
 and the scripts were entirely AI generated.
 
-The geometry uses slot-length increase `t = 169/1000000`. An exact
-polynomial certificate gives high-endpoint margin `1/500000`, while the
-low estimate has margin `1/4000000`. The certificate keeps the row count
-and geometric perturbation in the same expression.
+The geometry uses slot-length increase `t = 42930200831/250000000000000`
+and asymmetry `k = 12457523527/15625000000000`. The physical lengths are
+`17/48+k-t/2` and `23/48-k-t/2`. An exact polynomial certificate gives
+high-endpoint margin `1/1250000000000`. The low estimate has margin
+`831/1000000000000000`. Both margins are strictly positive rational numbers.
 
 [OAIHighUnconditional.lean](lean/OAIHighUnconditional.lean) proves the final
 statements without an assumed moment estimate or prior zero-free bound.
@@ -91,7 +92,7 @@ uv run scripts/run_comparator.py
 The challenge
 [`lean/comparator/PerturbedQuasiRiemann.lean`](lean/comparator/PerturbedQuasiRiemann.lean)
 is upstream's `ComparatorChallenges/HeckeSevenEighths.lean` with the bound
-changed to `437479/500000`. It adds the Mathlib statements for
+changed to `4374785349/5000000000`. It adds the Mathlib statements for
 `riemannZeta` and `DirichletCharacter.LFunction`. The script exports
 upstream `lean/` at the pinned commit into `build/comparator/lean`, adds the
 local modules, the challenge, and

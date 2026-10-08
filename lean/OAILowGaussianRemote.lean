@@ -9,6 +9,8 @@ open scoped Classical ContDiff SchwartzMap
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve
 
 local notation "O" => ActualEisensteinCubic.O
@@ -25,11 +27,14 @@ lemma eventually_perturbed_low_physical_scales
         (∀ i x, x ∈ slots i →
           elementNorm x ≤ b * Z ^ (ell i)) →
         ∀ (J : Finset (Fin K)) (p : ∀ i, slots i),
-          1 ≤ Z ^ (17 / 48 - t / 2) /
+          1 ≤ Z ^ (xBase - t / 2) /
             elementNorm (slotProduct (fun i => (p i).val) J) ∧
-          1 ≤ Z ^ (23 / 48 - t / 2) /
+          1 ≤ Z ^ (yBase - t / 2) /
             elementNorm (slotProduct (fun i => (p i).val) J) := by
-  have hmargin : 0 < (3 / 16 - 3 * t / 2) := by linarith
+  have hmargin : 0 < (xBase - 1 / 6 - 3 * t / 2) := by
+    have hs : 0 ≤ skew := by norm_num [skew]
+    dsimp only [xBase]
+    linarith
   filter_upwards [Filter.eventually_gt_atTop (1 : ℝ),
     (tendsto_rpow_atTop hmargin).eventually
       (Filter.eventually_ge_atTop ((max 1 b) ^ K))]
@@ -47,10 +52,10 @@ lemma eventually_perturbed_low_physical_scales
   rw [← slotProduct_subtype (fun i => (p i).val) J] at hb
   have hLX : elementNorm
       (slotProduct (fun i => (p i).val) J) ≤
-      Z ^ (17 / 48 - t / 2) := by
+      Z ^ (xBase - t / 2) := by
     apply hb.trans
     calc
-      _ ≤ Z ^ (3 / 16 - 3 * t / 2) * Z ^ (1 / 6 + t) :=
+      _ ≤ Z ^ (xBase - 1 / 6 - 3 * t / 2) * Z ^ (1 / 6 + t) :=
         mul_le_mul_of_nonneg_right hc (by positivity)
       _ = _ := by
         rw [← Real.rpow_add (lt_trans zero_lt_one hZ)]
@@ -60,7 +65,7 @@ lemma eventually_perturbed_low_physical_scales
   · exact (one_le_div hl).mpr hLX
   · exact (one_le_div hl).mpr
       (hLX.trans (Real.rpow_le_rpow_of_exponent_le hZ.le
-        (by norm_num)))
+        (by norm_num [xBase, yBase, skew])))
 
 lemma perturbed_low_remote_power
     (Z ell t ε : ℝ) (N : ℕ) (hZ : 1 ≤ Z)
@@ -111,8 +116,8 @@ theorem perturbed_low_remote_gaussian_dyads
           then ‖lowCommonDyad η (calibrationForSet S hS)
             W0 W1 (fun i => canonicalSlotSupport (T i))
             W (fun i => Z ^ (ell i)) J
-            (Z ^ (17 / 48 - t / 2))
-            (Z ^ (23 / 48 - t / 2)) ((2 : ℝ) ^ j)
+            (Z ^ (xBase - t / 2))
+            (Z ^ (yBase - t / 2)) ((2 : ℝ) ^ j)
             (Z ^ (1 + lowSelectedLength ell J)) V hV‖
           else 0
         Summable f ∧ (∑' j : ℕ, f j) ≤ C * Z ^ (-1 : ℝ) := by
@@ -152,9 +157,9 @@ theorem perturbed_low_remote_gaussian_dyads
       (fun i => Z ^ (ell i)) (fun i => (p i).val) J)
     (fun p => Ideal.span
       {slotProduct (fun i => (p i).val) (Finset.univ \ J)})
-    (fun p => Z ^ (17 / 48 - t / 2) /
+    (fun p => Z ^ (xBase - t / 2) /
       elementNorm (slotProduct (fun i => (p i).val) J))
-    (fun p => Z ^ (23 / 48 - t / 2) /
+    (fun p => Z ^ (yBase - t / 2) /
       elementNorm (slotProduct (fun i => (p i).val) J))
     (fun p _ => (hs p).1) (fun p _ => (hs p).2)
     (fun i : SelectedSlot J => W i.val)

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound
 
 namespace OAI
@@ -5,6 +6,8 @@ namespace OAI
 noncomputable section
 
 namespace SevenEighths.ProbePhysical
+
+open AsymmetricGeometry
 
 lemma perturbed_low_inverse_power_cancel
     (Z d t α : ℝ) (hZ : 0 < Z) :
@@ -57,14 +60,15 @@ lemma perturbed_low_inverse_sqrt_normalized
 
 lemma perturbed_low_physical_scale_source
     (C : CalibrationData) (Z L t : ℝ) (hZ : 0 < Z) :
-    lowPhysicalScale C (Z ^ (17 / 48 - t / 2) / L)
-      (Z ^ (23 / 48 - t / 2) / L) =
+    lowPhysicalScale C (Z ^ (xBase - t / 2) / L)
+      (Z ^ (yBase - t / 2) / L) =
       elementNorm C.generator * Z ^ (5 / 6 - t) / L ^ 2 := by
   unfold lowPhysicalScale
-  have he : Z ^ (17 / 48 - t / 2) * Z ^ (23 / 48 - t / 2) =
+  have he : Z ^ (xBase - t / 2) * Z ^ (yBase - t / 2) =
       Z ^ (5 / 6 - t) := by
     rw [← Real.rpow_add hZ]
     congr 1
+    dsimp only [xBase, yBase]
     ring
   rw [← he]
   ring
@@ -72,8 +76,8 @@ lemma perturbed_low_physical_scale_source
 lemma perturbed_low_physical_scale_nominal_bound
     (C : CalibrationData) (Z L c d t : ℝ)
     (hZ : 0 < Z) (hc : 0 < c) (hL : c * Z ^ d ≤ L) :
-    lowPhysicalScale C (Z ^ (17 / 48 - t / 2) / L)
-      (Z ^ (23 / 48 - t / 2) / L) ≤
+    lowPhysicalScale C (Z ^ (xBase - t / 2) / L)
+      (Z ^ (yBase - t / 2) / L) ≤
       (elementNorm C.generator / c ^ 2) *
         Z ^ (5 / 6 - t - 2 * d) := by
   have hl : 0 < L := lt_of_lt_of_le (by positivity) hL

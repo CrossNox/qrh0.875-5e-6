@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighOuterContours
 
 namespace OAI
@@ -6,6 +7,7 @@ noncomputable section
 open scoped Classical BigOperators Topology
 open Complex Set MeasureTheory Filter
 namespace SevenEighths.ProbePrincipalContours
+open AsymmetricGeometry
 
 open HeckeFamily ProbePhysical ProbeEuler ProbeLocal CompletedGauss
 open ProbeFiniteProductBounds ProbeFiniteProductX PrincipalMellinResidues
@@ -19,7 +21,7 @@ theorem source_uniform_joint_tails_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (a Bs Bz cw : ℝ)
-    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
+    (ha : boundary ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hcw : 1 < cw) (N : ℕ) :
     ∃ K : ℝ, 0 < K ∧ ∀ (η : Character) (S : Finset Id)

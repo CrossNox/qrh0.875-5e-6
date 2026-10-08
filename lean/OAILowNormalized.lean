@@ -11,6 +11,8 @@ open Filter
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open ProbeRaySlots PrincipalSignalComparison
 open PrincipalMellinResidues ProbePrincipalResidueActual
 
@@ -58,9 +60,9 @@ theorem perturbed_original_normalized_compensatedPhysicalProbe_low
           ‖compensatedPhysicalProbe η (calibrationForSet S hmax)
             W0 W1 (fun j => canonicalSlotSupport (T j))
             WC Yp
-            (Z ^ (17 / 48 - t / 2))
-            (Z ^ (23 / 48 - t / 2)) Z / normer‖ ≤
-            C * Z ^ (3 / 16 - t / 4 + loss) := by
+            (Z ^ (xBase - t / 2))
+            (Z ^ (yBase - t / 2)) Z / normer‖ ≤
+            C * Z ^ (lowBase - t / 4 + loss) := by
   let : NeZero (∏ P ∈ S, P) :=
     ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   let WC : Fin K → ℝ → ℂ := fun j y => (W j y : ℂ)
@@ -108,10 +110,10 @@ theorem perturbed_original_normalized_compensatedPhysicalProbe_low
   refine ⟨hn.1, ?_⟩
   rw [div_eq_mul_inv, norm_mul]
   calc
-    _ ≤ (Cp * Z ^ (3 / 16 - t / 4 + loss / 2)) *
+    _ ≤ (Cp * Z ^ (lowBase - t / 4 + loss / 2)) *
         (Cn * Z ^ (loss / 2)) :=
       mul_le_mul hp hn.2 (norm_nonneg _) (by positivity)
-    _ = (Cp * Cn) * Z ^ (3 / 16 - t / 4 + loss) := by
+    _ = (Cp * Cn) * Z ^ (lowBase - t / 4 + loss) := by
       rw [mul_mul_mul_comm, ← Real.rpow_add hZ]
       congr 2
       ring

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighCentralCrude
 import OAI.NumberTheory.DirichletL.PrimeRows.CentralFiniteError
 
@@ -35,7 +36,7 @@ theorem finite_rectangle_arbitrary_saving_with_perturbed_lengths (K : ℕ) (τ s
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1) :
     ∃C : ℝ,0≤C ∧ ∀(η : Character) (Z : ℝ),1≤Z → ∀R : Finset FreeRow,
-      (∀u∈R,u.val≠1 ∧ ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤Z^((13/16:ℝ)+3*t/2+ζ)) →
+      (∀u∈R,u.val≠1 ∧ ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)≤Z^((AsymmetricGeometry.rowBase:ℝ)+3*t/2+ζ)) →
       ∀(T : Fin K→Finset PrimeIdeal) (hT : ∀i P,P∈T i → P.val∉S),
       (∀P:(∀i,T i),Function.Injective (fun i=>(P i).val)) →
       ∀length : Fin K→ℝ,(∑j,length j)=(1/6:ℝ)+t →
@@ -44,17 +45,17 @@ theorem finite_rectangle_arbitrary_saving_with_perturbed_lengths (K : ℕ) (τ s
       ∀(a B H : FreeRow→ℝ) (idx : FreeRow→ℕ) (ψ : FreeRow→ι→Character),
       (∀u∈R,(51/100:ℝ)≤a u ∧ a u≤1 ∧ 2<B u ∧ Z^τ≤H u ∧ H u≤(3*idx u+2:ℕ)*B u ∧
         detectorMaximum (sourceDetectorFamily S hS.prime η u (ψ u)) (3*(idx u+1:ℕ)*B u)<a u+2*e) →
-      ‖finitePhysicalRows S hmax η R T W (fun j=>Z^(length j)) W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z-
+      ‖finitePhysicalRows S hmax η R T W (fun j=>Z^(length j)) W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z-
         finiteCentralRectangleRows S hS hmax η R T hT W (fun j=>Z^(length j)) W0 W1
-          (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z e a H‖≤C*(η.modulus.absNorm:ℝ)^2*Z^(-saving) := by
+          (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z e a H‖≤C*(η.modulus.absNorm:ℝ)^2*Z^(-saving) := by
   obtain ⟨C,hC,hrow⟩ := original_row_rectangle_arbitrary_saving_with_perturbed_lengths (ι:=ι) K τ (saving+2) b ζ t hτ hb hζ ht ht' e he he'
     S hS hmax hfirst W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
   refine ⟨128*(128*b)^K*A^K*C,by positivity,?_⟩
   intro η Z hZ R hR T hT hdis length hl hp W hW a B H idx ψ hbin
   have hZ0 : 0<Z := lt_of_lt_of_le zero_lt_one hZ
-  have hrange : Z^((13/16:ℝ)+3*t/2+ζ)≤Z := by
+  have hrange : Z^((AsymmetricGeometry.rowBase:ℝ)+3*t/2+ζ)≤Z := by
     simpa using Real.rpow_le_rpow_of_exponent_le hZ
-      (show (13/16:ℝ)+3*t/2+ζ≤1 by linarith)
+      (show (AsymmetricGeometry.rowBase:ℝ)+3*t/2+ζ≤1 by linarith)
   have hcR : (R.card:ℝ)≤128*Z := freeRow_count R Z hZ (by
     intro u hu
     exact (hR u hu).2.trans hrange)
@@ -65,9 +66,9 @@ theorem finite_rectangle_arbitrary_saving_with_perturbed_lengths (K : ℕ) (τ s
   have hE : 0≤E := by dsimp [E];positivity
   have herr (u : FreeRow) (hu : u∈R) (P : ∀j,T j) :
       ‖rowIntegral η S (calibrationForSet S hmax) (fun j=>CompletedGauss.primaryGenerator (P j).val.val)
-          W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z u-
+          W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z u-
         centralRectangleIntegral S hS hmax (fun j=>(P j).val) (fun j=>hT j _ (P j).property)
-          η u W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z (a u) e (H u)‖≤E := by
+          η u W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z (a u) e (H u)‖≤E := by
     rcases hbin u hu with ⟨ha,ha',hB,hHlo,hH,hzero⟩
     exact hrow η u (hR u hu).1 (fun j=>(P j).val) (hdis P) (fun j=>hT j _ (P j).property)
       (ψ u) Z hZ (hR u hu).2 length hl (fun j=>hp j _ (P j).property)
@@ -81,10 +82,10 @@ theorem finite_rectangle_arbitrary_saving_with_perturbed_lengths (K : ℕ) (τ s
   rw [←Finset.sum_sub_distrib]
   calc
     _ ≤ ∑u∈R,‖(∑P:(∀j,T j),(∏j,W j (((P j).val.val.absNorm:ℝ)/Z^(length j)))*
-        rowIntegral η S (calibrationForSet S hmax) (fun j=>CompletedGauss.primaryGenerator (P j).val.val) W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z u)-
+        rowIntegral η S (calibrationForSet S hmax) (fun j=>CompletedGauss.primaryGenerator (P j).val.val) W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z u)-
       ∑P:(∀j,T j),(∏j,W j (((P j).val.val.absNorm:ℝ)/Z^(length j)))*
         centralRectangleIntegral S hS hmax (fun j=>(P j).val) (fun j=>hT j _ (P j).property)
-          η u W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z (a u) e (H u)‖ := norm_sum_le _ _
+          η u W0 W1 (Z^(AsymmetricGeometry.xBase-t/2:ℝ)) (Z^(AsymmetricGeometry.yBase-t/2:ℝ)) Z (a u) e (H u)‖ := norm_sum_le _ _
     _ ≤ ∑_u∈R,∑_P:(∀j,T j),A^K*E := by
       apply Finset.sum_le_sum
       intro u hu

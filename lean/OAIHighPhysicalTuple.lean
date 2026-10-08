@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighTupleBound
 import OAI.NumberTheory.DirichletL.PrimeRows.WeightedTuple
 import OAI.NumberTheory.DirichletL.PrimeRows.TupleBound
@@ -21,7 +22,7 @@ theorem calibrated_physical_tuple_sum_on_perturbed_boundary (K : ℕ) (e δ a b 
       (∀P:(∀i,T i),Function.Injective (fun i=>(P i).val)) →
       ∀(Y : Fin K→ℝ), (∀i,1≤Y i) → ∀(W : Fin K→ℝ→ℂ),
       (∀i,Function.support (W i)⊆Set.Icc a b) → (∀i y,‖W i y‖≤B) →
-      ∀(x w z : ℂ),(7 / 8 - 21 / 500000 : ℝ) ≤ x.re → HeckeZeroSupremum.beta+8*e≤x.re →
+      ∀(x w z : ℂ),(AsymmetricGeometry.boundary : ℝ) ≤ x.re → HeckeZeroSupremum.beta+8*e≤x.re →
       (1/2:ℝ)≤w.re → z.re=r →
       (∑P:(∀i,T i),‖calibratedTupleValue S hS hmax η u (fun i=>(P i).val)
         (fun i=>hT i (P i).val (P i).property) W Y x w z‖)≤
@@ -31,6 +32,7 @@ theorem calibrated_physical_tuple_sum_on_perturbed_boundary (K : ℕ) (e δ a b 
   obtain ⟨CG,hCG,hG⟩ := continued_selected_tuple_with_correction_on_perturbed_boundary K (δ/2) a b r B (by linarith) ha hb hr hB
   refine ⟨CL*CG,mul_pos hCL hCG,?_⟩
   intro η u hu T hT hdis Y hY W hWS hWB x w z hx hxβ hw hz
+  dsimp [AsymmetricGeometry.boundary] at hx
   let N : ℝ := ((Ideal.span {u.val}:Ideal O).absNorm:ℝ)
   have hN : 0<N := by
     dsimp [N]

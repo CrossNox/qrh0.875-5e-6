@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighDyadIntegral
 import OAIHighTailScales
 import OAI.NumberTheory.DirichletL.PrimeRows.LargeDyad
@@ -8,6 +9,7 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 local notation "O" => HeckeFamily.O
 
@@ -27,8 +29,8 @@ theorem large_physical_dyad_bound_with_perturbed_lengths (K : ℕ) (δ a b B r t
       ∀length : Fin K→ℝ,(∀i,0≤length i) → (∑i,length i)=(1/6:ℝ)+t →
       ∀W : Fin K→ℝ→ℂ,(∀i,Function.support (W i)⊆Icc a b) → (∀i y,‖W i y‖≤B) →
       absolutePhysicalDyadIntegral S hS hmax η R T hT W (fun i=>Z^(length i)) W0 W1
-        (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z 2 2 r
-      ≤C*(η.modulus.absNorm:ℝ)^δ*Z^((53/32:ℝ)+(13/16:ℝ)*r+(3*r/2-3/4)*t)*U^(8/5+δ-r) := by
+        (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z 2 2 r
+      ≤C*(η.modulus.absNorm:ℝ)^δ*Z^((53/32:ℝ)-skew/2+rowBase*r+(3*r/2-3/4)*t)*U^(8/5+δ-r) := by
   obtain ⟨C,hC,hmain⟩ := calibrated_physical_dyad_integral_on_perturbed_boundary K (1/2000) δ a b r B
     2 2 (by norm_num) (by norm_num) hδ hδ' ha hb hr hB
     (by norm_num) (by linarith [HeckeZeroSupremum.beta_le_one]) (by norm_num)
@@ -38,11 +40,11 @@ theorem large_physical_dyad_bound_with_perturbed_lengths (K : ℕ) (δ a b B r t
   have hZ0 : 0<Z := lt_of_lt_of_le zero_lt_one hZ
   have hYp (i : Fin K) : 1≤Z^(length i) := Real.one_le_rpow hZ (hl0 i)
   have hh := (hmain η U hU R hR T hT hdis (fun i=>Z^(length i)) hYp W hWS hWB
-    (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z (Real.rpow_pos_of_pos hZ0 _) (Real.rpow_pos_of_pos hZ0 _) hZ0).2
+    (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z (Real.rpow_pos_of_pos hZ0 _) (Real.rpow_pos_of_pos hZ0 _) hZ0).2
   apply hh.trans_eq
   calc
     _ = (C*(η.modulus.absNorm:ℝ)^δ)*U^(8/5+δ-r)*
-      ((∏i,(Z^(length i))^r)*((Z^(17/48-t/2:ℝ))^(1/2-r)*Z^(2+r-1)*(Z^(23/48-t/2:ℝ))^((2:ℝ)-1))) := by ring
+      ((∏i,(Z^(length i))^r)*((Z^(xBase-t/2:ℝ))^(1/2-r)*Z^(2+r-1)*(Z^(yBase-t/2:ℝ))^((2:ℝ)-1))) := by ring
     _ = _ := by rw [large_source_scale_with_perturbed_lengths Z hZ0 length t r hl];ring
 
 

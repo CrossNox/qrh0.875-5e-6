@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighLargeTail
 import OAI.NumberTheory.DirichletL.PrimeRows.LargeSaving
 
@@ -7,6 +8,7 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 local notation "O" => HeckeFamily.O
 
@@ -22,10 +24,10 @@ theorem large_physical_tail_arbitrary_saving_with_perturbed_lengths
     ∃ r C : ℝ, (17 / 50 : ℝ) ≤ r ∧ 0 < C ∧
       ∀ (η : Character) (Z : ℝ), 1 ≤ Z → ∀ R : ℕ → Finset FreeRow,
       (∀ n u, u ∈ R n → u.val ≠ 1 ∧
-        Z ^ ((13 / 16 : ℝ) + 3 * t / 2 + ζ) * (2 : ℝ) ^ n ≤
+        Z ^ (rowBase + 3 * t / 2 + ζ) * (2 : ℝ) ^ n ≤
           ((Ideal.span {u.val} : Ideal O).absNorm : ℝ) ∧
         ((Ideal.span {u.val} : Ideal O).absNorm : ℝ) ≤
-          2 * (Z ^ ((13 / 16 : ℝ) + 3 * t / 2 + ζ) * (2 : ℝ) ^ n)) →
+          2 * (Z ^ (rowBase + 3 * t / 2 + ζ) * (2 : ℝ) ^ n)) →
       ∀ (T : Fin K → Finset PrimeIdeal) (hT : ∀ i P, P ∈ T i → P.val ∉ S),
       (∀ P : (∀ i, T i), Function.Injective (fun i => (P i).val)) →
       ∀ length : Fin K → ℝ, (∀ i, 0 ≤ length i) →
@@ -34,10 +36,10 @@ theorem large_physical_tail_arbitrary_saving_with_perturbed_lengths
       (∀ i y, ‖W i y‖ ≤ B) →
       Summable (fun n => absolutePhysicalDyadIntegral S hS hmax η (R n) T hT W
         (fun i => Z ^ (length i)) W0 W1
-        (Z ^ (17 / 48 - t / 2 : ℝ)) (Z ^ (23 / 48 - t / 2 : ℝ)) Z 2 2 r) ∧
+        (Z ^ (xBase - t / 2 : ℝ)) (Z ^ (yBase - t / 2 : ℝ)) Z 2 2 r) ∧
       (∑' n, absolutePhysicalDyadIntegral S hS hmax η (R n) T hT W
         (fun i => Z ^ (length i)) W0 W1
-        (Z ^ (17 / 48 - t / 2 : ℝ)) (Z ^ (23 / 48 - t / 2 : ℝ)) Z 2 2 r) ≤
+        (Z ^ (xBase - t / 2 : ℝ)) (Z ^ (yBase - t / 2 : ℝ)) Z 2 2 r) ≤
         C * (η.modulus.absNorm : ℝ) ^ δ * Z ^ (-saving) := by
   obtain ⟨r, hr, hr', hpower⟩ :=
     exists_large_tail_line ζ δ (saving + (33 / 20 + 3 * δ / 2) * t) hζ
@@ -51,7 +53,10 @@ theorem large_physical_tail_arbitrary_saving_with_perturbed_lengths
   refine ⟨hs, hb.trans ?_⟩
   apply mul_le_mul_of_nonneg_left _ (by positivity)
   apply Real.rpow_le_rpow_of_exponent_le hZ
-  nlinarith [hpower]
+  have hskewCost : 0 ≤ skew * (1 / 2 + (8 / 5 + δ)) :=
+    mul_nonneg bound_skew.1 (by linarith)
+  simp only [rowBase]
+  nlinarith [hpower, hskewCost]
 
 end SevenEighths.ProbeHighRowFamily
 end

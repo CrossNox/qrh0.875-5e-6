@@ -6,6 +6,7 @@ noncomputable section
 open scoped Classical BigOperators Topology ContDiff
 open Filter Set
 namespace SevenEighths.ProbeFinalAssembly
+open AsymmetricGeometry
 open ProbeHighRowFamily
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary
 open ProbeRaySlots HeckeDetectorPhysicalSelection HeckeDetectorAmplitudeFirst HeckeDetectorFiberPartition
@@ -15,7 +16,7 @@ local instance : Finite (O ⧸ M) := Ring.HasFiniteQuotients.finiteQuotient (NeZ
 variable (H : Subgroup (O ⧸ M)ˣ) (hH : RayOrthogonality.globalUnits M≤H)
 
 theorem perturbed_nonfloor_cube_norm_with_count_parameters (N n : ℕ) (e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift : ℝ)
-    (hlengthShift : 0 ≤ lengthShift) (hlengthShiftCap : lengthShift ≤ 169 / 1000000)
+    (hlengthShift : 0 ≤ lengthShift) (hlengthShiftCap : lengthShift ≤ AsymmetricGeometry.lengthShift)
     (he : 0<e) (he1 : e<1/1000) (heps : 0<eps) (hc : 0<c) (hcb : c≤b) (hA : 0≤A)
     (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax) (hrmin : 0<rmin)
     (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh)
@@ -40,15 +41,15 @@ theorem perturbed_nonfloor_cube_norm_with_count_parameters (N n : ℕ) (e eps c 
     (hlog : 0<logCost) (hMomentHeight : τ<heightCost)
     (ζ μ saving : ℝ) (hζ : 0≤ζ) (hμ : 0≤μ)
     (hcount : 159*ε+εm+R+7*ν≤1/32)
-    (hfinal : (13/16+3*lengthShift/2)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
+    (hfinal : (rowBase+3*lengthShift/2)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
       (26*e+(N+8)*eps+loss+mesh/6)+(logCost+heightCost+momentCost)+saving+
-      lengthShift*(3*e+mesh)≤1/500000)
+      lengthShift*(3*e+mesh)+6*skew*e≤highMargin)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1)
     (counts : CountParameters M H εm) :
     ∃C : ℝ,0<C ∧
     ∀η : Character,∀ᶠZ : ℝ in atTop,
-      ∀d : ℝ,dmin≤d → d≤dmax → ∀(v a C0 : ℝ),0≤v → v≤13/16+3*lengthShift/2+ζ → v≤1 → d-v≤μ →
+      ∀d : ℝ,dmin≤d → d≤dmax → ∀(v a C0 : ℝ),0≤v → v≤rowBase+3*lengthShift/2+ζ → v≤1 → d-v≤μ →
       51/100<a → a≤7/8 → 0≤C0 → ∀rows : Finset FreeRow,
       (∀u∈rows,u.val≠1 ∧ Z^(1/100:ℝ)≤rowNorm u ∧
         (calibrationForSet S hmax).residueMonoid u.val≠0 ∧ rowNorm u≤Z^(d-margin)) →
@@ -67,8 +68,8 @@ theorem perturbed_nonfloor_cube_norm_with_count_parameters (N n : ℕ) (e eps c 
         (if 2*a-1≤5/6 then counts.kB else counts.kH)
         (C0*Z^momentCost) (Z^heightCost) εm) →
       ‖finiteCentralCubeRows S hS hmax η rows T (nonfloorPoolOutside M H S N c b Y) W Y
-        W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e (fun _=>a) (fun _=>(3*i+1:ℕ)*Z^τ)‖≤
-        C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*Z^(3/16-21/500000-saving) := by
+        W0 W1 (Z^(xBase-lengthShift/2:ℝ)) (Z^(yBase-lengthShift/2:ℝ)) Z e (fun _=>a) (fun _=>(3*i+1:ℕ)*Z^τ)‖≤
+        C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*Z^(lowBase-boundaryReduction-saving) := by
   obtain ⟨C,hC,harith⟩ :=
     perturbed_nonfloor_cube_arithmetic_with_count_parameters M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift hlengthShift hlengthShiftCap
       he he1 heps hc hcb hA hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh
@@ -89,12 +90,12 @@ theorem perturbed_nonfloor_cube_norm_with_count_parameters (N n : ℕ) (e eps c 
   let Y : Fin N→ℝ := fun j=>Z^(ell j)
   let T : Fin N→Finset ProbePhysical.PrimeIdeal := fun j=>pool (RayQuotient.identityClass M H) S c b (Y j)
   let A : ℝ := C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*
-    Z^(3/16-21/500000-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)))
+    Z^(lowBase-boundaryReduction-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)+skew*(a+4/25+6*e)))
   have hA : 0≤A := by dsimp [A];positivity
   have hp := hprofile e a (Z^τ) ((3*i+1:ℕ)*Z^τ) i he he1 ha.le (by linarith) hT
     (by gcongr;omega) S hS hmax hfirst η rows (fun u hu=>(hrows u hu).1)
     T (nonfloorPoolOutside M H S N c b Y) (rayCubeFamily M H hH) hnext W Y
-    (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z (by positivity) (by positivity) hZp A hA
+    (Z^(xBase-lengthShift/2:ℝ)) (Z^(yBase-lengthShift/2:ℝ)) Z (by positivity) (by positivity) hZp A hA
     (fun t ht=>harith d hd hd' v a C0 hv hv' hv1 hdv ha ha' hC0 rows hrows hnorm i hi hnext hcurrent
       t ht (hmom t ht))
   apply hp.trans_eq
@@ -102,8 +103,8 @@ theorem perturbed_nonfloor_cube_norm_with_count_parameters (N n : ℕ) (e eps c 
   dsimp only [A]
   calc
     _ = (D*C)*C0*(η.modulus.absNorm:ℝ)^(2*eps)*
-        (Z^((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25))*
-          Z^(3/16-21/500000-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)))) := by ring
+        (Z^((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)+skew*(a+4/25+6*e))*
+          Z^(lowBase-boundaryReduction-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)+skew*(a+4/25+6*e)))) := by ring
     _ = _ := by rw [←Real.rpow_add hZp];congr 2;ring
 
 end SevenEighths.ProbeFinalAssembly

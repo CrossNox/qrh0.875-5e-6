@@ -235,7 +235,7 @@ def continuedLattice (χ : Character) : ℂ → ℂ := HeckeTheta.latticeL (coef
 def LFunction (χ : Character) (s : ℂ) : ℂ := continuedLattice χ s / 6
 
 theorem LFunction_ne_zero_of_perturbed_boundary_lt_re
-    (χ : Character) {s : ℂ} (hs : (437479 / 500000 : ℝ) < s.re)
+    (χ : Character) {s : ℂ} (hs : (4374785349 / 5000000000 : ℝ) < s.re)
     (hpole : ¬ (χ.residue = 1 ∧ s = 1)) : LFunction χ s ≠ 0 := by sorry
 
 end SevenEighths.HeckeFamily
@@ -243,12 +243,12 @@ end SevenEighths.HeckeFamily
 namespace SevenEighths.PerturbedZeroFree
 
 theorem riemannZeta_ne_zero_of_perturbed_boundary_lt_re
-    {s : ℂ} (hs : (437479 / 500000 : ℝ) < s.re) : riemannZeta s ≠ 0 := by
+    {s : ℂ} (hs : (4374785349 / 5000000000 : ℝ) < s.re) : riemannZeta s ≠ 0 := by
   sorry
 
 theorem dirichletLFunction_ne_zero_of_perturbed_boundary_lt_re
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {s : ℂ}
-    (hs : (437479 / 500000 : ℝ) < s.re) (hpole : ¬ (χ = 1 ∧ s = 1)) :
+    (hs : (4374785349 / 5000000000 : ℝ) < s.re) (hpole : ¬ (χ = 1 ∧ s = 1)) :
     χ.LFunction s ≠ 0 := by
   sorry
 

@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighEulerRegion
 import OAI.NumberTheory.DirichletL.Detector.PrincipalProduct
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace PerturbedZeroFreeBound
 
 noncomputable section
@@ -37,7 +39,7 @@ theorem sum_perturbed_prime_defects : Summable perturbedPrimeDefectBound := by
 theorem bound_principal_local_on_perturbed_region
     (eta : OAI.SevenEighths.HeckeFamily.Character) (P : PrimeIdeal)
     (hP : 4 ≤ Ideal.absNorm P.val) (s : ℂ)
-    (hs : 7 / 8 - 21 / 500000 < s.re) :
+    (hs : boundary < s.re) :
     ‖principalLocal eta P s - 1‖ ≤ perturbedPrimeDefectBound P := by
   have hlocal := bound_unramified_closed_on_perturbed_region
     (Ideal.absNorm P.val) (actualAPhase eta (primaryGenerator P.val))
@@ -56,7 +58,7 @@ theorem principal_local_analytic_on_perturbed_region
     (eta : OAI.SevenEighths.HeckeFamily.Character) (P : PrimeIdeal)
     (hP : 4 ≤ Ideal.absNorm P.val) :
     AnalyticOnNhd ℂ (principalLocal eta P)
-      {s : ℂ | 7 / 8 - 21 / 500000 < s.re} := by
+      {s : ℂ | boundary < s.re} := by
   have hQ0 : 0 < (Ideal.absNorm P.val : ℝ) := by exact_mod_cast (by omega : 0 < Ideal.absNorm P.val)
   have hV : 1 - coordV (Ideal.absNorm P.val) (1 / 6) ≠ 0 := by
     apply OAI.SevenEighths.ProbeLocal.one_sub_ne_zero_of_norm_le_half
@@ -64,20 +66,22 @@ theorem principal_local_analytic_on_perturbed_region
     apply rpow_le_half _ _ (by exact_mod_cast hP)
     norm_num
   have hdif : DifferentiableOn ℂ (principalLocal eta P)
-      {s : ℂ | 7 / 8 - 21 / 500000 < s.re} := by
+      {s : ℂ | boundary < s.re} := by
     intro s hs
     apply (unramifiedClosed_differentiableAt _ hQ0 _ _ 1 s 1 (1 / 6) ?_ hV ?_).differentiableWithinAt
     · apply OAI.SevenEighths.ProbeLocal.one_sub_ne_zero_of_norm_le_half
       apply (coordR_norm_le _ hQ0 _ s (1 / 6) (actualAPhase_norm_le_one eta _)).trans
       apply rpow_le_half _ _ (by exact_mod_cast hP)
       norm_num
-      change (7 / 8 - 21 / 500000 : ℝ) < s.re at hs
+      change (boundary : ℝ) < s.re at hs
+      norm_num [boundary] at hs
       linarith
     · apply OAI.SevenEighths.ProbeLocal.one_sub_ne_zero_of_norm_le_half
       apply (coordD_norm_le _ hQ0 _ 1 s
         (OAI.SevenEighths.ProbeRow.targetMonoid_norm_le_one eta _) (by simp)).trans
       apply rpow_le_half _ _ (by exact_mod_cast hP)
-      change (7 / 8 - 21 / 500000 : ℝ) < s.re at hs
+      change (boundary : ℝ) < s.re at hs
+      norm_num [boundary] at hs
       linarith
   exact hdif.analyticOnNhd (isOpen_lt continuous_const Complex.continuous_re)
 
@@ -86,8 +90,8 @@ theorem exists_uniform_perturbed_principal_cutoff :
       (∀ P : PrimeIdeal, Ideal.absNorm P.val ≤ N → P.val ∈ S) →
       ∀ eta : OAI.SevenEighths.HeckeFamily.Character,
         AnalyticOnNhd ℂ (principalCorrection eta S)
-          {s : ℂ | 7 / 8 - 21 / 500000 < s.re} ∧
-        ∀ s : ℂ, 7 / 8 - 21 / 500000 < s.re →
+          {s : ℂ | boundary < s.re} ∧
+        ∀ s : ℂ, boundary < s.re →
           ‖principalCorrection eta S s - 1‖ ≤ 1 / 2 := by
   have ht := (tendsto_order.1
     (tendsto_tsum_compl_atTop_zero perturbedPrimeDefectBound)).2 (1 / 6) (by norm_num)
@@ -135,8 +139,8 @@ theorem exists_perturbed_principal_correction (S₀ : Finset (Ideal O)) :
     ∃ S : Finset (Ideal O), S₀ ⊆ S ∧
       ∀ eta : OAI.SevenEighths.HeckeFamily.Character,
         AnalyticOnNhd ℂ (principalCorrection eta S)
-          {s : ℂ | 7 / 8 - 21 / 500000 < s.re} ∧
-        ∀ s : ℂ, 7 / 8 - 21 / 500000 < s.re →
+          {s : ℂ | boundary < s.re} ∧
+        ∀ s : ℂ, boundary < s.re →
           ‖principalCorrection eta S s - 1‖ ≤ 1 / 2 := by
   obtain ⟨N, hN, hcut⟩ := exists_uniform_perturbed_principal_cutoff
   refine ⟨S₀ ∪ smallPrimeSet N, Finset.subset_union_left, ?_⟩

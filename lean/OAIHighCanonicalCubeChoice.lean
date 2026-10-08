@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighCanonicalCubeReduction
 import OAI.NumberTheory.DirichletL.PrimeRows.CanonicalCubeBins
 
@@ -7,13 +8,14 @@ noncomputable section
 open scoped Classical BigOperators
 open MeasureTheory Set
 namespace SevenEighths.ProbeHighRowFamily
+open AsymmetricGeometry
 open HeckeFamily HeckeInverseAmplification ProbePhysical ProbeMellinBoundary CompletedGauss
 local notation "O" => HeckeFamily.O
 variable {ι : Type*} [Fintype ι]
 
 theorem canonical_probe_exists_perturbed_cube (K : ℕ) (e δ a b B ζ t saving τ : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2) (hζ : 0<ζ) (hζ' : ζ≤1/48) (ht : 0≤t) (ht' : t≤1/30) (hτ : 0<τ)
-    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : (7/8-21 / 500000:ℝ)≤HeckeZeroSupremum.beta)
+    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : boundary≤HeckeZeroSupremum.beta)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (4*e) S)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
@@ -38,11 +40,11 @@ theorem canonical_probe_exists_perturbed_cube (K : ℕ) (e δ a b B ζ t saving 
       let alpha : FreeRow→ℝ := fun u=>51/100+e*grid u
       let H : FreeRow→ℝ := fun u=>(3*idx u+1:ℕ)*Z^τ
       ‖compensatedPhysicalProbe η (calibrationForSet S hmax) W0 W1
-          (fun i=>canonicalSlotSupport (T i)) W (fun i=>Z^(length i)) (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z-
-        principalPhysicalPool η S T W (fun i=>Z^(length i)) W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z-
-        finiteCentralCubeRows S hS hmax η (rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*t/2+ζ))) T hT W (fun i=>Z^(length i))
-          W0 W1 (Z^(17/48-t/2:ℝ)) (Z^(23/48-t/2:ℝ)) Z e alpha H‖≤
-        C*(η.modulus.absNorm:ℝ)^2*(Z^(HeckeZeroSupremum.beta-11/16-63/800+8*e+51*t/100)+Z^(-saving)) := by
+          (fun i=>canonicalSlotSupport (T i)) W (fun i=>Z^(length i)) (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z-
+        principalPhysicalPool η S T W (fun i=>Z^(length i)) W0 W1 (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z-
+        finiteCentralCubeRows S hS hmax η (rowBand (Z^(1/100:ℝ)) (Z^(rowBase+3*t/2+ζ))) T hT W (fun i=>Z^(length i))
+          W0 W1 (Z^(xBase-t/2:ℝ)) (Z^(yBase-t/2:ℝ)) Z e alpha H‖≤
+        C*(η.modulus.absNorm:ℝ)^2*(Z^(HeckeZeroSupremum.beta+signalOffset+49*skew/150-63/800+8*e+51*t/100)+Z^(-saving)) := by
   obtain ⟨C,hC,hbound⟩ := canonical_probe_minus_perturbed_cube (ι:=ι) K e δ a b B ζ t saving τ
     he he' hδ hδ' hζ hζ' ht ht' hτ ha hb hB hβ S hS hmax hfirst
     W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1

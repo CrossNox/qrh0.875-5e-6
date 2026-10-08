@@ -1,5 +1,7 @@
+import OAIAsymmetricGeometry
 import OAI.NumberTheory.DirichletL.Hecke.SignalIdentity
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -8,7 +10,7 @@ open scoped Classical
 namespace SevenEighths.HeckeSignal
 open HeckeFamily Continuation
 
-def perturbedBoundary : ℝ := 7 / 8 - 21 / 500000
+def perturbedBoundary : ℝ := boundary
 
 def perturbedContinuationMargin (β ω σ : ℝ) : ℝ :=
   min (β - perturbedBoundary - ω) σ
@@ -46,12 +48,12 @@ theorem nonzero_of_perturbed_probe_bounds
       intro s hs
       change 7 / 8 < s.re at hs
       change perturbedBoundary < s.re
-      dsimp [perturbedBoundary]
+      dsimp [perturbedBoundary, boundary]
       linarith)
   have hb7 : ∀ s : ℂ, 7 / 8 < s.re → ‖H s - 1‖ ≤ 1 / 2 := by
     intro s hs
     apply hb
-    dsimp [perturbedBoundary]
+    dsimp [perturbedBoundary, boundary]
     linarith
   have hHd := hH7.differentiableOn
   have hexp : max (perturbedBoundary + c + ω) (β + c - σ) = a + c := by
@@ -93,7 +95,7 @@ theorem nonzero_of_perturbed_probe_bounds
     rw [h] at hρ
     norm_num at hρ
     have hpos : 0 < a := by
-      dsimp [perturbedBoundary] at hboundary
+      dsimp [perturbedBoundary, boundary] at hboundary
       linarith
     linarith
   · exact targetRegularizer_ne_zero χ hpole

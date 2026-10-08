@@ -1,6 +1,8 @@
+import OAIAsymmetricGeometry
 import OAIHighFixedIntegral
 import OAI.NumberTheory.DirichletL.PrimeRows.WZTransport
 
+open OAI.SevenEighths.AsymmetricGeometry
 namespace OAI
 
 noncomputable section
@@ -19,7 +21,7 @@ private lemma height_integral_wxz (f : HeightSpace→ℂ) (hf : Integrable f hei
 
 theorem continuedRowOnLines_z_transport_on_perturbed_boundary {K : ℕ}
     (e σ υ l r : ℝ) (he : 0<e) (he' : e<1/1000)
-    (hσ : (7 / 8 - 21 / 500000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ)
+    (hσ : (boundary : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ)
     (hυ : (1/2:ℝ)≤υ) (hl : (17/50:ℝ)≤l) (hlr : l≤r)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S) (P : Fin K→PrimeIdeal) (hP : Function.Injective P)
@@ -29,6 +31,7 @@ theorem continuedRowOnLines_z_transport_on_perturbed_boundary {K : ℕ}
     (X Y Z : ℝ) (hX : 0<X) (hY : 0<Y) (hZ : 0<Z) :
     (∫p : HeightSpace,continuedRowOnLines S hS hmax P hPS η u W0 W1 X Y Z σ υ l p ∂heightMeasure)=
       ∫p : HeightSpace,continuedRowOnLines S hS hmax P hPS η u W0 W1 X Y Z σ υ r p ∂heightMeasure := by
+  norm_num [boundary] at hσ
   have hi (q : ℝ) (hq : (17/50:ℝ)≤q) :
       Integrable (continuedRowOnLines S hS hmax P hPS η u W0 W1 X Y Z σ υ q) heightMeasure :=
     continuedPhysicalRowKernel_integrable_on_perturbed_boundary e σ υ q he he' hσ hσβ hυ hq S hS hmax hfirst P hP hPS η u hu

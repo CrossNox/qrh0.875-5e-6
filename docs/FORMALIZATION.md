@@ -3,12 +3,12 @@
 Local Lean filenames below are relative to `lean/`. Verification commands
 run from the repository root.
 
-The theorem is nonvanishing for `Re(s) > 437479/500000`.
+The theorem is nonvanishing for `Re(s) > 4374785349/5000000000`.
 `OAIHighUnconditional.lean` proves it in Lean without a moment hypothesis
 or an assumed prior zero-free bound. The declarations in
 `OAI.SevenEighths.PerturbedZeroFree` are:
 
-- `bound_zero_supremum`: `beta ≤ 437479/500000`.
+- `bound_zero_supremum`: `beta ≤ 4374785349/5000000000`.
 - `prove_hecke_nonvanishing`: finite-order Hecke L-functions over the
   Eisenstein field, apart from the principal pole.
 - `prove_dirichlet_nonvanishing`: Dirichlet L-functions for every positive
@@ -30,10 +30,12 @@ the source's reflected-exponent calculation to the new slot length and proves
 the extra positive-part loss. `EndpointCertificate.lean` proves the
 source endpoint polynomial identity, its lower bound, its equality with the
 high-bin exponent at the original geometry, and an exact perturbed
-high-endpoint margin of `1/500000`. The new certificate clears the positive
-balance denominator and completes a square in the detector parameter.
-Its remaining polynomial has positive coefficients. The low margin is
-`1/4000000` at slot-length increase `169/1000000`.
+high-endpoint margin of `1/1250000000000`. The certificate includes the asymmetry
+`k = 12457523527/15625000000000`, clears the positive balance denominator,
+and completes a square in the detector parameter. Its remaining polynomial
+has positive coefficients. `OAIAsymmetricGeometry.lean` defines the exact
+geometry and proves the signal exponent `s-11/16+k/3`. The low margin is
+`831/1000000000000000` at slot-length increase `42930200831/250000000000000`.
 
 The local project uses Lean 4.34.1 and the upstream Mathlib revision
 `d13f23b723b8a846827a245b89c10fc7d3f11612`. `lake build` from `lean/`
@@ -47,8 +49,8 @@ changed physical scales. It also proves that a fixed slot-product cap
 
 The normalized compensated low estimate for the changed physical probe is
 proved in Lean. `OAIHighEulerRegion.lean` proves the unramified local
-Euler defect bound at `Re(s) ≥ 437479/500000`, with decay
-`240 Q^(-363/200+63/250000)`. `OAIHighPrincipalProduct.lean` proves that,
+Euler defect bound at `Re(s) ≥ 4374785349/5000000000`, with decay
+`240 Q^(-363/200+643953/2500000000)`. `OAIHighPrincipalProduct.lean` proves that,
 after excluding finitely many small primes, the actual principal Euler
 correction is analytic and within `1/2` of `1` on the larger open region.
 `OAIHighRamifiedBound.lean` proves the corresponding `193` bound for the
@@ -73,7 +75,7 @@ and `OAIHighSourceWZ.lean` prove the corresponding `w` and `z` analyticity.
 `OAIHighComplexSlotBounds.lean` bounds the original finite multiplier for
 arbitrary complex weights on the enlarged region. `OAIHighSourceContours.lean`
 uses this to prove the original source's `w` and `z` boundary controls and
-residue contour shifts for `Re(s) ≥ 437479/500000`.
+residue contour shifts for `Re(s) ≥ 4374785349/5000000000`.
 `OAIHighArithmeticLines.lean` carries the complex multiplier bound into
 the joint contour-line amplitude, joint integrability, Fubini exchange,
 and slice estimates. `OAIHighOrderedContours.lean` proves the ordered
@@ -88,7 +90,7 @@ contour limits.
 `OAIHighTripleTransport.lean` prove the principal triple-contour moves
 from the initial lines to the enlarged region. `OAIHighInitialPlacement.lean`
 combines them with the ordered residue shift at any
-`437479/500000 < a ≤ 3` above the Hecke zero supremum.
+`4374785349/5000000000 < a ≤ 3` above the Hecke zero supremum.
 `OAIHighSelectedTerms.lean` through `OAIHighSelectedLocal.lean` extend the
 actual row-dependent selected Euler factors on the first Euler region.
 `OAIHighSelectedSlotSums.lean` proves the weighted selected-prime slot
@@ -110,10 +112,10 @@ the central rectangle truncation error.
 `OAIHighEndpointCertificate.lean` proves the exact endpoint certificate
 using the upstream balanced exponent and row-count definitions.
 `OAIHighCentralExponent.lean` applies it for `δ ≤ 3/4` and
-`0 ≤ t ≤ 169/1000000`. Its saving budget charges
-`(13/16+3*t/2)*countLoss + 2*ζ + 3*μ/2` for the row count, frequency
+`0 ≤ t ≤ 42930200831/250000000000000`. Its saving budget charges
+`(13/16-k+3*t/2)*countLoss + 2*ζ + 3*μ/2` for the row count, frequency
 extension, and row-scale slack. It also includes the real-contour losses
-and the additional physical-scale cost `t*(3*e+mesh)`.
+and the additional physical-scale cost `t*(3*e+mesh)+6*k*e`.
 `OAIHighCentralSlotExponent.lean` through `OAIHighCentralCollected.lean`
 carry this bound through the actual amplitude batches, source row count,
 finite central integral, normalizer, and dyadic collection. The resulting
@@ -125,20 +127,22 @@ positive total mass and the physical width bounds. `OAIHighCentralBudget.lean`
 chooses a small parameter below any positive zero gap and proves that the
 perturbed detector budget has room for the fixed length increase.
 `OAIHighData.lean` packages positive slot lengths of total
-`1/6+169/1000000`, detector scales, the new row threshold, and the central
+`1/6+42930200831/250000000000000`, detector scales, the new row threshold, and the central
 and floor budgets for every positive zero gap. It proves that such data exist.
 `OAIHighFloorArithmetic.lean` through `OAIHighFloorCollected.lean` carry the
 floor tuple estimate through dyadic summation, the changed physical scales,
 normalization, and collection by detector height. The floor budget includes
-the exact added cost `t*(121/40+3*e+mesh)`.
+the added cost `t*(121/40+3*e+mesh)+k*(67/100+6*e)`.
 `OAIHighPhysicalSmallTail.lean` through `OAIHighCanonicalRayCube.lean`
 assemble the perturbed small- and large-row tails, cube truncation error,
 and the canonical ray-cube bin choice. Their common geometry uses
-`17/48-t/2`, `23/48-t/2`, slot mass `1/6+t`, and row cutoff
-`13/16+3*t/2+ζ`.
+`17/48+k-t/2`, `23/48-k-t/2`, slot mass `1/6+t`, and row cutoff
+`13/16-k+3*t/2+ζ`. The small-row saving is
+`63/800-51*t/100-49*k/150`.
 `OAIHighSignalShift.lean` through `OAIHighPrincipalActualBound.lean` prove
 the principal slot-ratio and normalized residue estimates on the new
-boundary. `OAIHighPrincipalScale.lean` through
+boundary. The asymmetric principal kernel carries the factor `Z^(k/3)`
+required by the shifted signal. `OAIHighPrincipalScale.lean` through
 `OAIHighPrincipalPhysicalRemainder.lean` prove the physical principal
 remainder at the changed lengths with saving `1/4000` on the fixed
 contour just right of `7/8`. `OAIHighPrincipalWindow.lean` through
@@ -152,7 +156,7 @@ the perturbed physical scales. `OAIHighAssemblyClass.lean` through
 `OAIHighAssemblyFixedHigh.lean` carry the selected count parameters into
 the concrete detector data. `OAIHighSignalIdentity.lean` and
 `OAIHighCommonProbe.lean` prove the continuation contradiction at the new
-boundary. `OAIHighAssemblyFinal.lean` concludes `β* ≤ 437479/500000` and
+boundary. `OAIHighAssemblyFinal.lean` concludes `β* ≤ 4374785349/5000000000` and
 the Hecke, Dirichlet, and zeta nonvanishing claims from
 `ChosenPerturbedMomentInput` and `β* ≤ 7/8`. It also states versions that
 take the raw moment input. `OAIHighData.lean` selects slots fine enough for
@@ -171,8 +175,11 @@ The Hecke definitions in that challenge are upstream's
 `ComparatorChallenges/HeckeSevenEighths.lean` verbatim.
 
 The perturbed moment input asserts fourth-moment estimates with zero moment
-excess, slot mass `1/6+169/1000000`, and detector labels at most `7/8`.
-`OAIHighMomentCertificate.lean` and `OAIHighMomentEnergy.lean` prove the
+excess, slot mass `1/6+42930200831/250000000000000`, and detector labels at most `7/8`.
+`OAIHighMomentGeometry.lean` proves the normalized slot bounds and the
+selected-capacity equivalence at the asymmetric row scale. `OAIHighMomentCertificate.lean`
+obtains `κ=3/4` from the previously proved `β*≤7/8` alone, then
+`OAIHighMomentEnergy.lean` proves the
 generic certified energy band and its positive and zero field bounds at
 `κ=3/4` when `β*≤7/8` in the perturbed contradiction range.
 `OAIHighMomentTransport.lean` transports those field bounds to the actual
@@ -192,13 +199,13 @@ generic certified energy band and its positive and zero field bounds at
 The positive energy mesh depends on `small`, and the slot construction
 ensures `ell j ≤ mesh/200`. Since `d ≥ 1/200`, every batch width
 `ell j/d` lies within that mesh. This allows total slot mass
-`1/6+169/1000000`. The original `RawMomentInput`, which applies under
+`1/6+42930200831/250000000000000`. The original `RawMomentInput`, which applies under
 `β* > 7/8` with excess `β*-7/8`, is not used as the perturbed moment input.
 
 The local low-side chain replaces the upstream declaration
 [`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).
 It assumes the total slot length is at most `1/6` and concludes with the
-fixed exponent `3/16`. The new probe has total length `1/6 + 169/1000000`.
+fixed exponent `3/16`. The new probe has total length `1/6 + 42930200831/250000000000000`.
 Its caller in `LowNormalized.lean` also fixes the original physical scales
 `17/48` and `23/48`. The existing theorem cannot be applied to the new
 probe, even though `BoundsReal.lean` proves the required numerical margins.
@@ -212,17 +219,17 @@ slot-mass estimate retains a factor `Z^(-d)` for a rescaled subset of length
 and remote Gaussian dyads, common physical probe, original ray pools, and
 normalizer are all proved for `0 ≤ t ≤ 1/30` and total slot length
 `1/6+t`. `OAILowNormalized.lean` concludes with normalized bound
-`Z^(3/16-t/4+loss)` for every positive `loss`. Run
+`Z^(3/16+k/3-t/4+loss)` for every positive `loss`. Run
 `uv run scripts/verify_oai.py OAILowAudit` to rebuild the source-connected chain
 and audit its axioms. The audit reports only `propext`, `Classical.choice`,
 and `Quot.sound`.
 The upstream `Reflection/LowOriginalEnergy.lean` assumes both `d ≤ 1/6`
 and `ell0 ≤ 1/6-d+η`, and bounds parent norms using `5/6-2*d`. The new
-probe needs `d ≤ 1/6+169/1000000`, surviving length
-`ell0 ≤ 1/6+169/1000000-d`, and parent exponent
-`5/6-169/1000000-2*d`. The old theorem cannot yield the needed power saving
+probe needs `d ≤ 1/6+42930200831/250000000000000`, surviving length
+`ell0 ≤ 1/6+42930200831/250000000000000-d`, and parent exponent
+`5/6-42930200831/250000000000000-2*d`. The old theorem cannot yield the needed power saving
 by setting its loss parameter `η` as large as the slot-length increase.
 
 The [existing final assembly](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssembly.lean)
 starts with the assumption `7/8 < β*`. The perturbed assembly uses a
-separate moment input and the row scale `13/16+3*t/2`.
+separate moment input and the row scale `13/16-k+3*t/2`.

@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighData
 import OAIHighFixedSource
 import OAILowNormalized
@@ -73,8 +74,8 @@ def perturbedNormalizedProbe {K : ℕ} (M : Ideal O) [NeZero M]
   compensatedPhysicalProbe η (calibrationForSet S hmax) W0 W1
     (fun j => canonicalSlotSupport (T j))
     (fun j y => (W j y : ℂ)) Yp
-    (Z ^ (17 / 48 - lengthShift / 2))
-    (Z ^ (23 / 48 - lengthShift / 2)) Z /
+    (Z ^ (AsymmetricGeometry.xBase - lengthShift / 2))
+    (Z ^ (AsymmetricGeometry.yBase - lengthShift / 2)) Z /
     (sourceResidueConstant W0 W1 (∏ P ∈ S, P) *
       (Probe.principalScalar Finset.univ Z (1 / 6 + lengthShift)
         (slotMass T (residueWeights W Yp)) : ℂ))
@@ -90,7 +91,7 @@ theorem PerturbedSourceData.probe_low {gap : ℝ} {D : PerturbedHighData gap}
     (F : PerturbedSourceData D) (loss : ℝ) (hloss : 0 < loss)
     (η : Character) :
     F.probe η =O[atTop]
-      (fun Z : ℝ => Z ^ (3 / 16 - perturbedSlotLengthShift / 4 + loss)) := by
+      (fun Z : ℝ => Z ^ (AsymmetricGeometry.lowBase - perturbedSlotLengthShift / 4 + loss)) := by
   let : NeZero (∏ P ∈ F.S, P) :=
     ⟨fixedPrimeProduct_ne_zero F.S F.exclusions.prime⟩
   obtain ⟨C, hC, hbound⟩ :=

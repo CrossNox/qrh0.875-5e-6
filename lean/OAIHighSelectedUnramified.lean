@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSelectedError
 import OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedUnramified
 
@@ -9,8 +10,9 @@ open ProbeLocal
 
 lemma unramifiedSelected_error_bound_on_perturbed_boundary (Q : ℝ) (A eta v x w z : ℂ)
     (hQ : 4≤Q) (hA : ‖A‖≤1) (heta : ‖eta‖=1) (hv : ‖v‖=1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖unramifiedSelected Q A eta v x w z+unramifiedClosed Q A eta v x w z*star v‖≤720 := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   have hQ0 : 0<Q := by linarith
   have hQ1 : 1≤Q := by linarith
   have hV : ‖coordV Q z‖≤1/2 := by
@@ -33,8 +35,9 @@ lemma unramifiedSelected_error_bound_on_perturbed_boundary (Q : ℝ) (A eta v x 
 
 lemma unramifiedSelected_bound_on_perturbed_boundary (Q : ℝ) (A eta v x w z : ℂ)
     (hQ : 4≤Q) (hA : ‖A‖≤1) (heta : ‖eta‖=1) (hv : ‖v‖=1)
-    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (hx : (AsymmetricGeometry.boundary : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖unramifiedSelected Q A eta v x w z‖≤961 := by
+  dsimp [AsymmetricGeometry.boundary] at hx
   have hd := unramifiedClosed_first_region_bound Q A eta v x w z (1/4) hQ hA heta.le hv.le
     (by norm_num) (by linarith) hz (by linarith) (by linarith)
   have hpow : Q^(-1-min (1/4:ℝ) (1/50))≤1 :=

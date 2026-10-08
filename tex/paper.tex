@@ -10,7 +10,7 @@
 \newcommand{\NF}{\operatorname{N}}
 
 \title{The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane
-$\Ree(s)>7/8-42\times10^{-6}$}
+$\Ree(s)>0.8749570698$}
 \author{}
 \date{8 October 2026}
 
@@ -19,13 +19,15 @@ $\Ree(s)>7/8-42\times10^{-6}$}
 
 \begin{abstract}
 We examine the numerical endpoint in the compensated-probe proof of the
-seven-eighths zero-free half-plane in \cite{OAI}. The reflected-row estimate
-has room to increase the total prime length. An exact polynomial
-certificate preserves the dependence between the high-side exponent and
-its geometric perturbation. We extend the source moment estimates to the
-perturbed geometry and obtain the zero-free boundary
-$437479/500000=0.874958$. The accompanying Lean proof derives the moment
-input and the continuation conclusion from the upstream formalization.
+seven-eighths zero-free half-plane in \cite{OAI}. We increase the total
+prime length and shift the two physical scales in opposite directions.
+An exact polynomial certificate bounds the resulting high-side exponent.
+The low comparison includes the same shift in its principal signal.
+These estimates give the zero-free boundary
+$4374785349/5000000000=0.8749570698$.
+The accompanying Lean files prove the moment input and continuation
+argument against the upstream formalization. The full proof passes its
+axiom audit and Comparator's kernel replay.
 \end{abstract}
 
 \section{Statement and geometry}
@@ -47,8 +49,8 @@ and analytic domains.
 Every finite-order Hecke $L$-function over $F$ and every Dirichlet
 $L$-function, including the Riemann zeta function, has no zero in
 \[
-    \Ree s> B:=\frac{437479}{500000}
-                =\frac78-\frac{21}{500000}.
+    \Ree s> B:=\frac{4374785349}{5000000000}
+                =\frac78-\frac{214651}{5000000000}.
 \]
 The usual pole at $s=1$ for a principal character is allowed.
 \end{theorem}
@@ -56,19 +58,22 @@ The usual pole at $s=1$ for a principal character is allowed.
 Put
 \begin{equation}\label{eq:geometry}
 \begin{gathered}
- t=\frac{169}{1000000},\qquad
- \ell=\frac16+t,\qquad b=\frac18,\\
- l_x=\frac{17}{48}-\frac t2,\qquad
- l_y=\frac{23}{48}-\frac t2,\qquad
- h=\frac{13}{16}+\frac{3t}{2},\\
+ \epsilon=\frac{214651}{5000000000},\qquad
+ \kappa=\frac{12457523527}{15625000000000},\\
+ t=\frac{42930200831}{250000000000000},\qquad
+ \ell=\frac16+t,\qquad b=\frac18-2\kappa,\\
+ l_x=\frac{17}{48}+\kappa-\frac t2,\qquad
+ l_y=\frac{23}{48}-\kappa-\frac t2,\\
+ h=\frac{13}{16}-\kappa+\frac{3t}{2},\qquad
  M=l_x+l_y=\frac56-t.
 \end{gathered}
 \end{equation}
 These lengths satisfy $l_y-l_x=b$, $M+\ell=1$, and
 $h=1-l_x+\ell$. The general Mellin-exponent identity in
-\cite[Part II, compensated low estimate]{OAI} therefore remains
+\cite[Part II, compensated low estimate]{OAI} gives
 \begin{equation}\label{eq:signal}
- C(s)=\frac{l_x}{2}+s-1+\frac h6=s-\frac{11}{16}.
+ C(s)=\frac{l_x}{2}+s-1+\frac h6
+     =s-\frac{11}{16}+\frac\kappa3.
 \end{equation}
 Choose finitely many distinct positive slot lengths $\ell_j$ with
 $\sum_j\ell_j=\ell$. Their maximum can be made smaller than any prescribed
@@ -84,7 +89,7 @@ The normalized compensated probe of \cite{OAI}, formed with
 \eqref{eq:geometry}, satisfies for every $\varepsilon>0$
 \[
        |J_\eta(Z)|\ll_{\eta,\varepsilon}
-             Z^{3/16-t/4+\varepsilon}.
+             Z^{3/16+\kappa/3-t/4+\varepsilon}.
 \]
 \end{lemma}
 
@@ -107,15 +112,28 @@ gives the squared row norm
 The additive Gram estimate is available throughout this range. Its scale
 conditions follow from
 \[
- l_x-\ell=\frac3{16}-\frac{3t}{2}>0,\qquad
- l_y-\ell=\frac5{16}-\frac{3t}{2}>0,
+ l_x-\ell=\frac3{16}+\kappa-\frac{3t}{2}>0,\qquad
+ l_y-\ell=\frac5{16}-\kappa-\frac{3t}{2}>0,
 \]
 \[
  M-2\ell=\frac12-3t>0,\qquad
- l_y-\ell-\frac{11b}{6}=\frac1{12}-\frac{3t}{2}>0.
+ l_y-\ell-\frac{11b}{6}
+   =\frac1{12}+\frac{8\kappa}{3}-\frac{3t}{2}>0.
 \]
 Thus its $P_a^2/Y'$ term is absorbed by $P_a^{1/6}$, exactly as in
-\cite[Part II, additive Gram bound]{OAI}. Cauchy--Schwarz, the count of
+\cite[Part II, additive Gram bound]{OAI}.
+The compensated scale cap is now
+\[
+ 2l_x-l_y=\frac{11}{48}+3\kappa-\frac t2,
+ \qquad
+ 2l_x-l_y-\ell=\frac1{16}+3\kappa-\frac{3t}{2}>0.
+\]
+For a fixed calibration norm $q$ and an unselected tuple norm
+$L\ll Z^\ell$, these inequalities give, eventually,
+$qZ^{l_x}\le Z^{l_y}$ and
+$LZ^{l_y}\le q^2Z^{2l_x}$.
+They are the physical scale conditions used by the compensated Gram bound.
+Cauchy--Schwarz, the count of
 rescaled tuples, and their coefficients add to the basic low exponent
 \[
  -d+\left(\frac{d-1/6+5t}{8}\right)_+.
@@ -128,24 +146,32 @@ is consequently $Z^{l_x/2+b/12+\varepsilon}$.
 The prime normalizer in \cite[Part II, principal normalizer]{OAI} is nonzero and has
 inverse $Z^{o(1)}$ for every fixed positive slot length. Finally,
 \[
- \frac{l_x}{2}+\frac b{12}=\frac3{16}-\frac t4.
+ \frac{l_x}{2}+\frac b{12}
+ =\frac3{16}+\frac\kappa3-\frac t4.
 \]
 This proves the normalized estimate.
 \end{proof}
 
 The signal at the proposed boundary is
 \begin{equation}\label{eq:low-gap}
- C(B)=\frac3{16}-\frac{21}{500000},\qquad
- C(B)-\left(\frac3{16}-\frac t4\right)
- =\frac1{4000000}>0.
+ \begin{gathered}
+ C(B)=\frac3{16}+\frac\kappa3-\epsilon,\\
+ C(B)-\left(\frac3{16}+\frac\kappa3-\frac t4\right)
+ =\frac t4-\epsilon=\frac{831}{10^{15}}>0.
+ \end{gathered}
 \end{equation}
+The formal continuation assembly uses low loss $10^{-13}$, which leaves
+the strictly positive margin $731/10^{15}$.
 
 \section{The perturbed source moments}\label{sec:moments}
 
 The fourth-moment lemma with short prime factors in \cite{OAI} permits
-$\kappa=3/4$. Its zero-free hypothesis is available because
+moment parameter $\kappa_{\rm mom}=3/4$.
+This parameter is distinct from the geometric skew $\kappa$ in
+\eqref{eq:geometry}.
+Its zero-free hypothesis is available because
 $2\beta_*-1\le3/4$. The original detector application uses
-$\kappa=3/4+2\Delta$ with $\Delta=\beta_*-7/8>0$.
+$\kappa_{\rm mom}=3/4+2\Delta$ with $\Delta=\beta_*-7/8>0$.
 Here the moment estimates use $\Delta=0$. The gap $\beta_*-B$, when
 positive, is used separately to choose the detector losses.
 
@@ -193,7 +219,7 @@ with zero moment excess required by the detector.
 \end{lemma}
 
 \begin{proof}
-Apply the certified energy theorem of \cite{OAI} with $\kappa=3/4$ and
+Apply the certified energy theorem of \cite{OAI} with $\kappa_{\rm mom}=3/4$ and
 stage error $\rho/4$. Its positive-width and zero-slot conclusions give a
 positive fine mesh $\mu$. The condition $\ell_j\le\mu/200$ ensures
 $\lambda_j\le\mu$ for every $d\ge1/200$. This does not restrict the total
@@ -210,7 +236,7 @@ from the retained rows for large $Z$.
 The source identities bound the sum of the squared plain witness products
 by retained energy with the physical prime coefficients. The marked initial state
 has width $1+\rho/4$. Its capacity condition follows from
-$2m+6\kappa L_A\le1$, and the positive-width energy bound gives exponent
+$2m+6\kappa_{\rm mom}L_A\le1$, and the positive-width energy bound gives exponent
 $1+\rho/2\le1+\rho$. For the unmarked pair, use initial width
 $\max\{1,2m\}+\rho/4$ and the zero-slot energy bound. This gives
 \eqref{eq:plain-marked-moment} and \eqref{eq:plain-unmarked-moment}.
@@ -254,10 +280,10 @@ $H_p-1$ in the original second
 region by $O(Q^{-363/200})$ for $p\nmid u$ and $O(Q^{-33/40})$
 for $p\mid u$, where $Q=\NF p$. Every local exponent involving
 $\Ree s$ has coefficient of absolute value at most six. Moving its
-lower boundary left by $21/500000$ therefore gives the respective bounds
+lower boundary left by $\epsilon$ therefore gives the respective bounds
 \[
- O(Q^{-363/200+63/250000})\quad\text{and}\quad
- O(Q^{-33/40+63/250000}).
+ O(Q^{-363/200+6\epsilon})\quad\text{and}\quad
+ O(Q^{-33/40+6\epsilon}).
 \]
 The first exponent is less than $-1$. The unramified product converges
 normally, while the ramified product has the same $O_\varepsilon((\NF
@@ -296,8 +322,9 @@ where $f_\eta$ is the principal Mellin signal from \cite{OAI} with
 \end{lemma}
 
 \begin{proof}
-Lemma~\ref{lem:moments} supplies the fourth-moment estimate at $\kappa=3/4$, because its
-zero-free input is $\beta_*\le(1+\kappa)/2=7/8$. Every detected bin has
+Lemma~\ref{lem:moments} supplies the fourth-moment estimate at
+$\kappa_{\rm mom}=3/4$, because its
+zero-free input is $\beta_*\le(1+\kappa_{\rm mom})/2=7/8$. Every detected bin has
 $\delta=2a-1\le2\beta_*-1\le3/4$. Its plain prime capacity is thus
 the baseline capacity in the proof of \cite[Part II, capacity
 comparison]{OAI}, with no positive $\Delta/4$ surcharge.
@@ -313,13 +340,14 @@ At row length $d=h$, the general high exponent relative to $C(B)$ is
        -a l_y-\frac\ell2+q\ell
        +h\left(R+\frac\delta2-\frac{17}{50}\right).
 \end{equation}
-Holding $a,\delta,q,R$ fixed while changing \eqref{eq:geometry} gives
+Using $\delta=2a-1$ and holding $a,\delta,q,R$ fixed while changing
+\eqref{eq:geometry} gives
 \begin{equation}\label{eq:perturbation}
  E_B(h)-E_{7/8}(13/16)
- =\frac{21}{500000}
-       +t\left(-\frac12+\delta+q+\frac{3R}{2}\right).
+ =\epsilon+t\left(-\frac12+\delta+q+\frac{3R}{2}\right)
+       +\kappa\left(\frac23-R\right).
 \end{equation}
-We evaluate the two terms together using the exact balanced row count
+We evaluate the combined exponent using the exact balanced row count
 from \cite[Part II, compensated endpoint certificate]{OAI}. Put
 $y=1/2-x$ and define
 \[
@@ -333,25 +361,33 @@ Then $J\ge35/54>0$ on the parameter box, and
 \]
 With $R=R_*$ and the value of $t$ in \eqref{eq:geometry}, direct substitution gives
 \[
- 648000000J(\delta,y)\left(-E_B(h)-\frac1{500000}\right)
- =H(\delta,y):=A(y)\delta^2+L(y)\delta+K(y),
+ \begin{gathered}
+ 162000000000000000J(\delta,y)
+   \left(-E_B(h)-\frac1{1250000000000}\right)
+ =H(\delta,y),\\
+ H(\delta,y):=A(y)\delta^2+L(y)\delta+K(y),
+ \end{gathered}
 \]
 where
 \begin{align*}
- A(y)&=153063882+393024336y+282085176y^2+96097344y^3,\\
- L(y)&=-118376871-188464636y-13011148y^2,\\
- K(y)&=22888570+21032740y.
+ A(y)&=38381036152738950+98112671277888624y\\
+     &\quad+70349424015981576y^2+24024727795678656y^3,\\
+ L(y)&=-29828491018092129-47206874749477924y\\
+     &\quad-3166469409426772y^2,\\
+ K(y)&=5795432885635430+5325532921935260y.
 \end{align*}
 The following identity certifies $H\ge0$ for every $y\ge0$:
 \begin{align*}
  4A(y)H(\delta,y)
- &=(2A(y)\delta+L(y))^2+569922764319\\
- &\quad+4240763631276888y+20292262879067528y^2\\
- &\quad+27625937254957024y^3+7915471831892336y^4.
+ &=(2A(y)\delta+L(y))^2+979807389619512241359\\
+ &\quad+275799814009247843319007787580888y\\
+ &\quad+1303439473219357232720782491774728y^2\\
+ &\quad+1756569235069508453488622075444704y^3\\
+ &\quad+501751386744843713686464752902256y^4.
 \end{align*}
 Every coefficient in the remainder is positive, as is $A(y)$. Hence
 \begin{equation}\label{eq:high-gap}
- -E_B(h)\ge\frac1{500000}.
+ -E_B(h)\ge\frac1{1250000000000}.
 \end{equation}
 For a row-count loss $0\le\rho\le1/32$, put $R=R_*+\rho$.
 The source bounds imply
@@ -362,17 +398,39 @@ with $d-v\le\mu$, the mixed exponent differs from its balanced endpoint by
  h\rho+(v-h)(R+\delta/2-17/50)+(d-v)R
  \le h\rho+2\zeta+\frac32\mu.
 \]
-These losses, the additional physical-scale cost $t(3e+\mathrm{mesh})$,
+These losses, the additional physical-scale cost
+$t(3e+\mathrm{mesh})+6\kappa e$,
 and the remaining detector losses can all be chosen below the margin
 in \eqref{eq:high-gap}.
 
 The floor and intermediate-row margins in \cite{OAI} are respectively
 $7/1200$ and $49/14400$ at the original geometry. The floor shift costs
-$t(121/40+3e+\mathrm{mesh})$, including the changed row threshold. The
+$t(121/40+3e+\mathrm{mesh})+\kappa(67/100+6e)$,
+including the changed row threshold. The
 parameter budget absorbs this cost and the boundary change
-$7/8-B=21/500000$. The small-row
-margin is $63/800$. Its change is at most $51t/100$, since
-$h(17/50-1/6)-l_y/2$ has derivative $51/100$ with respect to $t$.
+$7/8-B=\epsilon$. In particular,
+\[
+ \epsilon+\frac{121t}{40}+\frac{67\kappa}{100}
+ <\min\left(\frac7{1200},\frac{49}{14400}\right).
+\]
+The intermediate estimate can also be checked directly.
+Before the small detector losses, its bounds are
+$d\le1/2$, $q\le\delta/2$, and $R\le76/75-2\delta/3$.
+Its exponent relative to $C(B)$ is therefore at most
+\[
+ -\frac{529}{2400}+\frac{25\delta}{96}+\epsilon
+ +t\left(\frac1{100}+\frac{3\delta}{4}\right)
+ +\kappa\left(\frac{49}{150}+\frac\delta2\right)
+ <-\frac3{125}
+ \qquad(0\le\delta\le3/4).
+\]
+The expression increases with $\delta$, and substitution of $\delta=3/4$
+gives $-2440350045024453/10^{17}$.
+The small-row margin is $63/800$.
+Relative to the shifted signal, its geometric cost is
+\[
+ \frac{51t}{100}+\frac{49\kappa}{150}<\frac{63}{800}.
+\]
 For large rows, the absolute contour can still be taken sufficiently far
 right after choosing $\zeta$. Lemma~\ref{lem:analytic} supplies the
 principal contour, whose margins $l_y/20$ and $h/600$ remain positive.
@@ -381,6 +439,11 @@ slot. The prime normalizer costs only $Z^{o(1)}$.
 
 All detector, mesh, real-contour, and normalizer losses can be chosen
 below these fixed positive margins before the target character is fixed.
+The explicit central budget takes a common small parameter at most
+$10^{-16}$ and bounds the later detector allowances by
+$\mathrm{small}/(N+2000)$, where $N$ is the fixed slot count.
+It reserves the high margin in \eqref{eq:high-gap}, including the row-count,
+physical-scale, Mellin, and normalization costs.
 The late height choice in \cite{OAI} then gives one $\sigma>0$ for every
 target, as claimed.
 \end{proof}
@@ -403,36 +466,37 @@ stated assertions.
 The rational inequalities in \eqref{eq:low-gap} and \eqref{eq:high-gap}
 can be checked independently by the accompanying
 \texttt{scripts/verify\_bounds.py}.
-The accompanying files in \texttt{lean/} verify the geometry, reflected-exponent
-calculation, high-side endpoint, normalized compensated low estimate,
-local Euler bounds, and principal and global Euler product extensions against
-the upstream OAI formalization. The finite source multiplier bounds and
+The accompanying files in \texttt{lean/} contain proofs of the geometry,
+reflected-exponent calculation, high-side endpoint, normalized compensated
+low estimate, local Euler bounds, and principal and global Euler product
+extensions against the upstream OAI formalization.
+The finite source multiplier bounds and
 the principal source's $w$ and $z$ contour shifts, ordered double shift,
 uniform contour tails, and $x$ contour transport also have Lean proofs at
 the new boundary. The selected high-row local factors, weighted prime-slot
 sum, physical-row dyad, Mellin integral, and changed small- and large-row
 tail bounds, central cube truncation error, canonical ray-cube choice, and
-normalized floor-row collection are verified there as well.
-The principal slot-ratio and normalized residue estimates are proved on the
+normalized floor-row collection have proof files there as well.
+The principal slot-ratio and normalized residue proofs use the
 new boundary. The physical principal remainder at the changed lengths is
 bounded on a fixed contour just right of $7/8$, leaving a power saving of
 $1/4000$ relative to $\beta_*$ in the proposed interval. The contour at
 $\beta_*+e$ used in the final comparison retains a saving of $1/3000$.
-The perturbed source moment transport is proved in
+The perturbed source moment transport is implemented in
 \texttt{OAIHighMomentTransport.lean}. It supplies the chosen fourth-moment
 input used by the central-bin estimate and detector assembly.
 \texttt{OAIHighUnconditional.lean} derives the prior $\beta_*\le7/8$ bound
 from the upstream unconditional module and concludes the stronger Hecke,
 Dirichlet, and zeta nonvanishing statements without a moment hypothesis.
-The final theorem's axiom audit permits only the standard Lean axioms
+The final theorem's axiom audit passes with only the standard Lean axioms
 \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
 It rejects any other transitive axiom dependency, including incomplete proofs.
 The verification script requires the pinned upstream commit and a clean
 upstream working tree.
-The Hecke, Dirichlet, and zeta statements are also accepted by
-Comparator, the judge used for the upstream challenges. The challenge
-uses upstream's Hecke definitions with the bound changed to $B$, and
-Comparator replays the solution through the Lean kernel.
+Full Lean verification and Comparator replay of the updated bound pass.
+The Comparator challenge uses upstream's Hecke definitions with the
+bound changed to $B$. Comparator checks all three nonvanishing statements
+and replays their proofs through the Lean kernel.
 The proof uses Lean 4.34.1 and upstream revision
 \texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
 Compiling this note checks the TeX. The separate Lean build checks the proof.

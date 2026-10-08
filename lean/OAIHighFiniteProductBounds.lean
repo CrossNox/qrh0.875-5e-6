@@ -1,3 +1,4 @@
+import OAIAsymmetricGeometry
 import OAIHighSlotEstimate
 import OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds
 
@@ -17,10 +18,10 @@ theorem bound_slot_multiplier_on_perturbed_boundary
     (hPmin : 480 ≤ Pmin) (hb : ∀ j ∈ J, ∀ P ∈ T j, 0 ≤ b j P)
     (hQ : ∀ j ∈ J, ∀ P ∈ T j, Pmin ≤ (Ideal.absNorm P.val : ℝ))
     (hη : ∀ j ∈ J, ∀ P ∈ T j, ‖idealCoeff η P.val‖ = 1)
-    (s w z : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (s w z : ℂ) (hs : (AsymmetricGeometry.boundary : ℝ) ≤ s.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖slotMultiplier η J T (fun j P => (b j P : ℂ)) s w z‖ ≤
-      ∏ j ∈ J, (1 + 1440 * Pmin ^ (-(7 / 8 - 21 / 500000 : ℝ))) *
+      ∏ j ∈ J, (1 + 1440 * Pmin ^ (-(AsymmetricGeometry.boundary : ℝ))) *
         ∑ P ∈ T j, b j P * (Ideal.absNorm P.val : ℝ) ^ (z.re - 1) := by
   simp only [slotMultiplier, local_eq_regionSlot, norm_prod]
   apply Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
@@ -42,12 +43,12 @@ theorem bound_combined_slots_on_perturbed_boundary
     (hPmin : 480 ≤ Pmin) (hb : ∀ j ∈ J, ∀ P ∈ T j, 0 ≤ b j P)
     (hQ : ∀ j ∈ J, ∀ P ∈ T j, Pmin ≤ (Ideal.absNorm P.val : ℝ))
     (hη : ∀ j ∈ J, ∀ P ∈ T j, ‖idealCoeff η P.val‖ = 1)
-    (s w z : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
+    (s w z : ℂ) (hs : (AsymmetricGeometry.boundary : ℝ) ≤ s.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖globalClosedCorrection η S s w z *
       slotMultiplier η J T (fun j P => (b j P : ℂ)) s w z‖ ≤
       (3 / 2) * ∏ j ∈ J,
-        (1 + 1440 * Pmin ^ (-(7 / 8 - 21 / 500000 : ℝ))) *
+        (1 + 1440 * Pmin ^ (-(AsymmetricGeometry.boundary : ℝ))) *
           ∑ P ∈ T j, b j P * (Ideal.absNorm P.val : ℝ) ^ (z.re - 1) := by
   have hglobal := bound_global_closed_correction_on_perturbed_region
     η S hS s w z hs (by linarith) (by linarith)

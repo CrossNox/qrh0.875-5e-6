@@ -11,6 +11,8 @@ open scoped Classical ContDiff
 
 namespace SevenEighths.ProbePhysical
 
+open AsymmetricGeometry
+
 open CompletedGauss CanonicalQuadraticSieve RayFourExpansion
 
 local notation "O" => ActualEisensteinCubic.O
@@ -49,12 +51,12 @@ theorem perturbed_low_central_compensated_tuple
             (fun i => (p i).val) J *
           compensationRowTest η (calibrationForSet S hS) W0 W1
             (fun i => (p i).val) J
-            (Z ^ (17 / 48 - t / 2))
-            (Z ^ (23 / 48 - t / 2)) X θ *
+            (Z ^ (xBase - t / 2))
+            (Z ^ (yBase - t / 2)) X θ *
           selectedSlotFactor W (fun i => Z ^ (ell i))
             (fun i => (p i).val) J θ‖ ≤
           C * (1 + ‖θ‖) ^ degree *
-            Z ^ (3 / 16 - t / 4 + 254 * ε) := by
+            Z ^ (lowBase - t / 4 + 254 * ε) := by
   obtain ⟨Cg, hCg, hgram⟩ :=
     compensation_tuple_actual_gram ε hε hε1 W0 W1
       a0 b0 a1 b1 M ha0 ha1 hab1 hM hW0 hW1
@@ -83,7 +85,7 @@ theorem perturbed_low_central_compensated_tuple
   let Yp := fun i => Z ^ (ell i)
   let d := lowUnselectedLength ell J
   let loss := max 0 ((d - 1 / 6 + 5 * t) / 4)
-  let gramExponent := 3 / 16 - t / 4 + (23 / 96 - t / 4) * ε
+  let gramExponent := lowBase - t / 4 + (yBase / 2 - t / 4) * ε
   let inverseExponent := (loss + 507 * ε) / 2
   have hz : 0 < Z := lt_trans zero_lt_one hInv.1
   have hd : 0 ≤ d := Finset.sum_nonneg (fun i _ => hell i)
@@ -98,7 +100,7 @@ theorem perturbed_low_central_compensated_tuple
       (mul_le_mul_of_nonneg_right (le_max_right _ _) (by positivity))
   have hs := hScale.2 slots hslots hnormE J
   have hg := hgram K η slots hslots J W Yp
-    (Z ^ (17 / 48 - t / 2)) (Z ^ (23 / 48 - t / 2)) X θ
+    (Z ^ (xBase - t / 2)) (Z ^ (yBase - t / 2)) X θ
     (by positivity) (by positivity) hX
     (fun p => (hs p).1) (fun p => (hs p).2.1)
   apply hg.trans
@@ -107,19 +109,19 @@ theorem perturbed_low_central_compensated_tuple
   have hterm (p : LowUnselectedTuple slots J) :
       let L := elementNorm (∏ i : J, (p i).val)
       let Q := lowPhysicalScale (calibrationForSet S hS)
-        (Z ^ (17 / 48 - t / 2) / L)
-        (Z ^ (23 / 48 - t / 2) / L)
+        (Z ^ (xBase - t / 2) / L)
+        (Z ^ (yBase - t / 2) / L)
       ‖lowUnselectedWeight slots J W Yp p‖ *
         ((Real.sqrt Q)⁻¹ / (2 * Real.pi)) *
         lowGramFactor (calibrationForSet S hS)
-          (Z ^ (17 / 48 - t / 2) / L)
-          (Z ^ (23 / 48 - t / 2) / L) ε *
+          (Z ^ (xBase - t / 2) / L)
+          (Z ^ (yBase - t / 2) / L) ε *
         lowInverseMass (calibrationForSet S hS)
           (a0 * a1) (max 1 (b0 * b1))
           (mul_pos ha0 ha1)
           (lt_of_lt_of_le zero_lt_one (le_max_left _ _))
-          (Z ^ (17 / 48 - t / 2) / L)
-          (Z ^ (23 / 48 - t / 2) / L)
+          (Z ^ (xBase - t / 2) / L)
+          (Z ^ (yBase - t / 2) / L)
           (div_pos (by positivity)
             (lowUnselectedProduct_norm_pos slots hslots J p))
           (div_pos (by positivity)
@@ -134,8 +136,8 @@ theorem perturbed_low_central_compensated_tuple
     dsimp only
     let L := elementNorm (∏ i : J, (p i).val)
     let Q := lowPhysicalScale (calibrationForSet S hS)
-      (Z ^ (17 / 48 - t / 2) / L)
-      (Z ^ (23 / 48 - t / 2) / L)
+      (Z ^ (xBase - t / 2) / L)
+      (Z ^ (yBase - t / 2) / L)
     have hL := lowUnselectedProduct_norm_pos slots hslots J p
     have hgb := (hs p).2.2 ε hε.le
     have hib := hInv.2 T hT hout hdis hnorm J p X hX
@@ -143,8 +145,8 @@ theorem perturbed_low_central_compensated_tuple
       (div_pos (by positivity) hL)
       (div_pos (by positivity) hL)
     have hgn : 0 ≤ lowGramFactor (calibrationForSet S hS)
-        (Z ^ (17 / 48 - t / 2) / L)
-        (Z ^ (23 / 48 - t / 2) / L) ε := Real.sqrt_nonneg _
+        (Z ^ (xBase - t / 2) / L)
+        (Z ^ (yBase - t / 2) / L) ε := Real.sqrt_nonneg _
     have hh := mul_le_mul_of_nonneg_left hib
       (mul_nonneg (norm_nonneg (lowUnselectedWeight slots J W Yp p)) hgn)
     have hh2 := mul_le_mul_of_nonneg_right
@@ -154,15 +156,15 @@ theorem perturbed_low_central_compensated_tuple
     calc
       _ = ‖lowUnselectedWeight slots J W Yp p‖ *
         lowGramFactor (calibrationForSet S hS)
-          (Z ^ (17 / 48 - t / 2) / L)
-          (Z ^ (23 / 48 - t / 2) / L) ε *
+          (Z ^ (xBase - t / 2) / L)
+          (Z ^ (yBase - t / 2) / L) ε *
         (Real.sqrt Q)⁻¹ / (2 * Real.pi) *
         lowInverseMass (calibrationForSet S hS)
           (a0 * a1) (max 1 (b0 * b1))
           (mul_pos ha0 ha1)
           (lt_of_lt_of_le zero_lt_one (le_max_left _ _))
-          (Z ^ (17 / 48 - t / 2) / L)
-          (Z ^ (23 / 48 - t / 2) / L)
+          (Z ^ (xBase - t / 2) / L)
+          (Z ^ (yBase - t / 2) / L)
           (div_pos (by positivity) hL)
           (div_pos (by positivity) hL)
           (lowSelectedInverseRow Finset.univ
@@ -202,9 +204,11 @@ theorem perturbed_low_central_compensated_tuple
     dsimp [loss]
     linarith
   have hpower : gramExponent + inverseExponent - d ≤
-      3 / 16 - t / 4 + 254 * ε := by
+      lowBase - t / 4 + 254 * ε := by
     dsimp [gramExponent, inverseExponent]
     have hte : 0 ≤ t * ε := mul_nonneg ht hε.le
+    have hy : yBase / 2 ≤ (1 / 2 : ℝ) := by norm_num [yBase, skew]
+    have hye := mul_le_mul_of_nonneg_right hy hε.le
     nlinarith
   calc
     _ ≤ Cg * ((Ci * Real.sqrt (3 * q) *

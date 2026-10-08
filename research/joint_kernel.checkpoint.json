@@ -1,0 +1,783 @@
+{
+  "upstream_revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "script_sha256": "21b0965c61e86dac94fcb4c284158c411da928ebb9689aa512e974f170fc48b3",
+  "fields": [
+    {
+      "prime": 5,
+      "omega_residue": null,
+      "field_cardinality": 25,
+      "fourier_cases_checked": 150,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "27f7c10fb54a03d792cca7fb00bc7ebdd0945de7378232a3e3cc2d6217629670",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 24,
+      "selected_unit_character_one_count": 4,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 3255,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 709,
+        "maximum_nonexceptional_norm_squared": 121,
+        "maximum_witness_shifts": {
+          "character_power": 3,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -11,
+          0
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            5,
+            0
+          ],
+          "2": [
+            5,
+            0
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            5,
+            0
+          ],
+          "5": [
+            5,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "prime": 7,
+      "omega_residue": 2,
+      "field_cardinality": 7,
+      "fourier_cases_checked": 42,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "943bd386fa0266b89014a99dfbef629fd885f26f9709cd3b6407af095bd45a07",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 6,
+      "selected_unit_character_one_count": 1,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 285,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 169,
+        "maximum_nonexceptional_norm_squared": 12,
+        "maximum_witness_shifts": {
+          "character_power": 1,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -2,
+          -2
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            -2,
+            -1
+          ],
+          "2": [
+            -1,
+            3
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            2,
+            -3
+          ],
+          "5": [
+            -3,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "prime": 7,
+      "omega_residue": 4,
+      "field_cardinality": 7,
+      "fourier_cases_checked": 42,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "5fa10d96d44d1917cb0451a77dc2aba2923265ce913c23ac62ee403d2d2cf26f",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 6,
+      "selected_unit_character_one_count": 1,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 285,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 169,
+        "maximum_nonexceptional_norm_squared": 12,
+        "maximum_witness_shifts": {
+          "character_power": 1,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -4,
+          2
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            -3,
+            1
+          ],
+          "2": [
+            2,
+            -3
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            -1,
+            3
+          ],
+          "5": [
+            -2,
+            -1
+          ]
+        }
+      }
+    },
+    {
+      "prime": 11,
+      "omega_residue": null,
+      "field_cardinality": 121,
+      "fourier_cases_checked": 726,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "088cc6e1d80b0b3e5144cbe4c11b0bccffea98c3ac7631df43ffe74674c132fc",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 120,
+      "selected_unit_character_one_count": 20,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 73815,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 3589,
+        "maximum_nonexceptional_norm_squared": 529,
+        "maximum_witness_shifts": {
+          "character_power": 3,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              3,
+              5
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -23,
+          0
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            11,
+            0
+          ],
+          "2": [
+            11,
+            0
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            11,
+            0
+          ],
+          "5": [
+            11,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "prime": 13,
+      "omega_residue": 3,
+      "field_cardinality": 13,
+      "fourier_cases_checked": 78,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "46b1abad173846fbb34d1dffbcdb7082c71f2bc4c6ffea9317af070d0d408b97",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 12,
+      "selected_unit_character_one_count": 2,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 915,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 349,
+        "maximum_nonexceptional_norm_squared": 49,
+        "maximum_witness_shifts": {
+          "character_power": 3,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              11,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -7,
+          0
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            3,
+            1
+          ],
+          "2": [
+            -4,
+            3
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            -1,
+            -3
+          ],
+          "5": [
+            4,
+            -1
+          ]
+        }
+      }
+    },
+    {
+      "prime": 13,
+      "omega_residue": 9,
+      "field_cardinality": 13,
+      "fourier_cases_checked": 78,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "d3e519a42c833c38820e126e495e12574b9f45bc90d04de3b45f1ba3876106bd",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 12,
+      "selected_unit_character_one_count": 2,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 915,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 349,
+        "maximum_nonexceptional_norm_squared": 49,
+        "maximum_witness_shifts": {
+          "character_power": 3,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              11,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -7,
+          0
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            4,
+            -1
+          ],
+          "2": [
+            -1,
+            -3
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            -4,
+            3
+          ],
+          "5": [
+            3,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "prime": 19,
+      "omega_residue": 7,
+      "field_cardinality": 19,
+      "fourier_cases_checked": 114,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "32785a8febcf849190413177bf0ce9e464065f33f6cd7ef19e589d7f96a64f20",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 18,
+      "selected_unit_character_one_count": 3,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 1905,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 529,
+        "maximum_nonexceptional_norm_squared": 81,
+        "maximum_witness_shifts": {
+          "character_power": 1,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -9,
+          0
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            3,
+            -5
+          ],
+          "2": [
+            2,
+            3
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            5,
+            -3
+          ],
+          "5": [
+            -2,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "prime": 19,
+      "omega_residue": 11,
+      "field_cardinality": 19,
+      "fourier_cases_checked": 114,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "25547c4deab1473517ca12bc9a8fb07a94c5b79c2942ee4af11aaa1887457625",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 18,
+      "selected_unit_character_one_count": 3,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 1905,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 529,
+        "maximum_nonexceptional_norm_squared": 81,
+        "maximum_witness_shifts": {
+          "character_power": 1,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -9,
+          0
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            -2,
+            5
+          ],
+          "2": [
+            5,
+            -3
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            2,
+            3
+          ],
+          "5": [
+            3,
+            -5
+          ]
+        }
+      }
+    },
+    {
+      "prime": 31,
+      "omega_residue": 5,
+      "field_cardinality": 31,
+      "fourier_cases_checked": 186,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "bca481cd2c7371be76cd187f2bda45342c9f2911d826f04cac451982ee405e0e",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 30,
+      "selected_unit_character_one_count": 5,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 4965,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 889,
+        "maximum_nonexceptional_norm_squared": 111,
+        "maximum_witness_shifts": {
+          "character_power": 1,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              7,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -11,
+          10
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            -1,
+            6
+          ],
+          "2": [
+            -1,
+            6
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            5,
+            -6
+          ],
+          "5": [
+            5,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "prime": 31,
+      "omega_residue": 25,
+      "field_cardinality": 31,
+      "fourier_cases_checked": 186,
+      "joint_exponent_cases_checked": 144,
+      "kernel_sha256": "bb7c77eef34c26c69a508eab7a3154efdfd0b9ad2d7660dc8c1c88b06b68df13",
+      "exceptional_example_exponents": [
+        1,
+        7
+      ],
+      "exceptional_example_complete_sum": 30,
+      "selected_unit_character_one_count": 5,
+      "four_shift_correlations": {
+        "normalized_shift_cases_checked": 4965,
+        "exceptional_cases": 16,
+        "nonexceptional_collision_cases": 889,
+        "maximum_nonexceptional_norm_squared": 111,
+        "maximum_witness_shifts": {
+          "character_power": 1,
+          "shifts": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              7,
+              0
+            ]
+          ]
+        },
+        "maximum_correlation_in_zeta6_basis": [
+          -1,
+          -10
+        ],
+        "uniform_bound_status": "observed only, not a proof for all fields",
+        "three_root_jacobi_sums": {
+          "1": [
+            5,
+            -6
+          ],
+          "2": [
+            5,
+            -6
+          ],
+          "3": [
+            -1,
+            0
+          ],
+          "4": [
+            -1,
+            6
+          ],
+          "5": [
+            -1,
+            6
+          ]
+        }
+      }
+    }
+  ],
+  "coefficient_conductor_groups": [
+    {
+      "inverse_length": 32,
+      "plain_length": 8,
+      "profile_kind": "indicator annuli, coefficient arithmetic only",
+      "prime_ideal_count": 15,
+      "inverse_ideal_count": 9,
+      "plain_ideal_count": 2,
+      "inverse_prime_ideal_count": 6,
+      "plain_prime_ideal_count": 2,
+      "nonzero_product_coefficient_count": 14,
+      "coefficient_square_sum": 14,
+      "masked_group_coefficient_square_sum": 14,
+      "maximum_masked_group_size": 1,
+      "exact_prime_product_coefficients_minus_one": 12,
+      "normalized_prime_product_square_mass": [
+        12,
+        256
+      ]
+    },
+    {
+      "inverse_length": 128,
+      "plain_length": 16,
+      "profile_kind": "indicator annuli, coefficient arithmetic only",
+      "prime_ideal_count": 52,
+      "inverse_ideal_count": 39,
+      "plain_ideal_count": 5,
+      "inverse_prime_ideal_count": 22,
+      "plain_prime_ideal_count": 5,
+      "nonzero_product_coefficient_count": 163,
+      "coefficient_square_sum": 229,
+      "masked_group_coefficient_square_sum": 229,
+      "maximum_masked_group_size": 1,
+      "exact_prime_product_coefficients_minus_one": 110,
+      "normalized_prime_product_square_mass": [
+        110,
+        2048
+      ]
+    },
+    {
+      "inverse_length": 256,
+      "plain_length": 32,
+      "profile_kind": "indicator annuli, coefficient arithmetic only",
+      "prime_ideal_count": 93,
+      "inverse_ideal_count": 80,
+      "plain_ideal_count": 9,
+      "inverse_prime_ideal_count": 41,
+      "plain_prime_ideal_count": 6,
+      "nonzero_product_coefficient_count": 614,
+      "coefficient_square_sum": 770,
+      "masked_group_coefficient_square_sum": 770,
+      "maximum_masked_group_size": 1,
+      "exact_prime_product_coefficients_minus_one": 246,
+      "normalized_prime_product_square_mass": [
+        246,
+        8192
+      ]
+    },
+    {
+      "inverse_length": 512,
+      "plain_length": 64,
+      "profile_kind": "indicator annuli, coefficient arithmetic only",
+      "prime_ideal_count": 169,
+      "inverse_ideal_count": 150,
+      "plain_ideal_count": 19,
+      "inverse_prime_ideal_count": 76,
+      "plain_prime_ideal_count": 15,
+      "nonzero_product_coefficient_count": 2453,
+      "coefficient_square_sum": 2885,
+      "masked_group_coefficient_square_sum": 2885,
+      "maximum_masked_group_size": 1,
+      "exact_prime_product_coefficients_minus_one": 1140,
+      "normalized_prime_product_square_mass": [
+        1140,
+        32768
+      ]
+    },
+    {
+      "inverse_length": 1024,
+      "plain_length": 64,
+      "profile_kind": "indicator annuli, coefficient arithmetic only",
+      "prime_ideal_count": 308,
+      "inverse_ideal_count": 312,
+      "plain_ideal_count": 19,
+      "inverse_prime_ideal_count": 139,
+      "plain_prime_ideal_count": 15,
+      "nonzero_product_coefficient_count": 5085,
+      "coefficient_square_sum": 5988,
+      "masked_group_coefficient_square_sum": 5988,
+      "maximum_masked_group_size": 1,
+      "exact_prime_product_coefficients_minus_one": 2085,
+      "normalized_prime_product_square_mass": [
+        2085,
+        65536
+      ]
+    }
+  ]
+}

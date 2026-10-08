@@ -7,14 +7,15 @@ noncomputable section
 open scoped Classical BigOperators ContDiff
 open Filter
 namespace SevenEighths.ProbeFinalAssembly
+open AsymmetricGeometry
 open HeckeFamily ProbePhysical ProbeHighRowFamily Parameters PrincipalSignalComparison
 open HeckeInverseAmplification HeckeDetectorPhysicalSelection HeckeDetectorFiberPartition
 open ProbeMellinBoundary
 
 theorem fixed_perturbed_high_bound
-    (hβ : (7/8-21/500000:ℝ)<HeckeZeroSupremum.beta)
+    (hβ : (boundary:ℝ)<HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta≤7/8)
-    (D : PerturbedHighData (HeckeZeroSupremum.beta-(7/8-21/500000)))
+    (D : PerturbedHighData (HeckeZeroSupremum.beta-(boundary)))
     (F : PerturbedSourceData D)
     (counts : CountParameters F.modulus ⊤ D.small) (τ : ℝ)
     (hτ : 0<τ) (hτd : τ<(1/200:ℝ)/2) (hτcost : 4*τ<(1/200:ℝ)*D.cost)
@@ -22,12 +23,14 @@ theorem fixed_perturbed_high_bound
     ∃C : ℝ,0<C ∧ ∀η : Character,∃Ct : ℝ,0<Ct ∧ ∀ᶠZ : ℝ in atTop,
       ∀C0 : ℝ,0≤C0 → PerturbedSourceMomentBound F counts η Z τ (C0*Z^D.small) (Z^(2*τ)) →
       ‖F.probe η Z-HeckeSignal.signal (η.excludePrimes F.S F.exclusions.prime)
-        (sourceCorrection η F.S) (-11/16) Z‖≤
-        (Ct+C*C0*(η.modulus.absNorm:ℝ)^(2*D.eps))*Z^(HeckeZeroSupremum.beta-11/16-D.sigma) := by
+        (sourceCorrection η F.S) signalOffset Z‖≤
+        (Ct+C*C0*(η.modulus.absNorm:ℝ)^(2*D.eps))*Z^(HeckeZeroSupremum.beta+signalOffset-D.sigma) := by
   let : NeZero (∏P∈F.S,P) := ⟨fixedPrimeProduct_ne_zero F.S F.exclusions.prime⟩
   have ht := D.small_pos
   have ht1 := D.small_cap
-  have hconductor : (13/16:ℝ)+3*perturbedSlotLengthShift/2+
+  have hβfloor : (51/100:ℝ)≤HeckeZeroSupremum.beta :=
+    (by norm_num [boundary] : (51/100:ℝ)≤boundary).trans hβ.le
+  have hconductor : (rowBase:ℝ)+3*perturbedSlotLengthShift/2+
       D.small+2*D.small≤7/8 := by linarith [D.row_threshold]
   let slotMesh := (1+6*perturbedSlotLengthShift)*D.small
   have hslotMesh : 0≤slotMesh := by
@@ -57,8 +60,7 @@ theorem fixed_perturbed_high_bound
     (by linarith) hβ hβhi
     D.sigma D.sigma_pos (by linarith [D.geometric_budget])
     (by linarith [D.principal_budget])
-    (by simpa only [show (7/8-21/500000:ℝ)=437479/500000 by norm_num]
-      using D.window_budget)
+    D.window_budget
     (by linarith [D.high_saving, D.small_cap])
     (by linarith [D.floor_budget]) D.high_saving counts
   refine ⟨C,hC,?_⟩
@@ -66,7 +68,7 @@ theorem fixed_perturbed_high_bound
   obtain ⟨Ct,hCt,hb⟩ := hbound η
   refine ⟨Ct,hCt,?_⟩
   filter_upwards [hb,sourceDyad_geometry_eventually (1/200) (7/8) D.small
-    (13/16+3*perturbedSlotLengthShift/2+D.small)
+    (rowBase+3*perturbedSlotLengthShift/2+D.small)
     (by norm_num) (by norm_num) ht hconductor,
     HeckeDyadic.constant_absorbed_eventually (3*(n:ℝ)+1) τ hτ,
     eventually_gt_atTop (1:ℝ)] with Z hb hgeo hnheight hZ
@@ -76,11 +78,11 @@ theorem fixed_perturbed_high_bound
   intro k hk i hi j hj
   dsimp only
   intro hne t htheight
-  let rows := supportedNonfloorRows F.S F.maximal (rowBand (Z^(1/100:ℝ)) (Z^((13/16:ℝ)+3*perturbedSlotLengthShift/2+D.small))) grid
+  let rows := supportedNonfloorRows F.S F.maximal (rowBand (Z^(1/100:ℝ)) (Z^((rowBase:ℝ)+3*perturbedSlotLengthShift/2+D.small))) grid
   let rows' := cubeBinRows (rows∩dyadicRows 1 k) idx grid i j
   have hsub : rows'⊆rows∩dyadicRows 1 k := Finset.filter_subset _ _
   have hsubr : rows'⊆rows := hsub.trans Finset.inter_subset_left
-  have hrows : ∀u∈rows,u.val≠1 ∧ Z^(1/100:ℝ)≤rowNorm u ∧ rowNorm u≤Z^(13/16+3*perturbedSlotLengthShift/2+D.small) := by
+  have hrows : ∀u∈rows,u.val≠1 ∧ Z^(1/100:ℝ)≤rowNorm u ∧ rowNorm u≤Z^(rowBase+3*perturbedSlotLengthShift/2+D.small) := by
     intro u hu
     have hh := mem_rowBand.mp ((mem_supportedNonfloorRows F.S F.maximal _ grid u).mp hu).1
     exact ⟨hh.1,hh.2.1,hh.2.2.le⟩
@@ -95,7 +97,7 @@ theorem fixed_perturbed_high_bound
     have hdet := detectorMaximum_le_beta
       (sourceDetectorFamily F.S F.exclusions.prime η u
         (rayCubeFamily F.modulus ⊤ le_top u))
-      (3*idx u*Z^τ) (by linarith [hβ])
+      (3*idx u*Z^τ) hβfloor
     have hlabel := (hbins u).2.2.1
     simpa only [huj] using hlabel.trans (hdet.trans hβhi)
   have hrow' : ∀v∈rows',v.val≠1 ∧ Z^(1/100:ℝ)≤rowNorm v ∧
