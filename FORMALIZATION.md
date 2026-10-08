@@ -5,10 +5,13 @@ proved in Lean.
 
 `BoundsReal.lean` proves the changed geometry, signal exponent, low margin,
 low scale conditions, reflected-row loss inequality, and Euler-region
-numerical margins over real numbers. `EndpointCertificate.lean` proves the
+numerical margins over real numbers. `ReflectedExponent.lean` generalizes
+the source's reflected-exponent calculation to the new slot length and proves
+the extra positive-part loss. `EndpointCertificate.lean` proves the
 source endpoint polynomial identity, its lower bound, its equality with the
 high-bin exponent at the original geometry, and the perturbed high-endpoint
-margin `2611/110160000`. Both files compile without `sorry` or new axioms.
+margin `2611/110160000`. All three files compile without `sorry` or new
+axioms.
 
 The remaining proof requires the actual analytic estimates for the changed
 physical probe. In particular, its reflected-row and additive Gram bounds
@@ -24,6 +27,8 @@ fixed exponent `3/16`. The new probe has total length `1/6 + 3/100000`.
 Its caller in `LowNormalized.lean` also fixes the original physical scales
 `17/48` and `23/48`. The existing theorem cannot be applied to the new
 probe, even though `BoundsReal.lean` proves the required numerical margins.
+The new reflected-exponent lemma is standalone arithmetic. It has not been
+connected to the upstream row-energy theorem or the probe norm estimate.
 
 The [existing final assembly](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssembly.lean)
 starts with the assumption `7/8 < β*`. Its

@@ -5,13 +5,15 @@
 [seven-eighths manuscript](https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex).
 
 Run `uv run verify_bounds.py` to check the rational margins. The Mathlib files
-`BoundsReal.lean` and `EndpointCertificate.lean` prove the geometry and
-endpoint inequalities for real parameters. Both compile with Lean 4.27.0 and
+`BoundsReal.lean`, `EndpointCertificate.lean`, and `ReflectedExponent.lean`
+prove the geometry, endpoint, and reflected-exponent inequalities for real
+parameters. They compile with Lean 4.27.0 and
 Mathlib in `ghcr.io/ldct/mathlib4:v4.27.0`:
 
 ```sh
 docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/BoundsReal.lean'
 docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/EndpointCertificate.lean'
+docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/ReflectedExponent.lean'
 ```
 
 Run
