@@ -26,6 +26,18 @@ UPSTREAM_TARGETS = {
     "OAILowMemberGeometry": "OAI.NumberTheory.DirichletL.Reflection.LowMemberGeometry",
     "OAILowCaps": "OAI.NumberTheory.DirichletL.Reflection.LowCaps",
     "OAILowFixedMember": "OAI.NumberTheory.DirichletL.Reflection.LowFixedMember",
+    "OAILowDyads": "OAI.NumberTheory.DirichletL.Reflection.LowDyads",
+    "OAILowChoiceEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowChoiceEnergy",
+    "OAILowInactiveEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowInactiveEnergy",
+    "OAILowFrozenEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowFrozenEnergy",
+    "OAILowCompletedFiber": "OAI.NumberTheory.DirichletL.Reflection.LowCompletedFiber",
+    "OAILowCompletedRows": "OAI.NumberTheory.DirichletL.Reflection.LowCompletedRows",
+    "OAILowOriginalEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowOriginalEnergy",
+    "OAILowSelectedBound": "OAI.NumberTheory.DirichletL.Detector.LowSelectedBound",
+    "OAILowNominalEnergy": "OAI.NumberTheory.DirichletL.Detector.LowNominalEnergy",
+    "OAILowInverseNormalize": "OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound",
+    "OAILowPhysicalInverseBound": "OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound",
+    "OAILowSourceScales": "OAI.NumberTheory.DirichletL.Detector.LowSourceScales",
 }
 
 

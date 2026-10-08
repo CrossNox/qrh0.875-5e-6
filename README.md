@@ -23,10 +23,12 @@ docker run --rm --cpuset-cpus 0-3 --cpus 4 --memory 8g \
 ```
 
 The `OAILow*.lean` files connect the perturbed reflected exponent through
-the upstream OAI fixed-member energy theorem. Check them with
-`uv run verify_oai.py OAILowFixedMember` from this directory. This requires the
-adjacent `rh-upstream` checkout and Docker. The physical low-probe bound and
-zero-free theorem remain unproved.
+completed-row energy and physical inverse-mass normalization. They also
+prove the changed source Gram-scale geometry. Check them with
+`uv run verify_oai.py OAILowPhysicalInverseBound` and
+`uv run verify_oai.py OAILowSourceScales --only` from this directory. This
+requires the adjacent `rh-upstream` checkout and Docker. The full physical
+low-probe bound and zero-free theorem remain unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build

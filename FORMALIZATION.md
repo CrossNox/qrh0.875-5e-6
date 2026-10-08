@@ -39,14 +39,17 @@ Its caller in `LowNormalized.lean` also fixes the original physical scales
 probe, even though `BoundsReal.lean` proves the required numerical margins.
 The `OAILow*.lean` files compile against upstream OAI with Lean 4.34.1.
 They carry the changed parent exponent and surviving slot length through
-the reflected exponent, normalized sector energy, retained dyads, full-row
-tail, global sectors, tuple members, and fixed-member geometry. The
-perturbation parameter is restricted to `0 ≤ t ≤ 1/6` at the fixed-member
-layer. `OAILowCaps.lean` proves the required physical scale caps. Run
-`uv run verify_oai.py OAILowFixedMember` to rebuild the imports and check
-the source-connected chain. This does not yet bound the physical probe.
-The dyad selection and remaining row-energy layers still use the original
-scales.
+the reflected row energy, physical dyads, slot choices, completed rows,
+and detector selected-row energy. `OAILowNominalEnergy.lean` converts the
+selected-row theorem to nominal slot lengths. `OAILowInverseNormalize.lean`
+and `OAILowPhysicalInverseBound.lean` prove that the changed physical scale
+`Z^(5/6-t)/L²` cancels the matching row-energy exponent after taking square
+roots. `OAILowSourceScales.lean` proves the changed Gram-scale geometry for
+`0 ≤ t < 1/24`. Run `uv run verify_oai.py OAILowPhysicalInverseBound`
+and `uv run verify_oai.py OAILowSourceScales --only` to check these ends of
+the source-connected chain. The central tuple, Gaussian dyad sum, remote
+mass, and common low bound still need to be generalized. This does not yet
+bound the full physical probe.
 The upstream `Reflection/LowOriginalEnergy.lean` assumes both `d ≤ 1/6`
 and `ell0 ≤ 1/6-d+η`, and bounds parent norms using `5/6-2*d`. The new
 probe needs `d ≤ 1/6+3/100000`, surviving length
