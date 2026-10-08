@@ -1,4 +1,4 @@
-# A perturbation of the seven-eighths zero-free half-plane
+# The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane $\Re(s)>7/8-5\times10^{-6}$
 
 `paper.tex` proves nonvanishing for `Re(s) > 174999/200000 = 0.874995`
 for finite-order Hecke L-functions over `Q(sqrt(-3))` and Dirichlet
