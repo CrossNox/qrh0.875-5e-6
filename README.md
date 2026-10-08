@@ -29,11 +29,11 @@ adjacent `rh-upstream` checkout and Docker. The `OAIHigh*.lean` files prove
 the local Euler bounds and principal and global Euler product extensions at
 the new boundary. They also prove source-multiplier analyticity, finite
 complex-weight bounds, the `w` and `z` source contour shifts, and the
-ordered principal double shift, uniform contour tails, and principal
-triple-contour transport. Check them with
-`uv run verify_oai.py OAIHighAudit`. The
-row-dependent high-side contour estimates and zero-free theorem remain
-unproved.
+ordered principal double shift, uniform contour tails, principal
+triple-contour transport, selected high-row local bounds, and row-dependent
+tuple, dyad, and Mellin-integral bounds. Check them with
+`uv run verify_oai.py OAIHighAudit`. The central-bin detector estimates
+and zero-free theorem remain unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build

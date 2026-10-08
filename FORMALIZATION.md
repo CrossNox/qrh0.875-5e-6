@@ -66,13 +66,28 @@ contour limits.
 from the initial lines to the enlarged region. `OAIHighInitialPlacement.lean`
 combines them with the ordered residue shift at any
 `174999/200000 < a ≤ 3` above the Hecke zero supremum.
+`OAIHighSelectedTerms.lean` through `OAIHighSelectedLocal.lean` extend the
+actual row-dependent selected Euler factors on the first Euler region.
+`OAIHighSelectedSlotSums.lean` proves the weighted selected-prime slot
+estimate and `OAIHighWGrowth.lean` proves calibrated physical-row growth
+on the left `w` line.
+`OAIHighNonprincipalShift.lean` carries the nonprincipal `w` contour move.
+`OAIHighTupleSums.lean` through `OAIHighDyadIntegral.lean` bound the actual
+selected tuple, physical row dyad, and its Mellin integral on the enlarged
+boundary. `OAIHighFixedIntegral.lean` through `OAIHighPhysicalDyad.lean`
+prove the row integral exists and identify finite physical rows with the
+contour integral there. `OAIHighTailScales.lean`, `OAIHighSmallDyad.lean`,
+`OAIHighSmallTail.lean`, and `OAIHighLargeDyad.lean` carry the changed
+physical lengths through the small-row bound and the large-row dyad bound.
+`OAIHighLargeTail.lean` and `OAIHighLargeSaving.lean` sum the outer-row
+dyads with arbitrary power saving at the changed high-row threshold.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires the row-dependent high-side contours at the
-new boundary and their use in the detector. The detector and high-row assembly
-must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
+The remaining proof requires the full row-dependent high-side contours,
+central-bin estimates, and their use in the detector. The detector and
+high-row assembly must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
 
 The upstream low-side declaration that was strengthened is
