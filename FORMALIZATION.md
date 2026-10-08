@@ -86,14 +86,19 @@ changed row threshold, physical lengths, and prime-tuple count through
 the central rectangle truncation error.
 `OAIHighCentralExponent.lean` proves the exact perturbation of the
 balanced central-bin exponent. For bins with `δ ≤ 3/4`, its saving budget
-loses at most `11t/4 + 1/200000` before the usual detector losses.
+includes the changed row threshold, physical scales, and slot length.
+`OAIHighCentralSlotExponent.lean` through `OAIHighCentralCollected.lean`
+carry this bound through the actual amplitude batches, source row count,
+finite central integral, normalizer, and dyadic collection. The resulting
+small-row bound assumes the stated `SourceMomentsAt` fourth-moment input
+at the changed slot lengths, zero moment excess, and detector heights.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires the full row-dependent high-side contours,
-central-bin estimates, and their use in the detector. The detector and
-high-row assembly must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
+The remaining proof requires the fourth-moment input for the changed
+parameters and its use in the detector. The high-row and final detector
+assembly must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
 
 The upstream low-side declaration that was strengthened is

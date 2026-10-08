@@ -32,14 +32,15 @@ complex-weight bounds, the `w` and `z` source contour shifts, and the
 ordered principal double shift, uniform contour tails, principal
 triple-contour transport, selected high-row local bounds, and row-dependent
 tuple, dyad, and Mellin-integral bounds. Check them with
-`uv run verify_oai.py OAIHighAudit`. The central-bin detector estimates
-and zero-free theorem remain unproved.
+`uv run verify_oai.py OAIHighAudit`. The conditional central-bin dyadic
+bound is also formalized. The changed fourth-moment input, final detector
+assembly, and zero-free theorem remain unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build
 the PDF and resolve references.
 
 These checks verify the stated partial results and the document build.
-They do not certify the high-side contour arguments or the proposed stronger
-theorem. See [FORMALIZATION.md](FORMALIZATION.md) for the remaining proof
+They do not certify the full high-side detector argument or the proposed
+stronger theorem. See [FORMALIZATION.md](FORMALIZATION.md) for the remaining proof
 obligations.

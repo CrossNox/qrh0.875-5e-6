@@ -49,6 +49,16 @@ import OAIHighLargeSaving
 import OAIHighCentralCrude
 import OAIHighCentralFiniteError
 import OAIHighCentralExponent
+import OAIHighCentralSlotExponent
+import OAIHighCentralClassArithmetic
+import OAIHighCentralBatch
+import OAIHighCentralAmplitudeBatch
+import OAIHighCentralClassMoments
+import OAIHighCentralArithmetic
+import OAIHighCentralIntegral
+import OAIHighCentralNormalizer
+import OAIHighCentralNormalized
+import OAIHighCentralCollected
 
 #print axioms PerturbedZeroFreeBound.exists_perturbed_principal_correction
 #print axioms OAI.SevenEighths.ProbeEuler.bound_ramified_closed_on_perturbed_region
@@ -82,3 +92,13 @@ import OAIHighCentralExponent
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.large_physical_tail_arbitrary_saving_with_perturbed_lengths
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.finite_rectangle_arbitrary_saving_with_perturbed_lengths
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.balanced_mixed_saving_with_perturbed_lengths
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_slot_product
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_class_cube_arithmetic
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_source_amplitude_batches
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_nonfloor_class_from_raw_moments
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.balanced_adaptive_saving_with_perturbed_lengths
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_nonfloor_cube_arithmetic
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_nonfloor_cube_norm
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_ray_normalizer_inverse
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_normalized_nonfloor_cube
+#print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_nonfloor_rows_saving

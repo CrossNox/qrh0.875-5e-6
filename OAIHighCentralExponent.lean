@@ -1,5 +1,6 @@
 import OAI.NumberTheory.DirichletL.Detector.CentralMixedMargins
 import OAI.NumberTheory.DirichletL.Hecke.DetectorRowCountEndpoint
+import OAI.NumberTheory.DirichletL.PrimeRows.NonfloorExponent
 
 namespace OAI
 
@@ -82,6 +83,61 @@ lemma balanced_mixed_saving_with_perturbed_lengths
   rw [hid]
   dsimp [R] at hm hc ⊢
   linarith
+
+lemma perturbed_class_exponent_identity (N : ℕ)
+    (a v d R q e eps loss mesh overhead t : ℝ) :
+    ((25 / 48) * a - 181 / 300 + (105 / 8) * e +
+      t * (a / 2 + 3 * e - 2 / 25)) +
+      (overhead + d * R + v * (a - 1 / 2 + 12 * e + eps * (N + 8) - 17 / 50) +
+        loss + (1 / 6 + t) * (-(4 / 25 : ℝ) + q + mesh)) =
+    mixedSourceExponentWithPerturbedLengths t a v d R q +
+      ProbeCentralExponent.realLoss N v e eps loss mesh + overhead +
+        t * (3 * e + mesh) := by
+  unfold mixedSourceExponentWithPerturbedLengths ProbeCentralExponent.realLoss
+  ring
+
+lemma balanced_adaptive_saving_with_perturbed_lengths (N : ℕ)
+    (a q ε εm slotMesh ν ζ μ v d e eps loss mesh overhead t saving : ℝ)
+    (ha : 1 / 2 < a) (ha' : a ≤ 7 / 8)
+    (hq : 0 ≤ q) (hq' : q ≤ (2 * a - 1) / 2)
+    (hε : 0 ≤ ε) (hεm : 0 ≤ εm)
+    (hslot : 0 ≤ slotMesh) (hν : 0 ≤ ν)
+    (hcount : 159 * ε + εm + slotMesh + 7 * ν ≤ 1 / 32)
+    (hζ : 0 ≤ ζ) (hv : v ≤ 13 / 16 + 3 * t / 2 + ζ)
+    (hv1 : v ≤ 1)
+    (hμ : 0 ≤ μ) (hdv : d - v ≤ μ) (ht : 0 ≤ t)
+    (he : 0 ≤ e) (heps : 0 ≤ eps)
+    (hbudget : (13 / 16) * (159 * ε + εm + slotMesh + 7 * ν) +
+      2 * ζ + (3 / 2) * μ +
+      (26 * e + (N + 8) * eps + loss + mesh / 6) + overhead + saving +
+      t * (11 / 4 + 3 * (159 * ε + εm + slotMesh + 7 * ν) / 2 + 3 * e + mesh) +
+      1 / 200000 ≤ 49 / 440640) :
+    mixedSourceExponentWithPerturbedLengths t a v d
+      (adaptiveRowExponent (2 * a - 1) q 0 ε εm slotMesh ν) q +
+      ProbeCentralExponent.realLoss N v e eps loss mesh + overhead +
+        t * (3 * e + mesh) ≤ 3 / 16 - 1 / 200000 - saving := by
+  have hδ : 0 < 2 * a - 1 := by linarith
+  have hδ' : 2 * a - 1 ≤ 3 / 4 := by linarith
+  have hx : 0 ≤ q / (2 * a - 1) := div_nonneg hq hδ.le
+  have hx' : q / (2 * a - 1) ≤ 1 / 2 :=
+    (div_le_iff₀ hδ).mpr (by linarith)
+  have hl : 0 ≤ 159 * ε + εm + slotMesh + 7 * ν := by positivity
+  have haeq : (1 + (2 * a - 1)) / 2 = a := by ring
+  have hqeq : (2 * a - 1) * (q / (2 * a - 1)) = q :=
+    mul_div_cancel₀ q hδ.ne'
+  have hr := ProbeCentralExponent.realLoss_bound N v e eps loss mesh
+    hv1 he heps
+  have hb := balanced_mixed_saving_with_perturbed_lengths
+    (2 * a - 1) (q / (2 * a - 1))
+    (159 * ε + εm + slotMesh + 7 * ν) ζ μ v d t
+    (ProbeCentralExponent.realLoss N v e eps loss mesh + overhead +
+      t * (3 * e + mesh)) saving
+    hδ.le hδ' hx hx' hl hcount hζ hv hμ hdv ht (by linarith)
+  rw [haeq, hqeq] at hb
+  simp only [adaptiveRowExponent,
+    ite_eq_left (show 2 * a - 1 ≤ 5 / 6 by linarith), zero_div, add_zero]
+  simp only [add_assoc] at hb ⊢
+  exact hb
 
 end SevenEighths.ProbeHighRowFamily
 
