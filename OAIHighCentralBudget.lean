@@ -12,6 +12,7 @@ theorem exists_perturbed_central_budget (gap : ℝ) (hgap : 0 < gap) :
       small ≤ 1 / 100000000 ∧
       13 / 16 + 3 * perturbedSlotLengthShift / 2 + 3 * small ≤ 7 / 8 ∧
       ∀ N : ℕ, ∃ allowance : ℝ, 0 < allowance ∧
+        allowance ≤ small / ((N : ℝ) + 2000) ∧
         ∀ ε e eps : ℝ,
           0 ≤ ε → ε ≤ allowance →
           0 ≤ e → e ≤ allowance →
@@ -44,7 +45,7 @@ theorem exists_perturbed_central_budget (gap : ℝ) (hgap : 0 < gap) :
   have hallowance_product : allowance * ((N : ℝ) + 2000) = small := by
     dsimp [allowance]
     field_simp
-  refine ⟨allowance, hallowance, ?_⟩
+  refine ⟨allowance, hallowance, le_refl _, ?_⟩
   intro ε e eps hε hεa he hea heps hepsa
   have hεsmall : 2000 * ε ≤ small := by linarith
   have hesmall : 2000 * e ≤ small := by linarith

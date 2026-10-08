@@ -96,6 +96,9 @@ at the changed slot lengths, zero moment excess, and detector heights.
 positive total mass and the physical width bounds. `OAIHighCentralBudget.lean`
 chooses a small parameter below any positive zero gap and proves that the
 perturbed detector budget has room for the fixed length increase.
+`OAIHighData.lean` packages positive slot lengths of total
+`1/6+3/100000`, detector scales, the new row threshold, and the central
+budget for every positive zero gap. It proves that such data exist.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
