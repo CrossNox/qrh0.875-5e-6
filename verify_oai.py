@@ -76,6 +76,8 @@ UPSTREAM_TARGETS = {
     "OAIHighCentralNormalizer": "OAI.NumberTheory.DirichletL.PrimeRows.CubeNormalizer",
     "OAIHighCentralNormalized": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorNormalized",
     "OAIHighCentralCollected": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorCollected",
+    "OAIHighSlotLengths": "OAI.NumberTheory.DirichletL.ParametersSlotLengths",
+    "OAIHighCentralBudget": "OAI.NumberTheory.DirichletL.ParametersCentralBudget",
     "OAIHighAudit": "OAI.NumberTheory.DirichletL.Detector.CentralMixedMargins",
     "OAILowReflected": "OAI.NumberTheory.DirichletL.Detector.LowReflectedLength",
     "OAILowExponent": "OAI.NumberTheory.DirichletL.Reflection.LowExponent",

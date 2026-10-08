@@ -92,6 +92,10 @@ carry this bound through the actual amplitude batches, source row count,
 finite central integral, normalizer, and dyadic collection. The resulting
 small-row bound assumes the stated `SourceMomentsAt` fourth-moment input
 at the changed slot lengths, zero moment excess, and detector heights.
+`OAIHighSlotLengths.lean` constructs distinct positive slots with any
+positive total mass and the physical width bounds. `OAIHighCentralBudget.lean`
+chooses a small parameter below any positive zero gap and proves that the
+perturbed detector budget has room for the fixed length increase.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
