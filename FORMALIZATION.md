@@ -51,12 +51,18 @@ and `OAIHighSourceWZ.lean` prove the corresponding `w` and `z` analyticity.
 arbitrary complex weights on the enlarged region. `OAIHighSourceContours.lean`
 uses this to prove the original source's `w` and `z` boundary controls and
 residue contour shifts for `Re(s) ≥ 174999/200000`.
+`OAIHighArithmeticLines.lean` carries the complex multiplier bound into
+the joint contour-line amplitude, joint integrability, Fubini exchange,
+and slice estimates. `OAIHighOrderedContours.lean` proves the ordered
+principal `w` and `z` double shift at fixed height and almost everywhere
+on the new boundary.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
 The remaining proof requires the principal `x` contour transport and
-row-dependent high-side contours at the new boundary. The detector and high-row assembly
+uniform high-slice and residue bounds, followed by row-dependent
+high-side contours at the new boundary. The detector and high-row assembly
 must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
 

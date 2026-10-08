@@ -10,6 +10,8 @@ import OAIHighFiniteProductWZ
 import OAIHighSourceWZ
 import OAIHighComplexSlotBounds
 import OAIHighSourceContours
+import OAIHighArithmeticLines
+import OAIHighOrderedContours
 
 #print axioms PerturbedZeroFreeBound.exists_perturbed_principal_correction
 #print axioms OAI.SevenEighths.ProbeEuler.bound_ramified_closed_on_perturbed_region
@@ -25,3 +27,4 @@ import OAIHighSourceContours
 #print axioms OAI.SevenEighths.ProbeFiniteProductBounds.source_multiplier_differentiable_z_on_perturbed_boundary
 #print axioms OAI.SevenEighths.ProbeFiniteProductBounds.bound_combined_slots_with_complex_weight_on_perturbed_boundary
 #print axioms OAI.SevenEighths.ProbeFiniteProductBounds.source_residue_z_shift_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePrincipalContours.source_ordered_ae_on_perturbed_region

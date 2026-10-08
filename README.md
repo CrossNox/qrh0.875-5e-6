@@ -28,7 +28,8 @@ its axioms with `uv run verify_oai.py OAILowAudit`. This requires the
 adjacent `rh-upstream` checkout and Docker. The `OAIHigh*.lean` files prove
 the local Euler bounds and principal and global Euler product extensions at
 the new boundary. They also prove source-multiplier analyticity, finite
-complex-weight bounds, and the `w` and `z` source contour shifts. Check them with
+complex-weight bounds, the `w` and `z` source contour shifts, and the
+ordered principal double shift. Check them with
 `uv run verify_oai.py OAIHighAudit`. The
 row-dependent high-side contour estimates and zero-free theorem remain
 unproved.

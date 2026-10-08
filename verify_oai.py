@@ -27,6 +27,8 @@ UPSTREAM_TARGETS = {
     "OAIHighSourceWZ": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
     "OAIHighComplexSlotBounds": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
     "OAIHighSourceContours": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
+    "OAIHighArithmeticLines": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
+    "OAIHighOrderedContours": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
     "OAIHighAudit": "OAI.NumberTheory.DirichletL.ParametersFixedSource",
     "OAILowReflected": "OAI.NumberTheory.DirichletL.Detector.LowReflectedLength",
     "OAILowExponent": "OAI.NumberTheory.DirichletL.Reflection.LowExponent",
