@@ -26,8 +26,8 @@ The `OAILow*.lean` files prove the normalized compensated low estimate for
 the perturbed physical probe against upstream OAI. Check the full chain and
 its axioms with `uv run verify_oai.py OAILowAudit`. This requires the
 adjacent `rh-upstream` checkout and Docker. The `OAIHigh*.lean` files prove
-the unramified and ramified local Euler bounds and principal Euler product
-extension at the new boundary, including local analyticity. Check them with
+the local Euler bounds and principal and global Euler product extensions at
+the new boundary, including local analyticity. Check them with
 `uv run verify_oai.py OAIHighAudit`. The
 row-dependent high-side contour estimates and zero-free theorem remain
 unproved.

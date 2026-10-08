@@ -1,7 +1,11 @@
 import OAIHighPrincipalProduct
 import OAIHighRamifiedBound
 import OAIHighHolomorphic
+import OAIHighGlobalCorrection
 
 #print axioms PerturbedZeroFreeBound.exists_perturbed_principal_correction
 #print axioms OAI.SevenEighths.ProbeEuler.bound_ramified_closed_on_perturbed_region
 #print axioms OAI.SevenEighths.ProbeEuler.ramified_closed_analytic_z_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePhysical.exists_perturbed_global_correction
+#print axioms OAI.SevenEighths.ProbePhysical.bound_global_closed_correction_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePhysical.global_closed_correction_analytic_z_on_perturbed_region

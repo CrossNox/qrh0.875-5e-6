@@ -34,11 +34,17 @@ changed lower bound through the marked-term, finite-sum, and closed-factor
 estimates. `OAIHighHolomorphic.lean` proves that the unramified and
 ramified local factors are analytic in each contour variable on the
 corresponding enlarged region.
+`OAIHighGlobalRegion.lean` proves a summable `240 Q^(-5/3)` defect bound
+on the larger three-variable region needed for the contour shifts.
+`OAIHighGlobalCorrection.lean` uses it to give the actual global Euler
+correction a finite-prime cutoff, a uniform `1/2` defect bound, and
+analyticity in each contour variable there. Its stronger tail condition
+implies the original source tail condition.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires row-dependent Euler correction bounds and
+The remaining proof requires the compensated slot-multiplier bounds and
 contour transport at the new boundary. The detector and high-row assembly
 must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
