@@ -10,7 +10,7 @@
 \newcommand{\NF}{\operatorname{N}}
 
 \title{The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane
-$\Ree(s)>7/8-5\times10^{-6}$}
+$\Ree(s)>7/8-42\times10^{-6}$}
 \author{}
 \date{8 October 2026}
 
@@ -20,10 +20,11 @@ $\Ree(s)>7/8-5\times10^{-6}$}
 \begin{abstract}
 We examine the numerical endpoint in the compensated-probe proof of the
 seven-eighths zero-free half-plane in \cite{OAI}. The reflected-row estimate
-has room to increase the total prime length, while the high-side endpoint
-certificate has a fixed positive margin. We extend the source moment
-estimates to the perturbed geometry and obtain the zero-free boundary
-$174999/200000=0.874995$. The accompanying Lean proof derives the moment
+has room to increase the total prime length. An exact polynomial
+certificate preserves the dependence between the high-side exponent and
+its geometric perturbation. We extend the source moment estimates to the
+perturbed geometry and obtain the zero-free boundary
+$437479/500000=0.874958$. The accompanying Lean proof derives the moment
 input and the continuation conclusion from the upstream formalization.
 \end{abstract}
 
@@ -46,8 +47,8 @@ and analytic domains.
 Every finite-order Hecke $L$-function over $F$ and every Dirichlet
 $L$-function, including the Riemann zeta function, has no zero in
 \[
-    \Ree s> B:=\frac{174999}{200000}
-                =\frac78-\frac1{200000}.
+    \Ree s> B:=\frac{437479}{500000}
+                =\frac78-\frac{21}{500000}.
 \]
 The usual pole at $s=1$ for a principal character is allowed.
 \end{theorem}
@@ -55,7 +56,7 @@ The usual pole at $s=1$ for a principal character is allowed.
 Put
 \begin{equation}\label{eq:geometry}
 \begin{gathered}
- t=\frac3{100000},\qquad
+ t=\frac{169}{1000000},\qquad
  \ell=\frac16+t,\qquad b=\frac18,\\
  l_x=\frac{17}{48}-\frac t2,\qquad
  l_y=\frac{23}{48}-\frac t2,\qquad
@@ -134,9 +135,9 @@ This proves the normalized estimate.
 
 The signal at the proposed boundary is
 \begin{equation}\label{eq:low-gap}
- C(B)=\frac3{16}-\frac1{200000},\qquad
+ C(B)=\frac3{16}-\frac{21}{500000},\qquad
  C(B)-\left(\frac3{16}-\frac t4\right)
- =\frac1{400000}>0.
+ =\frac1{4000000}>0.
 \end{equation}
 
 \section{The perturbed source moments}\label{sec:moments}
@@ -253,10 +254,10 @@ $H_p-1$ in the original second
 region by $O(Q^{-363/200})$ for $p\nmid u$ and $O(Q^{-33/40})$
 for $p\mid u$, where $Q=\NF p$. Every local exponent involving
 $\Ree s$ has coefficient of absolute value at most six. Moving its
-lower boundary left by $1/200000$ therefore gives the respective bounds
+lower boundary left by $21/500000$ therefore gives the respective bounds
 \[
- O(Q^{-363/200+3/100000})\quad\text{and}\quad
- O(Q^{-33/40+3/100000}).
+ O(Q^{-363/200+63/250000})\quad\text{and}\quad
+ O(Q^{-33/40+63/250000}).
 \]
 The first exponent is less than $-1$. The unramified product converges
 normally, while the ramified product has the same $O_\varepsilon((\NF
@@ -312,33 +313,64 @@ At row length $d=h$, the general high exponent relative to $C(B)$ is
        -a l_y-\frac\ell2+q\ell
        +h\left(R+\frac\delta2-\frac{17}{50}\right).
 \end{equation}
-The endpoint certificate of \cite[Part II, compensated endpoint
-certificate]{OAI}, evaluated at
-its original geometry, bounds this expression with $B=7/8$ and $R=R_*$
-by $-49/440640$ for the larger range $\delta\le5/6$.
 Holding $a,\delta,q,R$ fixed while changing \eqref{eq:geometry} gives
 \begin{equation}\label{eq:perturbation}
  E_B(h)-E_{7/8}(13/16)
- =\frac1{200000}
+ =\frac{21}{500000}
        +t\left(-\frac12+\delta+q+\frac{3R}{2}\right).
 \end{equation}
-The source bounds $R_*\le17/12$. Since $\delta\le3/4$ and
-$q\le\delta/2$, the right side of \eqref{eq:perturbation} is at most
+We evaluate the two terms together using the exact balanced row count
+from \cite[Part II, compensated endpoint certificate]{OAI}. Put
+$y=1/2-x$ and define
 \[
- \frac1{200000}+\frac{11t}{4}=\frac7{80000}.
+ D(y)=\frac{37+34y}{18},\qquad
+ P(y)=\frac{7+18y+8y^2}{9},\qquad
+ J(\delta,y)=(5/6-\delta)D(y)+\delta P(y).
 \]
-Thus the central endpoint retains the explicit margin
+Then $J\ge35/54>0$ on the parameter box, and
+\[
+ R_*=1-\delta+\frac{(5/6-\delta)\delta P(y)}{2J(\delta,y)}.
+\]
+With $R=R_*$ and the value of $t$ in \eqref{eq:geometry}, direct substitution gives
+\[
+ 648000000J(\delta,y)\left(-E_B(h)-\frac1{500000}\right)
+ =H(\delta,y):=A(y)\delta^2+L(y)\delta+K(y),
+\]
+where
+\begin{align*}
+ A(y)&=153063882+393024336y+282085176y^2+96097344y^3,\\
+ L(y)&=-118376871-188464636y-13011148y^2,\\
+ K(y)&=22888570+21032740y.
+\end{align*}
+The following identity certifies $H\ge0$ for every $y\ge0$:
+\begin{align*}
+ 4A(y)H(\delta,y)
+ &=(2A(y)\delta+L(y))^2+569922764319\\
+ &\quad+4240763631276888y+20292262879067528y^2\\
+ &\quad+27625937254957024y^3+7915471831892336y^4.
+\end{align*}
+Every coefficient in the remainder is positive, as is $A(y)$. Hence
 \begin{equation}\label{eq:high-gap}
- -E_B(h)\ge\frac{49}{440640}-\frac7{80000}>0.
+ -E_B(h)\ge\frac1{500000}.
 \end{equation}
-The frequency slope is positive, so this endpoint bounds all moderate
-rows with $d\le h$. Extending to $h+\zeta$ costs at most $2\zeta$, and
-$\zeta$ can be chosen below the margin in \eqref{eq:high-gap}.
+For a row-count loss $0\le\rho\le1/32$, put $R=R_*+\rho$.
+The source bounds imply
+$0\le R\le3/2$ and $0\le R+\delta/2-17/50\le2$.
+For $\zeta,\mu\ge0$, frequency length $v\le h+\zeta$, and row scale $d$
+with $d-v\le\mu$, the mixed exponent differs from its balanced endpoint by
+\[
+ h\rho+(v-h)(R+\delta/2-17/50)+(d-v)R
+ \le h\rho+2\zeta+\frac32\mu.
+\]
+These losses, the additional physical-scale cost $t(3e+\mathrm{mesh})$,
+and the remaining detector losses can all be chosen below the margin
+in \eqref{eq:high-gap}.
 
 The floor and intermediate-row margins in \cite{OAI} are respectively
 $7/1200$ and $49/14400$ at the original geometry. The floor shift costs
 $t(121/40+3e+\mathrm{mesh})$, including the changed row threshold. The
-parameter budget absorbs this cost. The small-row
+parameter budget absorbs this cost and the boundary change
+$7/8-B=21/500000$. The small-row
 margin is $63/800$. Its change is at most $51t/100$, since
 $h(17/50-1/6)-l_y/2$ has derivative $51/100$ with respect to $t$.
 For large rows, the absolute contour can still be taken sufficiently far
@@ -384,7 +416,8 @@ normalized floor-row collection are verified there as well.
 The principal slot-ratio and normalized residue estimates are proved on the
 new boundary. The physical principal remainder at the changed lengths is
 bounded on a fixed contour just right of $7/8$, leaving a power saving of
-$1/3000$ relative to $\beta_*$ in the proposed interval.
+$1/4000$ relative to $\beta_*$ in the proposed interval. The contour at
+$\beta_*+e$ used in the final comparison retains a saving of $1/3000$.
 The perturbed source moment transport is proved in
 \texttt{OAIHighMomentTransport.lean}. It supplies the chosen fourth-moment
 input used by the central-bin estimate and detector assembly.

@@ -21,7 +21,7 @@ theorem calibrated_physical_tuple_sum_on_perturbed_boundary (K : ℕ) (e δ a b 
       (∀P:(∀i,T i),Function.Injective (fun i=>(P i).val)) →
       ∀(Y : Fin K→ℝ), (∀i,1≤Y i) → ∀(W : Fin K→ℝ→ℂ),
       (∀i,Function.support (W i)⊆Set.Icc a b) → (∀i y,‖W i y‖≤B) →
-      ∀(x w z : ℂ),(7 / 8 - 1 / 200000 : ℝ) ≤ x.re → HeckeZeroSupremum.beta+8*e≤x.re →
+      ∀(x w z : ℂ),(7 / 8 - 21 / 500000 : ℝ) ≤ x.re → HeckeZeroSupremum.beta+8*e≤x.re →
       (1/2:ℝ)≤w.re → z.re=r →
       (∑P:(∀i,T i),‖calibratedTupleValue S hS hmax η u (fun i=>(P i).val)
         (fun i=>hT i (P i).val (P i).property) W Y x w z‖)≤

@@ -16,7 +16,7 @@ local instance : Finite (O ⧸ M) := Ring.HasFiniteQuotients.finiteQuotient (NeZ
 variable (H : Subgroup (O ⧸ M)ˣ) (hH : RayOrthogonality.globalUnits M≤H)
 
 theorem perturbed_normalized_nonfloor_cube_with_count_parameters (N n : ℕ) (e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift : ℝ)
-    (hlengthShift : 0 ≤ lengthShift)
+    (hlengthShift : 0 ≤ lengthShift) (hlengthShiftCap : lengthShift ≤ 169 / 1000000)
     (he : 0<e) (he1 : e<1/1000) (heps : 0<eps) (hc : 0<c) (hcb : c≤b) (hA : 0≤A)
     (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax) (hrmin : 0<rmin)
     (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh)
@@ -42,9 +42,9 @@ theorem perturbed_normalized_nonfloor_cube_with_count_parameters (N n : ℕ) (e 
     (hlog : 0<logCost) (hMomentHeight : τ<heightCost)
     (ζ μ saving : ℝ) (hζ : 0≤ζ) (hμ : 0≤μ)
     (hcount : 159*ε+εm+R+7*ν≤1/32)
-    (hfinal : (13/16)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
+    (hfinal : (13/16+3*lengthShift/2)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
       (26*e+(N+8)*eps+loss+mesh/6)+(logCost+heightCost+momentCost)+saving+
-      lengthShift*(11/4+3*(159*ε+εm+R+7*ν)/2+3*e+mesh)+1/200000≤49/440640)
+      lengthShift*(3*e+mesh)≤1/500000)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1)
     (hr0 : ∀y,(W0 y).im=0) (hr1 : ∀y,(W1 y).im=0)
@@ -77,7 +77,7 @@ theorem perturbed_normalized_nonfloor_cube_with_count_parameters (N n : ℕ) (e 
           (PrincipalSignalComparison.slotMass T (ProbePrincipalResidueActual.residueWeights W Y)) : ℂ)
       normer≠0 ∧ ‖finiteCentralCubeRows S hS hmax η rows T (nonfloorPoolOutside M H S N c b Y) (fun j y=>(W j y:ℂ)) Y
         W0 W1 (Z^(17/48-lengthShift/2:ℝ)) (Z^(23/48-lengthShift/2:ℝ)) Z e (fun _=>a) (fun _=>(3*i+1:ℕ)*Z^τ)/normer‖≤
-        C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*Z^(3/16-1/200000-saving+nu) := by
+        C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*Z^(3/16-21/500000-saving+nu) := by
   let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   let WC : Fin N→ℝ→ℂ := fun j y=>(W j y:ℂ)
   have hWC (j : Fin N) : ContDiff ℝ ∞ (WC j) := Complex.ofRealCLM.contDiff.comp (hW j)
@@ -89,7 +89,7 @@ theorem perturbed_normalized_nonfloor_cube_with_count_parameters (N n : ℕ) (e 
   have hWCB (j : Fin N) (y : ℝ) : ‖WC j y‖≤A := by
     simpa only [WC,Complex.norm_real,Real.norm_eq_abs,abs_of_nonneg (hWB j y).1] using (hWB j y).2
   obtain ⟨C,hC,hbound⟩ :=
-    perturbed_nonfloor_cube_norm_with_count_parameters M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift hlengthShift
+    perturbed_nonfloor_cube_norm_with_count_parameters M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift hlengthShift hlengthShiftCap
       he he1 heps hc hcb hA hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh
       hbudget hgap hmargin hheight hloss S hS hfirst hmax ell hell hello hellhi WC hWCs hWC hWCB hellsum
       hdtop hε1 hκ1 hτzero hτheight hwbudget
@@ -113,7 +113,7 @@ theorem perturbed_normalized_nonfloor_cube_with_count_parameters (N n : ℕ) (e 
   rw [div_eq_mul_inv,norm_mul]
   have hm := mul_le_mul hh hn.2 (norm_nonneg _) (by positivity)
   apply hm.trans_eq
-  rw [Real.rpow_add hZ (3/16-1/200000-saving) nu]
+  rw [Real.rpow_add hZ (3/16-21/500000-saving) nu]
   ring
 
 end SevenEighths.ProbeFinalAssembly

@@ -15,7 +15,7 @@ local notation "Id" => Ideal ActualEisensteinCubic.O
 private theorem bound_marked_on_perturbed_boundary
     (Q : ℝ) (A η x w z : ℂ) (hQ : 4 ≤ Q)
     (hA : ‖A‖ ≤ 1) (hη : ‖η‖ ≤ 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖PrincipalSlotEstimate.regionMarked Q A η x w z‖ ≤ 16 := by
   have hQ0 : 0 < Q := by linarith
@@ -61,7 +61,7 @@ private theorem bound_marked_on_perturbed_boundary
 theorem bound_local_multiplier_with_complex_weight_on_perturbed_boundary
     (η : Character) (S : Finset Id) (hS : PerturbedCorrectionTail S)
     (P : PrimeIdeal) (hP : P.val ∉ S) (x w z : ℂ) (Bx Bz : ℝ)
-    (hx : x.re ∈ Icc (7 / 8 - 1 / 200000 : ℝ) Bx)
+    (hx : x.re ∈ Icc (7 / 8 - 21 / 500000 : ℝ) Bx)
     (hw : (19 / 20 : ℝ) ≤ w.re)
     (hz : z.re ∈ Icc (33 / 200 : ℝ) Bz) :
     ‖localMultiplier η P x w z‖ ≤ localBound Bx Bz P := by
@@ -121,7 +121,7 @@ theorem bound_slot_multiplier_with_complex_weight_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal) (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (x w z : ℂ) (Bx Bz : ℝ)
-    (hx : x.re ∈ Icc (7 / 8 - 1 / 200000 : ℝ) Bx)
+    (hx : x.re ∈ Icc (7 / 8 - 21 / 500000 : ℝ) Bx)
     (hw : (19 / 20 : ℝ) ≤ w.re)
     (hz : z.re ∈ Icc (33 / 200 : ℝ) Bz) :
     ‖slotMultiplier η J T b x w z‖ ≤ slotBound J T b Bx Bz := by
@@ -141,7 +141,7 @@ theorem bound_combined_slots_with_complex_weight_on_perturbed_boundary
     (J : Finset ι) (T : ι → Finset PrimeIdeal) (b : ι → PrimeIdeal → ℂ)
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (x w z : ℂ) (Bx Bz : ℝ)
-    (hx : x.re ∈ Icc (7 / 8 - 1 / 200000 : ℝ) Bx)
+    (hx : x.re ∈ Icc (7 / 8 - 21 / 500000 : ℝ) Bx)
     (hw : (19 / 20 : ℝ) ≤ w.re)
     (hz : z.re ∈ Icc (33 / 200 : ℝ) Bz) :
     ‖globalClosedCorrection η S x w z * slotMultiplier η J T b x w z‖ ≤

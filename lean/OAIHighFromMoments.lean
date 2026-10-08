@@ -41,11 +41,11 @@ theorem actual_high_probe_from_raw_moments_on_perturbed_boundary (N : ℕ) (e ep
     (hεm : 0<εm) (hν : 0<ν)
     (hlog : 0<logCost) (hMomentHeight : τ<heightCost)
     (ζ μ saving : ℝ) (hζ : 0<ζ) (hζ1 : ζ≤1/48) (hμ : 0≤μ)
-    (hshift : 0≤lengthShift) (hshiftcap : lengthShift≤3/100000)
+    (hshift : 0≤lengthShift) (hshiftcap : lengthShift≤169/1000000)
     (hcount : 159*ε+εm+R+7*ν≤1/32)
-    (hfinal : (13/16)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
+    (hfinal : (13/16+3*lengthShift/2)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
       (26*e+(N+8)*eps+loss+mesh/6)+(logCost+heightCost+momentCost)+saving+
-      lengthShift*(11/4+3*(159*ε+εm+R+7*ν)/2+3*e+mesh)+1/200000≤49/440640)
+      lengthShift*(3*e+mesh)≤1/500000)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1)
     (hr0 : ∀y,(W0 y).im=0) (hr1 : ∀y,(W1 y).im=0)
@@ -54,14 +54,14 @@ theorem actual_high_probe_from_raw_moments_on_perturbed_boundary (N : ℕ) (e ep
     (dyadCost : ℝ) (hdyadCost : 0<dyadCost)
     (hdmin1 : dmin<1/100) (hconductor : 13/16+3*lengthShift/2+ζ+2*margin≤dmax)
     (hmuMargin : 2*margin≤μ)
-    (hβ : (7/8-1/200000:ℝ)<HeckeZeroSupremum.beta)
+    (hβ : (7/8-21/500000:ℝ)<HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta≤7/8)
     (sigma : ℝ) (hsigma : 0<sigma)
     (hgeometric : sigma+8*e+nu≤63/800-51*lengthShift/100) (hprincipal : sigma+nu≤1/3000)
-    (hwindow : sigma+e≤(7/8-1/200000)*(dmax*rmin))
-    (hlarge : sigma+nu+1/200000≤1+3/16)
+    (hwindow : sigma+e≤(7/8-21/500000)*(dmax*rmin))
+    (hlarge : sigma+nu+21/500000≤1+3/16)
     (hfloorbudget : 2*ζ+26*e+(N+8)*eps+loss+mesh/6+nu+
-      lengthShift*(121/40+3*e+mesh)+(sigma+1/200000)≤7/1200)
+      lengthShift*(121/40+3*e+mesh)+(sigma+21/500000)≤7/1200)
     (hcentral : sigma+nu+dyadCost≤saving) :
     let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃n : ℕ,0<n ∧ ∃cB κB cH κH C : ℝ,
@@ -111,13 +111,13 @@ theorem actual_high_probe_from_raw_moments_on_perturbed_boundary (N : ℕ) (e ep
   let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   have hmin : 0<dmax*rmin := mul_pos (hdmin.trans_le hdRange) hrmin
   obtain ⟨n,hn,htransport⟩ := actual_nonfloor_probe_transport_on_perturbed_boundary M H hH N e (1/4) c b A ζ lengthShift 1 τ (dmax*rmin) nu
-    he he1 (by norm_num) (by norm_num) hζ hζ1 hτ hc hcb hA hmin hnu hβ hshift hshiftcap S hS hTail hmax hfirst
+    he he1 (by norm_num) (by norm_num) hζ hζ1 hτ hc hcb hA hmin hnu hβ hshift (by linarith) S hS hTail hmax hfirst
     ell hello hell hellsum W hW hcompact hWs hWB hne W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
     hr0 hr1 hp0 hp1 hn0 hn1 sigma hsigma hgeometric hprincipal hwindow hlarge
     eps R dmin dmax rmin ε κ cost mesh margin loss heps hR hdmin hdmax hdRange hrmin hε hκ hcost hmesh hmargin
     hbudget hgap hheight hloss (by linarith) hello hellhi hfloorbudget
   obtain ⟨cB,κB,cH,κH,C,hcB,hcB1,hκB,hcH,hcH1,hκH,hC,hbound⟩ :=
-    perturbed_nonfloor_rows_saving M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift hshift
+    perturbed_nonfloor_rows_saving M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift hshift hshiftcap
       he he1 heps hc hcb hA hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh
       hbudget hgap hmargin hheight hloss S hS hfirst hmax ell hell hello hellhi W hWs hW hWB hcompact hne hellsum
       hdtop hε1 hκ1 hτzero hτheight hwbudget
@@ -154,7 +154,7 @@ theorem actual_high_probe_from_raw_moments_on_perturbed_boundary (N : ℕ) (e ep
     intro u hu
     simpa only [Nat.cast_mul,Nat.cast_ofNat] using (hbins u).2.2.1
   have hglobal := (hb C0 hC0 rows hrows idx grid hlabel hnext hcurrent hmom).2
-  have hexp : Z^(3/16-1/200000-saving+nu+dyadCost)≤
+  have hexp : Z^(3/16-21/500000-saving+nu+dyadCost)≤
       Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
     Real.rpow_le_rpow_of_exponent_le hZ (by linarith)
   have hcentral' := hglobal.trans (mul_le_mul_of_nonneg_left hexp (by positivity))

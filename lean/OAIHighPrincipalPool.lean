@@ -21,7 +21,7 @@ theorem principal_physical_pool_ordered_on_perturbed_boundary {K : ℕ} (η : Ch
     (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Set.Icc a0 b0) (hW1 : Function.support W1⊆Set.Icc a1 b1)
     (X Y Z a e : ℝ) (hX : 0<X) (hY : 0<Y) (hZ : 0<Z)
-    (ha : (7/8-1/200000 : ℝ)<a) (ha3 : a≤3) (hβ : HeckeZeroSupremum.beta<a) (he : 0<e) (he2 : e≤11/6) :
+    (ha : (7/8-21 / 500000 : ℝ)<a) (ha3 : a≤3) (hβ : HeckeZeroSupremum.beta<a) (he : 0<e) (he2 : e≤11/6) :
     let F := fun s => sourceMultiplier W0 W1 X Y Z (η.excludePrimes S hS.prime) s
       (globalClosedCorrection η S s) (slotMultiplier η Finset.univ T b s)
     let π := fixedSourcePrincipal S hS.prime

@@ -15,7 +15,7 @@ local instance : Finite (O ⧸ M) := Ring.HasFiniteQuotients.finiteQuotient (NeZ
 variable (H : Subgroup (O ⧸ M)ˣ) (hH : RayOrthogonality.globalUnits M≤H)
 
 theorem perturbed_nonfloor_cube_arithmetic (N n : ℕ) (e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift : ℝ)
-    (hlengthShift : 0 ≤ lengthShift)
+    (hlengthShift : 0 ≤ lengthShift) (hlengthShiftCap : lengthShift ≤ 169 / 1000000)
     (he : 0<e) (he1 : e<1/1000) (heps : 0<eps) (hc : 0<c) (hcb : c≤b) (hA : 0≤A)
     (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax) (hrmin : 0<rmin)
     (hτ : 0<τ) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh)
@@ -40,9 +40,9 @@ theorem perturbed_nonfloor_cube_arithmetic (N n : ℕ) (e eps c b A R dmin dmax 
     (hlog : 0<logCost) (hMomentHeight : τ<heightCost)
     (ζ μ saving : ℝ) (hζ : 0≤ζ) (hμ : 0≤μ)
     (hcount : 159*ε+εm+R+7*ν≤1/32)
-    (hfinal : (13/16)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
+    (hfinal : (13/16+3*lengthShift/2)*(159*ε+εm+R+7*ν)+2*ζ+(3/2)*μ+
       (26*e+(N+8)*eps+loss+mesh/6)+(logCost+heightCost+momentCost)+saving+
-      lengthShift*(11/4+3*(159*ε+εm+R+7*ν)/2+3*e+mesh)+1/200000≤49/440640) :
+      lengthShift*(3*e+mesh)≤1/500000) :
     ∃cB κB cH κH C : ℝ,0<cB ∧ cB≤1 ∧ 0<κB ∧ 0<cH ∧ cH≤1 ∧ 0<κH ∧ 0<C ∧
     ∀η : Character,∀ᶠZ : ℝ in atTop,
       ∀d : ℝ,dmin≤d → d≤dmax → ∀(v a C0 : ℝ),0≤v → v≤13/16+3*lengthShift/2+ζ → v≤1 → d-v≤μ →
@@ -64,7 +64,7 @@ theorem perturbed_nonfloor_cube_arithmetic (N n : ℕ) (e eps c b A R dmin dmax 
         (C0*Z^momentCost) (Z^heightCost) εm →
       ‖cubeArithmeticSum S hS hmax η rows T (nonfloorPoolOutside M H S N c b Y) W Y a e t‖≤
         C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*
-          Z^(3/16-1/200000-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25))) := by
+          Z^(3/16-21/500000-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25))) := by
   obtain ⟨cB,κB,cH,κH,C,hcB,hcB1,hκB,hcH,hcH1,hκH,hC,hclass⟩ :=
     perturbed_nonfloor_class_from_raw_moments M H hH N n e eps c b A R dmin dmax rmin τ ε κ cost mesh margin loss lengthShift hlengthShift
       he he1 heps hc hcb hA hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh
@@ -85,7 +85,7 @@ theorem perturbed_nonfloor_cube_arithmetic (N n : ℕ) (e eps c b A R dmin dmax 
   let T : Fin N→Finset ProbePhysical.PrimeIdeal := fun j=>pool (RayQuotient.identityClass M H) S c b (Y j)
   let Q := physical M H (fun u : FreeRow=>u.val) W (fun _=>b) (fun j=>ell j/d) (fun _=>z) (Z^d)
   let bound : ℝ := C*C0*(η.modulus.absNorm:ℝ)^(2*eps)*
-    Z^(3/16-1/200000-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)))
+    Z^(3/16-21/500000-saving-((25/48)*a-181/300+(105/8)*e+lengthShift*(a/2+3*e-2/25)))
   have hb : 0≤bound := by dsimp [bound];positivity
   have hpart := cubeArithmeticSum_class_uniform S hS hmax η rows T
     (nonfloorPoolOutside M H S N c b Y) W Y a e t Finset.univ (Z^d) ((2*a-1)/2) mesh hmesh
@@ -96,7 +96,7 @@ theorem perturbed_nonfloor_cube_arithmetic (N n : ℕ) (e eps c b A R dmin dmax 
       let q := classMean Finset.univ ((2*a-1)/2) mesh (fun j=>ell j/d) bin
       have hs := balanced_adaptive_saving_with_perturbed_lengths N a q ε εm R ν ζ μ v d e eps loss mesh
         (logCost+heightCost+momentCost) lengthShift saving (by linarith) ha' hp.1 hp.2.1 hε.le hεm.le
-        hR hν.le hcount hζ hv' hv1 hμ hdv hlengthShift he.le heps.le hfinal
+        hR hν.le hcount hζ hv' hv1 hμ hdv hlengthShift hlengthShiftCap he.le heps.le hfinal
       have hid := perturbed_class_exponent_identity N a v d
         (adaptiveRowExponent (2*a-1) q 0 ε εm R ν) q e eps loss mesh (logCost+heightCost+momentCost) lengthShift
       apply hp.2.2.trans

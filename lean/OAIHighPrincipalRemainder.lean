@@ -52,13 +52,13 @@ theorem source_remainders_power_bound_with_perturbed_lengths {ι : Type*}
   exact hh
 
 lemma perturbed_source_fixed_contour_exponent (β e lengthShift : ℝ)
-    (hβlo : (7/8-1/200000 : ℝ) ≤ β)
+    (hβlo : (7/8-21/500000 : ℝ) ≤ β)
     (he : e ≤ 1/1000)
-    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 3/100000) :
+    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     ((7/8 : ℝ)+e)-11/16+(13/16)*e-23/960+
-        lengthShift*(1/40+3*e/2) ≤ β-11/16-1/3000 ∧
+        lengthShift*(1/40+3*e/2) ≤ β-11/16-1/4000 ∧
     ((7/8 : ℝ)+e)-11/16-13/9600-lengthShift/400 ≤
-        β-11/16-1/3000 := by
+        β-11/16-1/4000 := by
   constructor
   · have h := perturbed_source_w_strict_exponent (7/8) e lengthShift he ht ht'
     linarith
@@ -71,10 +71,10 @@ theorem source_remainders_fixed_contour_saving {ι : Type*}
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Icc a0 b0) (hW1 : Function.support W1⊆Icc a1 b1)
     (β e lengthShift : ℝ)
-    (hβlo : (7/8-1/200000 : ℝ) ≤ β) (hβhi : β ≤ 7/8)
+    (hβlo : (7/8-21/500000 : ℝ) ≤ β) (hβhi : β ≤ 7/8)
     (hβeq : β = HeckeZeroSupremum.beta)
     (he : 0<e) (hehi : e≤1/1000)
-    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 3/100000) :
+    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     ∃C : ℝ,0<C ∧ ∀(ell : ι→ℝ),(∑j∈J,ell j=1/6+lengthShift) →
     ∀(W : ι→ℝ→ℝ),
     (∀j∈J,∀x,0≤W j x ∧ W j x≤B) →
@@ -89,10 +89,10 @@ theorem source_remainders_fixed_contour_saving {ι : Type*}
     let π := fixedSourcePrincipal S hS.prime
     (‖verticalIntegral (7/8+e) (fun s=>verticalIntegral (1/6+e)
       (fun z=>verticalIntegral (19/20) (fun w=>K0 s w z*LFunction π (6*z)*LFunction π w)))‖≤
-      C/e*Z^(β-11/16-1/3000)) ∧
+      C/e*Z^(β-11/16-1/4000)) ∧
     (‖HeckeReciprocal.regularizedL π 1 * verticalIntegral (7/8+e)
       (fun s=>verticalIntegral (33/200) (fun z=>K0 s 1 z*LFunction π (6*z)))‖≤
-      C*Z^(β-11/16-1/3000)) := by
+      C*Z^(β-11/16-1/4000)) := by
   obtain ⟨C,hC,hbound⟩ := source_remainders_power_bound_with_perturbed_lengths
     η S hS J c d B hc hd hB W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1
     (7/8+e) e lengthShift ⟨by linarith,by linarith⟩ (by rw [← hβeq]; linarith)

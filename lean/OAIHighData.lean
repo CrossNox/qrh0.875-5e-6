@@ -44,23 +44,20 @@ structure PerturbedHighData (gap : ℝ) where
   count_budget : 159 * ε + small +
     (1 + 6 * perturbedSlotLengthShift) * small + 7 * small ≤ 1 / 32
   central_budget :
-    (13 / 16) * (159 * ε + small +
+    (13 / 16 + 3 * perturbedSlotLengthShift / 2) * (159 * ε + small +
       (1 + 6 * perturbedSlotLengthShift) * small + 7 * small) +
       2 * small + (3 / 2) * (2 * small) +
       (26 * e + (N + 8) * eps + small + small / 6) +
       (small + small + small) + small +
-      perturbedSlotLengthShift *
-        (11 / 4 + 3 * (159 * ε + small +
-          (1 + 6 * perturbedSlotLengthShift) * small + 7 * small) / 2 +
-          3 * e + small) + 1 / 200000 ≤ 49 / 440640
+      perturbedSlotLengthShift * (3 * e + small) ≤ 1 / 500000
   row_threshold : 13 / 16 + 3 * perturbedSlotLengthShift / 2 +
     3 * small ≤ 7 / 8
   geometric_budget : sigma + 8 * e + small / 8 +
     51 * perturbedSlotLengthShift / 100 ≤ 63 / 800
   principal_budget : sigma + small / 8 ≤ 2611 / 110160000
-  window_budget : sigma + e ≤ (174999 / 200000) * ((7 / 8) * rmin)
+  window_budget : sigma + e ≤ (437479 / 500000) * ((7 / 8) * rmin)
   floor_budget : 2 * small + 26 * e + (N + 8) * eps +
-    small + small / 6 + small / 8 + sigma + 1 / 200000 +
+    small + small / 6 + small / 8 + sigma + 21 / 500000 +
     perturbedSlotLengthShift * (121 / 40 + 3 * e + small) ≤ 7 / 1200
   high_saving : sigma + small / 8 + small / 8 ≤ small
   height_choice : ∀ J : ℝ, 0 ≤ J → ∃ τ : ℝ,
@@ -144,7 +141,7 @@ theorem exists_perturbed_high_data_fine
   · linarith only [hsigma_small, hsmall_cap]
   · have hsum : sigma + e ≤ ellMin / 2 := by
       linarith only [hsigma_ell, heell]
-    have hcoef : (1 / 2 : ℝ) ≤ 174999 / 200000 := by norm_num
+    have hcoef : (1 / 2 : ℝ) ≤ 437479 / 500000 := by norm_num
     have hscaled := mul_le_mul_of_nonneg_right hcoef hellMin.le
     dsimp [ellMin] at hsum hscaled ⊢
     linarith

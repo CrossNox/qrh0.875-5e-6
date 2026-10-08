@@ -31,7 +31,7 @@ def PerturbedPositiveFineSourceInput
 theorem perturbed_plain_inputs
     {gap : ℝ} (D : Parameters.PerturbedHighData gap)
     (F : PerturbedSourceData D)
-    (hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta)
+    (hβ : (7 / 8 - 21 / 500000 : ℝ) < HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
     PerturbedPositiveFineSourceInput F
       (fineMesh 2 0 1 (3 / 4) (D.small / 4)) ∧

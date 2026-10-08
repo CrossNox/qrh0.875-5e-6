@@ -15,7 +15,7 @@ variable (p : O) (hp : Prime p) [(Ideal.span {p} : Ideal O).IsMaximal]
 include hc in
 theorem bound_row_marked_term_on_perturbed_region (eta a rho x w z : ℂ)
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re)
     (j e l k m : ℕ) (ht : 0 < e + 3 * l) (hk : k ≤ 1) :
     ‖rowMarkedTerm p hp hg eta a ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-x))
@@ -49,7 +49,7 @@ theorem bound_second_region_v_on_perturbed_region (Q : ℝ)
 
 theorem bound_second_region_r_on_perturbed_region (Q : ℝ)
     (hQ : 4 ≤ Q) (a x z : ℂ) (ha : ‖a‖ ≤ 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖evenRatio Q a ((Q : ℂ) ^ (-x)) (coordV Q z)‖ ≤ 1 / 2 := by
   rw [evenRatio_eq_coordR Q (by linarith)]
@@ -61,7 +61,7 @@ include hc in
 theorem bound_row_base_finite_on_perturbed_region (eta a rho x w z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re)
     (j e l : ℕ) (ht : 0 < e + 3 * l) :
     ‖rowBaseFinite p hp hg eta a ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-x))
@@ -94,7 +94,7 @@ include hc in
 theorem bound_row_closed_marked_on_perturbed_region (eta a rho x w z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) (j : ℕ) :
     ‖rowClosedMarked p hp hg eta a
       ((Ideal.absNorm (Ideal.span {p}) : ℂ) ^ (-x))
@@ -124,7 +124,7 @@ include hc in
 theorem bound_ramified_closed_on_perturbed_region (eta a rho x w z : ℂ)
     (hQ : (4 : ℝ) ≤ Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖ ≤ 1) (ha : ‖a‖ ≤ 1) (hρ : rho ^ 6 = 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) (j : ℕ) :
     ‖ramifiedClosed p hp hg eta a rho x w z j‖ ≤ 193 := by
   have hb := bound_row_closed_marked_on_perturbed_region p hp hg hc

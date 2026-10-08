@@ -43,9 +43,9 @@ lemma PerturbedSourceMomentBound.mono_constant
     (h rows d a hd hd' ha ha' hrows i z hz hzh)
 
 def RawPerturbedMomentInput : Prop :=
-  ∀ _hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta,
+  ∀ _hβ : (7 / 8 - 21 / 500000 : ℝ) < HeckeZeroSupremum.beta,
     ∀ D : PerturbedHighData
-      (HeckeZeroSupremum.beta - (7 / 8 - 1 / 200000)),
+      (HeckeZeroSupremum.beta - (7 / 8 - 21 / 500000)),
     ∀ F : PerturbedSourceData D,
     ∀ counts : CountParameters F.modulus ⊤ D.small,
     ∃ J : ℝ, 0 ≤ J ∧ ∀ η : Character, ∃ C : ℝ, 0 < C ∧
@@ -54,9 +54,9 @@ def RawPerturbedMomentInput : Prop :=
           (C * (1 + Z ^ (2 * τ)) ^ J) (Z ^ (2 * τ))
 
 def ChosenPerturbedMomentInput : Prop :=
-  ∀ _hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta,
+  ∀ _hβ : (7 / 8 - 21 / 500000 : ℝ) < HeckeZeroSupremum.beta,
     ∃ D : PerturbedHighData
-      (HeckeZeroSupremum.beta - (7 / 8 - 1 / 200000)),
+      (HeckeZeroSupremum.beta - (7 / 8 - 21 / 500000)),
     ∃ F : PerturbedSourceData D,
     ∃ counts : CountParameters F.modulus ⊤ D.small,
     ∃ J : ℝ, 0 ≤ J ∧ ∀ η : Character, ∃ C : ℝ, 0 < C ∧
@@ -65,10 +65,10 @@ def ChosenPerturbedMomentInput : Prop :=
           (C * (1 + Z ^ (2 * τ)) ^ J) (Z ^ (2 * τ))
 
 def FinePerturbedMomentInput : Prop :=
-  ∀ _hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta,
+  ∀ _hβ : (7 / 8 - 21 / 500000 : ℝ) < HeckeZeroSupremum.beta,
     ∃ mesh : ℝ → ℝ, (∀ small : ℝ, 0 < small → 0 < mesh small) ∧
       ∀ D : PerturbedHighData
-          (HeckeZeroSupremum.beta - (7 / 8 - 1 / 200000)),
+          (HeckeZeroSupremum.beta - (7 / 8 - 21 / 500000)),
         (∀ j, D.ell j ≤ mesh D.small / 200) →
         ∀ F : PerturbedSourceData D,
         ∀ counts : CountParameters F.modulus ⊤ D.small,

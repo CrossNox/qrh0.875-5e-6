@@ -13,7 +13,7 @@ local notation "O" => HeckeFamily.O
 theorem calibrated_physical_dyad_integral_on_perturbed_boundary (K : ℕ) (e δ a b r B σ υ : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1)
     (ha : 0<a) (hb : 0<b) (hr : (17/50:ℝ)≤r) (hB : 0≤B)
-    (hσ : (7 / 8 - 1 / 200000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ) (hυ : (1/2:ℝ)≤υ)
+    (hσ : (7 / 8 - 21 / 500000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ) (hυ : (1/2:ℝ)≤υ)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)

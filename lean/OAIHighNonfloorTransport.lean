@@ -25,8 +25,8 @@ private theorem perturbedNonfloorTransportPoolOutside
 theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a b B ζ lengthShift saving τ ellMin nu : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2) (hζ : 0<ζ) (hζ' : ζ≤1/48) (hτ : 0<τ)
     (ha : 0<a) (hab : a≤b) (hB : 0≤B) (hmin : 0<ellMin) (hnu : 0<nu)
-    (hβ : (7/8-1/200000:ℝ)<HeckeZeroSupremum.beta)
-    (ht : 0≤lengthShift) (ht' : lengthShift≤3/100000)
+    (hβ : (7/8-21 / 500000:ℝ)<HeckeZeroSupremum.beta)
+    (ht : 0≤lengthShift) (ht' : lengthShift≤1 / 1000)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hTail : PerturbedCorrectionTail S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (4*e) S)
     (ell : Fin K→ℝ) (hell : ∀j,ellMin≤ell j) (hellinj : Function.Injective ell) (hellsum : ∑j,ell j=1/6+lengthShift)
@@ -38,7 +38,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     (hp0 : ∀y,0≤(W0 y).re) (hp1 : ∀y,0≤(W1 y).re) (hn0 : W0≠0) (hn1 : W1≠0)
     (sigma : ℝ) (hsigma : 0<sigma)
     (hgeometric : sigma+8*e+nu≤63/800-51*lengthShift/100) (hprincipal : sigma+nu≤1/3000)
-    (hwindow : sigma+e≤PrincipalSlotEstimate.perturbedBoundary*ellMin) (hlarge : sigma+nu+1/200000≤saving+3/16)
+    (hwindow : sigma+e≤PrincipalSlotEstimate.perturbedBoundary*ellMin) (hlarge : sigma+nu+21 / 500000≤saving+3/16)
     (eps R dmin dmax rmin ε κ cost mesh margin loss : ℝ)
     (heps : 0<eps) (hR : 0≤R) (hdmin : 0<dmin) (hdmax : 0≤dmax) (hdRange : dmin≤dmax)
     (hrmin : 0<rmin) (hε : 0<ε) (hκ : 0<κ) (hcost : 0≤cost) (hmesh : 0<mesh) (hmargin : 0<margin)
@@ -47,7 +47,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     (hcap : 13/16+3*lengthShift/2+ζ≤dmax-margin)
     (helllo : ∀j,dmax*rmin≤ell j) (hellhi : ∀j,ell j≤dmin*R)
     (hfloorbudget : 2*ζ+26*e+(K+8)*eps+loss+mesh/6+nu+
-      lengthShift*(121/40+3*e+mesh)+(sigma+1/200000)≤7/1200) :
+      lengthShift*(121/40+3*e+mesh)+(sigma+21 / 500000)≤7/1200) :
     let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃n : ℕ,0<n ∧ ∀η : Character,∃C : ℝ,0<C ∧ ∀ᶠ Z : ℝ in atTop,
       let Yp := fun j=>Z^(ell j)
@@ -93,7 +93,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
     (1/100) margin loss lengthShift ht he he' heps ha hab hB hR hdmin hdmax hdRange hrmin hτ hε hκ hcost hmesh
     (by norm_num) hphasebudget hphasegap hmargin hheight hloss S hS hfirst hmax ell hellinj helllo hellhi
     W hsupp hW hWB hcompact hne hellsum W0 W1 a0 b0 a1 b1 ha0 ha1 hW0 hW1 hr0 hr1 hp0 hp1 hn0 hn1
-    nu hnu ζ (sigma+1/200000) hζ.le (by linarith)
+    nu hnu ζ (sigma+21 / 500000) hζ.le (by linarith)
     (by linarith) hfloorbudget
   refine ⟨n,hn,?_⟩
   intro η
@@ -135,7 +135,7 @@ theorem actual_nonfloor_probe_transport_on_perturbed_boundary (K : ℕ) (e δ a 
   rw [hsplit] at herror
   have hh := normalized_nonfloor_error _ _ _ _ _ _ _ herror hb
   apply hh.trans
-  have hp : Z^(3/16-(sigma+1/200000))≤
+  have hp : Z^(3/16-(sigma+21 / 500000))≤
       Z^(HeckeZeroSupremum.beta-11/16-sigma) :=
     Real.rpow_le_rpow_of_exponent_le hZ (by linarith [hβ])
   calc

@@ -12,9 +12,9 @@ open HeckeInverseAmplification HeckeDetectorPhysicalSelection HeckeDetectorFiber
 open ProbeMellinBoundary
 
 theorem fixed_perturbed_high_bound
-    (hβ : (7/8-1/200000:ℝ)<HeckeZeroSupremum.beta)
+    (hβ : (7/8-21/500000:ℝ)<HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta≤7/8)
-    (D : PerturbedHighData (HeckeZeroSupremum.beta-(7/8-1/200000)))
+    (D : PerturbedHighData (HeckeZeroSupremum.beta-(7/8-21/500000)))
     (F : PerturbedSourceData D)
     (counts : CountParameters F.modulus ⊤ D.small) (τ : ℝ)
     (hτ : 0<τ) (hτd : τ<(1/200:ℝ)/2) (hτcost : 4*τ<(1/200:ℝ)*D.cost)
@@ -57,7 +57,7 @@ theorem fixed_perturbed_high_bound
     (by linarith) hβ hβhi
     D.sigma D.sigma_pos (by linarith [D.geometric_budget])
     (by linarith [D.principal_budget])
-    (by simpa only [show (7/8-1/200000:ℝ)=174999/200000 by norm_num]
+    (by simpa only [show (7/8-21/500000:ℝ)=437479/500000 by norm_num]
       using D.window_budget)
     (by linarith [D.high_saving, D.small_cap])
     (by linarith [D.floor_budget]) D.high_saving counts

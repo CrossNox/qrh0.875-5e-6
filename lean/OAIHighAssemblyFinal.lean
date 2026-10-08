@@ -63,11 +63,11 @@ theorem common_perturbed_probe_of_chosen_moments
   refine ⟨η.excludePrimes F.S F.exclusions.prime,
     sourceCorrection η F.S, F.probe η,
     hmask, hH, hHbound, ?_, ?_⟩
-  · have hlow := F.probe_low (1 / 1000000) (by norm_num) η
+  · have hlow := F.probe_low (1 / 10000000) (by norm_num) η
     apply hlow.trans
     apply Continuation.rpow_isBigO_atTop_of_le
     have hgap : 0 < HeckeZeroSupremum.beta -
-        (7 / 8 - 1 / 200000 : ℝ) := by
+        (7 / 8 - 21 / 500000 : ℝ) := by
       simpa only [HeckeSignal.perturbedBoundary] using sub_pos.mpr hβ
     dsimp [ω, HeckeSignal.perturbedBoundary,
       Parameters.perturbedSlotLengthShift]

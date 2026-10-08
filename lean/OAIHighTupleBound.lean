@@ -18,7 +18,7 @@ theorem continued_selected_tuple_with_correction_on_perturbed_boundary (K : ℕ)
       (hT : ∀i P,P∈T i→Supported P.val ∧ (4:ℝ)≤P.val.absNorm)
       (Y : Fin K→ℝ), (∀i,1≤Y i) → ∀(W : Fin K→ℝ→ℂ),
       (∀i,Function.support (W i)⊆Set.Icc a b) → (∀i y,‖W i y‖≤B) →
-      ∀(x w z : ℂ),(7 / 8 - 1 / 200000 : ℝ) ≤ x.re → (1/2:ℝ)≤w.re → z.re=r →
+      ∀(x w z : ℂ),(7 / 8 - 21 / 500000 : ℝ) ≤ x.re → (1/2:ℝ)≤w.re → z.re=r →
       1+eps≤x.re+w.re →
       (∑P : (∀i,T i),‖continuedCorrection
         (markExclusions S (Finset.univ.image (fun i=>(P i).val)))

@@ -1,6 +1,7 @@
 import OAI.NumberTheory.DirichletL.Detector.CentralMixedMargins
 import OAI.NumberTheory.DirichletL.Hecke.DetectorRowCountEndpoint
 import OAI.NumberTheory.DirichletL.PrimeRows.NonfloorExponent
+import OAIHighEndpointCertificate
 
 namespace OAI
 
@@ -37,27 +38,6 @@ lemma physical_scale_identity_with_perturbed_lengths
   congr 1
   ring
 
-lemma balanced_row_count_le_seventeen_twelfths
-    (δ x : ℝ) (hδ : 0 ≤ δ) (hδ' : δ ≤ 3 / 4)
-    (hx : 0 ≤ x) (hx' : x ≤ 1 / 2) :
-    Endpoint.balancedRowCount δ (1 / 2 - x) ≤ 17 / 12 := by
-  have hcut := balanced_cutoff_bounds hδ (by linarith : δ ≤ 5 / 6) hx hx'
-  have hmul := mul_le_mul_of_nonneg_left hcut.2
-    (show 0 ≤ (5 / 6 : ℝ) - δ by linarith)
-  unfold Endpoint.balancedRowCount
-  nlinarith
-
-lemma balanced_perturbation_cost
-    (δ x loss t : ℝ) (hδ : 0 ≤ δ) (hδ' : δ ≤ 3 / 4)
-    (hx : 0 ≤ x) (hx' : x ≤ 1 / 2) (ht : 0 ≤ t) :
-    t * (-1 / 2 + δ + δ * x +
-      3 * (Endpoint.balancedRowCount δ (1 / 2 - x) + loss) / 2) ≤
-      t * (11 / 4 + 3 * loss / 2) := by
-  have hrow := balanced_row_count_le_seventeen_twelfths δ x hδ hδ' hx hx'
-  have hq := mul_le_mul_of_nonneg_left hx' hδ
-  apply mul_le_mul_of_nonneg_left _ ht
-  nlinarith
-
 lemma balanced_mixed_saving_with_perturbed_lengths
     (δ x loss ζ μ v d t other saving : ℝ)
     (hδ : 0 ≤ δ) (hδ' : δ ≤ 3 / 4)
@@ -65,23 +45,48 @@ lemma balanced_mixed_saving_with_perturbed_lengths
     (hl : 0 ≤ loss) (hl' : loss ≤ 1 / 32)
     (hζ : 0 ≤ ζ) (hv : v ≤ 13 / 16 + 3 * t / 2 + ζ)
     (hμ : 0 ≤ μ) (hdv : d - v ≤ μ) (ht : 0 ≤ t)
-    (hbudget : (13 / 16) * loss + 2 * ζ + (3 / 2) * μ + other +
-      saving + t * (11 / 4 + 3 * loss / 2) + 1 / 200000 ≤ 49 / 440640) :
+    (ht' : t ≤ 169 / 1000000)
+    (hbudget : (13 / 16 + 3 * t / 2) * loss + 2 * ζ +
+      (3 / 2) * μ + other + saving ≤ 1 / 500000) :
     mixedSourceExponentWithPerturbedLengths t ((1 + δ) / 2) v d
       (Endpoint.balancedRowCount δ (1 / 2 - x) + loss) (δ * x) +
-      other ≤ 3 / 16 - 1 / 200000 - saving := by
+      other ≤ 3 / 16 - 21 / 500000 - saving := by
+  let h := 13 / 16 + 3 * t / 2
+  let R0 := Endpoint.balancedRowCount δ (1 / 2 - x)
   let R := Endpoint.balancedRowCount δ (1 / 2 - x) + loss
-  have hm := balanced_mixed_margin δ x 0 loss ζ μ
-    (v - 3 * t / 2) (d - 3 * t / 2)
-    hδ (by linarith) hx hx' (by norm_num) (by norm_num)
-    hl hl' hζ (by linarith) hμ (by linarith)
-  have hc := balanced_perturbation_cost δ x loss t hδ hδ' hx hx' ht
-  have hid := mixed_source_perturbation_identity t ((1 + δ) / 2) v d R (δ * x)
-  have hdelta : 2 * ((1 + δ) / 2) - 1 = δ := by ring
-  rw [hdelta] at hid
-  simp only [zero_div, add_zero, mul_zero] at hm
+  have hr := balanced_count_range δ x 0 loss hδ (by linarith) hx hx'
+    (by norm_num) (by norm_num) hl hl'
+  simp only [zero_div, add_zero] at hr
+  change 1 - δ ≤ R ∧ R ≤ 3 / 2 at hr
+  have hR : 0 ≤ R := by linarith [hr.1]
+  have hslo : 0 ≤ R + δ / 2 - 17 / 50 := by linarith [hr.1]
+  have hshi : R + δ / 2 - 17 / 50 ≤ 2 := by linarith [hr.2]
+  have he := Endpoint.bound_high_endpoint_exponent_with_slot_length_shift
+    t δ (1 / 2 - x) ht ht' hδ hδ' (by linarith) (by linarith)
+  have hendpoint : mixedSourceExponentWithPerturbedLengths t ((1 + δ) / 2)
+      h h R0 (δ * x) ≤ 3 / 16 - 21 / 500000 - 1 / 500000 := by
+    have hid : mixedSourceExponentWithPerturbedLengths t ((1 + δ) / 2)
+        h h R0 (δ * x) = 3 / 16 + Endpoint.balancedExponent δ (1 / 2 - x) +
+          t * (-1 / 2 + δ + δ * x + 3 * R0 / 2) := by
+      unfold mixedSourceExponentWithPerturbedLengths h R0 Endpoint.balancedExponent
+      ring
+    rw [hid]
+    dsimp [R0] at *
+    nlinarith only [he]
+  have hfrequency := mul_le_mul_of_nonneg_right
+    (show v - h ≤ ζ by dsimp [h]; linarith) hslo
+  have hfrequency_cap := mul_le_mul_of_nonneg_left hshi hζ
+  have hslack := mul_le_mul_of_nonneg_right hdv hR
+  have hslack_cap := mul_le_mul_of_nonneg_left hr.2 hμ
+  have hid : mixedSourceExponentWithPerturbedLengths t ((1 + δ) / 2) v d R (δ * x) =
+      mixedSourceExponentWithPerturbedLengths t ((1 + δ) / 2) h h R0 (δ * x) +
+        h * loss + (v - h) * (R + δ / 2 - 17 / 50) + (d - v) * R := by
+    unfold mixedSourceExponentWithPerturbedLengths h R R0
+    ring
+  change h * loss + 2 * ζ + (3 / 2) * μ + other + saving ≤ 1 / 500000 at hbudget
+  change mixedSourceExponentWithPerturbedLengths t ((1 + δ) / 2) v d R (δ * x) +
+    other ≤ 3 / 16 - 21 / 500000 - saving
   rw [hid]
-  dsimp [R] at hm hc ⊢
   linarith
 
 lemma perturbed_class_exponent_identity (N : ℕ)
@@ -106,16 +111,16 @@ lemma balanced_adaptive_saving_with_perturbed_lengths (N : ℕ)
     (hζ : 0 ≤ ζ) (hv : v ≤ 13 / 16 + 3 * t / 2 + ζ)
     (hv1 : v ≤ 1)
     (hμ : 0 ≤ μ) (hdv : d - v ≤ μ) (ht : 0 ≤ t)
+    (ht' : t ≤ 169 / 1000000)
     (he : 0 ≤ e) (heps : 0 ≤ eps)
-    (hbudget : (13 / 16) * (159 * ε + εm + slotMesh + 7 * ν) +
+    (hbudget : (13 / 16 + 3 * t / 2) * (159 * ε + εm + slotMesh + 7 * ν) +
       2 * ζ + (3 / 2) * μ +
       (26 * e + (N + 8) * eps + loss + mesh / 6) + overhead + saving +
-      t * (11 / 4 + 3 * (159 * ε + εm + slotMesh + 7 * ν) / 2 + 3 * e + mesh) +
-      1 / 200000 ≤ 49 / 440640) :
+      t * (3 * e + mesh) ≤ 1 / 500000) :
     mixedSourceExponentWithPerturbedLengths t a v d
       (adaptiveRowExponent (2 * a - 1) q 0 ε εm slotMesh ν) q +
       ProbeCentralExponent.realLoss N v e eps loss mesh + overhead +
-        t * (3 * e + mesh) ≤ 3 / 16 - 1 / 200000 - saving := by
+        t * (3 * e + mesh) ≤ 3 / 16 - 21 / 500000 - saving := by
   have hδ : 0 < 2 * a - 1 := by linarith
   have hδ' : 2 * a - 1 ≤ 3 / 4 := by linarith
   have hx : 0 ≤ q / (2 * a - 1) := div_nonneg hq hδ.le
@@ -132,7 +137,7 @@ lemma balanced_adaptive_saving_with_perturbed_lengths (N : ℕ)
     (159 * ε + εm + slotMesh + 7 * ν) ζ μ v d t
     (ProbeCentralExponent.realLoss N v e eps loss mesh + overhead +
       t * (3 * e + mesh)) saving
-    hδ.le hδ' hx hx' hl hcount hζ hv hμ hdv ht (by linarith)
+    hδ.le hδ' hx hx' hl hcount hζ hv hμ hdv ht ht' (by linarith)
   rw [haeq, hqeq] at hb
   simp only [adaptiveRowExponent,
     ite_eq_left (show 2 * a - 1 ≤ 5 / 6 by linarith), zero_div, add_zero]

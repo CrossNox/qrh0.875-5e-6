@@ -13,7 +13,7 @@ open CenteredMomentEnergyCappedWidthInduction CenteredMomentEnergyWidthSchedule
 theorem perturbed_detector_certified_band
     {gap : ℝ} (D : Parameters.PerturbedHighData gap)
     (F : PerturbedSourceData D)
-    (hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta)
+    (hβ : (7 / 8 - 21 / 500000 : ℝ) < HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
     (bΦ : ℝ) (hbΦ : 0 < bΦ) :
     CertifiedBand (α := Fin D.N) F.modulus ⊤ le_top

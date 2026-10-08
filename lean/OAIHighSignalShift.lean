@@ -9,17 +9,17 @@ namespace SevenEighths.HeckeSignalShift
 open HeckeFamily HeckeSignal Continuation
 
 theorem quotient_holomorphic_on_perturbed_boundary (χ : Character) (H : ℂ → ℂ)
-    (hH : DifferentiableOn ℂ H {s : ℂ | 7/8 - 1/200000 < s.re}) {a : ℝ}
-    (ha : (7/8 - 1/200000 : ℝ)<a) (hβ : HeckeZeroSupremum.beta < a) :
+    (hH : DifferentiableOn ℂ H {s : ℂ | 7/8 - 21 / 500000 < s.re}) {a : ℝ}
+    (ha : (7/8 - 21 / 500000 : ℝ)<a) (hβ : HeckeZeroSupremum.beta < a) :
     DifferentiableOn ℂ (quotient χ H) {s : ℂ | a ≤ s.re ∧ s.re ≤ 2} := by
   intro s hs
-  exact ((hH.differentiableAt ((Complex.isOpen_re_gt (7/8 - 1/200000)).mem_nhds
+  exact ((hH.differentiableAt ((Complex.isOpen_re_gt (7/8 - 21 / 500000)).mem_nhds
     (ha.trans_le hs.1))).mul
     (HeckeReciprocal.reciprocal_differentiableAt χ (hβ.trans_le hs.1))).differentiableWithinAt
 
 theorem quotient_polynomial_bound_on_perturbed_boundary (χ : Character) (H : ℂ → ℂ)
-    (hb : ∀ s : ℂ, 7/8 - 1/200000<s.re → ‖H s-1‖ ≤ 1/2)
-    {a C : ℝ} (n : ℕ) (ha : (7/8 - 1/200000 : ℝ)<a) (_hC : 0 ≤ C)
+    (hb : ∀ s : ℂ, 7/8 - 21 / 500000<s.re → ‖H s-1‖ ≤ 1/2)
+    {a C : ℝ} (n : ℕ) (ha : (7/8 - 21 / 500000 : ℝ)<a) (_hC : 0 ≤ C)
     (hR : ∀ s : ℂ, a ≤ s.re → s.re ≤ 2 →
       ‖HeckeReciprocal.reciprocal χ s‖ ≤ C*(1+|s.im|^n))
     {s : ℂ} (hs : a ≤ s.re ∧ s.re ≤ 2) :
@@ -36,9 +36,9 @@ theorem quotient_polynomial_bound_on_perturbed_boundary (χ : Character) (H : �
     _ = _ := by ring
 
 theorem contour_shift_left_on_perturbed_boundary (χ : Character) (H : ℂ → ℂ)
-    (hH : DifferentiableOn ℂ H {s : ℂ | 7/8 - 1/200000<s.re})
-    (hb : ∀ s : ℂ, 7/8 - 1/200000<s.re → ‖H s-1‖ ≤ 1/2)
-    (c a C : ℝ) (n : ℕ) (ha : (7/8 - 1/200000 : ℝ)<a) (ha2 : a ≤ 2)
+    (hH : DifferentiableOn ℂ H {s : ℂ | 7/8 - 21 / 500000<s.re})
+    (hb : ∀ s : ℂ, 7/8 - 21 / 500000<s.re → ‖H s-1‖ ≤ 1/2)
+    (c a C : ℝ) (n : ℕ) (ha : (7/8 - 21 / 500000 : ℝ)<a) (ha2 : a ≤ 2)
     (hβ : HeckeZeroSupremum.beta < a) (hC : 0 ≤ C)
     (hR : ∀ s : ℂ, a ≤ s.re → s.re ≤ 2 →
       ‖HeckeReciprocal.reciprocal χ s‖ ≤ C*(1+|s.im|^n))

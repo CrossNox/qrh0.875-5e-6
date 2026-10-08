@@ -20,7 +20,7 @@ theorem source_w_boundary_on_perturbed_region
     (W0 W1 : SchwartzMap ℝ ℂ) (a1 b1 : ℝ) (ha1 : 0 < a1)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (M : Ideal HeckeFamily.O) [NeZero M] (X Y Z : ℝ) (hY : 0 < Y)
-    (s z : ℂ) (hs : (7 / 8 - 1 / 200000 : ℝ) ≤ s.re)
+    (s z : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
     (hz : (33 / 200 : ℝ) ≤ z.re)
     (hEta : LFunction (η.excludePrimes S hS.prime) s ≠ 0)
     {cw : ℝ} (hcw : 1 < cw) :
@@ -51,7 +51,7 @@ theorem source_z_boundary_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (M : Ideal HeckeFamily.O) [NeZero M] (X Y Z : ℝ)
     (hX : 0 < X) (hZ : 0 < Z)
-    (s : ℂ) (hs : (7 / 8 - 1 / 200000 : ℝ) ≤ s.re)
+    (s : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
     (hEta : LFunction (η.excludePrimes S hS.prime) s ≠ 0)
     {e : ℝ} (he : 0 < e) (he' : e ≤ 2 / 3) :
     BoundaryControl (fun z => sourceMultiplier W0 W1 X Y Z
@@ -80,7 +80,7 @@ theorem source_w_shift_on_perturbed_region
     (W0 W1 : SchwartzMap ℝ ℂ) (a1 b1 : ℝ) (ha1 : 0 < a1)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (M : Ideal HeckeFamily.O) [NeZero M] (X Y Z : ℝ) (hY : 0 < Y)
-    (s z : ℂ) (hs : (7 / 8 - 1 / 200000 : ℝ) ≤ s.re)
+    (s z : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
     (hz : (33 / 200 : ℝ) ≤ z.re)
     (hEta : LFunction (η.excludePrimes S hS.prime) s ≠ 0)
     {cw : ℝ} (hcw : 1 < cw) :
@@ -108,7 +108,7 @@ theorem source_residue_z_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (M : Ideal HeckeFamily.O) [NeZero M] (X Y Z : ℝ)
     (hX : 0 < X) (hZ : 0 < Z)
-    (s : ℂ) (hs : (7 / 8 - 1 / 200000 : ℝ) ≤ s.re)
+    (s : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
     (hEta : LFunction (η.excludePrimes S hS.prime) s ≠ 0)
     {e : ℝ} (he : 0 < e) (he' : e ≤ 2 / 3) :
     let K := sourceMultiplier W0 W1 X Y Z (η.excludePrimes S hS.prime) s

@@ -16,7 +16,7 @@ theorem sourceCorrection_differentiable_on_perturbed_boundary (η : Character)
     DifferentiableOn ℂ (sourceCorrection η E)
       {s : ℂ | perturbedBoundary < s.re} := by
   change DifferentiableOn ℂ (fun s => globalClosedCorrection η E s 1 (1/6))
-    {s : ℂ | (7/8-1/200000 : ℝ) < s.re}
+    {s : ℂ | (7/8-21 / 500000 : ℝ) < s.re}
   exact (global_closed_correction_analytic_x_on_perturbed_region η E hE 1 (1/6)
     (by norm_num) (by norm_num)).differentiableOn
 

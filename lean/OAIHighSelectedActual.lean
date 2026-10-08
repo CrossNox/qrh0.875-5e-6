@@ -12,7 +12,7 @@ theorem actualUnramifiedSelected_bound_on_perturbed_boundary (eta : HeckeFamily.
     [(Ideal.span {p}:Ideal O).IsMaximal] (hg : goodLambda∉Ideal.span {p})
     (hc : ringChar (O ⧸ Ideal.span {p})≠2) (hu : IsCoprime u p)
     (hQ : (4:ℝ)≤Ideal.absNorm (Ideal.span {p})) (x w z : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖actualUnramifiedSelected eta p u hg x w z‖≤961 := by
   have hv := Complex.norm_eq_one_of_pow_eq_one (ProbePhysical.actualSextic_unit_six p u hg hc hu) (by decide : (6:ℕ)≠0)
   unfold actualUnramifiedSelected

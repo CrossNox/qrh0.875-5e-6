@@ -8,7 +8,7 @@ open scoped Classical
 namespace SevenEighths.HeckeSignal
 open HeckeFamily Continuation
 
-def perturbedBoundary : ℝ := 7 / 8 - 1 / 200000
+def perturbedBoundary : ℝ := 7 / 8 - 21 / 500000
 
 def perturbedContinuationMargin (β ω σ : ℝ) : ℝ :=
   min (β - perturbedBoundary - ω) σ

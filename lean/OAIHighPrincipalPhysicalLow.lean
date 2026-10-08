@@ -18,8 +18,8 @@ theorem physical_principal_residue_remainder_on_perturbed_boundary {K : ℕ}
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Set.Icc a0 b0) (hW1 : Function.support W1⊆Set.Icc a1 b1)
     (e lengthShift : ℝ) (he : 0<e) (hehi : e≤1/1000)
-    (hβlo : (7/8-1/200000 : ℝ) < HeckeZeroSupremum.beta)
-    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 3/100000) :
+    (hβlo : (7/8-21/500000 : ℝ) < HeckeZeroSupremum.beta)
+    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     letI : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃C : ℝ,0<C ∧ ∀ell : Fin K→ℝ,(∑j,ell j)=1/6+lengthShift →
     ∀W : Fin K→ℝ→ℝ,

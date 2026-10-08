@@ -19,7 +19,7 @@ private lemma height_integral_wzx (f : HeightSpace→ℂ) (hf : Integrable f hei
 
 theorem continuedRowOnLines_x_transport_on_perturbed_boundary {K : ℕ}
     (e l r υ ξ : ℝ) (he : 0<e) (he' : e<1/1000)
-    (hl : (7 / 8 - 1 / 200000 : ℝ) ≤ l) (hlβ : HeckeZeroSupremum.beta+8*e≤l) (hlr : l≤r)
+    (hl : (7 / 8 - 21 / 500000 : ℝ) ≤ l) (hlβ : HeckeZeroSupremum.beta+8*e≤l) (hlr : l≤r)
     (hυ : (1/2:ℝ)≤υ) (hξ : (17/50:ℝ)≤ξ)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S) (P : Fin K→PrimeIdeal) (hP : Function.Injective P)
@@ -48,7 +48,7 @@ theorem continuedRowOnLines_x_transport_on_perturbed_boundary {K : ℕ}
 
 theorem rowIntegral_source_lines_on_perturbed_boundary {K : ℕ}
     (e σ υ r : ℝ) (he : 0<e) (he' : e<1/1000)
-    (hσ : (7 / 8 - 1 / 200000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ) (hσ3 : σ≤3)
+    (hσ : (7 / 8 - 21 / 500000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ) (hσ3 : σ≤3)
     (hυ : (1/2:ℝ)≤υ) (hυ3 : υ≤3) (hr : (17/50:ℝ)≤r)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S) (P : Fin K→PrimeIdeal) (hP : Function.Injective P)

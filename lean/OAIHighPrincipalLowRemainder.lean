@@ -62,7 +62,7 @@ theorem source_remainders_strict_saving_on_perturbed_boundary {ι : Type*}
     (hW1 : Function.support W1⊆Icc a1 b1)
     (e lengthShift : ℝ) (he : 0<e) (hehi : e≤1/1000)
     (hβlo : PrincipalSlotEstimate.perturbedBoundary < HeckeZeroSupremum.beta)
-    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 3/100000) :
+    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     ∃C : ℝ,0<C ∧ ∀(ell : ι→ℝ),
       (∑j∈J,ell j=1/6+lengthShift) → ∀(W : ι→ℝ→ℝ),
     (∀j∈J,∀x,0≤W j x ∧ W j x≤B) →

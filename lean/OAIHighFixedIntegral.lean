@@ -12,7 +12,7 @@ local notation "O" => HeckeFamily.O
 
 theorem continuedPhysicalRowKernel_integrable_on_perturbed_boundary {K : ℕ}
     (e σ υ r : ℝ) (he : 0<e) (he' : e<1/1000)
-    (hσ : (7 / 8 - 1 / 200000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ)
+    (hσ : (7 / 8 - 21 / 500000 : ℝ) ≤ σ) (hσβ : HeckeZeroSupremum.beta+8*e≤σ)
     (hυ : (1/2:ℝ)≤υ) (hr : (17/50:ℝ)≤r)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S) (P : Fin K→PrimeIdeal) (hP : Function.Injective P)

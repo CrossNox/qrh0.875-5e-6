@@ -24,7 +24,7 @@ theorem source_ordered_at_height_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e t cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hcw : 1 < cw) (he : 0 < e)
     (hs1 : (a : ℂ) + t * I ≠ 1) :
@@ -42,7 +42,7 @@ theorem source_ordered_at_height_on_perturbed_region
     (HeckeReciprocal.regularizedL π 1) ^ 2 / 6 * K 1 (1 / 6) := by
   dsimp only
   let : NeZero (∏ P ∈ S, P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
-  have hs : (7 / 8 - 1 / 200000 : ℝ) ≤
+  have hs : (7 / 8 - 21 / 500000 : ℝ) ≤
       (((a : ℂ) + t * I) : ℂ).re := by simpa using ha
   have hη := HeckeZeroSupremum.LFunction_ne_zero_of_beta_lt
     (η.excludePrimes S hS.prime)
@@ -92,7 +92,7 @@ theorem source_ordered_ae_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hcw : 1 < cw) (he : 0 < e) :
     ∀ᵐ t : ℝ,

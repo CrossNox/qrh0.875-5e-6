@@ -11,7 +11,7 @@ open Complex
 namespace SevenEighths.PrincipalSlotEstimate
 open ProbeEuler ProbeLocal
 
-def perturbedBoundary : ℝ := 7 / 8 - 1 / 200000
+def perturbedBoundary : ℝ := 7 / 8 - 21 / 500000
 
 theorem bound_region_correction_defect_on_perturbed_boundary
     {Q : ℝ} {A η s w z : ℂ}
@@ -24,7 +24,7 @@ theorem bound_region_correction_defect_on_perturbed_boundary
   have hb := PerturbedZeroFreeBound.bound_unramified_closed_on_perturbed_region
     Q A η 1 s w z (by linarith) hA hη (by simp)
     (by simpa only [perturbedBoundary] using hs) hw hz
-  have hp : Q ^ (-(363 / 200 : ℝ) + 3 / 100000) ≤ Q ^ (-(1 : ℝ)) :=
+  have hp : Q ^ (-(363 / 200 : ℝ) + 63 / 250000) ≤ Q ^ (-(1 : ℝ)) :=
     Real.rpow_le_rpow_of_exponent_le hQ1 (by norm_num)
   have hi : 240 * Q ^ (-(1 : ℝ)) ≤ 1 / 2 := by
     rw [Real.rpow_neg_one, ← div_eq_mul_inv]

@@ -9,10 +9,10 @@ open OAI.SevenEighths.ProbeEuler
 theorem bound_unramified_closed_on_perturbed_region
     (Q : ℝ) (A eta v x w z : ℂ)
     (hQ : 4 ≤ Q) (hA : ‖A‖ ≤ 1) (heta : ‖eta‖ ≤ 1) (hv : ‖v‖ ≤ 1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (19 / 20 : ℝ) ≤ w.re) (hz : (33 / 200 : ℝ) ≤ z.re) :
     ‖unramifiedClosed Q A eta v x w z - 1‖ ≤
-      240 * Q ^ (-(363 / 200 : ℝ) + 3 / 100000) := by
+      240 * Q ^ (-(363 / 200 : ℝ) + 63 / 250000) := by
   have hQ0 : 0 < Q := by linarith
   have hQ1 : 1 ≤ Q := by linarith
   let V := coordV Q z
@@ -23,16 +23,16 @@ theorem bound_unramified_closed_on_perturbed_region
   have hV : ‖V‖ ≤ Q ^ (-(99 / 100 : ℝ)) := by
     rw [show V = coordV Q z from rfl, coordV_norm Q hQ0]
     exact Real.rpow_le_rpow_of_exponent_le hQ1 (by linarith)
-  have hR : ‖R‖ ≤ Q ^ (-(56 / 25 : ℝ) + 3 / 100000) :=
+  have hR : ‖R‖ ≤ Q ^ (-(56 / 25 : ℝ) + 63 / 250000) :=
     (coordR_norm_le Q hQ0 A x z hA).trans
       (Real.rpow_le_rpow_of_exponent_le hQ1 (by linarith))
   have hW : ‖W‖ ≤ Q ^ (-(19 / 20 : ℝ)) :=
     (coordW_norm_le Q hQ0 v w hv).trans
       (Real.rpow_le_rpow_of_exponent_le hQ1 (by linarith))
-  have hD : ‖D‖ ≤ Q ^ (-(7 / 8 : ℝ) + 1 / 200000) :=
+  have hD : ‖D‖ ≤ Q ^ (-(7 / 8 : ℝ) + 21 / 500000) :=
     (coordD_norm_le Q hQ0 eta v x heta hv).trans
       (Real.rpow_le_rpow_of_exponent_le hQ1 (by linarith))
-  have hK : ‖K‖ ≤ Q ^ (-(33 / 40 : ℝ) + 1 / 200000) :=
+  have hK : ‖K‖ ≤ Q ^ (-(33 / 40 : ℝ) + 21 / 500000) :=
     (coordK_norm_le Q hQ1 eta x w heta).trans
       (Real.rpow_le_rpow_of_exponent_le hQ1 (by linarith))
   have hVhalf : ‖V‖ ≤ 1 / 2 := hV.trans
@@ -47,14 +47,14 @@ theorem bound_unramified_closed_on_perturbed_region
   have hQinv : ‖(Q : ℂ)⁻¹‖ ≤ 1 := by
     rw [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hQ0, ← one_div]
     exact (div_le_one hQ0).mpr hQ1
-  let T := Q ^ (-(363 / 200 : ℝ) + 3 / 100000)
+  let T := Q ^ (-(363 / 200 : ℝ) + 63 / 250000)
   have hT : 0 ≤ T := Real.rpow_nonneg hQ0.le _
   have hRT : ‖R‖ ≤ T := hR.trans
     (Real.rpow_le_rpow_of_exponent_le hQ1 (by norm_num))
   have hprod (a b exponentA exponentB : ℝ)
       (ha : 0 ≤ a) (hb : 0 ≤ b)
       (haa : a ≤ Q ^ exponentA) (hbb : b ≤ Q ^ exponentB)
-      (hexponents : exponentA + exponentB ≤ -(363 / 200 : ℝ) + 3 / 100000) :
+      (hexponents : exponentA + exponentB ≤ -(363 / 200 : ℝ) + 63 / 250000) :
       a * b ≤ T := by
     calc
       a * b ≤ Q ^ exponentA * Q ^ exponentB :=

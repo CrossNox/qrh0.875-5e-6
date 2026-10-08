@@ -12,7 +12,7 @@ local notation "O" => HeckeFamily.O
 
 theorem canonical_probe_minus_perturbed_central (K : ℕ) (e δ a b B ζ t saving : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2) (hζ : 0<ζ) (ht : 0≤t)
-    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : (7/8-1/200000:ℝ)≤HeckeZeroSupremum.beta)
+    (ha : 0<a) (hb : 0<b) (hB : 0≤B) (hβ : (7/8-21 / 500000:ℝ)≤HeckeZeroSupremum.beta)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (1/4) S)
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)

@@ -15,7 +15,7 @@ include hc in
 lemma rowBaseFinite_selected_bound_on_perturbed_boundary (eta a rho x w z : ℂ)
     (hQ : (4:ℝ)≤Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖≤1) (ha : ‖a‖≤1) (hρ : rho^6=1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re)
     (j e l : ℕ) (hj : j<6)
     (hf : (e=0 ∧ l=2) ∨ (e=1 ∧ l=0) ∨ (e=0 ∧ l=1) ∨ (e=1 ∧ l=1)) :
     ‖rowBaseFinite p hp hg eta a ((Ideal.absNorm (Ideal.span {p}):ℂ)^(-x))
@@ -51,7 +51,7 @@ include hc in
 theorem rowClosedMarked_selected_bound_on_perturbed_boundary (eta a rho x w z : ℂ)
     (hQ : (4:ℝ)≤Ideal.absNorm (Ideal.span {p}))
     (heta : ‖eta‖≤1) (ha : ‖a‖≤1) (hρ : rho^6=1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) (j : ℕ) (hj : j<6) :
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) (j : ℕ) (hj : j<6) :
     ‖rowClosedMarked p hp hg eta a ((Ideal.absNorm (Ideal.span {p}):ℂ)^(-x))
       ((Ideal.absNorm (Ideal.span {p}):ℂ)^(-w)) (coordV (Ideal.absNorm (Ideal.span {p})) z) rho j‖≤128*(Ideal.absNorm (Ideal.span {p}):ℝ)^(-x.re+max (1-w.re) 0) := by
   have hpow : 0≤(Ideal.absNorm (Ideal.span {p}):ℝ)^(-x.re+max (1-w.re) 0) := by positivity

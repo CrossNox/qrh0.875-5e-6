@@ -9,7 +9,7 @@ open ProbeLocal
 
 lemma unramifiedSelected_error_bound_on_perturbed_boundary (Q : ℝ) (A eta v x w z : ℂ)
     (hQ : 4≤Q) (hA : ‖A‖≤1) (heta : ‖eta‖=1) (hv : ‖v‖=1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖unramifiedSelected Q A eta v x w z+unramifiedClosed Q A eta v x w z*star v‖≤720 := by
   have hQ0 : 0<Q := by linarith
   have hQ1 : 1≤Q := by linarith
@@ -33,7 +33,7 @@ lemma unramifiedSelected_error_bound_on_perturbed_boundary (Q : ℝ) (A eta v x 
 
 lemma unramifiedSelected_bound_on_perturbed_boundary (Q : ℝ) (A eta v x w z : ℂ)
     (hQ : 4≤Q) (hA : ‖A‖≤1) (heta : ‖eta‖=1) (hv : ‖v‖=1)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖unramifiedSelected Q A eta v x w z‖≤961 := by
   have hd := unramifiedClosed_first_region_bound Q A eta v x w z (1/4) hQ hA heta.le hv.le
     (by norm_num) (by linarith) hz (by linarith) (by linarith)

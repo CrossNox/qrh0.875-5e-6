@@ -47,7 +47,7 @@ lemma perturbed_source_z_scale_identity {ι : Type*} (J : Finset ι)
 
 lemma perturbed_source_w_strict_exponent (β e t : ℝ)
     (he' : e ≤ 1 / 1000)
-    (ht : 0 ≤ t) (ht' : t ≤ 3 / 100000) :
+    (ht : 0 ≤ t) (ht' : t ≤ 1 / 1000) :
     (β + e) - 11 / 16 + (13 / 16) * e - 23 / 960 +
       t * (1 / 40 + 3 * e / 2) ≤ β - 11 / 16 - 17 / 48000 := by
   have heprod := mul_le_mul_of_nonneg_left he' ht

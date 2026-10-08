@@ -24,7 +24,7 @@ theorem principal_box_majorant_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξlo : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξlo : 1 / 6 < ξlo) :
     ∃ A : ℝ, 0 ≤ A ∧
       ∀ σ ∈ Icc a 3, ∀ ξ ∈ Icc ξlo 2, ∀ p : HeightSpace,
@@ -101,7 +101,7 @@ theorem continued_x_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) < a) (ha3 : a ≤ 3)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) < a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) (v u : ℝ) :
     verticalIntegral a (fun s =>

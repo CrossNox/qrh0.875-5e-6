@@ -23,8 +23,8 @@ private theorem perturbedSavingPoolOutside (S : Finset (Ideal O))
 theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ) (e δ a b B ζ lengthShift saving τ ellMin nu : ℝ)
     (he : 0<e) (he' : e<1/1000) (hδ : 0<δ) (hδ' : δ≤1/2) (hζ : 0<ζ) (hζ' : ζ≤1/48) (hτ : 0<τ)
     (ha : 0<a) (hab : a≤b) (hB : 0≤B) (hmin : 0<ellMin) (hnu : 0<nu)
-    (hβ : (7/8-1/200000:ℝ)<HeckeZeroSupremum.beta)
-    (ht : 0≤lengthShift) (ht' : lengthShift≤3/100000)
+    (hβ : (7/8-21 / 500000:ℝ)<HeckeZeroSupremum.beta)
+    (ht : 0≤lengthShift) (ht' : lengthShift≤1 / 1000)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hTail : PerturbedCorrectionTail S) (hmax : ∀P∈S,P.IsMaximal)
     (hfirst : FirstTail (4*e) S)
     (ell : Fin K→ℝ) (hell : ∀j,ellMin≤ell j) (hellinj : Function.Injective ell) (hellsum : ∑j,ell j=1/6+lengthShift)
@@ -37,7 +37,7 @@ theorem actual_normalized_probe_transport_saving_on_perturbed_boundary (K : ℕ)
     (sigma : ℝ)
     (_hgeometric : sigma+8*e+nu≤63/800-51*lengthShift/100) (hprincipal : sigma+nu≤1/3000)
     (hwindow : sigma+e≤PrincipalSlotEstimate.perturbedBoundary*ellMin)
-    (hlarge : sigma+nu+1/200000≤saving+3/16) :
+    (hlarge : sigma+nu+21 / 500000≤saving+3/16) :
     let : NeZero (∏P∈S,P) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃n : ℕ,0<n ∧ ∀η : Character,∃C : ℝ,0<C ∧ ∀ᶠ Z : ℝ in atTop,
       let Yp := fun j=>Z^(ell j)

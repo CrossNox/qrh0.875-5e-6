@@ -21,7 +21,7 @@ theorem bound_arithmetic_on_lines_with_gaps_on_perturbed_region
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (X Y Z a Bs Bz cw σ ξ υ C : ℝ)
     (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hσ : σ ∈ Icc a Bs) (hξ : ξ ∈ Icc (33 / 200 : ℝ) Bz)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (δw δz : ℝ) (hdw : 0 < δw) (hdz : 0 < δz)
@@ -164,7 +164,7 @@ theorem bound_arithmetic_on_lines_on_perturbed_region
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (X Y Z a Bs Bz cw σ ξ υ C : ℝ)
     (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hσ : σ ∈ Icc a Bs) (hξ : ξ ∈ Icc (33 / 200 : ℝ) Bz)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1)
@@ -197,7 +197,7 @@ theorem continued_source_joint_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -238,7 +238,7 @@ theorem source_joint_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -270,7 +270,7 @@ theorem source_joint_fubini_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) :
@@ -311,7 +311,7 @@ theorem continued_source_slices_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ υ cw : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (hξ : 33 / 200 ≤ ξ)
     (hcw : 1 < cw) (hυ : υ ∈ Icc (19 / 20 : ℝ) cw)
     (hξ1 : 6 * ξ ≠ 1) (hυ1 : υ ≠ 1) (N : ℕ) :
@@ -367,7 +367,7 @@ theorem source_w_leftover_outer_integrable_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a e t : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a) (he : 0 < e)
     (hs1 : (a : ℂ) + t * I ≠ 1) :
     let s : ℂ := (a : ℂ) + t * I
@@ -415,7 +415,7 @@ theorem source_z_boundary_any_on_perturbed_region
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 : ℝ) (ha0 : 0 < a0)
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (X Y Z : ℝ) (hX : 0 < X) (hZ : 0 < Z)
-    (s : ℂ) (hs : (7 / 8 - 1 / 200000 : ℝ) ≤ s.re)
+    (s : ℂ) (hs : (7 / 8 - 21 / 500000 : ℝ) ≤ s.re)
     (hη : LFunction (η.excludePrimes S hS.prime) s ≠ 0)
     {e : ℝ} (he : 0 < e) :
     BoundaryControl (fun z => sourceMultiplier W0 W1 X Y Z

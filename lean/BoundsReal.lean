@@ -1,11 +1,11 @@
-import Mathlib
+import EndpointCertificate
 
 namespace PerturbedZeroFreeBound
 
 noncomputable section
 
-def lengthChange : ℝ := 3 / 100000
-def boundary : ℝ := 7 / 8 - 1 / 200000
+def lengthChange : ℝ := 169 / 1000000
+def boundary : ℝ := 7 / 8 - 21 / 500000
 def slotLength : ℝ := 1 / 6 + lengthChange
 def xLength : ℝ := 17 / 48 - lengthChange / 2
 def yLength : ℝ := 23 / 48 - lengthChange / 2
@@ -24,7 +24,7 @@ theorem verify_signal_exponent (sigma : ℝ) :
   ring
 
 theorem verify_low_margin :
-    (boundary - 11 / 16) - (xLength / 2 + (1 / 8) / 12) = 1 / 400000 := by
+    (boundary - 11 / 16) - (xLength / 2 + (1 / 8) / 12) = 1 / 4000000 := by
   norm_num [boundary, xLength, lengthChange]
 
 theorem verify_low_scale_conditions (d : ℝ) (hd : d ≤ slotLength) :
@@ -65,29 +65,25 @@ theorem verify_high_perturbation (a delta q rowExponent : ℝ)
     highExponent boundary slotLength yLength rowLength a delta q rowExponent =
       highExponent (7 / 8) (1 / 6) (23 / 48) (13 / 16)
         a delta q rowExponent +
-      1 / 200000 +
+      21 / 500000 +
       lengthChange * (-(1 / 2) + delta + q + 3 * rowExponent / 2) := by
   rw [show a = (1 + delta) / 2 by linarith]
   unfold highExponent boundary slotLength yLength rowLength lengthChange
   ring
 
-theorem bound_high_endpoint (a delta q rowExponent : ℝ)
-    (ha : 2 * a = 1 + delta)
-    (hdelta : delta ≤ 3 / 4) (hq : q ≤ delta / 2)
-    (hrow : rowExponent ≤ 17 / 12)
-    (hsource : highExponent (7 / 8) (1 / 6) (23 / 48) (13 / 16)
-      a delta q rowExponent ≤ -(49 / 440640)) :
-    highExponent boundary slotLength yLength rowLength a delta q rowExponent ≤
-      -(2611 / 110160000) := by
-  rw [verify_high_perturbation a delta q rowExponent ha]
-  have hderivative := bound_high_derivative delta q rowExponent hdelta hq hrow
-  have ht : lengthChange = 3 / 100000 := rfl
-  rw [ht]
-  linarith
+theorem bound_high_endpoint (delta y : ℝ)
+    (hdelta : 0 ≤ delta) (hdelta' : delta ≤ 3 / 4)
+    (hy : 0 ≤ y) (hy' : y ≤ 1 / 2) :
+    highExponent boundary slotLength yLength rowLength ((1 + delta) / 2)
+      delta ((1 / 2 - y) * delta) (sourceRowExponent delta y) ≤
+      -(1 / 500000) := by
+  convert bound_perturbed_high_endpoint delta y hdelta hdelta' hy hy' using 1
+  norm_num [highExponent, sourceHighExponent, boundary, slotLength, yLength,
+    rowLength, lengthChange]
 
 theorem verify_analytic_margins :
-    -(363 / 200 : ℝ) + 3 / 100000 < -1 ∧
-    -(33 / 40 : ℝ) + 3 / 100000 < 0 ∧
+    -(363 / 200 : ℝ) + 63 / 250000 < -1 ∧
+    -(33 / 40 : ℝ) + 63 / 250000 < 0 ∧
     boundary - 1 / 2 > 37 / 100 ∧
     slotLength / rowLength > 8 / 39 ∧
     5 * slotLength - rowLength > 1 / 48 := by

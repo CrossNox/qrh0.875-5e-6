@@ -73,7 +73,7 @@ theorem PerturbedCorrectionTail.to_source {S : Finset Id}
 theorem bound_ideal_closed_correction_on_perturbed_region
     (η : HeckeFamily.Character) (P : PrimeIdeal)
     (hP : 4 ≤ Ideal.absNorm P.val) (x w z : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     ‖idealClosedCorrection η P x w z - 1‖ ≤
       perturbedGlobalPrimeDefectBound P := by
@@ -89,7 +89,7 @@ theorem bound_ideal_closed_correction_on_perturbed_region
 theorem bound_global_closed_correction_on_perturbed_region
     (η : HeckeFamily.Character) (S : Finset Id)
     (hS : PerturbedCorrectionTail S) (x w z : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     ‖globalClosedCorrection η S x w z - 1‖ ≤ 1 / 2 :=
   product_defect_le _ _ hS.sum_defects
@@ -102,7 +102,7 @@ theorem global_closed_correction_analytic_x_on_perturbed_region
     (hS : PerturbedCorrectionTail S) (w z : ℂ)
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun x => globalClosedCorrection η S x w z)
-      {x : ℂ | 7 / 8 - 1 / 200000 < x.re} := by
+      {x : ℂ | 7 / 8 - 21 / 500000 < x.re} := by
   apply normalProduct_analytic _ _ _ (Complex.isOpen_re_gt _) hS.sum_defects
   · intro P
     apply unramified_closed_analytic_x_on_perturbed_region
@@ -119,7 +119,7 @@ theorem global_closed_correction_analytic_x_on_perturbed_region
 theorem global_closed_correction_analytic_w_on_perturbed_region
     (η : HeckeFamily.Character) (S : Finset Id)
     (hS : PerturbedCorrectionTail S) (x z : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun w => globalClosedCorrection η S x w z)
       {w : ℂ | 9 / 10 < w.re} := by
@@ -140,7 +140,7 @@ theorem global_closed_correction_analytic_w_on_perturbed_region
 theorem global_closed_correction_analytic_z_on_perturbed_region
     (η : HeckeFamily.Character) (S : Finset Id)
     (hS : PerturbedCorrectionTail S) (x w : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hw : (9 / 10 : ℝ) ≤ w.re) :
     AnalyticOnNhd ℂ (fun z => globalClosedCorrection η S x w z)
       {z : ℂ | 4 / 25 < z.re} := by

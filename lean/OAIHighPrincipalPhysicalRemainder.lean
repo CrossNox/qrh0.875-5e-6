@@ -17,9 +17,9 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
     (W0 W1 : SchwartzMap ℝ ℂ) (a0 b0 a1 b1 : ℝ) (ha0 : 0<a0) (ha1 : 0<a1)
     (hW0 : Function.support W0⊆Set.Icc a0 b0) (hW1 : Function.support W1⊆Set.Icc a1 b1)
     (e lengthShift : ℝ) (he : 0<e) (hehi : e≤1/1000)
-    (hβlo : (7/8-1/200000 : ℝ) ≤ HeckeZeroSupremum.beta)
+    (hβlo : (7/8-21/500000 : ℝ) ≤ HeckeZeroSupremum.beta)
     (hβhi : HeckeZeroSupremum.beta ≤ 7/8)
-    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 3/100000) :
+    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     letI : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃C : ℝ,0<C ∧ ∀ell : Fin K→ℝ,(∑j,ell j)=1/6+lengthShift →
     ∀W : Fin K→ℝ→ℝ,
@@ -38,7 +38,7 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
         (globalClosedCorrection η S)
         (windowMultiplier η Finset.univ T (fun j x=>(W j x:ℂ))
           (fun j=>Z^(ell j)))‖≤
-      C/e*Z^(HeckeZeroSupremum.beta-11/16-1/3000) := by
+      C/e*Z^(HeckeZeroSupremum.beta-11/16-1/4000) := by
   let : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
   obtain ⟨C,hC,hbound⟩ :=
     ProbePrincipalRemainderBounds.source_remainders_fixed_contour_saving η S hS
@@ -71,10 +71,10 @@ theorem physical_principal_residue_remainder_with_perturbed_lengths {K : ℕ}
   unfold sourceResidueIntegral windowMultiplier
   rw [hres,add_sub_cancel_right]
   have hn := (norm_add_le _ _).trans (add_le_add hb.1 hb.2)
-  change _≤(2*C)/e*Z^(HeckeZeroSupremum.beta-11/16-1/3000)
+  change _≤(2*C)/e*Z^(HeckeZeroSupremum.beta-11/16-1/4000)
   apply hn.trans
   have hCe : C≤C/e := (le_div_iff₀ he).mpr (by nlinarith)
-  have hzpow : 0≤Z^(HeckeZeroSupremum.beta-11/16-1/3000) :=
+  have hzpow : 0≤Z^(HeckeZeroSupremum.beta-11/16-1/4000) :=
     Real.rpow_nonneg hZ0.le _
   have htwo : (2*C)/e=2*(C/e) := by ring
   rw [htwo]

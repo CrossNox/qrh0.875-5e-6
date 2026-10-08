@@ -13,7 +13,7 @@ local notation "O" => HeckeFamily.O
 
 lemma continuedCompensatedLocal_ramified_bound_on_perturbed_boundary (η : Character) (u : FreeRow) (P : PrimeIdeal)
     (hs : Supported P.val) (hP : P.val∣Ideal.span {u.val}) (hQ : (4:ℝ)≤P.val.absNorm)
-    (x w z : ℂ) (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (x w z : ℂ) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖continuedCompensatedLocal η u P hs x w z
       (star (idealCoeff η P.val)*(P.val.absNorm:ℂ)^x) ((P.val.absNorm:ℂ)^(-w))‖≤
         385*(P.val.absNorm:ℝ)^(max (1-w.re) 0) := by
@@ -36,7 +36,7 @@ lemma continuedCompensatedLocal_ramified_bound_on_perturbed_boundary (η : Chara
 
 lemma continuedCompensatedLocal_unramified_bound_on_perturbed_boundary (η : Character) (u : FreeRow) (P : PrimeIdeal)
     (hs : Supported P.val) (hP : ¬P.val∣Ideal.span {u.val}) (hQ : (4:ℝ)≤P.val.absNorm)
-    (x w z : ℂ) (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (x w z : ℂ) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖continuedCompensatedLocal η u P hs x w z
       (star (idealCoeff η P.val)*(P.val.absNorm:ℂ)^x) ((P.val.absNorm:ℂ)^(-w))‖≤961 := by
   let p := primaryGenerator P.val
@@ -66,7 +66,7 @@ lemma continuedCompensatedLocal_unramified_bound_on_perturbed_boundary (η : Cha
 
 lemma continuedCompensatedLocal_bound_on_perturbed_boundary (η : Character) (u : FreeRow) (P : PrimeIdeal)
     (hs : Supported P.val) (hQ : (4:ℝ)≤P.val.absNorm)
-    (x w z : ℂ) (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
+    (x w z : ℂ) (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hw : (1/2:ℝ)≤w.re) (hz : (17/50:ℝ)≤z.re) :
     ‖continuedCompensatedLocal η u P hs x w z
       (star (idealCoeff η P.val)*(P.val.absNorm:ℂ)^x) ((P.val.absNorm:ℂ)^(-w))‖≤
         961*(if P.val∣Ideal.span {u.val} then (P.val.absNorm:ℝ)^(max (1-w.re) 0) else 1) := by

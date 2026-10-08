@@ -15,7 +15,7 @@ local notation "Id" => Ideal ActualEisensteinCubic.O
 lemma marked_differentiableAt_x_on_perturbed_boundary
     (η : Character) (P : PrimeIdeal) (x w z : ℂ)
     (hQ : 4 ≤ (Ideal.absNorm P.val : ℝ))
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re)
     (hz : (4 / 25 : ℝ) ≤ z.re) :
     DifferentiableAt ℂ (fun x => idealMarkedClosed η P x w z) x := by
   have hQ0 : 0 < (Ideal.absNorm P.val : ℝ) := by linarith
@@ -38,7 +38,7 @@ theorem local_analytic_x_on_perturbed_boundary
     (P : PrimeIdeal) (hP : P.val ∉ S) (w z : ℂ)
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun x => localMultiplier η P x w z)
-      {x : ℂ | 7 / 8 - 1 / 200000 < x.re} := by
+      {x : ℂ | 7 / 8 - 21 / 500000 < x.re} := by
   have hQ : 4 ≤ (Ideal.absNorm P.val : ℝ) := by
     exact_mod_cast hS.norm_four P hP
   have hQ0 : 0 < (Ideal.absNorm P.val : ℝ) := by linarith
@@ -82,7 +82,7 @@ theorem slot_analytic_x_on_perturbed_boundary
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S) (w z : ℂ)
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ (fun x => slotMultiplier η J T b x w z)
-      {x : ℂ | 7 / 8 - 1 / 200000 < x.re} := by
+      {x : ℂ | 7 / 8 - 21 / 500000 < x.re} := by
   apply J.analyticOnNhd_fun_prod
   intro j hj
   apply (T j).analyticOnNhd_fun_sum
@@ -99,7 +99,7 @@ theorem combined_slot_analytic_x_on_perturbed_boundary
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ
       (fun x => globalClosedCorrection η S x w z * slotMultiplier η J T b x w z)
-      {x : ℂ | 7 / 8 - 1 / 200000 < x.re} :=
+      {x : ℂ | 7 / 8 - 21 / 500000 < x.re} :=
   (global_closed_correction_analytic_x_on_perturbed_region η S hS w z hw hz).mul
     (slot_analytic_x_on_perturbed_boundary η S hS J T b hT w z hw hz)
 
@@ -113,11 +113,11 @@ theorem continued_source_analytic_x_on_perturbed_boundary
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re) :
     AnalyticOnNhd ℂ
       (fun x => continuedSourceMultiplier η S hS.prime J T b W0 W1 X Y Z x w z)
-      {x : ℂ | max (7 / 8 - 1 / 200000 : ℝ) HeckeZeroSupremum.beta < x.re} := by
+      {x : ℂ | max (7 / 8 - 21 / 500000 : ℝ) HeckeZeroSupremum.beta < x.re} := by
   have hn : (Z : ℂ) ≠ 0 := by exact_mod_cast hZ.ne'
   apply DifferentiableOn.analyticOnNhd _ (Complex.isOpen_re_gt _)
   intro x hx
-  have hx' : (7 / 8 - 1 / 200000 : ℝ) < x.re :=
+  have hx' : (7 / 8 - 21 / 500000 : ℝ) < x.re :=
     lt_of_le_of_lt (le_max_left _ _) hx
   have hβ : HeckeZeroSupremum.beta < x.re :=
     lt_of_le_of_lt (le_max_right _ _) hx
@@ -139,7 +139,7 @@ theorem continued_source_differentiable_strip_on_perturbed_boundary
     (hT : ∀ j ∈ J, ∀ P ∈ T j, P.val ∉ S)
     (W0 W1 : SchwartzMap ℝ ℂ) (X Y Z : ℝ) (hZ : 0 < Z) (w z : ℂ)
     (hw : (9 / 10 : ℝ) ≤ w.re) (hz : (4 / 25 : ℝ) ≤ z.re)
-    {a c : ℝ} (ha : 7 / 8 - 1 / 200000 < a)
+    {a c : ℝ} (ha : 7 / 8 - 21 / 500000 < a)
     (hβ : HeckeZeroSupremum.beta < a) :
     DifferentiableOn ℂ
       (fun x => continuedSourceMultiplier η S hS.prime J T b W0 W1 X Y Z x w z)

@@ -23,7 +23,7 @@ theorem continued_triple_x_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) < a) (ha3 : a ≤ 3)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) < a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) :
     let F := fun s w z =>
@@ -71,7 +71,7 @@ theorem continued_triple_z_shift_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (X Y Z a ξ : ℝ) (hX : 0 < X) (hY : 0 < Y) (hZ : 0 < Z)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a) (ha3 : a ≤ 3)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a) (ha3 : a ≤ 3)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 1 / 6 < ξ) (hξ2 : ξ ≤ 2) :
     let F := fun s w z =>

@@ -19,7 +19,7 @@ theorem residue_uniform_moments_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (a ξ : ℝ)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 33 / 200 ≤ ξ) (hξ1 : 6 * ξ ≠ 1) (N : ℕ) :
     ∃ K : ℝ, 0 < K ∧ ∀ (η : Character) (S : Finset Id)
@@ -144,7 +144,7 @@ theorem residue_uniform_tails_on_perturbed_region
     (hW0 : Function.support W0 ⊆ Icc a0 b0)
     (hW1 : Function.support W1 ⊆ Icc a1 b1)
     (a ξ : ℝ)
-    (ha : (7 / 8 - 1 / 200000 : ℝ) ≤ a)
+    (ha : (7 / 8 - 21 / 500000 : ℝ) ≤ a)
     (hβ : HeckeZeroSupremum.beta < a)
     (hξ : 33 / 200 ≤ ξ) (hξ1 : 6 * ξ ≠ 1) (N : ℕ) :
     ∃ K : ℝ, 0 < K ∧ ∀ (η : Character) (S : Finset Id)

@@ -13,7 +13,7 @@ theorem calibrated_physicalRow_w_growth_on_perturbed_boundary (eps : ℝ)
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hfirst : FirstTail eps S)
     (hmax : ∀P∈S,P.IsMaximal) (T : Finset PrimeIdeal) (hT : ∀P∈T,P.val∉S)
     (η : Character) (u : FreeRow) (hu : u.val≠1) (x z : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re)
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re)
     (hxw : 1+eps≤x.re+1/2) :
     ∃C : ℝ,0<C ∧ ∀w : ℂ,(1/2:ℝ)≤w.re →
       ‖star ((calibrationForSet S hmax).residueMonoid u.val)*

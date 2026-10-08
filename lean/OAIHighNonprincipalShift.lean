@@ -14,7 +14,7 @@ lemma physicalRow_w_height_bound_on_perturbed_boundary {K : ℕ} (eps : ℝ) (he
     (S : Finset (Ideal O)) (hS : SourceExclusions S) (hfirst : FirstTail (eps/2) S)
     (hmax : ∀P∈S,P.IsMaximal) (P : Fin K→PrimeIdeal) (hPS : ∀i,(P i).val∉S)
     (η : Character) (u : FreeRow) (hu : u.val≠1) (x z : ℂ)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re) (hxw : 1+eps≤x.re+1/2) :
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re) (hxw : 1+eps≤x.re+1/2) :
     ∃C : ℝ,0<C ∧ ∀v : ℝ,(1/2:ℝ)≤v → ∀t : ℝ,
       ‖star ((calibrationForSet S hmax).residueMonoid u.val)*
         physicalCompensatedRow S hS (Finset.univ.image P) (contourTupleOutside S P hPS) η u x ((v:ℂ)+t*I) z‖≤
@@ -37,7 +37,7 @@ theorem nonprincipal_w_integral_eq_on_perturbed_boundary {K : ℕ}
     (P : Fin K→PrimeIdeal) (hPS : ∀i,(P i).val∉S) (η : Character) (u : FreeRow) (hu : u.val≠1)
     (W0 W1 : SchwartzMap ℝ ℂ) (a b : ℝ) (ha : 0<a) (hW : Function.support W1⊆Icc a b)
     (X Y Z : ℝ) (hY : 0<Y) (x z : ℂ) (l r : ℝ) (hlr : l≤r) (hl : (1/2:ℝ)≤l)
-    (hx : (7 / 8 - 1 / 200000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re) (hxw : 1+eps≤x.re+1/2) :
+    (hx : (7 / 8 - 21 / 500000 : ℝ) ≤ x.re) (hz : (17/50:ℝ)≤z.re) (hxw : 1+eps≤x.re+1/2) :
     (∫t : ℝ,continuedPhysicalRowKernel S hS hmax P hPS η u W0 W1 X Y Z x ((l:ℂ)+t*I) z)=
       ∫t : ℝ,continuedPhysicalRowKernel S hS hmax P hPS η u W0 W1 X Y Z x ((r:ℂ)+t*I) z := by
   obtain ⟨C,hC,hbound⟩ := physicalRow_w_height_bound_on_perturbed_boundary eps heps S hS hfirst hmax P hPS η u hu x z hx hz hxw

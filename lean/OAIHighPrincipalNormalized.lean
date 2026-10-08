@@ -30,7 +30,7 @@ theorem actual_ray_principal_comparison_on_perturbed_boundary {K : ℕ}
     (hp0 : ∀y,0≤(W0 y).re) (hp1 : ∀y,0≤(W1 y).re) (hn0 : W0≠0) (hn1 : W1≠0)
     (e nu : ℝ) (he : 0<e) (hehi : e≤1/1000) (hnu : 0<nu)
     (hβlo : PrincipalSlotEstimate.perturbedBoundary < HeckeZeroSupremum.beta)
-    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 3/100000) :
+    (ht : 0 ≤ lengthShift) (ht' : lengthShift ≤ 1/1000) :
     letI : NeZero (∏p∈S,p) := ⟨fixedPrimeProduct_ne_zero S hS.prime⟩
     ∃C : ℝ,0<C ∧ ∀ᶠZ : ℝ in atTop,
       let T := fun j=>pool (RayQuotient.identityClass M H) S c d (Z^(ell j))
