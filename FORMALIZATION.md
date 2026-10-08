@@ -56,13 +56,22 @@ the joint contour-line amplitude, joint integrability, Fubini exchange,
 and slice estimates. `OAIHighOrderedContours.lean` proves the ordered
 principal `w` and `z` double shift at fixed height and almost everywhere
 on the new boundary.
+`OAIHighResidueBounds.lean` and `OAIHighOuterContours.lean` carry the
+residue pair and ordered outer identity. `OAIHighUniformTails.lean`,
+`OAIHighHighSlices.lean`, and `OAIHighResidueMoments.lean` prove the
+uniform joint tails, raw high slices, and residue tails needed to pass
+contour limits.
+`OAIHighXTransport.lean`, `OAIHighZTransport.lean`, and
+`OAIHighTripleTransport.lean` prove the principal triple-contour moves
+from the initial lines to the enlarged region. `OAIHighInitialPlacement.lean`
+combines them with the ordered residue shift at any
+`174999/200000 < a ≤ 3` above the Hecke zero supremum.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires the principal `x` contour transport and
-uniform high-slice and residue bounds, followed by row-dependent
-high-side contours at the new boundary. The detector and high-row assembly
+The remaining proof requires the row-dependent high-side contours at the
+new boundary and their use in the detector. The detector and high-row assembly
 must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
 

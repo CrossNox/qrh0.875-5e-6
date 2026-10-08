@@ -12,6 +12,15 @@ import OAIHighComplexSlotBounds
 import OAIHighSourceContours
 import OAIHighArithmeticLines
 import OAIHighOrderedContours
+import OAIHighResidueBounds
+import OAIHighOuterContours
+import OAIHighUniformTails
+import OAIHighHighSlices
+import OAIHighResidueMoments
+import OAIHighXTransport
+import OAIHighZTransport
+import OAIHighTripleTransport
+import OAIHighInitialPlacement
 
 #print axioms PerturbedZeroFreeBound.exists_perturbed_principal_correction
 #print axioms OAI.SevenEighths.ProbeEuler.bound_ramified_closed_on_perturbed_region
@@ -28,3 +37,8 @@ import OAIHighOrderedContours
 #print axioms OAI.SevenEighths.ProbeFiniteProductBounds.bound_combined_slots_with_complex_weight_on_perturbed_boundary
 #print axioms OAI.SevenEighths.ProbeFiniteProductBounds.source_residue_z_shift_on_perturbed_region
 #print axioms OAI.SevenEighths.ProbePrincipalContours.source_ordered_ae_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePrincipalContours.source_initial_ordered_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePrincipalContours.source_uniform_joint_tails_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePrincipalContours.raw_source_uniform_high_slices_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePrincipalContours.residue_uniform_tails_on_perturbed_region
+#print axioms OAI.SevenEighths.ProbePrincipalTransport.source_initial_ordered_at_a_on_perturbed_region
