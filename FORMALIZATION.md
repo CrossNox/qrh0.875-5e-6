@@ -108,14 +108,37 @@ assemble the perturbed small- and large-row tails, cube truncation error,
 and the canonical ray-cube bin choice. Their common geometry uses
 `17/48-t/2`, `23/48-t/2`, slot mass `1/6+t`, and row cutoff
 `13/16+3*t/2+ζ`.
+`OAIHighSignalShift.lean` through `OAIHighPrincipalActualBound.lean` prove
+the principal slot-ratio and normalized residue estimates on the new
+boundary. `OAIHighPrincipalScale.lean` through
+`OAIHighPrincipalPhysicalRemainder.lean` prove the physical principal
+remainder at the changed lengths. `OAIHighPrincipalWindow.lean` through
+`OAIHighPrincipalNormalized.lean` carry the contour to `β*+e` and prove
+the normalized principal comparison. This retains a `1/3000` power saving
+relative to the zero supremum when it lies between the proposed boundary
+and `7/8`.
+`OAIHighNormalizedTransport.lean` through `OAIHighFromMoments.lean` prove
+the normalized probe transport and the raw-moment-to-probe estimate with
+the perturbed physical scales. `OAIHighAssemblyClass.lean` through
+`OAIHighAssemblyFixedHigh.lean` carry the selected count parameters into
+the concrete detector data. `OAIHighSignalIdentity.lean` and
+`OAIHighCommonProbe.lean` prove the continuation contradiction at the new
+boundary. `OAIHighAssemblyFinal.lean` concludes `β* ≤ 174999/200000` and
+the Hecke, Dirichlet, and zeta nonvanishing claims from
+`RawPerturbedMomentInput` and `β* ≤ 7/8`. It also derives the old bound
+from the upstream `ChosenMomentInput` as a separate conditional route.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires the fourth-moment input for the changed
-parameters and its use in the detector. The high-row and final detector
-assembly must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
-`β* - 174999/200000`.
+The remaining proof requires `RawPerturbedMomentInput`, the fourth-moment
+estimate with zero moment excess, slot mass `1/6+3/100000`, and detector
+labels at most `7/8`. The old `RawMomentInput` applies only when
+`β* > 7/8` and uses moment excess `β*-7/8`, so it does not discharge this
+new input. The current Lean theorem is conditional, not an unconditional
+proof of the stronger zero-free region. The prior `β* ≤ 7/8` result is
+passed as a hypothesis in the final theorem because rebuilding the large
+upstream certified-band module was not completed in this checkout.
 
 The upstream low-side declaration that was strengthened is
 [`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).
@@ -146,7 +169,5 @@ probe needs `d ≤ 1/6+3/100000`, surviving length
 by setting its loss parameter `η` as large as the slot-length increase.
 
 The [existing final assembly](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssembly.lean)
-starts with the assumption `7/8 < β*`. Its
-[fixed high bound](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssemblyFixedHigh.lean)
-uses the original row scale `13/16` and boundary `7/8`. Those declarations
-cannot prove the new theorem by changing only its concluding inequality.
+starts with the assumption `7/8 < β*`. The perturbed assembly uses a
+separate moment input and the row scale `13/16+3*t/2`.

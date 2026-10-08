@@ -60,7 +60,7 @@ structure PerturbedHighData (gap : ℝ) where
   principal_budget : sigma + small / 8 ≤ 2611 / 110160000
   window_budget : sigma + e ≤ (174999 / 200000) * ((7 / 8) * rmin)
   floor_budget : 2 * small + 26 * e + (N + 8) * eps +
-    small + small / 6 + small / 8 + sigma +
+    small + small / 6 + small / 8 + sigma + 1 / 200000 +
     perturbedSlotLengthShift * (121 / 40 + 3 * e + small) ≤ 7 / 1200
   high_saving : sigma + small / 8 + small / 8 ≤ small
   height_choice : ∀ J : ℝ, 0 ≤ J → ∃ τ : ℝ,

@@ -11,7 +11,7 @@
 
 \title{A perturbation of the seven-eighths zero-free half-plane}
 \author{}
-\date{7 October 2026}
+\date{8 October 2026}
 
 \begin{document}
 \maketitle
@@ -20,10 +20,10 @@
 We examine the numerical endpoint in the compensated-probe proof of the
 seven-eighths zero-free half-plane in \cite{OAI}. The reflected-row estimate
 has room to increase the total prime length, while the high-side endpoint
-certificate has a fixed positive margin. Keeping the same probe and changing
-its lengths gives, from the analytic estimates of \cite{OAI}, a zero-free
-half-plane with boundary $174999/200000=0.874995$. This note records the
-parameter changes and the extensions of the estimates used at the boundary.
+certificate has a fixed positive margin. We prove the detector and
+continuation argument at boundary $174999/200000=0.874995$, conditional on
+a fourth-moment estimate for the perturbed source. This note records the
+parameter changes, the needed input, and the estimates used at the boundary.
 \end{abstract}
 
 \section{Statement and input}
@@ -37,7 +37,14 @@ Gram bound, and continuation criterion proved there. Section 2 checks the
 changes needed when its Part II geometry is perturbed. Section 3 checks the
 high comparison and the analytic domains.
 
+The perturbed fourth-moment input asserts the source moment estimates of
+\cite{OAI} for every resulting detector bin with label $a\le7/8$, zero
+moment excess $\Delta=0$, and total prime-slot length $1/6+3/100000$.
+It includes the same count parameters and polynomial height allowance as
+the original raw-moment input. This input is not established here.
+
 \begin{theorem}\label{thm:main}
+Assume the perturbed fourth-moment input above.
 Every finite-order Hecke $L$-function over $F$ and every Dirichlet
 $L$-function, including the Riemann zeta function, has no zero in
 \[
@@ -187,7 +194,8 @@ principal, bin, and outer-row contour estimates.
 \end{proof}
 
 \begin{lemma}\label{lem:high}
-If $B<\beta_*\le7/8$, then for some $\sigma>0$ independent of the
+Under the perturbed fourth-moment input, if $B<\beta_*\le7/8$, then for
+some $\sigma>0$ independent of the
 target character,
 \[
        |J_\eta(Z)-f_\eta(Z)|
@@ -198,7 +206,7 @@ where $f_\eta$ is the principal Mellin signal from \cite{OAI} with
 \end{lemma}
 
 \begin{proof}
-The fourth-moment lemma of \cite{OAI} permits $\kappa=3/4$, because its
+The required fourth-moment estimate uses $\kappa=3/4$, because its
 zero-free input is $\beta_*\le(1+\kappa)/2=7/8$. Every detected bin has
 $\delta=2a-1\le2\beta_*-1\le3/4$. Its plain prime capacity is thus
 the baseline capacity in the proof of \cite[Part II, capacity
@@ -283,13 +291,18 @@ the new boundary. The selected high-row local factors, weighted prime-slot
 sum, physical-row dyad, Mellin integral, and changed small- and large-row
 tail bounds, central cube truncation error, canonical ray-cube choice, and
 normalized floor-row collection are verified there as well.
-The balanced central-bin estimate is carried through the normalized dyadic
-collection, conditional on its stated fourth-moment input at the changed
-parameters. That input and the final detector assembly remain open.
+The principal slot-ratio and normalized residue estimates are proved on the
+new boundary. The physical principal remainder at the changed lengths is
+bounded on a fixed contour just right of $7/8$, leaving a power saving of
+$1/3000$ relative to $\beta_*$ in the proposed interval.
+The balanced central-bin estimate, principal transport, detector assembly,
+and continuation contradiction are formalized in Lean conditional on the
+stated fourth-moment input. That input remains open. The final Lean theorem
+also takes $\beta_*\le7/8$ as a hypothesis, since the upstream certified-band
+module was not rebuilt in this checkout.
 Compiling this note checks the TeX, not the remaining number-theoretic inputs.
-The stronger boundary in
-Theorem~\ref{thm:main} is not part of \cite{OAI}'s stated theorem or its
-existing formalization.
+The conditional stronger boundary in Theorem~\ref{thm:main} is not part of
+\cite{OAI}'s stated theorem or its existing formalization.
 
 \begin{thebibliography}{1}
 \bibitem{OAI}

@@ -33,15 +33,16 @@ ordered principal double shift, uniform contour tails, principal
 triple-contour transport, selected high-row local bounds, and row-dependent
 tuple, dyad, and Mellin-integral bounds. Check them with
 `uv run verify_oai.py OAIHighAudit`. The conditional central-bin dyadic
-bound, changed floor-row bound, and canonical ray-cube decomposition are
-also formalized. The changed fourth-moment input, principal comparison,
-final detector assembly, and zero-free theorem remain unproved.
+bound, changed floor-row bound, canonical ray-cube decomposition, principal
+transport, and detector assembly are also formalized.
+`OAIHighAssemblyFinal.lean` proves the stronger Hecke, Dirichlet, and zeta
+zero-free statements from an explicit `RawPerturbedMomentInput` and the
+prior bound `beta ≤ 7/8`. The changed fourth-moment input has not been proved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build
 the PDF and resolve references.
 
-These checks verify the stated partial results and the document build.
-They do not certify the full high-side detector argument or the proposed
-stronger theorem. See [FORMALIZATION.md](FORMALIZATION.md) for the remaining proof
-obligations.
+These checks verify the conditional high-side detector argument and the
+document build. They do not certify an unconditional stronger theorem.
+See [FORMALIZATION.md](FORMALIZATION.md) for the remaining proof obligation.
