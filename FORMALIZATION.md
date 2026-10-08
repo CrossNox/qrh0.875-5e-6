@@ -40,12 +40,23 @@ on the larger three-variable region needed for the contour shifts.
 correction a finite-prime cutoff, a uniform `1/2` defect bound, and
 analyticity in each contour variable there. Its stronger tail condition
 implies the original source tail condition.
+`OAIHighSlotEstimate.lean` extends the actual compensated slot factor to
+the new boundary. `OAIHighFiniteProductBounds.lean` bounds the finite
+multiplier for nonnegative real weights. `OAIHighFiniteProductX.lean`
+proves the continued source multiplier is analytic in the enlarged
+`x` strip. `OAIHighFixedSource.lean` chooses one finite prime set satisfying
+all source and enlarged Euler-tail conditions. `OAIHighFiniteProductWZ.lean`
+and `OAIHighSourceWZ.lean` prove the corresponding `w` and `z` analyticity.
+`OAIHighComplexSlotBounds.lean` bounds the original finite multiplier for
+arbitrary complex weights on the enlarged region. `OAIHighSourceContours.lean`
+uses this to prove the original source's `w` and `z` boundary controls and
+residue contour shifts for `Re(s) ≥ 174999/200000`.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires the compensated slot-multiplier bounds and
-contour transport at the new boundary. The detector and high-row assembly
+The remaining proof requires the principal `x` contour transport and
+row-dependent high-side contours at the new boundary. The detector and high-row assembly
 must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
 
