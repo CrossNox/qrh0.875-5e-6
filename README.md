@@ -4,14 +4,22 @@
 `Re(s) > 0.874995` from the analytic estimates in OpenAI's
 [seven-eighths manuscript](https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex).
 
-Run `uv run verify_bounds.py` to check the rational margins. `Bounds.lean`
-checks the corresponding integer identities and two scaled linear bounds.
-It compiles with Lean 4.10.0 using `lean Bounds.lean`. Run
+Run `uv run verify_bounds.py` to check the rational margins. The Mathlib files
+`BoundsReal.lean` and `EndpointCertificate.lean` prove the geometry and
+endpoint inequalities for real parameters. Both compile with Lean 4.27.0 and
+Mathlib in `ghcr.io/ldct/mathlib4:v4.27.0`:
+
+```sh
+docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/BoundsReal.lean'
+docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/EndpointCertificate.lean'
+```
+
+Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build
 the PDF and resolve references.
 
-These checks verify arithmetic and the document build. The Lean file does
-not formalize the map from the manuscript's real parameters to its scaled
-integers. It does not certify the cited number-theoretic estimates or the
-extension of their contour arguments. The proposed stronger theorem is not
-formalized.
+These checks verify the numerical part of the proposed argument and the
+document build. They do not certify the cited number-theoretic estimates or
+the extension of their contour arguments. The proposed stronger theorem is
+not formalized. See [FORMALIZATION.md](FORMALIZATION.md) for the remaining
+proof obligations.
