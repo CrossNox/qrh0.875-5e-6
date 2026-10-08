@@ -13,7 +13,7 @@ upstream seven-eighths formalization. Run `lake exe cache get` and `lake build`
 from this directory. A Docker environment is also available:
 
 ```sh
-docker run --rm --cpus 4 --memory 8g \
+docker run --rm --cpuset-cpus 0-3 --cpus 4 --memory 8g \
   --entrypoint /bin/bash \
   --mount "type=bind,src=$PWD,dst=/home/lean/project" \
   --mount type=volume,src=rh-lean-toolchains,dst=/home/lean/.elan/toolchains \
@@ -21,6 +21,12 @@ docker run --rm --cpus 4 --memory 8g \
   ghcr.io/leanprover-community/mathlib4/lean:latest \
   -lc 'lake exe cache get && lake build'
 ```
+
+The `OAILow*.lean` files connect the perturbed reflected exponent to the
+upstream OAI normalized sector-energy theorem. Check them with
+`uv run verify_oai.py OAILowSector` from this directory. This requires the
+adjacent `rh-upstream` checkout and Docker. The physical low-probe bound and
+zero-free theorem remain unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build

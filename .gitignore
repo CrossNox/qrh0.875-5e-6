@@ -7,3 +7,6 @@
 *.synctex.gz
 .lake/
 .lean-toolchains/
+*.olean
+*.ilean
+*.trace
