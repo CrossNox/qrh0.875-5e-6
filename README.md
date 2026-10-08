@@ -7,13 +7,18 @@
 Run `uv run verify_bounds.py` to check the rational margins. The Mathlib files
 `BoundsReal.lean`, `EndpointCertificate.lean`, and `ReflectedExponent.lean`
 prove the geometry, endpoint, and reflected-exponent inequalities for real
-parameters. They compile with Lean 4.27.0 and
-Mathlib in `ghcr.io/ldct/mathlib4:v4.27.0`:
+parameters. The project pins Lean 4.34.1 and the Mathlib revision used by the
+upstream seven-eighths formalization. Run `lake exe cache get` and `lake build`
+from this directory. A Docker environment is also available:
 
 ```sh
-docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/BoundsReal.lean'
-docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/EndpointCertificate.lean'
-docker run --rm -v "$PWD:/project/rh:ro" --workdir /project ghcr.io/ldct/mathlib4:v4.27.0 bash -lc 'lake env lean rh/ReflectedExponent.lean'
+docker run --rm --cpus 4 --memory 8g \
+  --entrypoint /bin/bash \
+  --mount "type=bind,src=$PWD,dst=/home/lean/project" \
+  --mount type=volume,src=rh-lean-toolchains,dst=/home/lean/.elan/toolchains \
+  --workdir /home/lean/project \
+  ghcr.io/leanprover-community/mathlib4/lean:latest \
+  -lc 'lake exe cache get && lake build'
 ```
 
 Run

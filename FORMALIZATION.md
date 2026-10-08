@@ -13,6 +13,10 @@ high-bin exponent at the original geometry, and the perturbed high-endpoint
 margin `2611/110160000`. All three files compile without `sorry` or new
 axioms.
 
+The local project now uses Lean 4.34.1 and the upstream Mathlib revision
+`d13f23b723b8a846827a245b89c10fc7d3f11612`. All three certificate
+files compile together with `lake build` on this toolchain.
+
 The remaining proof requires the actual analytic estimates for the changed
 physical probe. In particular, its reflected-row and additive Gram bounds
 must yield the new low estimate, and its full Euler correction must support
