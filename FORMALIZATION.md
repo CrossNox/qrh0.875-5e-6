@@ -84,6 +84,9 @@ dyads with arbitrary power saving at the changed high-row threshold.
 `OAIHighCentralCrude.lean` and `OAIHighCentralFiniteError.lean` carry the
 changed row threshold, physical lengths, and prime-tuple count through
 the central rectangle truncation error.
+`OAIHighCentralExponent.lean` proves the exact perturbation of the
+balanced central-bin exponent. For bins with `δ ≤ 3/4`, its saving budget
+loses at most `11t/4 + 1/200000` before the usual detector losses.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
