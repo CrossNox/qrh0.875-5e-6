@@ -37,13 +37,16 @@ fixed exponent `3/16`. The new probe has total length `1/6 + 3/100000`.
 Its caller in `LowNormalized.lean` also fixes the original physical scales
 `17/48` and `23/48`. The existing theorem cannot be applied to the new
 probe, even though `BoundsReal.lean` proves the required numerical margins.
-`OAILowReflected.lean`, `OAILowExponent.lean`, `OAILowBranchSum.lean`, and
-`OAILowSector.lean` compile against the upstream OAI definitions with Lean
-4.34.1. They carry the changed parent exponent and surviving slot length
-through the reflected exponent, branch count, and normalized sector energy.
-Run `uv run verify_oai.py OAILowSector` to rebuild their upstream imports and
-check all four files. This does not yet bound the physical probe. The
-remaining member, dyad, and row-energy layers still use the original scales.
+The `OAILow*.lean` files compile against upstream OAI with Lean 4.34.1.
+They carry the changed parent exponent and surviving slot length through
+the reflected exponent, normalized sector energy, retained dyads, full-row
+tail, global sectors, tuple members, and fixed-member geometry. The
+perturbation parameter is restricted to `0 ≤ t ≤ 1/6` at the fixed-member
+layer. `OAILowCaps.lean` proves the required physical scale caps. Run
+`uv run verify_oai.py OAILowFixedMember` to rebuild the imports and check
+the source-connected chain. This does not yet bound the physical probe.
+The dyad selection and remaining row-energy layers still use the original
+scales.
 The upstream `Reflection/LowOriginalEnergy.lean` assumes both `d ≤ 1/6`
 and `ell0 ≤ 1/6-d+η`, and bounds parent norms using `5/6-2*d`. The new
 probe needs `d ≤ 1/6+3/100000`, surviving length

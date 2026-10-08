@@ -17,13 +17,22 @@ UPSTREAM_TARGETS = {
     "OAILowExponent": "OAI.NumberTheory.DirichletL.Reflection.LowExponent",
     "OAILowBranchSum": "OAI.NumberTheory.DirichletL.Reflection.LowBranchSum",
     "OAILowSector": "OAI.NumberTheory.DirichletL.Reflection.LowSector",
+    "OAILowRetained": "OAI.NumberTheory.DirichletL.Reflection.LowRetained",
+    "OAILowRetainedBudget": "OAI.NumberTheory.DirichletL.Reflection.LowRetainedBudget",
+    "OAILowFull": "OAI.NumberTheory.DirichletL.Reflection.LowFull",
+    "OAILowFullBudget": "OAI.NumberTheory.DirichletL.Reflection.LowFullBudget",
+    "OAILowGlobalBudget": "OAI.NumberTheory.DirichletL.Reflection.LowGlobalBudget",
+    "OAILowMemberBudget": "OAI.NumberTheory.DirichletL.Reflection.LowMemberBudget",
+    "OAILowMemberGeometry": "OAI.NumberTheory.DirichletL.Reflection.LowMemberGeometry",
+    "OAILowCaps": "OAI.NumberTheory.DirichletL.Reflection.LowCaps",
+    "OAILowFixedMember": "OAI.NumberTheory.DirichletL.Reflection.LowFixedMember",
 }
 
 
 def build_upstream_oai_target(upstream_repo: Path, target: str) -> None:
     print(f"Building upstream OAI target {target}", flush=True)
 
-    subprocess.run(
+    compilation = subprocess.run(
         [
             "docker",
             "run",
@@ -46,8 +55,13 @@ def build_upstream_oai_target(upstream_repo: Path, target: str) -> None:
             "-lc",
             f"lake --quiet build +{target}:olean",
         ],
-        check=True,
+        capture_output=True,
+        text=True,
     )
+    if compilation.returncode != 0:
+        print(compilation.stdout, end="")
+        print(compilation.stderr, end="")
+        compilation.check_returncode()
 
 
 def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) -> None:
@@ -59,7 +73,7 @@ def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) ->
         f"/home/lean/rh/{module}.lean"
     )
 
-    subprocess.run(
+    compilation = subprocess.run(
         [
             "docker",
             "run",
@@ -84,13 +98,19 @@ def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) ->
             "-lc",
             f"lake env /bin/bash -lc {shlex.quote(lean_command)}",
         ],
-        check=True,
+        capture_output=True,
+        text=True,
     )
+    if compilation.returncode != 0:
+        print(compilation.stdout, end="")
+        print(compilation.stderr, end="")
+        compilation.check_returncode()
 
 
 def verify_oai_proofs() -> None:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("through", choices=tuple(UPSTREAM_TARGETS))
+    argument_parser.add_argument("--only", action="store_true")
     arguments = argument_parser.parse_args()
 
     rh_repo = Path(__file__).resolve().parent
@@ -100,7 +120,8 @@ def verify_oai_proofs() -> None:
 
     build_upstream_oai_target(upstream_repo, UPSTREAM_TARGETS[arguments.through])
 
-    for module in UPSTREAM_TARGETS:
+    modules = [arguments.through] if arguments.only else UPSTREAM_TARGETS
+    for module in modules:
         compile_local_oai_module(upstream_repo, rh_repo, module)
         if module == arguments.through:
             break

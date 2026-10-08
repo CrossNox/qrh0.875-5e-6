@@ -22,9 +22,9 @@ docker run --rm --cpuset-cpus 0-3 --cpus 4 --memory 8g \
   -lc 'lake exe cache get && lake build'
 ```
 
-The `OAILow*.lean` files connect the perturbed reflected exponent to the
-upstream OAI normalized sector-energy theorem. Check them with
-`uv run verify_oai.py OAILowSector` from this directory. This requires the
+The `OAILow*.lean` files connect the perturbed reflected exponent through
+the upstream OAI fixed-member energy theorem. Check them with
+`uv run verify_oai.py OAILowFixedMember` from this directory. This requires the
 adjacent `rh-upstream` checkout and Docker. The physical low-probe bound and
 zero-free theorem remain unproved.
 
