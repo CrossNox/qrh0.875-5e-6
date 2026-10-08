@@ -137,6 +137,10 @@ OAI and audit its axioms. The audited results report only `propext`,
 The remaining proof requires `ChosenPerturbedMomentInput`, or the stronger
 fine or raw version. These assert fourth-moment estimates with zero moment
 excess, slot mass `1/6+3/100000`, and detector labels at most `7/8`.
+`OAIHighMomentCertificate.lean` and `OAIHighMomentEnergy.lean` prove the
+generic certified energy band and its positive and zero field bounds at
+`κ=3/4` when `β*≤7/8`. The missing step transports those field bounds to
+the `SourceMomentsAt` batches for the perturbed source and slot lengths.
 The old `RawMomentInput` applies only when
 `β* > 7/8` and uses moment excess `β*-7/8`, so it does not discharge this
 new input. The current Lean theorem is conditional, not an unconditional

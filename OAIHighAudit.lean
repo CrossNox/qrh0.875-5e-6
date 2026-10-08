@@ -111,6 +111,7 @@ import OAIHighAssemblyFixedHigh
 import OAIHighSignalIdentity
 import OAIHighCommonProbe
 import OAIHighAssemblyFinal
+import OAIHighMomentEnergy
 
 #print axioms PerturbedZeroFreeBound.exists_perturbed_principal_correction
 #print axioms OAI.SevenEighths.ProbeEuler.bound_ramified_closed_on_perturbed_region
@@ -214,3 +215,6 @@ import OAIHighAssemblyFinal
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.hecke_of_raw_perturbed_moments
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.dirichlet_of_raw_perturbed_moments
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.zeta_of_raw_perturbed_moments
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_detector_certified_band
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbedFixedIdeal_ne_zero
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_plain_inputs
