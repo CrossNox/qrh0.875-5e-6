@@ -3,6 +3,8 @@
 # dependencies = []
 # ///
 
+"""Compile the local Lean dependency chain and report theorem axioms."""
+
 import argparse
 import shlex
 import subprocess
@@ -12,192 +14,64 @@ from pathlib import Path
 LEAN_IMAGE = "ghcr.io/leanprover-community/mathlib4/lean:latest"
 TOOLCHAIN_VOLUME = "rh-lean-toolchains"
 
-UPSTREAM_TARGETS = {
-    "OAIHighEulerRegion": "OAI.NumberTheory.DirichletL.Detector.EulerRegion",
-    "OAIHighPrincipalProduct": "OAI.NumberTheory.DirichletL.Detector.PrincipalProduct",
-    "OAIHighRamifiedBound": "OAI.NumberTheory.DirichletL.Detector.HighRowsRamified",
-    "OAIHighHolomorphic": "OAI.NumberTheory.DirichletL.Detector.HighRowsHolomorphic",
-    "OAIHighGlobalRegion": "OAI.NumberTheory.DirichletL.Detector.GlobalRegion",
-    "OAIHighGlobalCorrection": "OAI.NumberTheory.DirichletL.Detector.GlobalCorrection",
-    "OAIHighSlotEstimate": "OAI.NumberTheory.DirichletL.PrincipalSlotEstimate",
-    "OAIHighFiniteProductBounds": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
-    "OAIHighFiniteProductX": "OAI.NumberTheory.DirichletL.Detector.FiniteProductX",
-    "OAIHighFixedSource": "OAI.NumberTheory.DirichletL.ParametersFixedSource",
-    "OAIHighFiniteProductWZ": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
-    "OAIHighSourceWZ": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
-    "OAIHighComplexSlotBounds": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
-    "OAIHighSourceContours": "OAI.NumberTheory.DirichletL.Detector.FiniteProductBounds",
-    "OAIHighArithmeticLines": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighOrderedContours": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighResidueBounds": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighOuterContours": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighUniformTails": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighHighSlices": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighResidueMoments": "OAI.NumberTheory.DirichletL.Detector.PrincipalContours",
-    "OAIHighXTransport": "OAI.NumberTheory.DirichletL.Detector.PrincipalTransport",
-    "OAIHighZTransport": "OAI.NumberTheory.DirichletL.Detector.PrincipalTransport",
-    "OAIHighTripleTransport": "OAI.NumberTheory.DirichletL.Detector.PrincipalTransport",
-    "OAIHighInitialPlacement": "OAI.NumberTheory.DirichletL.Detector.PrincipalTransport",
-    "OAIHighSelectedTerms": "OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedTerms",
-    "OAIHighSelectedError": "OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedError",
-    "OAIHighSelectedUnramified": "OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedUnramified",
-    "OAIHighSelectedBound": "OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedBound",
-    "OAIHighSelectedRamified": "OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedRamified",
-    "OAIHighSelectedActual": "OAI.NumberTheory.DirichletL.Detector.HighRowsSelectedActual",
-    "OAIHighSelectedLocal": "OAI.NumberTheory.DirichletL.PrimeRows.SelectedBounds",
-    "OAIHighSelectedSlotSums": "OAI.NumberTheory.DirichletL.PrimeRows.SlotSums",
-    "OAIHighWGrowth": "OAI.NumberTheory.DirichletL.PrimeRows.WGrowth",
-    "OAIHighNonprincipalShift": "OAI.NumberTheory.DirichletL.PrimeRows.NonprincipalShift",
-    "OAIHighTupleSums": "OAI.NumberTheory.DirichletL.PrimeRows.TupleSums",
-    "OAIHighTupleBound": "OAI.NumberTheory.DirichletL.PrimeRows.TupleBound",
-    "OAIHighPhysicalTuple": "OAI.NumberTheory.DirichletL.PrimeRows.PhysicalBound",
-    "OAIHighDyadBound": "OAI.NumberTheory.DirichletL.PrimeRows.DyadBound",
-    "OAIHighDyadIntegral": "OAI.NumberTheory.DirichletL.PrimeRows.DyadIntegral",
-    "OAIHighFixedIntegral": "OAI.NumberTheory.DirichletL.PrimeRows.FixedIntegral",
-    "OAIHighWZTransport": "OAI.NumberTheory.DirichletL.PrimeRows.WZTransport",
-    "OAIHighSourceTransport": "OAI.NumberTheory.DirichletL.PrimeRows.SourceTransport",
-    "OAIHighPhysicalDyad": "OAI.NumberTheory.DirichletL.PrimeRows.PhysicalDyad",
-    "OAIHighTailScales": "OAI.NumberTheory.DirichletL.PrimeRows.TailScales",
-    "OAIHighSmallDyad": "OAI.NumberTheory.DirichletL.PrimeRows.SmallDyad",
-    "OAIHighSmallTail": "OAI.NumberTheory.DirichletL.PrimeRows.SmallTail",
-    "OAIHighLargeDyad": "OAI.NumberTheory.DirichletL.PrimeRows.LargeDyad",
-    "OAIHighLargeTail": "OAI.NumberTheory.DirichletL.PrimeRows.LargeTail",
-    "OAIHighLargeSaving": "OAI.NumberTheory.DirichletL.PrimeRows.LargeSaving",
-    "OAIHighCentralCrude": "OAI.NumberTheory.DirichletL.PrimeRows.CentralErrorSaving",
-    "OAIHighCentralFiniteError": "OAI.NumberTheory.DirichletL.PrimeRows.CentralFiniteError",
-    "OAIHighCentralExponent": "OAI.NumberTheory.DirichletL.Detector.CentralMixedMargins",
-    "OAIHighCentralSlotExponent": "OAI.NumberTheory.DirichletL.PrimeRows.CubeSlotExponent",
-    "OAIHighFloorArithmetic": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFloorArithmetic",
-    "OAIHighFloorGlobal": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFloorGlobal",
-    "OAIHighFloorIntegral": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFloorGlobalIntegral",
-    "OAIHighFloorNormalized": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFloorNormalized",
-    "OAIHighFloorSaving": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFloorSaving",
-    "OAIHighFloorCollected": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFloorCollected",
-    "OAIHighPhysicalSmallTail": "OAI.NumberTheory.DirichletL.PrimeRows.PhysicalSmallTail",
-    "OAIHighPhysicalLargeTail": "OAI.NumberTheory.DirichletL.PrimeRows.PhysicalLargeTail",
-    "OAIHighCanonicalTails": "OAI.NumberTheory.DirichletL.PrimeRows.CanonicalTails",
-    "OAIHighCanonicalReduction": "OAI.NumberTheory.DirichletL.PrimeRows.CanonicalReduction",
-    "OAIHighCubeCrude": "OAI.NumberTheory.DirichletL.PrimeRows.CubeErrorSaving",
-    "OAIHighCubeFiniteError": "OAI.NumberTheory.DirichletL.PrimeRows.CubeFiniteError",
-    "OAIHighCanonicalCubeReduction": "OAI.NumberTheory.DirichletL.PrimeRows.CanonicalCubeReduction",
-    "OAIHighCanonicalCubeChoice": "OAI.NumberTheory.DirichletL.PrimeRows.CanonicalCubeChoice",
-    "OAIHighCanonicalRayCube": "OAI.NumberTheory.DirichletL.PrimeRows.CanonicalRayCube",
-    "OAIHighPrincipalScale": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighSignalShift": "OAI.NumberTheory.DirichletL.Hecke.SignalShift",
-    "OAIHighPrincipalRatio": "OAI.NumberTheory.DirichletL.PrincipalSignalComparison",
-    "OAIHighPrincipalResidue": "OAI.NumberTheory.DirichletL.PrincipalSignalComparison",
-    "OAIHighPrincipalNormalizedIdentity": "OAI.NumberTheory.DirichletL.PrincipalSignalComparison",
-    "OAIHighPrincipalActualBound": "OAI.NumberTheory.DirichletL.PrincipalSignalComparison",
-    "OAIHighPrincipalRemainder": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighPrincipalPhysicalRemainder": "OAI.NumberTheory.DirichletL.Detector.PrincipalPhysicalRemainder",
-    "OAIHighPrincipalWindow": "OAI.NumberTheory.DirichletL.Detector.PrincipalResidueActual",
-    "OAIHighPrincipalSharp": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighPrincipalPointwise": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighPrincipalUniform": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighPrincipalOrdered": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighPrincipalLowRemainder": "OAI.NumberTheory.DirichletL.Detector.PrincipalRemainderBounds",
-    "OAIHighPrincipalPool": "OAI.NumberTheory.DirichletL.Detector.PrincipalPhysical",
-    "OAIHighPrincipalPhysicalLow": "OAI.NumberTheory.DirichletL.Detector.PrincipalPhysicalRemainder",
-    "OAIHighPrincipalNormalized": "OAI.NumberTheory.DirichletL.Detector.PrincipalNormalized",
-    "OAIHighNormalizedTransport": "OAI.NumberTheory.DirichletL.PrimeRows.NormalizedTransport",
-    "OAIHighNormalizedTransportSaving": "OAI.NumberTheory.DirichletL.PrimeRows.NormalizedTransportSaving",
-    "OAIHighNonfloorTransport": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorTransport",
-    "OAIHighDetectorBeta": "OAI.NumberTheory.DirichletL.PrimeRows.DetectorZeros",
-    "OAIHighFromMoments": "OAI.NumberTheory.DirichletL.PrimeRows.HighFromMoments",
-    "OAIHighAssemblyData": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyData",
-    "OAIHighAssemblyMomentInput": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyMomentInput",
-    "OAIHighMomentCertificate": "OAI.NumberTheory.DirichletL.Energy.CertifiedExistence",
-    "OAIHighMomentFixedIdeal": "OAI.NumberTheory.DirichletL.Moments.DetectorEnergyInitialState",
-    "OAIHighMomentEnergy": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyCertifiedBands",
-    "OAIHighAssemblyClass": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyClass",
-    "OAIHighAssemblyArithmetic": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyArithmetic",
-    "OAIHighAssemblyIntegral": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyIntegral",
-    "OAIHighAssemblyNormalized": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyNormalized",
-    "OAIHighAssemblyCollected": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyCollected",
-    "OAIHighAssemblyHigh": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyHigh",
-    "OAIHighAssemblyFixedHigh": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyFixedHigh",
-    "OAIHighSignalIdentity": "OAI.NumberTheory.DirichletL.Hecke.SignalIdentity",
-    "OAIHighCommonProbe": "OAI.NumberTheory.DirichletL.Hecke.CommonProbe",
-    "OAIHighAssemblyFinal": "OAI.NumberTheory.DirichletL.Detector.FinalAssemblyChosenData",
-    "OAIHighCentralClassArithmetic": "OAI.NumberTheory.DirichletL.Detector.CentralClassArithmetic",
-    "OAIHighCentralBatch": "OAI.NumberTheory.DirichletL.Detector.SourceBatch",
-    "OAIHighCentralAmplitudeBatch": "OAI.NumberTheory.DirichletL.Detector.SourceAmplitudeClasses",
-    "OAIHighCentralClassMoments": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorClass",
-    "OAIHighCentralArithmetic": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorArithmetic",
-    "OAIHighCentralIntegral": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorIntegral",
-    "OAIHighCentralNormalizer": "OAI.NumberTheory.DirichletL.PrimeRows.CubeNormalizer",
-    "OAIHighCentralNormalized": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorNormalized",
-    "OAIHighCentralCollected": "OAI.NumberTheory.DirichletL.PrimeRows.NonfloorCollected",
-    "OAIHighSlotLengths": "OAI.NumberTheory.DirichletL.ParametersSlotLengths",
-    "OAIHighCentralBudget": "OAI.NumberTheory.DirichletL.ParametersCentralBudget",
-    "OAIHighData": "OAI.NumberTheory.DirichletL.ParametersHighData",
-    "OAIHighAudit": "OAI.NumberTheory.DirichletL.Detector.CentralMixedMargins",
-    "OAILowReflected": "OAI.NumberTheory.DirichletL.Detector.LowReflectedLength",
-    "OAILowExponent": "OAI.NumberTheory.DirichletL.Reflection.LowExponent",
-    "OAILowBranchSum": "OAI.NumberTheory.DirichletL.Reflection.LowBranchSum",
-    "OAILowSector": "OAI.NumberTheory.DirichletL.Reflection.LowSector",
-    "OAILowRetained": "OAI.NumberTheory.DirichletL.Reflection.LowRetained",
-    "OAILowRetainedBudget": "OAI.NumberTheory.DirichletL.Reflection.LowRetainedBudget",
-    "OAILowFull": "OAI.NumberTheory.DirichletL.Reflection.LowFull",
-    "OAILowFullBudget": "OAI.NumberTheory.DirichletL.Reflection.LowFullBudget",
-    "OAILowGlobalBudget": "OAI.NumberTheory.DirichletL.Reflection.LowGlobalBudget",
-    "OAILowMemberBudget": "OAI.NumberTheory.DirichletL.Reflection.LowMemberBudget",
-    "OAILowMemberGeometry": "OAI.NumberTheory.DirichletL.Reflection.LowMemberGeometry",
-    "OAILowCaps": "OAI.NumberTheory.DirichletL.Reflection.LowCaps",
-    "OAILowFixedMember": "OAI.NumberTheory.DirichletL.Reflection.LowFixedMember",
-    "OAILowDyads": "OAI.NumberTheory.DirichletL.Reflection.LowDyads",
-    "OAILowChoiceEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowChoiceEnergy",
-    "OAILowInactiveEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowInactiveEnergy",
-    "OAILowFrozenEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowFrozenEnergy",
-    "OAILowCompletedFiber": "OAI.NumberTheory.DirichletL.Reflection.LowCompletedFiber",
-    "OAILowCompletedRows": "OAI.NumberTheory.DirichletL.Reflection.LowCompletedRows",
-    "OAILowOriginalEnergy": "OAI.NumberTheory.DirichletL.Reflection.LowOriginalEnergy",
-    "OAILowSelectedBound": "OAI.NumberTheory.DirichletL.Detector.LowSelectedBound",
-    "OAILowNominalEnergy": "OAI.NumberTheory.DirichletL.Detector.LowNominalEnergy",
-    "OAILowInverseNormalize": "OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound",
-    "OAILowPhysicalInverseBound": "OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound",
-    "OAILowSourceScales": "OAI.NumberTheory.DirichletL.Detector.LowSourceScales",
-    "OAILowSlotScales": "OAI.NumberTheory.DirichletL.Detector.LowSlotScales",
-    "OAILowUnselectedMass": "OAI.NumberTheory.DirichletL.Detector.LowUnselectedMass",
-    "OAILowCentralTuple": "OAI.NumberTheory.DirichletL.Detector.LowCentralTuple",
-    "OAILowGaussianDyad": "OAI.NumberTheory.DirichletL.Detector.LowGaussianDyad",
-    "OAILowGaussianCentral": "OAI.NumberTheory.DirichletL.Detector.LowGaussianCentral",
-    "OAILowRemoteMass": "OAI.NumberTheory.DirichletL.Detector.LowRemoteMass",
-    "OAILowGaussianRemote": "OAI.NumberTheory.DirichletL.Detector.LowGaussianRemote",
-    "OAILowGaussianSum": "OAI.NumberTheory.DirichletL.Detector.LowGaussianSum",
-    "OAILowCommonBound": "OAI.NumberTheory.DirichletL.Detector.LowCommonBound",
-    "OAILowWindowBound": "OAI.NumberTheory.DirichletL.Detector.LowWindowBound",
-    "OAILowNormalizer": "OAI.NumberTheory.DirichletL.PrimeRows.CubeNormalizer",
-    "OAILowNormalized": "OAI.NumberTheory.DirichletL.Detector.LowNormalized",
-    "OAILowAudit": "OAI.NumberTheory.DirichletL.Detector.LowNormalized",
-}
+
+def read_module_imports(module_path: Path) -> list[str]:
+    """Read the imports declared by a local Lean module."""
+    imports = []
+    for line in module_path.read_text().splitlines():
+        if line.startswith("import "):
+            imports.extend(line.removeprefix("import ").split("--", 1)[0].split())
+    return imports
 
 
-def build_upstream_oai_target(upstream_repo: Path, target: str) -> None:
-    print(f"Building upstream OAI target {target}", flush=True)
+def order_local_dependencies(rh_repo: Path, target: str) -> list[str]:
+    """Order the target's local imports before their consumers."""
+    ordered_modules = []
+    completed_modules = set()
+    active_modules = set()
 
+    def visit_module(module: str) -> None:
+        if module in completed_modules:
+            return
+        if module in active_modules:
+            raise ValueError(f"Cyclic local Lean import: {module}")
+
+        active_modules.add(module)
+        for dependency in read_module_imports(rh_repo / f"{module}.lean"):
+            if (rh_repo / f"{dependency}.lean").is_file():
+                visit_module(dependency)
+        active_modules.remove(module)
+        completed_modules.add(module)
+        ordered_modules.append(module)
+
+    visit_module(target)
+    return ordered_modules
+
+
+def find_upstream_targets(rh_repo: Path, modules: list[str]) -> list[str]:
+    """Collect upstream imports required by the local proof chain."""
+    return sorted({
+        dependency
+        for module in modules
+        for dependency in read_module_imports(rh_repo / f"{module}.lean")
+        if not (rh_repo / f"{dependency}.lean").is_file()
+    })
+
+
+def build_upstream_oai_targets(upstream_repo: Path, targets: list[str]) -> None:
+    """Build the imported upstream proof objects."""
+    print(f"Building {len(targets)} upstream Lean targets", flush=True)
+    command = "lake --quiet build " + " ".join(
+        shlex.quote(f"+{target}:olean") for target in targets
+    )
     compilation = subprocess.run(
         [
-            "docker",
-            "run",
-            "--rm",
-            "--cpuset-cpus",
-            "0-7",
-            "--cpus",
-            "8",
-            "--memory",
-            "14g",
-            "--entrypoint",
-            "/bin/bash",
-            "--mount",
-            f"type=bind,src={upstream_repo},dst=/home/lean/project",
+            "docker", "run", "--rm", "--cpuset-cpus", "0-7", "--cpus", "8",
+            "--memory", "14g", "--entrypoint", "/bin/bash",
+            "--mount", f"type=bind,src={upstream_repo},dst=/home/lean/project",
             "--mount",
             f"type=volume,src={TOOLCHAIN_VOLUME},dst=/home/lean/.elan/toolchains",
-            "--workdir",
-            "/home/lean/project/lean",
-            LEAN_IMAGE,
-            "-lc",
-            f"lake --quiet build +{target}:olean",
+            "--workdir", "/home/lean/project/lean", LEAN_IMAGE, "-lc", command,
         ],
         capture_output=True,
         text=True,
@@ -206,41 +80,60 @@ def build_upstream_oai_target(upstream_repo: Path, target: str) -> None:
         print(compilation.stdout, end="")
         print(compilation.stderr, end="")
         compilation.check_returncode()
+    print("Upstream Lean targets are ready", flush=True)
+
+
+def has_current_proof_object(rh_repo: Path, upstream_repo: Path, module: str) -> bool:
+    """Check source and direct dependency timestamps before resuming a build."""
+    proof_path = rh_repo / f"{module}.olean"
+    if not proof_path.is_file():
+        return False
+
+    proof_time = proof_path.stat().st_mtime_ns
+    source_path = rh_repo / f"{module}.lean"
+    if proof_time < source_path.stat().st_mtime_ns:
+        return False
+
+    for dependency in read_module_imports(source_path):
+        if (rh_repo / f"{dependency}.lean").is_file():
+            dependency_path = rh_repo / f"{dependency}.olean"
+        elif dependency.startswith("OAI."):
+            dependency_path = (
+                upstream_repo / "lean/.lake/build/lib/lean"
+                / f"{dependency.replace('.', '/')}.olean"
+            )
+        else:
+            continue
+
+        if not dependency_path.is_file():
+            return False
+        if proof_time < dependency_path.stat().st_mtime_ns:
+            return False
+
+    return True
 
 
 def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) -> None:
+    """Compile one module and retain its proof object for subsequent imports."""
     print(f"Compiling {module}.lean against upstream OAI", flush=True)
-
     lean_command = (
         "LEAN_PATH=/home/lean/rh:${LEAN_PATH:?Lake did not set LEAN_PATH} "
-        f"lean -R /home/lean/rh -o /home/lean/rh/{module}.olean "
-        f"/home/lean/rh/{module}.lean"
+        "lean -R /home/lean/rh -o "
+        f"{shlex.quote(f'/home/lean/rh/{module}.olean')} "
+        f"{shlex.quote(f'/home/lean/rh/{module}.lean')}"
     )
-
     compilation = subprocess.run(
         [
-            "docker",
-            "run",
-            "--rm",
-            "--cpuset-cpus",
-            "0-3",
-            "--cpus",
-            "4",
-            "--memory",
-            "8g",
-            "--entrypoint",
-            "/bin/bash",
+            "docker", "run", "--rm", "--network", "none",
+            "--cpuset-cpus", "0-3", "--cpus", "4", "--memory", "8g",
+            "--entrypoint", "/bin/bash",
             "--mount",
-            f"type=bind,src={upstream_repo},dst=/home/lean/project",
+            f"type=bind,src={upstream_repo},dst=/home/lean/project,readonly",
+            "--mount", f"type=bind,src={rh_repo},dst=/home/lean/rh",
             "--mount",
-            f"type=bind,src={rh_repo},dst=/home/lean/rh",
-            "--mount",
-            f"type=volume,src={TOOLCHAIN_VOLUME},dst=/home/lean/.elan/toolchains",
-            "--workdir",
-            "/home/lean/project/lean",
-            LEAN_IMAGE,
-            "-lc",
-            f"lake env /bin/bash -lc {shlex.quote(lean_command)}",
+            f"type=volume,src={TOOLCHAIN_VOLUME},dst=/home/lean/.elan/toolchains,readonly",
+            "--workdir", "/home/lean/project/lean", LEAN_IMAGE, "-lc",
+            f"lake env /bin/bash -c {shlex.quote(lean_command)}",
         ],
         capture_output=True,
         text=True,
@@ -249,28 +142,50 @@ def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) ->
         print(compilation.stdout, end="")
         print(compilation.stderr, end="")
         compilation.check_returncode()
-    if compilation.stdout.strip():
+    if len(compilation.stdout.strip()) != 0:
         print(compilation.stdout, end="")
 
 
 def verify_oai_proofs() -> None:
-    argument_parser = argparse.ArgumentParser()
-    argument_parser.add_argument("through", choices=tuple(UPSTREAM_TARGETS))
-    argument_parser.add_argument("--only", action="store_true")
+    """Build the requested theorem chain in dependency order."""
+    rh_repo = Path(__file__).resolve().parent
+    modules = sorted(path.stem for path in rh_repo.glob("*.lean")
+                     if path.stem != "lakefile")
+    argument_parser = argparse.ArgumentParser(description=__doc__)
+    argument_parser.add_argument("through", choices=modules)
+    argument_parser.add_argument(
+        "--only", action="store_true",
+        help="Compile only the requested module, using existing local imports.",
+    )
+    argument_parser.add_argument(
+        "--resume", action="store_true",
+        help="Reuse proof objects newer than their sources and direct imports.",
+    )
     arguments = argument_parser.parse_args()
 
-    rh_repo = Path(__file__).resolve().parent
     upstream_repo = rh_repo.parent / "rh-upstream"
-    if not (upstream_repo / "lean" / "lakefile.lean").is_file():
+    if not (upstream_repo / "lean/lakefile.lean").is_file():
         raise FileNotFoundError(f"Missing upstream Lean checkout: {upstream_repo}")
 
-    build_upstream_oai_target(upstream_repo, UPSTREAM_TARGETS[arguments.through])
+    ordered_modules = order_local_dependencies(rh_repo, arguments.through)
+    build_upstream_oai_targets(
+        upstream_repo, find_upstream_targets(rh_repo, ordered_modules)
+    )
 
-    modules = [arguments.through] if arguments.only else UPSTREAM_TARGETS
-    for module in modules:
+    modules_to_compile = [arguments.through] if arguments.only else ordered_modules
+    compiled_count = 0
+    for module in modules_to_compile:
+        is_audit = module == arguments.through and module.endswith("Audit")
+        if arguments.resume and not is_audit and has_current_proof_object(
+            rh_repo, upstream_repo, module
+        ):
+            continue
         compile_local_oai_module(upstream_repo, rh_repo, module)
-        if module == arguments.through:
-            break
+        compiled_count += 1
+    print(
+        f"Verified {arguments.through}: compiled {compiled_count} local modules",
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

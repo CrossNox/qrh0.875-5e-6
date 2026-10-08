@@ -112,6 +112,7 @@ import OAIHighSignalIdentity
 import OAIHighCommonProbe
 import OAIHighAssemblyFinal
 import OAIHighMomentEnergy
+import OAIHighUnconditional
 
 #print axioms PerturbedZeroFreeBound.exists_perturbed_principal_correction
 #print axioms OAI.SevenEighths.ProbeEuler.bound_ramified_closed_on_perturbed_region
@@ -218,3 +219,15 @@ import OAIHighMomentEnergy
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_detector_certified_band
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbedFixedIdeal_ne_zero
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_plain_inputs
+#print axioms OAI.SevenEighths.PerturbedMomentTransport.prove_fine_perturbed_moments
+#print axioms OAI.SevenEighths.PerturbedZeroFree.prove_prior_boundary
+#print axioms OAI.SevenEighths.PerturbedZeroFree.prove_chosen_perturbed_moments
+#print axioms OAI.SevenEighths.PerturbedZeroFree.bound_zero_supremum
+#print axioms OAI.SevenEighths.PerturbedZeroFree.prove_hecke_nonvanishing
+#print axioms OAI.SevenEighths.PerturbedZeroFree.prove_dirichlet_nonvanishing
+#print axioms OAI.SevenEighths.PerturbedZeroFree.prove_zeta_nonvanishing
+
+#check @OAI.SevenEighths.PerturbedZeroFree.bound_zero_supremum
+#check @OAI.SevenEighths.PerturbedZeroFree.prove_hecke_nonvanishing
+#check @OAI.SevenEighths.PerturbedZeroFree.prove_dirichlet_nonvanishing
+#check @OAI.SevenEighths.PerturbedZeroFree.prove_zeta_nonvanishing

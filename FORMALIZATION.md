@@ -1,7 +1,22 @@
 # Formalization status
 
-The target theorem is nonvanishing for `Re(s) > 174999/200000`. It is not
-proved in Lean.
+The theorem is nonvanishing for `Re(s) > 174999/200000`.
+`OAIHighUnconditional.lean` proves it in Lean without a moment hypothesis
+or an assumed prior zero-free bound. The declarations in
+`OAI.SevenEighths.PerturbedZeroFree` are:
+
+- `bound_zero_supremum`: `beta ≤ 174999/200000`.
+- `prove_hecke_nonvanishing`: finite-order Hecke L-functions over the
+  Eisenstein field, apart from the principal pole.
+- `prove_dirichlet_nonvanishing`: Dirichlet L-functions for every positive
+  modulus, apart from the principal pole.
+- `prove_zeta_nonvanishing`: the Mathlib Riemann zeta function.
+
+The upstream checkout is revision
+`adc7f1241b42e322a6451854ab7e4b4c146bf78a` of `openai/math`.
+Run `uv run verify_oai.py OAIHighAudit` to rebuild the local dependency
+chain and print the theorem types and their axioms. The final results
+report only `propext`, `Classical.choice`, and `Quot.sound`.
 
 `BoundsReal.lean` proves the changed geometry, signal exponent, low margin,
 low scale conditions, reflected-row loss inequality, and Euler-region
@@ -128,25 +143,39 @@ the Hecke, Dirichlet, and zeta nonvanishing claims from
 `ChosenPerturbedMomentInput` and `β* ≤ 7/8`. Its stronger raw-input
 versions remain available. `OAIHighData.lean` selects slots fine enough for
 any positive moment mesh, and `OAIHighAssemblyMomentInput.lean` derives the
-chosen input from a `FinePerturbedMomentInput`. The old bound also follows
-from the upstream `ChosenMomentInput` as a separate conditional route.
+chosen input from a `FinePerturbedMomentInput`.
+`OAIHighMomentTransport.lean` proves that fine input from `β* ≤ 7/8`.
+`OAIHighUnconditional.lean` derives the prior bound from the upstream
+`FinalAssemblyUnconditional.detector_certified_bands` theorem, then
+discharges both hypotheses of the perturbed assembly.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires `ChosenPerturbedMomentInput`, or the stronger
-fine or raw version. These assert fourth-moment estimates with zero moment
+The perturbed moment input asserts fourth-moment estimates with zero moment
 excess, slot mass `1/6+3/100000`, and detector labels at most `7/8`.
 `OAIHighMomentCertificate.lean` and `OAIHighMomentEnergy.lean` prove the
 generic certified energy band and its positive and zero field bounds at
-`κ=3/4` when `β*≤7/8`. The missing step transports those field bounds to
-the `SourceMomentsAt` batches for the perturbed source and slot lengths.
-The old `RawMomentInput` applies only when
-`β* > 7/8` and uses moment excess `β*-7/8`, so it does not discharge this
-new input. The current Lean theorem is conditional, not an unconditional
-proof of the stronger zero-free region. The prior `β* ≤ 7/8` result is
-passed as a hypothesis in the final theorem because rebuilding the large
-upstream certified-band module was not completed in this checkout.
+`κ=3/4` when `β*≤7/8` in the perturbed contradiction range.
+`OAIHighMomentTransport.lean` transports those field bounds to the actual
+`SourceMomentsAt` batches. Its supporting modules prove:
+
+- Disjoint prime supports and coefficient bounds for the distinct perturbed
+  slot lengths, followed by the inverse raw and marked moment fields.
+- Bounded norm for exceptional sixth-power-free rows, so they are absent
+  from the retained detector range for sufficiently large scales.
+- The equality between the physical plain witness products and the
+  retained energy source, with the fixed ideal and conductor deletions.
+- Admission of marked states at width `1 + small/4` and unmarked states
+  at width `max 1 (2*m) + small/4`, using stage error `small/4`.
+- Uniform polynomial height bounds for all required profiles, assembled
+  into the source moment estimate with zero excess.
+
+The positive energy mesh depends on `small`, and the slot construction
+ensures `ell j ≤ mesh/200`. Since `d ≥ 1/200`, every batch width
+`ell j/d` lies within that mesh. This allows total slot mass
+`1/6+3/100000`. The original `RawMomentInput`, which applies under
+`β* > 7/8` with excess `β*-7/8`, is not used as the perturbed moment input.
 
 The upstream low-side declaration that was strengthened is
 [`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).

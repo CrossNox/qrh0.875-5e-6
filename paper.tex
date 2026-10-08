@@ -20,36 +20,26 @@
 We examine the numerical endpoint in the compensated-probe proof of the
 seven-eighths zero-free half-plane in \cite{OAI}. The reflected-row estimate
 has room to increase the total prime length, while the high-side endpoint
-certificate has a fixed positive margin. We prove the detector and
-continuation argument at boundary $174999/200000=0.874995$, conditional on
-a fourth-moment estimate for the perturbed source. This note records the
-parameter changes, the needed input, and the estimates used at the boundary.
+certificate has a fixed positive margin. We extend the source moment
+estimates to the perturbed geometry and obtain the zero-free boundary
+$174999/200000=0.874995$. The accompanying Lean proof derives the moment
+input and the continuation conclusion from the upstream formalization.
 \end{abstract}
 
-\section{Statement and input}
+\section{Statement and geometry}
 
 Let $F=\mathbb Q(\sqrt{-3})$. As in \cite[Equation (1.1b)]{OAI}, let
 $\beta_*$ be the supremum of $1/2$ and the real parts of zeros of primitive
 finite-order Hecke $L$-functions over $F$ in the critical strip. We use the
 seven-eighths theorem of \cite{OAI}, so $\beta_*\le 7/8$. We also use the
 arithmetic identities, detector estimates, reflected-energy lemma, additive
-Gram bound, and continuation criterion proved there. Section 2 checks the
-changes needed when its Part II geometry is perturbed. Section 3 checks the
-high comparison and the analytic domains.
-
-The perturbed fourth-moment input asserts the existence of detector data
-whose source moments hold for every resulting bin with label $a\le7/8$,
-zero moment excess $\Delta=0$, and total prime-slot length
-$1/6+3/100000$. It includes the same count parameters and polynomial
-height allowance as the original chosen-moment input. The slot data can be
-chosen fine enough for any positive moment mesh. This input is not
-established here.
-The certified energy band and its positive and zero field bounds hold at
-$\kappa=3/4$ under $\beta_*\le7/8$. Their transport to the required
-perturbed source moment batches is not established here.
+Gram bound, and continuation criterion proved there.
+Section~\ref{sec:low} checks the changed low comparison.
+Section~\ref{sec:moments} supplies the perturbed source moments with
+zero moment excess, and Section~\ref{sec:high} checks the high comparison
+and analytic domains.
 
 \begin{theorem}\label{thm:main}
-Assume the perturbed fourth-moment input above.
 Every finite-order Hecke $L$-function over $F$ and every Dirichlet
 $L$-function, including the Riemann zeta function, has no zero in
 \[
@@ -76,13 +66,14 @@ $h=1-l_x+\ell$. The general Mellin-exponent identity in
 \begin{equation}\label{eq:signal}
  C(s)=\frac{l_x}{2}+s-1+\frac h6=s-\frac{11}{16}.
 \end{equation}
-Choose a fixed even number $K$ of disjoint prime slots, each of length
-$\ell/K$, as in \cite[Section 5, ``Order of choices'']{OAI}. The slot count
-may be enlarged to meet the same mesh requirements. The finite physical
+Choose finitely many distinct positive slot lengths $\ell_j$ with
+$\sum_j\ell_j=\ell$. Their maximum can be made smaller than any prescribed
+positive mesh. The prime annuli at scales $Z^{\ell_j}$ are then pairwise
+disjoint for all sufficiently large $Z$. The finite physical
 probe and its exact Poisson identity in \cite{OAI} make sense with the
 lengths in \eqref{eq:geometry}. All its arithmetic factors are unchanged.
 
-\section{The low comparison}
+\section{The low comparison}\label{sec:low}
 
 \begin{lemma}\label{lem:low}
 The normalized compensated probe of \cite{OAI}, formed with
@@ -145,7 +136,97 @@ The signal at the proposed boundary is
  =\frac1{400000}>0.
 \end{equation}
 
-\section{The high comparison}
+\section{The perturbed source moments}\label{sec:moments}
+
+The fourth-moment lemma with short prime factors in \cite{OAI} permits
+$\kappa=3/4$. Its zero-free hypothesis is available because
+$2\beta_*-1\le3/4$. The original detector application uses
+$\kappa=3/4+2\Delta$ with $\Delta=\beta_*-7/8>0$.
+Here the moment estimates use $\Delta=0$. The gap $\beta_*-B$, when
+positive, is used separately to choose the detector losses.
+
+We record the estimates needed for this application. Use the normalized
+witness polynomials and physical slot factors of \cite{OAI}. In a source
+fiber $\mathcal B$ at scale $U=Z^d$, write $r$ and $m$ for the inverse and
+plain witness lengths, $I_{u,n}$ for the inverse witness with $n$
+logarithmic derivatives, and $P_{u,j}$ for the plain witness with $j$
+logarithmic derivatives. These include the real shifts in $[0,1]$ and
+the height shifts in $[-H,H]$. The physical slot factors use
+$\Ree z=17/50$ and $|\operatorname{Im}z|\le H$.
+For a selected set $A$ of slots, let
+$Q_A(u)$ be their physical product and put
+\[
+ \lambda_j=\ell_j/d,\qquad L_A=\sum_{j\in A}\lambda_j.
+\]
+
+\begin{lemma}\label{lem:moments}
+Suppose $B<\beta_*\le7/8$. For every admissible choice of the perturbed
+detector losses, let $\rho>0$ be its moment loss. There is a positive mesh
+$\mu$ such that slot lengths with $\ell_j\le\mu/200$ satisfy the following
+estimates. After fixing the slots and source, there is an exponent
+$J\ge0$ independent of the target character. For each target there are
+$C_\eta>0$ and a threshold such that the bounds hold for every source fiber with
+$1/200\le d\le7/8$, $51/100<a\le7/8$, and retained rows
+$Z^{1/100}\le\NF u\le Z^{d-\rho}$ above that threshold.
+With $C_H=C_\eta(1+H)^J$, uniformly for $H\ge0$,
+\begin{align}
+ \sum_{u\in\mathcal B}|I_{u,n}Q_A(u)|^2
+   &\le C_H U^{1+\rho},
+   && n\le2,\quad r+2L_A<1,\quad 2r+8L_A<3,
+   \label{eq:inverse-moment}\\
+ \sum_{u\in\mathcal B}|P_{u,j}P_{u,k}Q_A(u)|^2
+   &\le C_H U^{1+\rho},
+   && j+k\le2,\quad 2m+\tfrac92 L_A\le1,
+   \label{eq:plain-marked-moment}\\
+ \sum_{u\in\mathcal B}|P_{u,j}P_{u,k}|^2
+   &\le C_H U^{\max\{1,2m\}+\rho},
+   && j+k\le2.
+   \label{eq:plain-unmarked-moment}
+\end{align}
+The unmarked inverse raw-moment bounds also hold with the count parameters
+chosen from the fixed source. Together these are the source moment bounds
+with zero moment excess required by the detector.
+\end{lemma}
+
+\begin{proof}
+Apply the certified energy theorem of \cite{OAI} with $\kappa=3/4$ and
+stage error $\rho/4$. Its positive-width and zero-slot conclusions give a
+positive fine mesh $\mu$. The condition $\ell_j\le\mu/200$ ensures
+$\lambda_j\le\mu$ for every $d\ge1/200$. This does not restrict the total
+slot length, since the number of distinct positive slots can be increased.
+
+Fix the source's finite excluded prime set $S$, and let $M_S$ be its
+product ideal. Use the fixed ideal $M_S\cap(72)$ in the energy source.
+For each target there are only finitely many source labels. The norm of
+the character modulus at every such label is at most $U^{\rho/4}$ once $Z$ is large
+enough. The exceptional sixth-power-free rows are supported on a fixed
+finite set of primes and have bounded norm. They are therefore absent
+from the retained rows for large $Z$.
+
+The source identities bound the sum of the squared plain witness products
+by retained energy with the physical prime coefficients. The marked initial state
+has width $1+\rho/4$. Its capacity condition follows from
+$2m+6\kappa L_A\le1$, and the positive-width energy bound gives exponent
+$1+\rho/2\le1+\rho$. For the unmarked pair, use initial width
+$\max\{1,2m\}+\rho/4$ and the zero-slot energy bound. This gives
+\eqref{eq:plain-marked-moment} and \eqref{eq:plain-unmarked-moment}.
+
+For the inverse witness, the fixed-source inverse estimates of \cite{OAI}
+apply under the two strict capacity inequalities in
+\eqref{eq:inverse-moment}. Distinct slot lengths give disjoint prime
+supports. Their fixed conductor deletions have modulus-one denominators
+on these supports for large $Z$. The inverse raw-moment bound and the
+marked inverse bound consequently apply to the perturbed slots.
+
+The profile estimates bound all needed seminorms by a fixed power of
+$1+H$. Taking a common exponent and summing the finitely many label
+constants gives $J$ and $C_\eta$. The exponent is chosen before the
+target. Thus the estimates hold at detector height $H=Z^{2\tau}$, and
+the usual late choice of $\tau>0$ absorbs the polynomial height factor
+into the prescribed detector loss.
+\end{proof}
+
+\section{The high comparison}\label{sec:high}
 
 We first record the extension of the Euler regions used by the contour
 arguments. The local factors below are those of
@@ -199,7 +280,7 @@ principal, bin, and outer-row contour estimates.
 \end{proof}
 
 \begin{lemma}\label{lem:high}
-Under the perturbed fourth-moment input, if $B<\beta_*\le7/8$, then for
+If $B<\beta_*\le7/8$, then for
 some $\sigma>0$ independent of the
 target character,
 \[
@@ -211,7 +292,7 @@ where $f_\eta$ is the principal Mellin signal from \cite{OAI} with
 \end{lemma}
 
 \begin{proof}
-The required fourth-moment estimate uses $\kappa=3/4$, because its
+Lemma~\ref{lem:moments} supplies the fourth-moment estimate at $\kappa=3/4$, because its
 zero-free input is $\beta_*\le(1+\kappa)/2=7/8$. Every detected bin has
 $\delta=2a-1\le2\beta_*-1\le3/4$. Its plain prime capacity is thus
 the baseline capacity in the proof of \cite[Part II, capacity
@@ -300,20 +381,25 @@ The principal slot-ratio and normalized residue estimates are proved on the
 new boundary. The physical principal remainder at the changed lengths is
 bounded on a fixed contour just right of $7/8$, leaving a power saving of
 $1/3000$ relative to $\beta_*$ in the proposed interval.
-The balanced central-bin estimate, principal transport, detector assembly,
-and continuation contradiction are formalized in Lean conditional on the
-stated chosen fourth-moment input. That input remains open. The final Lean theorem
-also takes $\beta_*\le7/8$ as a hypothesis, since the upstream certified-band
-module was not rebuilt in this checkout.
-Compiling this note checks the TeX, not the remaining number-theoretic inputs.
-The conditional stronger boundary in Theorem~\ref{thm:main} is not part of
-\cite{OAI}'s stated theorem or its existing formalization.
+The perturbed source moment transport is proved in
+\texttt{OAIHighMomentTransport.lean}. It supplies the chosen fourth-moment
+input used by the central-bin estimate and detector assembly.
+\texttt{OAIHighUnconditional.lean} derives the prior $\beta_*\le7/8$ bound
+from the upstream unconditional module and concludes the stronger Hecke,
+Dirichlet, and zeta nonvanishing statements without a moment hypothesis.
+The final theorem's axiom audit reports only the standard Lean axioms
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+The proof uses Lean 4.34.1 and upstream revision
+\texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
+Compiling this note checks the TeX. The separate Lean build checks the proof.
+The stronger boundary in Theorem~\ref{thm:main} is an extension of
+\cite{OAI}'s stated theorem.
 
 \begin{thebibliography}{1}
 \bibitem{OAI}
 OpenAI, \emph{The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane
 $\Ree(s)>7/8$}, 30 September 2026. Source consulted 7 October 2026.
-\href{https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex}{Source TeX}.
+\href{https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex}{Source TeX at the verified revision}.
 \end{thebibliography}
 
 \end{document}
