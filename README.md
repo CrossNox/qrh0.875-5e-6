@@ -25,15 +25,18 @@ docker run --rm --cpuset-cpus 0-3 --cpus 4 --memory 8g \
 The `OAILow*.lean` files prove the normalized compensated low estimate for
 the perturbed physical probe against upstream OAI. Check the full chain and
 its axioms with `uv run verify_oai.py OAILowAudit`. This requires the
-adjacent `rh-upstream` checkout and Docker. The high-side contour estimates
-and zero-free theorem remain unproved.
+adjacent `rh-upstream` checkout and Docker. The `OAIHigh*.lean` files prove
+the unramified and ramified local Euler bounds and principal Euler product
+extension at the new boundary, including local analyticity. Check them with
+`uv run verify_oai.py OAIHighAudit`. The
+row-dependent high-side contour estimates and zero-free theorem remain
+unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build
 the PDF and resolve references.
 
-These checks verify the numerical part of the proposed argument and the
-document build. They do not certify the cited number-theoretic estimates or
-the extension of their contour arguments. The proposed stronger theorem is
-not formalized. See [FORMALIZATION.md](FORMALIZATION.md) for the remaining
-proof obligations.
+These checks verify the stated partial results and the document build.
+They do not certify the high-side contour arguments or the proposed stronger
+theorem. See [FORMALIZATION.md](FORMALIZATION.md) for the remaining proof
+obligations.

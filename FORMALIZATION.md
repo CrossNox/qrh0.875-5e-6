@@ -23,10 +23,25 @@ changed physical scales. It also proves that a fixed slot-product cap
 `L ≤ Z^(2*xLength-yLength)`.
 
 The normalized compensated low estimate for the changed physical probe is
-now proved in Lean. The remaining proof requires the full Euler correction
-to support the contour moves to `Re(s) > 174999/200000`. The detector and
-high-row assembly must use the prior 7/8 theorem with `κ = 3/4` and a
-positive gap `β* - 174999/200000`.
+now proved in Lean. `OAIHighEulerRegion.lean` proves the unramified local
+Euler defect bound at `Re(s) ≥ 174999/200000`, with decay
+`240 Q^(-363/200+3/100000)`. `OAIHighPrincipalProduct.lean` proves that,
+after excluding finitely many small primes, the actual principal Euler
+correction is analytic and within `1/2` of `1` on the larger open region.
+`OAIHighRamifiedBound.lean` proves the corresponding `193` bound for the
+row-dependent ramified local factor at the new boundary. This carries the
+changed lower bound through the marked-term, finite-sum, and closed-factor
+estimates. `OAIHighHolomorphic.lean` proves that the unramified and
+ramified local factors are analytic in each contour variable on the
+corresponding enlarged region.
+Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
+OAI and audit its axioms. The audited results report only `propext`,
+`Classical.choice`, and `Quot.sound`.
+
+The remaining proof requires row-dependent Euler correction bounds and
+contour transport at the new boundary. The detector and high-row assembly
+must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
+`β* - 174999/200000`.
 
 The upstream low-side declaration that was strengthened is
 [`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).

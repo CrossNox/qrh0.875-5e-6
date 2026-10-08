@@ -13,6 +13,11 @@ LEAN_IMAGE = "ghcr.io/leanprover-community/mathlib4/lean:latest"
 TOOLCHAIN_VOLUME = "rh-lean-toolchains"
 
 UPSTREAM_TARGETS = {
+    "OAIHighEulerRegion": "OAI.NumberTheory.DirichletL.Detector.EulerRegion",
+    "OAIHighPrincipalProduct": "OAI.NumberTheory.DirichletL.Detector.PrincipalProduct",
+    "OAIHighRamifiedBound": "OAI.NumberTheory.DirichletL.Detector.HighRowsRamified",
+    "OAIHighHolomorphic": "OAI.NumberTheory.DirichletL.Detector.HighRowsHolomorphic",
+    "OAIHighAudit": "OAI.NumberTheory.DirichletL.Detector.HighRowsHolomorphic",
     "OAILowReflected": "OAI.NumberTheory.DirichletL.Detector.LowReflectedLength",
     "OAILowExponent": "OAI.NumberTheory.DirichletL.Reflection.LowExponent",
     "OAILowBranchSum": "OAI.NumberTheory.DirichletL.Reflection.LowBranchSum",
