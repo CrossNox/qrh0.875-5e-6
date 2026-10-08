@@ -17,6 +17,14 @@ the contour moves to `Re(s) > 174999/200000`. The detector and high-row
 assembly must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
 `β* - 174999/200000`.
 
+The first low-side declaration that must be strengthened is
+[`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).
+It assumes the total slot length is at most `1/6` and concludes with the
+fixed exponent `3/16`. The new probe has total length `1/6 + 3/100000`.
+Its caller in `LowNormalized.lean` also fixes the original physical scales
+`17/48` and `23/48`. The existing theorem cannot be applied to the new
+probe, even though `BoundsReal.lean` proves the required numerical margins.
+
 The [existing final assembly](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssembly.lean)
 starts with the assumption `7/8 < β*`. Its
 [fixed high bound](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssemblyFixedHigh.lean)
