@@ -125,15 +125,19 @@ the concrete detector data. `OAIHighSignalIdentity.lean` and
 `OAIHighCommonProbe.lean` prove the continuation contradiction at the new
 boundary. `OAIHighAssemblyFinal.lean` concludes `β* ≤ 174999/200000` and
 the Hecke, Dirichlet, and zeta nonvanishing claims from
-`RawPerturbedMomentInput` and `β* ≤ 7/8`. It also derives the old bound
+`ChosenPerturbedMomentInput` and `β* ≤ 7/8`. Its stronger raw-input
+versions remain available. `OAIHighData.lean` selects slots fine enough for
+any positive moment mesh, and `OAIHighAssemblyMomentInput.lean` derives the
+chosen input from a `FinePerturbedMomentInput`. The old bound also follows
 from the upstream `ChosenMomentInput` as a separate conditional route.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
-The remaining proof requires `RawPerturbedMomentInput`, the fourth-moment
-estimate with zero moment excess, slot mass `1/6+3/100000`, and detector
-labels at most `7/8`. The old `RawMomentInput` applies only when
+The remaining proof requires `ChosenPerturbedMomentInput`, or the stronger
+fine or raw version. These assert fourth-moment estimates with zero moment
+excess, slot mass `1/6+3/100000`, and detector labels at most `7/8`.
+The old `RawMomentInput` applies only when
 `β* > 7/8` and uses moment excess `β*-7/8`, so it does not discharge this
 new input. The current Lean theorem is conditional, not an unconditional
 proof of the stronger zero-free region. The prior `β* ≤ 7/8` result is

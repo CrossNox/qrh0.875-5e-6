@@ -36,8 +36,10 @@ tuple, dyad, and Mellin-integral bounds. Check them with
 bound, changed floor-row bound, canonical ray-cube decomposition, principal
 transport, and detector assembly are also formalized.
 `OAIHighAssemblyFinal.lean` proves the stronger Hecke, Dirichlet, and zeta
-zero-free statements from an explicit `RawPerturbedMomentInput` and the
-prior bound `beta ≤ 7/8`. The changed fourth-moment input has not been proved.
+zero-free statements from an explicit `ChosenPerturbedMomentInput` and the
+prior bound `beta ≤ 7/8`. It also provides versions using the stronger
+`RawPerturbedMomentInput`. Fine slot data can be selected for any positive
+moment mesh. The changed fourth-moment input has not been proved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build

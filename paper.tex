@@ -37,11 +37,13 @@ Gram bound, and continuation criterion proved there. Section 2 checks the
 changes needed when its Part II geometry is perturbed. Section 3 checks the
 high comparison and the analytic domains.
 
-The perturbed fourth-moment input asserts the source moment estimates of
-\cite{OAI} for every resulting detector bin with label $a\le7/8$, zero
-moment excess $\Delta=0$, and total prime-slot length $1/6+3/100000$.
-It includes the same count parameters and polynomial height allowance as
-the original raw-moment input. This input is not established here.
+The perturbed fourth-moment input asserts the existence of detector data
+whose source moments hold for every resulting bin with label $a\le7/8$,
+zero moment excess $\Delta=0$, and total prime-slot length
+$1/6+3/100000$. It includes the same count parameters and polynomial
+height allowance as the original chosen-moment input. The slot data can be
+chosen fine enough for any positive moment mesh. This input is not
+established here.
 
 \begin{theorem}\label{thm:main}
 Assume the perturbed fourth-moment input above.
@@ -297,7 +299,7 @@ bounded on a fixed contour just right of $7/8$, leaving a power saving of
 $1/3000$ relative to $\beta_*$ in the proposed interval.
 The balanced central-bin estimate, principal transport, detector assembly,
 and continuation contradiction are formalized in Lean conditional on the
-stated fourth-moment input. That input remains open. The final Lean theorem
+stated chosen fourth-moment input. That input remains open. The final Lean theorem
 also takes $\beta_*\le7/8$ as a hypothesis, since the upstream certified-band
 module was not rebuilt in this checkout.
 Compiling this note checks the TeX, not the remaining number-theoretic inputs.

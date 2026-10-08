@@ -39,19 +39,14 @@ theorem beta_le_seven_eighths_from_chosen_moments
   HeckeCommonProbe.beta_le_seven_eighths
     (common_probe_of_chosen_moments hchosen)
 
-theorem common_perturbed_probe_of_raw_moments
-    (hmom : RawPerturbedMomentInput)
+theorem common_perturbed_probe_of_chosen_moments
+    (hmom : ChosenPerturbedMomentInput)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
     UniformPerturbedCommonProbe := by
   intro hβ
-  have hgap : 0 < HeckeZeroSupremum.beta - HeckeSignal.perturbedBoundary :=
-    sub_pos.mpr hβ
-  obtain ⟨D⟩ := exists_perturbed_high_data
-    (HeckeZeroSupremum.beta - HeckeSignal.perturbedBoundary) hgap
-  obtain ⟨F⟩ := exists_perturbed_source_data D
-  obtain ⟨counts⟩ := perturbed_source_count_parameters F
+  obtain ⟨D, F, counts, J, hJ, hbound⟩ := hmom hβ
   obtain ⟨τ, hτ, hτd, hτcost, hτt, hτ2, hτeps, hsource⟩ :=
-    raw_perturbed_input_chosen_height hmom hβ D F counts
+    perturbed_chosen_data_height D F counts J hJ hbound
   obtain ⟨C, hC, hhigh⟩ :=
     fixed_perturbed_high_bound hβ hβhi D F counts τ
       hτ hτd hτcost hτt hτ2 hτeps
@@ -71,12 +66,12 @@ theorem common_perturbed_probe_of_raw_moments
   · have hlow := F.probe_low (1 / 1000000) (by norm_num) η
     apply hlow.trans
     apply Continuation.rpow_isBigO_atTop_of_le
-    have hgap' : 0 < HeckeZeroSupremum.beta -
+    have hgap : 0 < HeckeZeroSupremum.beta -
         (7 / 8 - 1 / 200000 : ℝ) := by
-      simpa only [HeckeSignal.perturbedBoundary] using hgap
+      simpa only [HeckeSignal.perturbedBoundary] using sub_pos.mpr hβ
     dsimp [ω, HeckeSignal.perturbedBoundary,
       Parameters.perturbedSlotLengthShift]
-    linarith [hgap']
+    linarith [hgap]
   · obtain ⟨Ct, hCt, hhigh⟩ := hhigh η
     obtain ⟨Cm, hCm, hsource⟩ := hsource η
     apply isBigO_rpow_of_eventual_norm_bound
@@ -84,6 +79,27 @@ theorem common_perturbed_probe_of_raw_moments
       by positivity, ?_⟩
     filter_upwards [hhigh, hsource] with Z hh hs
     exact hh Cm hCm.le hs
+
+theorem common_perturbed_probe_of_raw_moments
+    (hmom : RawPerturbedMomentInput)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
+    UniformPerturbedCommonProbe :=
+  common_perturbed_probe_of_chosen_moments
+    (chosen_perturbed_input_of_raw hmom) hβhi
+
+theorem beta_le_perturbed_boundary_of_chosen_perturbed_moments
+    (hmom : ChosenPerturbedMomentInput)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
+    HeckeZeroSupremum.beta ≤ HeckeSignal.perturbedBoundary :=
+  HeckeCommonProbe.beta_le_perturbed_boundary
+    (common_perturbed_probe_of_chosen_moments hmom hβhi)
+
+theorem beta_le_perturbed_boundary_of_fine_moments
+    (hmom : FinePerturbedMomentInput)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8) :
+    HeckeZeroSupremum.beta ≤ HeckeSignal.perturbedBoundary :=
+  beta_le_perturbed_boundary_of_chosen_perturbed_moments
+    (chosen_perturbed_input_of_fine hmom) hβhi
 
 theorem beta_le_perturbed_boundary_of_raw_moments
     (hmom : RawPerturbedMomentInput)
@@ -98,17 +114,17 @@ theorem beta_le_perturbed_boundary_of_raw_and_chosen_moments
   beta_le_perturbed_boundary_of_raw_moments hmom
     (beta_le_seven_eighths_from_chosen_moments hchosen)
 
-theorem hecke_of_raw_perturbed_moments
-    (hmom : RawPerturbedMomentInput)
+theorem hecke_of_chosen_perturbed_moments
+    (hmom : ChosenPerturbedMomentInput)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
     (χ : Character) (s : ℂ)
     (hs : HeckeSignal.perturbedBoundary < s.re)
     (hpole : s ≠ 1 ∨ χ.residue ≠ 1) : LFunction χ s ≠ 0 :=
   HeckeCommonProbe.hecke_ne_zero_of_perturbed_common_probe
-    (common_perturbed_probe_of_raw_moments hmom hβhi) χ s hs hpole
+    (common_perturbed_probe_of_chosen_moments hmom hβhi) χ s hs hpole
 
-theorem dirichlet_of_raw_perturbed_moments
-    (hmom : RawPerturbedMomentInput)
+theorem dirichlet_of_chosen_perturbed_moments
+    (hmom : ChosenPerturbedMomentInput)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
     (q : ℕ) (hq : q ≠ 0)
     (χ : DirichletCharacter ℂ q) (s : ℂ)
@@ -123,21 +139,50 @@ theorem dirichlet_of_raw_perturbed_moments
   have hs0 : s ≠ 0 := by
     intro h
     norm_num [h, HeckeSignal.perturbedBoundary] at hs
-  have h := hecke_of_raw_perturbed_moments hmom hβhi
+  have h := hecke_of_chosen_perturbed_moments hmom hβhi
     (HeckeDirichlet.character χ) s hs (Or.inl hs1)
   rw [HeckeDirichlet.LFunction_eq_dirichlet_product χ hs0 hs1] at h
   exact (mul_ne_zero_iff.mp h).1
 
-theorem zeta_of_raw_perturbed_moments
-    (hmom : RawPerturbedMomentInput)
+theorem zeta_of_chosen_perturbed_moments
+    (hmom : ChosenPerturbedMomentInput)
     (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
     (s : ℂ) (hs : HeckeSignal.perturbedBoundary < s.re) :
     riemannZeta s ≠ 0 := by
   by_cases h1 : s = 1
   · simpa [h1] using riemannZeta_one_ne_zero
-  have h := dirichlet_of_raw_perturbed_moments hmom hβhi
+  have h := dirichlet_of_chosen_perturbed_moments hmom hβhi
     1 (by norm_num) (1 : DirichletCharacter ℂ 1) s hs (by simp [h1])
   simpa only [DirichletCharacter.LFunction_modOne_eq] using h
+
+theorem hecke_of_raw_perturbed_moments
+    (hmom : RawPerturbedMomentInput)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
+    (χ : Character) (s : ℂ)
+    (hs : HeckeSignal.perturbedBoundary < s.re)
+    (hpole : s ≠ 1 ∨ χ.residue ≠ 1) : LFunction χ s ≠ 0 :=
+  hecke_of_chosen_perturbed_moments
+    (chosen_perturbed_input_of_raw hmom) hβhi χ s hs hpole
+
+theorem dirichlet_of_raw_perturbed_moments
+    (hmom : RawPerturbedMomentInput)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
+    (q : ℕ) (hq : q ≠ 0)
+    (χ : DirichletCharacter ℂ q) (s : ℂ)
+    (hs : HeckeSignal.perturbedBoundary < s.re)
+    (hexc : ¬ (χ = 1 ∧ s = 1)) :
+    letI : NeZero q := ⟨hq⟩
+    DirichletCharacter.LFunction χ s ≠ 0 :=
+  dirichlet_of_chosen_perturbed_moments
+    (chosen_perturbed_input_of_raw hmom) hβhi q hq χ s hs hexc
+
+theorem zeta_of_raw_perturbed_moments
+    (hmom : RawPerturbedMomentInput)
+    (hβhi : HeckeZeroSupremum.beta ≤ 7 / 8)
+    (s : ℂ) (hs : HeckeSignal.perturbedBoundary < s.re) :
+    riemannZeta s ≠ 0 :=
+  zeta_of_chosen_perturbed_moments
+    (chosen_perturbed_input_of_raw hmom) hβhi s hs
 
 end SevenEighths.ProbeFinalAssembly
 

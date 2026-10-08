@@ -53,20 +53,63 @@ def RawPerturbedMomentInput : Prop :=
         PerturbedSourceMomentBound F counts η Z τ
           (C * (1 + Z ^ (2 * τ)) ^ J) (Z ^ (2 * τ))
 
-theorem raw_perturbed_input_chosen_height
-    (h : RawPerturbedMomentInput)
-    (hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta)
-    (D : PerturbedHighData
-      (HeckeZeroSupremum.beta - (7 / 8 - 1 / 200000)))
+def ChosenPerturbedMomentInput : Prop :=
+  ∀ _hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta,
+    ∃ D : PerturbedHighData
+      (HeckeZeroSupremum.beta - (7 / 8 - 1 / 200000)),
+    ∃ F : PerturbedSourceData D,
+    ∃ counts : CountParameters F.modulus ⊤ D.small,
+    ∃ J : ℝ, 0 ≤ J ∧ ∀ η : Character, ∃ C : ℝ, 0 < C ∧
+      ∀ τ : ℝ, 0 < τ → τ ≤ 1 → ∀ᶠ Z : ℝ in atTop,
+        PerturbedSourceMomentBound F counts η Z τ
+          (C * (1 + Z ^ (2 * τ)) ^ J) (Z ^ (2 * τ))
+
+def FinePerturbedMomentInput : Prop :=
+  ∀ _hβ : (7 / 8 - 1 / 200000 : ℝ) < HeckeZeroSupremum.beta,
+    ∃ mesh : ℝ → ℝ, (∀ small : ℝ, 0 < small → 0 < mesh small) ∧
+      ∀ D : PerturbedHighData
+          (HeckeZeroSupremum.beta - (7 / 8 - 1 / 200000)),
+        (∀ j, D.ell j ≤ mesh D.small / 200) →
+        ∀ F : PerturbedSourceData D,
+        ∀ counts : CountParameters F.modulus ⊤ D.small,
+          ∃ J : ℝ, 0 ≤ J ∧ ∀ η : Character, ∃ C : ℝ, 0 < C ∧
+            ∀ τ : ℝ, 0 < τ → τ ≤ 1 → ∀ᶠ Z : ℝ in atTop,
+              PerturbedSourceMomentBound F counts η Z τ
+                (C * (1 + Z ^ (2 * τ)) ^ J) (Z ^ (2 * τ))
+
+theorem chosen_perturbed_input_of_fine
+    (h : FinePerturbedMomentInput) : ChosenPerturbedMomentInput := by
+  intro hβ
+  obtain ⟨mesh, hmesh, hmom⟩ := h hβ
+  obtain ⟨D, hD⟩ := exists_perturbed_high_data_fine _
+    (sub_pos.mpr hβ) mesh hmesh
+  obtain ⟨F⟩ := exists_perturbed_source_data D
+  obtain ⟨counts⟩ := perturbed_source_count_parameters F
+  exact ⟨D, F, counts, hmom D hD F counts⟩
+
+theorem chosen_perturbed_input_of_raw
+    (h : RawPerturbedMomentInput) : ChosenPerturbedMomentInput := by
+  intro hβ
+  obtain ⟨D⟩ := exists_perturbed_high_data _ (sub_pos.mpr hβ)
+  obtain ⟨F⟩ := exists_perturbed_source_data D
+  obtain ⟨counts⟩ := perturbed_source_count_parameters F
+  exact ⟨D, F, counts, h hβ D F counts⟩
+
+theorem perturbed_chosen_data_height
+    {gap : ℝ} (D : PerturbedHighData gap)
     (F : PerturbedSourceData D)
-    (counts : CountParameters F.modulus ⊤ D.small) :
+    (counts : CountParameters F.modulus ⊤ D.small)
+    (J : ℝ) (hJ : 0 ≤ J)
+    (hbound : ∀ η : Character, ∃ C : ℝ, 0 < C ∧
+      ∀ τ : ℝ, 0 < τ → τ ≤ 1 → ∀ᶠ Z : ℝ in atTop,
+        PerturbedSourceMomentBound F counts η Z τ
+          (C * (1 + Z ^ (2 * τ)) ^ J) (Z ^ (2 * τ))) :
     ∃ τ : ℝ, 0 < τ ∧ τ < (1 / 200 : ℝ) / 2 ∧
       4 * τ < (1 / 200 : ℝ) * D.cost ∧ τ < D.small ∧
       2 * τ ≤ D.small ∧ τ * (2 + 4 * D.eps) < D.small ∧
       ∀ η : Character, ∃ C : ℝ, 0 < C ∧ ∀ᶠ Z : ℝ in atTop,
         PerturbedSourceMomentBound F counts η Z τ
           (C * Z ^ D.small) (Z ^ (2 * τ)) := by
-  obtain ⟨J, hJ, hbound⟩ := h hβ D F counts
   obtain ⟨τ, hτ, hτd, hτcost, hτt, hτJ, hτeps⟩ :=
     D.height_choice J hJ
   have hτ1 : τ ≤ 1 := by linarith

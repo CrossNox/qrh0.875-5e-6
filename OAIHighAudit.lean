@@ -157,6 +157,7 @@ import OAIHighAssemblyFinal
 #print axioms OAI.SevenEighths.Parameters.exists_physical_slot_lengths_with_mass
 #print axioms OAI.SevenEighths.Parameters.exists_perturbed_central_budget
 #print axioms OAI.SevenEighths.Parameters.exists_perturbed_high_data
+#print axioms OAI.SevenEighths.Parameters.exists_perturbed_high_data_fine
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_floor_cube_arithmetic
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_global_floor_cube_arithmetic
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.perturbed_global_floor_cube_norm
@@ -190,7 +191,9 @@ import OAIHighAssemblyFinal
 #print axioms OAI.SevenEighths.ProbeHighRowFamily.actual_high_probe_from_raw_moments_on_perturbed_boundary
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.exists_perturbed_source_data
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.PerturbedSourceData.probe_low
-#print axioms OAI.SevenEighths.ProbeFinalAssembly.raw_perturbed_input_chosen_height
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.chosen_perturbed_input_of_raw
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.chosen_perturbed_input_of_fine
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_chosen_data_height
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_nonfloor_class_from_count_parameters
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_nonfloor_cube_arithmetic_with_count_parameters
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.perturbed_nonfloor_cube_norm_with_count_parameters
@@ -200,6 +203,12 @@ import OAIHighAssemblyFinal
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.fixed_perturbed_high_bound
 #print axioms OAI.SevenEighths.HeckeSignal.nonzero_of_perturbed_probe_bounds
 #print axioms OAI.SevenEighths.HeckeCommonProbe.beta_le_perturbed_boundary
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.common_perturbed_probe_of_chosen_moments
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.beta_le_perturbed_boundary_of_chosen_perturbed_moments
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.beta_le_perturbed_boundary_of_fine_moments
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.hecke_of_chosen_perturbed_moments
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.dirichlet_of_chosen_perturbed_moments
+#print axioms OAI.SevenEighths.ProbeFinalAssembly.zeta_of_chosen_perturbed_moments
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.common_perturbed_probe_of_raw_moments
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.beta_le_perturbed_boundary_of_raw_and_chosen_moments
 #print axioms OAI.SevenEighths.ProbeFinalAssembly.hecke_of_raw_perturbed_moments

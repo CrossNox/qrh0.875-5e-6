@@ -68,8 +68,11 @@ structure PerturbedHighData (gap : ℝ) where
     4 * τ < (1 / 200) * cost ∧ τ < small ∧
     2 * τ * (1 + J) ≤ small ∧ τ * (2 + 4 * eps) < small
 
-theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
-    Nonempty (PerturbedHighData gap) := by
+theorem exists_perturbed_high_data_fine
+    (gap : ℝ) (hgap : 0 < gap)
+    (mesh : ℝ → ℝ) (hmesh : ∀ small : ℝ, 0 < small → 0 < mesh small) :
+    ∃ D : PerturbedHighData gap,
+      ∀ j, D.ell j ≤ mesh D.small / 200 := by
   obtain ⟨small, hsmall, hsmall_gap, hsmall_cap, hrow, hallow⟩ :=
     exists_perturbed_central_budget gap hgap
   let slotMesh := (1 + 6 * perturbedSlotLengthShift) * small
@@ -79,9 +82,10 @@ theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
   obtain ⟨N, hN, ell, rmin, hrmin, hinj, hsum, hbounds, _⟩ :=
     exists_physical_slot_lengths_with_mass
       (1 / 6 + perturbedSlotLengthShift) (1 / 200) (7 / 8)
-      small slotMesh
+      (min slotMesh (mesh small)) small
       (by dsimp [perturbedSlotLengthShift]; norm_num)
-      (by norm_num) (by norm_num) hsmall hslotMesh
+      (by norm_num) (by norm_num)
+      (lt_min hslotMesh (hmesh small hsmall)) hsmall
   obtain ⟨allowance, hallowance, hallowance_bound, hbud⟩ := hallow N
   let ellMin := (7 / 8 : ℝ) * rmin
   have hellMin : 0 < ellMin := mul_pos (by norm_num) hrmin
@@ -122,7 +126,9 @@ theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
     ε := ε, e := e, κ := κ, cost := cost, eps := eps, sigma := sigma,
     small_pos := hsmall, small_gap := hsmall_gap, small_cap := hsmall_cap,
     slots_pos := hN, slots_injective := hinj, slots_sum := hsum,
-    slots_bounds := fun j => ⟨(hbounds j).1, (hbounds j).2.1, (hbounds j).2.2.2⟩,
+    slots_bounds := fun j => ⟨(hbounds j).1, (hbounds j).2.1,
+      (hbounds j).2.2.1.trans
+        (mul_le_mul_of_nonneg_left (min_le_left _ _) (by norm_num))⟩,
     rmin_pos := hrmin, epsilon_pos := hε, epsilon_small := hε1,
     epsilon_gap := hεgap, e_pos := he, e_small := he1,
     kappa_pos := hκ, kappa_small := hκ1, cost_pos := hcost,
@@ -132,7 +138,7 @@ theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
     row_threshold := hrow,
     geometric_budget := ?_, principal_budget := ?_,
     window_budget := ?_, floor_budget := ?_,
-    high_saving := ?_, height_choice := ?_ }⟩
+    high_saving := ?_, height_choice := ?_ }, ?_⟩
   · dsimp [perturbedSlotLengthShift]
     linarith only [hsigma_small, hea, hallowance_cap, hsmall_cap]
   · linarith only [hsigma_small, hsmall_cap]
@@ -165,6 +171,20 @@ theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
       by nlinarith only [hτbound, hprod, hτ],
       by nlinarith only [hτbound, hprod, hτ],
       by nlinarith only [hτbound, hprod, hprodeps, hτ]⟩
+  · intro j
+    change ell j ≤ mesh small / 200
+    calc
+      ell j ≤ (1 / 200 : ℝ) * min slotMesh (mesh small) :=
+        (hbounds j).2.2.1
+      _ ≤ (1 / 200 : ℝ) * mesh small :=
+        mul_le_mul_of_nonneg_left (min_le_right _ _) (by norm_num)
+      _ = mesh small / 200 := by ring
+
+theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
+    Nonempty (PerturbedHighData gap) := by
+  obtain ⟨D, _⟩ := exists_perturbed_high_data_fine gap hgap
+    (fun _ => 1) (by intros; norm_num)
+  exact ⟨D⟩
 
 end SevenEighths.Parameters
 
