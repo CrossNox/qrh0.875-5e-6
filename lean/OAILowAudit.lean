@@ -1,0 +1,4 @@
+import ProofAudit
+import OAILowNormalized
+
+#assert_standard_axioms OAI.SevenEighths.ProbePhysical.perturbed_original_normalized_compensatedPhysicalProbe_low

@@ -367,8 +367,9 @@ stated assertions.
 \section*{Verification scope}
 
 The rational inequalities in \eqref{eq:low-gap} and \eqref{eq:high-gap}
-can be checked independently by the accompanying \texttt{verify\_bounds.py}.
-The accompanying Lean files verify the geometry, reflected-exponent
+can be checked independently by the accompanying
+\texttt{scripts/verify\_bounds.py}.
+The accompanying files in \texttt{lean/} verify the geometry, reflected-exponent
 calculation, high-side endpoint, normalized compensated low estimate,
 local Euler bounds, and principal and global Euler product extensions against
 the upstream OAI formalization. The finite source multiplier bounds and
@@ -388,8 +389,11 @@ input used by the central-bin estimate and detector assembly.
 \texttt{OAIHighUnconditional.lean} derives the prior $\beta_*\le7/8$ bound
 from the upstream unconditional module and concludes the stronger Hecke,
 Dirichlet, and zeta nonvanishing statements without a moment hypothesis.
-The final theorem's axiom audit reports only the standard Lean axioms
+The final theorem's axiom audit permits only the standard Lean axioms
 \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+It rejects any other transitive axiom dependency, including incomplete proofs.
+The verification script requires the pinned upstream commit and a clean
+upstream working tree.
 The proof uses Lean 4.34.1 and upstream revision
 \texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}.
 Compiling this note checks the TeX. The separate Lean build checks the proof.

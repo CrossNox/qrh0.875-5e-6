@@ -3,16 +3,45 @@
 # dependencies = []
 # ///
 
-"""Compile the local Lean dependency chain and report theorem axioms."""
+"""Check Lean proofs and their axioms against the pinned upstream source."""
 
 import argparse
+import logging
 import shlex
 import subprocess
+import sys
 from pathlib import Path
 
 
 LEAN_IMAGE = "ghcr.io/leanprover-community/mathlib4/lean:latest"
 TOOLCHAIN_VOLUME = "rh-lean-toolchains"
+UPSTREAM_REVISION = "adc7f1241b42e322a6451854ab7e4b4c146bf78a"
+
+
+def verify_upstream_checkout(upstream_repo: Path, expected_revision: str) -> None:
+    """Require the pinned upstream commit and a clean working tree."""
+    revision = subprocess.run(
+        ["git", "-C", str(upstream_repo), "rev-parse", "HEAD"],
+        check=True,
+        stdout=subprocess.PIPE,
+        text=True,
+    ).stdout.strip()
+    if revision != expected_revision:
+        raise ValueError(
+            f"Upstream revision mismatch in {upstream_repo}: "
+            f"expected {expected_revision}, found {revision}"
+        )
+
+    changes = subprocess.run(
+        ["git", "-C", str(upstream_repo), "status", "--porcelain", "--untracked-files=normal"],
+        check=True,
+        stdout=subprocess.PIPE,
+        text=True,
+    ).stdout.strip()
+    if len(changes) != 0:
+        raise ValueError(f"Upstream checkout has uncommitted changes:\n{changes}")
+
+    logging.info("Verified upstream revision %s with a clean working tree", revision)
 
 
 def read_module_imports(module_path: Path) -> list[str]:
@@ -24,7 +53,7 @@ def read_module_imports(module_path: Path) -> list[str]:
     return imports
 
 
-def order_local_dependencies(rh_repo: Path, target: str) -> list[str]:
+def order_local_dependencies(lean_dir: Path, target: str) -> list[str]:
     """Order the target's local imports before their consumers."""
     ordered_modules = []
     completed_modules = set()
@@ -37,8 +66,8 @@ def order_local_dependencies(rh_repo: Path, target: str) -> list[str]:
             raise ValueError(f"Cyclic local Lean import: {module}")
 
         active_modules.add(module)
-        for dependency in read_module_imports(rh_repo / f"{module}.lean"):
-            if (rh_repo / f"{dependency}.lean").is_file():
+        for dependency in read_module_imports(lean_dir / f"{module}.lean"):
+            if (lean_dir / f"{dependency}.lean").is_file():
                 visit_module(dependency)
         active_modules.remove(module)
         completed_modules.add(module)
@@ -48,19 +77,19 @@ def order_local_dependencies(rh_repo: Path, target: str) -> list[str]:
     return ordered_modules
 
 
-def find_upstream_targets(rh_repo: Path, modules: list[str]) -> list[str]:
+def find_upstream_targets(lean_dir: Path, modules: list[str]) -> list[str]:
     """Collect upstream imports required by the local proof chain."""
     return sorted({
         dependency
         for module in modules
-        for dependency in read_module_imports(rh_repo / f"{module}.lean")
-        if not (rh_repo / f"{dependency}.lean").is_file()
+        for dependency in read_module_imports(lean_dir / f"{module}.lean")
+        if not (lean_dir / f"{dependency}.lean").is_file()
     })
 
 
 def build_upstream_oai_targets(upstream_repo: Path, targets: list[str]) -> None:
     """Build the imported upstream proof objects."""
-    print(f"Building {len(targets)} upstream Lean targets", flush=True)
+    logging.info("Building %s upstream Lean targets", len(targets))
     command = "lake --quiet build " + " ".join(
         shlex.quote(f"+{target}:olean") for target in targets
     )
@@ -76,27 +105,27 @@ def build_upstream_oai_targets(upstream_repo: Path, targets: list[str]) -> None:
         capture_output=True,
         text=True,
     )
-    if compilation.returncode != 0:
-        print(compilation.stdout, end="")
-        print(compilation.stderr, end="")
-        compilation.check_returncode()
-    print("Upstream Lean targets are ready", flush=True)
+    print(compilation.stdout, end="", flush=True)
+    print(compilation.stderr, end="", file=sys.stderr, flush=True)
+    compilation.check_returncode()
+    logging.info("Upstream Lean targets are ready")
 
 
-def has_current_proof_object(rh_repo: Path, upstream_repo: Path, module: str) -> bool:
+def has_current_proof_object(lean_dir: Path, upstream_repo: Path, module: str) -> bool:
     """Check source and direct dependency timestamps before resuming a build."""
-    proof_path = rh_repo / f"{module}.olean"
+    proof_dir = lean_dir / ".lake/build/lib/lean"
+    proof_path = proof_dir / f"{module}.olean"
     if not proof_path.is_file():
         return False
 
     proof_time = proof_path.stat().st_mtime_ns
-    source_path = rh_repo / f"{module}.lean"
+    source_path = lean_dir / f"{module}.lean"
     if proof_time < source_path.stat().st_mtime_ns:
         return False
 
     for dependency in read_module_imports(source_path):
-        if (rh_repo / f"{dependency}.lean").is_file():
-            dependency_path = rh_repo / f"{dependency}.olean"
+        if (lean_dir / f"{dependency}.lean").is_file():
+            dependency_path = proof_dir / f"{dependency}.olean"
         elif dependency.startswith("OAI."):
             dependency_path = (
                 upstream_repo / "lean/.lake/build/lib/lean"
@@ -113,13 +142,13 @@ def has_current_proof_object(rh_repo: Path, upstream_repo: Path, module: str) ->
     return True
 
 
-def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) -> None:
+def compile_local_oai_module(upstream_repo: Path, lean_dir: Path, module: str) -> None:
     """Compile one module and retain its proof object for subsequent imports."""
-    print(f"Compiling {module}.lean against upstream OAI", flush=True)
+    logging.info("Compiling %s.lean against upstream OAI", module)
     lean_command = (
-        "LEAN_PATH=/home/lean/rh:${LEAN_PATH:?Lake did not set LEAN_PATH} "
+        "LEAN_PATH=/home/lean/rh/.lake/build/lib/lean:${LEAN_PATH:?Lake did not set LEAN_PATH} "
         "lean -R /home/lean/rh -o "
-        f"{shlex.quote(f'/home/lean/rh/{module}.olean')} "
+        f"{shlex.quote(f'/home/lean/rh/.lake/build/lib/lean/{module}.olean')} "
         f"{shlex.quote(f'/home/lean/rh/{module}.lean')}"
     )
     compilation = subprocess.run(
@@ -129,7 +158,7 @@ def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) ->
             "--entrypoint", "/bin/bash",
             "--mount",
             f"type=bind,src={upstream_repo},dst=/home/lean/project,readonly",
-            "--mount", f"type=bind,src={rh_repo},dst=/home/lean/rh",
+            "--mount", f"type=bind,src={lean_dir},dst=/home/lean/rh",
             "--mount",
             f"type=volume,src={TOOLCHAIN_VOLUME},dst=/home/lean/.elan/toolchains,readonly",
             "--workdir", "/home/lean/project/lean", LEAN_IMAGE, "-lc",
@@ -138,18 +167,16 @@ def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) ->
         capture_output=True,
         text=True,
     )
-    if compilation.returncode != 0:
-        print(compilation.stdout, end="")
-        print(compilation.stderr, end="")
-        compilation.check_returncode()
-    if len(compilation.stdout.strip()) != 0:
-        print(compilation.stdout, end="")
+    print(compilation.stdout, end="", flush=True)
+    print(compilation.stderr, end="", file=sys.stderr, flush=True)
+    compilation.check_returncode()
 
 
 def verify_oai_proofs() -> None:
     """Build the requested theorem chain in dependency order."""
-    rh_repo = Path(__file__).resolve().parent
-    modules = sorted(path.stem for path in rh_repo.glob("*.lean")
+    rh_repo = Path(__file__).resolve().parents[1]
+    lean_dir = rh_repo / "lean"
+    modules = sorted(path.stem for path in lean_dir.glob("*.lean")
                      if path.stem != "lakefile")
     argument_parser = argparse.ArgumentParser(description=__doc__)
     argument_parser.add_argument("through", choices=modules)
@@ -166,10 +193,12 @@ def verify_oai_proofs() -> None:
     upstream_repo = rh_repo.parent / "rh-upstream"
     if not (upstream_repo / "lean/lakefile.lean").is_file():
         raise FileNotFoundError(f"Missing upstream Lean checkout: {upstream_repo}")
+    verify_upstream_checkout(upstream_repo, UPSTREAM_REVISION)
+    (lean_dir / ".lake/build/lib/lean").mkdir(parents=True, exist_ok=True)
 
-    ordered_modules = order_local_dependencies(rh_repo, arguments.through)
+    ordered_modules = order_local_dependencies(lean_dir, arguments.through)
     build_upstream_oai_targets(
-        upstream_repo, find_upstream_targets(rh_repo, ordered_modules)
+        upstream_repo, find_upstream_targets(lean_dir, ordered_modules)
     )
 
     modules_to_compile = [arguments.through] if arguments.only else ordered_modules
@@ -177,16 +206,16 @@ def verify_oai_proofs() -> None:
     for module in modules_to_compile:
         is_audit = module == arguments.through and module.endswith("Audit")
         if arguments.resume and not is_audit and has_current_proof_object(
-            rh_repo, upstream_repo, module
+            lean_dir, upstream_repo, module
         ):
             continue
-        compile_local_oai_module(upstream_repo, rh_repo, module)
+        compile_local_oai_module(upstream_repo, lean_dir, module)
         compiled_count += 1
-    print(
-        f"Verified {arguments.through}: compiled {compiled_count} local modules",
-        flush=True,
+    logging.info(
+        "Verified %s: compiled %s local modules", arguments.through, compiled_count,
     )
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stdout)
     verify_oai_proofs()

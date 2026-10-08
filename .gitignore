@@ -10,3 +10,5 @@
 *.olean
 *.ilean
 *.trace
+/build/
+__pycache__/

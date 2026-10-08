@@ -1,5 +1,8 @@
 # Formalization status
 
+Local Lean filenames below are relative to `lean/`. Verification commands
+run from the repository root.
+
 The theorem is nonvanishing for `Re(s) > 174999/200000`.
 `OAIHighUnconditional.lean` proves it in Lean without a moment hypothesis
 or an assumed prior zero-free bound. The declarations in
@@ -14,9 +17,11 @@ or an assumed prior zero-free bound. The declarations in
 
 The upstream checkout is revision
 `adc7f1241b42e322a6451854ab7e4b4c146bf78a` of `openai/math`.
-Run `uv run verify_oai.py OAIHighAudit` to rebuild the local dependency
-chain and print the theorem types and their axioms. The final results
-report only `propext`, `Classical.choice`, and `Quot.sound`.
+Run `uv run scripts/verify_oai.py OAIHighAudit` to rebuild the local dependency
+chain and check the theorem types and their axioms. The verifier requires
+the pinned upstream commit and a clean upstream working tree. `ProofAudit.lean`
+rejects transitive axiom dependencies outside `propext`, `Classical.choice`,
+and `Quot.sound`, so an incomplete proof or an added axiom fails the audit.
 
 `BoundsReal.lean` proves the changed geometry, signal exponent, low margin,
 low scale conditions, reflected-row loss inequality, and Euler-region
@@ -30,7 +35,7 @@ axioms.
 
 The local project now uses Lean 4.34.1 and the upstream Mathlib revision
 `d13f23b723b8a846827a245b89c10fc7d3f11612`. All three certificate
-files compile together with `lake build` on this toolchain.
+files compile together with `lake build` from `lean/` on this toolchain.
 
 `LowGramScale.lean` proves the compensated Gram-factor inequality at the
 changed physical scales. It also proves that a fixed slot-product cap
@@ -148,7 +153,7 @@ chosen input from a `FinePerturbedMomentInput`.
 `OAIHighUnconditional.lean` derives the prior bound from the upstream
 `FinalAssemblyUnconditional.detector_certified_bands` theorem, then
 discharges both hypotheses of the perturbed assembly.
-Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
+Run `uv run scripts/verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.
 
@@ -195,7 +200,7 @@ and remote Gaussian dyads, common physical probe, original ray pools, and
 normalizer are all proved for `0 ≤ t ≤ 1/30` and total slot length
 `1/6+t`. `OAILowNormalized.lean` concludes with normalized bound
 `Z^(3/16-t/4+loss)` for every positive `loss`. Run
-`uv run verify_oai.py OAILowAudit` to rebuild the source-connected chain
+`uv run scripts/verify_oai.py OAILowAudit` to rebuild the source-connected chain
 and audit its axioms. The audit reports only `propext`, `Classical.choice`,
 and `Quot.sound`.
 The upstream `Reflection/LowOriginalEnergy.lean` assumes both `d ≤ 1/6`

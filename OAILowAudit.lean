@@ -1,3 +1,0 @@
-import OAILowNormalized
-
-#print axioms OAI.SevenEighths.ProbePhysical.perturbed_original_normalized_compensatedPhysicalProbe_low
