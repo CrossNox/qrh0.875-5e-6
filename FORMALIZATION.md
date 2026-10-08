@@ -20,17 +20,15 @@ files compile together with `lake build` on this toolchain.
 `LowGramScale.lean` proves the compensated Gram-factor inequality at the
 changed physical scales. It also proves that a fixed slot-product cap
 `L ≤ B Z^slotLength` eventually meets the required Gram condition
-`L ≤ Z^(2*xLength-yLength)`. This is an elementary scale estimate. It does
-not prove the additive Gram theorem for the physical probe.
+`L ≤ Z^(2*xLength-yLength)`.
 
-The remaining proof requires the actual analytic estimates for the changed
-physical probe. In particular, its reflected-row and additive Gram bounds
-must yield the new low estimate, and its full Euler correction must support
-the contour moves to `Re(s) > 174999/200000`. The detector and high-row
-assembly must use the prior 7/8 theorem with `κ = 3/4` and a positive gap
-`β* - 174999/200000`.
+The normalized compensated low estimate for the changed physical probe is
+now proved in Lean. The remaining proof requires the full Euler correction
+to support the contour moves to `Re(s) > 174999/200000`. The detector and
+high-row assembly must use the prior 7/8 theorem with `κ = 3/4` and a
+positive gap `β* - 174999/200000`.
 
-The first low-side declaration that must be strengthened is
+The upstream low-side declaration that was strengthened is
 [`compensatedPhysicalProbe_low`](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/LowCommonBound.lean).
 It assumes the total slot length is at most `1/6` and concludes with the
 fixed exponent `3/16`. The new probe has total length `1/6 + 3/100000`.
@@ -39,17 +37,18 @@ Its caller in `LowNormalized.lean` also fixes the original physical scales
 probe, even though `BoundsReal.lean` proves the required numerical margins.
 The `OAILow*.lean` files compile against upstream OAI with Lean 4.34.1.
 They carry the changed parent exponent and surviving slot length through
-the reflected row energy, physical dyads, slot choices, completed rows,
-and detector selected-row energy. `OAILowNominalEnergy.lean` converts the
-selected-row theorem to nominal slot lengths. `OAILowInverseNormalize.lean`
-and `OAILowPhysicalInverseBound.lean` prove that the changed physical scale
-`Z^(5/6-t)/L²` cancels the matching row-energy exponent after taking square
-roots. `OAILowSourceScales.lean` proves the changed Gram-scale geometry for
-`0 ≤ t < 1/24`. Run `uv run verify_oai.py OAILowPhysicalInverseBound`
-and `uv run verify_oai.py OAILowSourceScales --only` to check these ends of
-the source-connected chain. The central tuple, Gaussian dyad sum, remote
-mass, and common low bound still need to be generalized. This does not yet
-bound the full physical probe.
+reflected row energy, physical dyads, slot choices, completed rows, and
+detector selected-row energy. The changed physical scale `Z^(5/6-t)/L²`
+cancels the matching row-energy exponent after taking square roots. A sharper
+slot-mass estimate retains a factor `Z^(-d)` for a rescaled subset of length
+`d`. This absorbs the reflected-row loss in the central tuple. The central
+and remote Gaussian dyads, common physical probe, original ray pools, and
+normalizer are all proved for `0 ≤ t ≤ 1/30` and total slot length
+`1/6+t`. `OAILowNormalized.lean` concludes with normalized bound
+`Z^(3/16-t/4+loss)` for every positive `loss`. Run
+`uv run verify_oai.py OAILowAudit` to rebuild the source-connected chain
+and audit its axioms. The audit reports only `propext`, `Classical.choice`,
+and `Quot.sound`.
 The upstream `Reflection/LowOriginalEnergy.lean` assumes both `d ≤ 1/6`
 and `ell0 ≤ 1/6-d+η`, and bounds parent norms using `5/6-2*d`. The new
 probe needs `d ≤ 1/6+3/100000`, surviving length

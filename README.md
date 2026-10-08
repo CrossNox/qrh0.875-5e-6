@@ -22,13 +22,11 @@ docker run --rm --cpuset-cpus 0-3 --cpus 4 --memory 8g \
   -lc 'lake exe cache get && lake build'
 ```
 
-The `OAILow*.lean` files connect the perturbed reflected exponent through
-completed-row energy and physical inverse-mass normalization. They also
-prove the changed source Gram-scale geometry. Check them with
-`uv run verify_oai.py OAILowPhysicalInverseBound` and
-`uv run verify_oai.py OAILowSourceScales --only` from this directory. This
-requires the adjacent `rh-upstream` checkout and Docker. The full physical
-low-probe bound and zero-free theorem remain unproved.
+The `OAILow*.lean` files prove the normalized compensated low estimate for
+the perturbed physical probe against upstream OAI. Check the full chain and
+its axioms with `uv run verify_oai.py OAILowAudit`. This requires the
+adjacent `rh-upstream` checkout and Docker. The high-side contour estimates
+and zero-free theorem remain unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build

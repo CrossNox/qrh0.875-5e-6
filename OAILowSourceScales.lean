@@ -28,7 +28,7 @@ lemma perturbed_source_compensated_scale_admissible
     (q Z L t : ℝ) (hq : 1 ≤ q) (hZ : 1 ≤ Z)
     (hL : 1 ≤ L) (hql : q ≤ Z ^ (1 / 8 : ℝ))
     (hLl : L ≤ Z ^ (11 / 48 - t / 2))
-    (ht : 0 ≤ t) (htSmall : t ≤ 1 / 6) :
+    (_ht : 0 ≤ t) (_htSmall : t ≤ 1 / 6) :
     1 ≤ Z ^ (23 / 48 - t / 2) / L ∧
       q * Z ^ (17 / 48 - t / 2) ≤ Z ^ (23 / 48 - t / 2) ∧
       L * Z ^ (23 / 48 - t / 2) ≤

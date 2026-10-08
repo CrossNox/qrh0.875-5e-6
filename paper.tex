@@ -272,11 +272,10 @@ stated assertions.
 
 The rational inequalities in \eqref{eq:low-gap} and \eqref{eq:high-gap}
 can be checked independently by the accompanying \texttt{verify\_bounds.py}.
-The accompanying Lean files verify the geometry, the reflected-exponent
-calculation, the high-side endpoint, and the compensated Gram-scale
-inequalities for real parameters
-in Lean 4 with Mathlib. They do not formalize the analytic lemmas or their
-extension to the new boundary. Compiling this note checks
+The accompanying Lean files verify the geometry, reflected-exponent
+calculation, high-side endpoint, and normalized compensated low estimate
+against the upstream OAI formalization. The high-side contour lemmas and
+their extension to the new boundary are not formalized here. Compiling this note checks
 the TeX, not the number-theoretic inputs. The stronger boundary in
 Theorem~\ref{thm:main} is not part of \cite{OAI}'s stated theorem or its
 existing formalization.

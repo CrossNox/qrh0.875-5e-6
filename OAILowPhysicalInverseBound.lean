@@ -140,7 +140,7 @@ theorem perturbed_low_physical_inverse_normalized
       (1 + ‖θ‖) (∑ z ∈ R, ‖row σ z‖ ^ 2) degree hq ZC.le
       hB.le hz hL (le_add_of_nonneg_right (norm_nonneg θ))
       (Finset.sum_nonneg (fun _ _ => sq_nonneg _))
-      (by convert he σ using 1 <;> ring) hLhi
+      (by convert he σ using 1; ring_nf) hLhi
   change (Real.sqrt Q)⁻¹ / (2 * Real.pi) *
     (∑ σ : RayRing, Real.sqrt (∑ z ∈ R, ‖row σ z‖ ^ 2)) ≤ _
   calc

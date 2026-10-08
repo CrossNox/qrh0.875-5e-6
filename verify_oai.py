@@ -38,6 +38,19 @@ UPSTREAM_TARGETS = {
     "OAILowInverseNormalize": "OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound",
     "OAILowPhysicalInverseBound": "OAI.NumberTheory.DirichletL.Detector.LowPhysicalInverseBound",
     "OAILowSourceScales": "OAI.NumberTheory.DirichletL.Detector.LowSourceScales",
+    "OAILowSlotScales": "OAI.NumberTheory.DirichletL.Detector.LowSlotScales",
+    "OAILowUnselectedMass": "OAI.NumberTheory.DirichletL.Detector.LowUnselectedMass",
+    "OAILowCentralTuple": "OAI.NumberTheory.DirichletL.Detector.LowCentralTuple",
+    "OAILowGaussianDyad": "OAI.NumberTheory.DirichletL.Detector.LowGaussianDyad",
+    "OAILowGaussianCentral": "OAI.NumberTheory.DirichletL.Detector.LowGaussianCentral",
+    "OAILowRemoteMass": "OAI.NumberTheory.DirichletL.Detector.LowRemoteMass",
+    "OAILowGaussianRemote": "OAI.NumberTheory.DirichletL.Detector.LowGaussianRemote",
+    "OAILowGaussianSum": "OAI.NumberTheory.DirichletL.Detector.LowGaussianSum",
+    "OAILowCommonBound": "OAI.NumberTheory.DirichletL.Detector.LowCommonBound",
+    "OAILowWindowBound": "OAI.NumberTheory.DirichletL.Detector.LowWindowBound",
+    "OAILowNormalizer": "OAI.NumberTheory.DirichletL.PrimeRows.CubeNormalizer",
+    "OAILowNormalized": "OAI.NumberTheory.DirichletL.Detector.LowNormalized",
+    "OAILowAudit": "OAI.NumberTheory.DirichletL.Detector.LowNormalized",
 }
 
 
@@ -117,6 +130,8 @@ def compile_local_oai_module(upstream_repo: Path, rh_repo: Path, module: str) ->
         print(compilation.stdout, end="")
         print(compilation.stderr, end="")
         compilation.check_returncode()
+    if compilation.stdout.strip():
+        print(compilation.stdout, end="")
 
 
 def verify_oai_proofs() -> None:
