@@ -4,13 +4,13 @@ namespace PerturbedZeroFreeBound
 
 noncomputable section
 
-private def lengthChange : ℝ := 3 / 100000
-private def boundary : ℝ := 7 / 8 - 1 / 200000
-private def slotLength : ℝ := 1 / 6 + lengthChange
-private def xLength : ℝ := 17 / 48 - lengthChange / 2
-private def yLength : ℝ := 23 / 48 - lengthChange / 2
-private def rowLength : ℝ := 13 / 16 + 3 * lengthChange / 2
-private def averagingLength : ℝ := xLength + yLength
+def lengthChange : ℝ := 3 / 100000
+def boundary : ℝ := 7 / 8 - 1 / 200000
+def slotLength : ℝ := 1 / 6 + lengthChange
+def xLength : ℝ := 17 / 48 - lengthChange / 2
+def yLength : ℝ := 23 / 48 - lengthChange / 2
+def rowLength : ℝ := 13 / 16 + 3 * lengthChange / 2
+def averagingLength : ℝ := xLength + yLength
 
 theorem verify_geometry :
     xLength + yLength + slotLength = 1 ∧

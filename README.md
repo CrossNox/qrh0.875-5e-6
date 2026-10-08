@@ -5,8 +5,9 @@
 [seven-eighths manuscript](https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex).
 
 Run `uv run verify_bounds.py` to check the rational margins. The Mathlib files
-`BoundsReal.lean`, `EndpointCertificate.lean`, and `ReflectedExponent.lean`
-prove the geometry, endpoint, and reflected-exponent inequalities for real
+`BoundsReal.lean`, `EndpointCertificate.lean`, `ReflectedExponent.lean`, and
+`LowGramScale.lean` prove the geometry, endpoint, reflected-exponent, and
+perturbed Gram-scale inequalities for real
 parameters. The project pins Lean 4.34.1 and the Mathlib revision used by the
 upstream seven-eighths formalization. Run `lake exe cache get` and `lake build`
 from this directory. A Docker environment is also available:

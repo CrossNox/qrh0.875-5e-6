@@ -17,6 +17,12 @@ The local project now uses Lean 4.34.1 and the upstream Mathlib revision
 `d13f23b723b8a846827a245b89c10fc7d3f11612`. All three certificate
 files compile together with `lake build` on this toolchain.
 
+`LowGramScale.lean` proves the compensated Gram-factor inequality at the
+changed physical scales. It also proves that a fixed slot-product cap
+`L ≤ B Z^slotLength` eventually meets the required Gram condition
+`L ≤ Z^(2*xLength-yLength)`. This is an elementary scale estimate. It does
+not prove the additive Gram theorem for the physical probe.
+
 The remaining proof requires the actual analytic estimates for the changed
 physical probe. In particular, its reflected-row and additive Gram bounds
 must yield the new low estimate, and its full Euler correction must support
@@ -33,6 +39,12 @@ Its caller in `LowNormalized.lean` also fixes the original physical scales
 probe, even though `BoundsReal.lean` proves the required numerical margins.
 The new reflected-exponent lemma is standalone arithmetic. It has not been
 connected to the upstream row-energy theorem or the probe norm estimate.
+The upstream `Reflection/LowOriginalEnergy.lean` assumes both `d ≤ 1/6`
+and `ell0 ≤ 1/6-d+η`, and bounds parent norms using `5/6-2*d`. The new
+probe needs `d ≤ 1/6+3/100000`, surviving length
+`ell0 ≤ 1/6+3/100000-d`, and parent exponent
+`5/6-3/100000-2*d`. The old theorem cannot yield the needed power saving
+by setting its loss parameter `η` as large as the slot-length increase.
 
 The [existing final assembly](https://github.com/openai/math/blob/main/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssembly.lean)
 starts with the assumption `7/8 < β*`. Its
