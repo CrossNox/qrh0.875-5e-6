@@ -98,7 +98,16 @@ chooses a small parameter below any positive zero gap and proves that the
 perturbed detector budget has room for the fixed length increase.
 `OAIHighData.lean` packages positive slot lengths of total
 `1/6+3/100000`, detector scales, the new row threshold, and the central
-budget for every positive zero gap. It proves that such data exist.
+and floor budgets for every positive zero gap. It proves that such data exist.
+`OAIHighFloorArithmetic.lean` through `OAIHighFloorCollected.lean` carry the
+floor tuple estimate through dyadic summation, the changed physical scales,
+normalization, and collection by detector height. The floor budget includes
+the exact added cost `t*(121/40+3*e+mesh)`.
+`OAIHighPhysicalSmallTail.lean` through `OAIHighCanonicalRayCube.lean`
+assemble the perturbed small- and large-row tails, cube truncation error,
+and the canonical ray-cube bin choice. Their common geometry uses
+`17/48-t/2`, `23/48-t/2`, slot mass `1/6+t`, and row cutoff
+`13/16+3*t/2+ζ`.
 Run `uv run verify_oai.py OAIHighAudit` to check this chain against upstream
 OAI and audit its axioms. The audited results report only `propext`,
 `Classical.choice`, and `Quot.sound`.

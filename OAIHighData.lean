@@ -60,7 +60,8 @@ structure PerturbedHighData (gap : ℝ) where
   principal_budget : sigma + small / 8 ≤ 2611 / 110160000
   window_budget : sigma + e ≤ (174999 / 200000) * ((7 / 8) * rmin)
   floor_budget : 2 * small + 26 * e + (N + 8) * eps +
-    small + small / 6 + small / 8 + sigma ≤ 7 / 1200
+    small + small / 6 + small / 8 + sigma +
+    perturbedSlotLengthShift * (121 / 40 + 3 * e + small) ≤ 7 / 1200
   high_saving : sigma + small / 8 + small / 8 ≤ small
   height_choice : ∀ J : ℝ, 0 ≤ J → ∃ τ : ℝ,
     0 < τ ∧ τ < (1 / 200) / 2 ∧
@@ -141,7 +142,8 @@ theorem exists_perturbed_high_data (gap : ℝ) (hgap : 0 < gap) :
     have hscaled := mul_le_mul_of_nonneg_right hcoef hellMin.le
     dsimp [ellMin] at hsum hscaled ⊢
     linarith
-  · linarith only [hsigma_small, hea, hallowance_cap,
+  · dsimp [perturbedSlotLengthShift]
+    linarith only [hsigma_small, hea, hallowance_cap,
       he8, hsmall_cap]
   · linarith only [hsigma_small, hsmall.le]
   · intro J hJ

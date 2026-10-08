@@ -33,8 +33,9 @@ ordered principal double shift, uniform contour tails, principal
 triple-contour transport, selected high-row local bounds, and row-dependent
 tuple, dyad, and Mellin-integral bounds. Check them with
 `uv run verify_oai.py OAIHighAudit`. The conditional central-bin dyadic
-bound is also formalized. The changed fourth-moment input, final detector
-assembly, and zero-free theorem remain unproved.
+bound, changed floor-row bound, and canonical ray-cube decomposition are
+also formalized. The changed fourth-moment input, principal comparison,
+final detector assembly, and zero-free theorem remain unproved.
 
 Run
 `pdflatex -interaction=nonstopmode -halt-on-error paper.tex` twice to build

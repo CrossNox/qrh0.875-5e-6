@@ -239,8 +239,9 @@ rows with $d\le h$. Extending to $h+\zeta$ costs at most $2\zeta$, and
 $\zeta$ can be chosen below the margin in \eqref{eq:high-gap}.
 
 The floor and intermediate-row margins in \cite{OAI} are respectively
-$7/1200$ and $49/14400$ at the original geometry. Their changes are
-bounded by the same $7/80000$ and are therefore harmless. The small-row
+$7/1200$ and $49/14400$ at the original geometry. The floor shift costs
+$t(121/40+3e+\mathrm{mesh})$, including the changed row threshold. The
+parameter budget absorbs this cost. The small-row
 margin is $63/800$. Its change is at most $51t/100$, since
 $h(17/50-1/6)-l_y/2$ has derivative $51/100$ with respect to $t$.
 For large rows, the absolute contour can still be taken sufficiently far
@@ -280,7 +281,8 @@ the principal source's $w$ and $z$ contour shifts, ordered double shift,
 uniform contour tails, and $x$ contour transport also have Lean proofs at
 the new boundary. The selected high-row local factors, weighted prime-slot
 sum, physical-row dyad, Mellin integral, and changed small- and large-row
-tail bounds and central rectangle truncation error are verified there as well.
+tail bounds, central cube truncation error, canonical ray-cube choice, and
+normalized floor-row collection are verified there as well.
 The balanced central-bin estimate is carried through the normalized dyadic
 collection, conditional on its stated fourth-moment input at the changed
 parameters. That input and the final detector assembly remain open.
